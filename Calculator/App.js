@@ -20,9 +20,9 @@ export default function MyCalculator() {
     const [calHistory, setCalHistory] = useState([]);
 
     // Initialize button 
-    const basicButtons = ['7', '8', '9', '/', '4', '5', '6', '*', '1', '2', '3', '-', '0', '.', '+', '%'];
+    const basicButtons = [['7', '8', '9', '/'], ['4', '5', '6', '*'],[ '1', '2', '3', '-'], ['0', '.', '+', '%']];
     const additionButtons = ['sin', 'cos', 'tan', 'log', 'ln', /*pi*/ decodeURI('%CF%80'), '^', /*square root*/decodeURI('%E2%88%9A'), '(', ')'];
-
+    const oneTimeButtons = ['+', '-', '*', '/', '.'];
 
     // Blinking
     useEffect(() => {
@@ -103,7 +103,7 @@ export default function MyCalculator() {
             setInputText(inputText + '/100');
         }
         else
-            if (inputText[inputText.length - 1] === '+' || inputText[inputText.length - 1] === '-' || inputText[inputText.length - 1] === '*' || inputText[inputText.length - 1] === '/') {
+            if (oneTimeButtons.includes(inputText[inputText.length - 1])) {
                 // Prevent operator is next to each other, if true then dont add more character
                 if (button === '+' || button === '-' || button === '*' || button === '/') {
                     setInputText(inputText);
@@ -111,7 +111,6 @@ export default function MyCalculator() {
                 }
                 else {
                     // First equation (before the '=' button is pressed first time)
-
                     if (isContinuous) {
                         setInputText(inputText + button);
                         setTextToShow(textToShow + button);
@@ -163,9 +162,7 @@ export default function MyCalculator() {
                 <View style={[styles.headerContainer]}>
                     {/* Input text */}
                     <Text style={styles.text}>
-
                         {textToShow}
-
                         <Text style={[styles.text, { color: showBlinker ? 'rgb(217,129,47)' : 'rgb(1,1,1)' }]}>
                             |
                         </Text>
@@ -199,13 +196,12 @@ export default function MyCalculator() {
                     <View
                         style={[styles.Btncontainer,
                         { display: showBasicBtn ? 'flex' : 'none' }]}>
-                        {basicButtons.map((button, index) =>
+                        {basicButtons.map((row, ind1) => row.map((button, ind2) => 
                             <Pressable style={styles.btn}
-                                key={index}
+                                key={ind1 * ind2}
                                 onPress={() => handleInputText(button)}>
                                 <Text style={styles.textBtn}>{button}</Text>
-                            </Pressable>
-                        )}
+                            </Pressable>))}
                     </View>
 
                     {/* Additional Button */}
