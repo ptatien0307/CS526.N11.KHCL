@@ -4,9 +4,12 @@ import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CalHistory from './CalHistory';
 
+
 export default function MyCalculator() {
 
     const { width, height } = useWindowDimensions();
+    const margin = height * 0.01;
+    // console.log(width, height);
 
     // Initilize useState and Button
     const [inputText, setInputText] = useState('');
@@ -20,8 +23,8 @@ export default function MyCalculator() {
     const [calHistory, setCalHistory] = useState([]);
 
     // Initialize button 
-    const basicButtons = [['7', '8', '9', '/'], ['4', '5', '6', '*'],[ '1', '2', '3', '-'], ['0', '.', '+', '%']];
-    const additionButtons = ['sin', 'cos', 'tan', 'log', 'ln', /*pi*/ decodeURI('%CF%80'), '^', /*square root*/decodeURI('%E2%88%9A'), '(', ')'];
+    const basicButtons = [['7', '8', '9', '/'], ['4', '5', '6', '*'], ['1', '2', '3', '-'], ['0', '.', '+', '%']];
+    const additionButtons = [['sin', 'cos', 'tan', 'log'], ['ln', /*pi*/ decodeURI('%CF%80'), '^', /*square root*/decodeURI('%E2%88%9A')], ['(', ')']];
     const oneTimeButtons = ['+', '-', '*', '/', '.'];
 
     // Blinking
@@ -193,29 +196,50 @@ export default function MyCalculator() {
                 <View style={[styles.bodyContainer]}>
 
                     {/* Basic Button */}
-                    <View
-                        style={[styles.Btncontainer,
-                        { display: showBasicBtn ? 'flex' : 'none' }]}>
-                        {basicButtons.map((row, ind1) => row.map((button, ind2) => 
-                            <Pressable style={styles.btn}
-                                key={ind1 * ind2}
-                                onPress={() => handleInputText(button)}>
-                                <Text style={styles.textBtn}>{button}</Text>
-                            </Pressable>))}
-                    </View>
+                    {
+                        basicButtons.map((row, rowIndex) => {
+                            return (
+                                <View
+                                    style={[styles.Btncontainer, { display: showBasicBtn ? 'flex' : 'none' }]}
+                                    key={row + rowIndex}
+                                >
+                                    {
+                                        row.map((button) =>
+                                            <Pressable style={styles.btn}
+                                                key={button + row.length}
+                                                onPress={() => handleInputText(button)}>
+                                                <Text style={styles.textBtn}>{button}</Text>
+                                            </Pressable>
+                                        )
+                                    }
+                                </View>
+                            );
+                        })
+                    }
+
 
                     {/* Additional Button */}
-                    <View
-                        style={[styles.Btncontainer,
-                        { display: !showBasicBtn ? 'flex' : 'none' }]}>
-                        {additionButtons.map((button, index) =>
-                            <Pressable style={styles.btn}
-                                key={index}
-                                onPress={() => handleInputText(button)}>
-                                <Text style={styles.textBtn}>{button}</Text>
-                            </Pressable>
-                        )}
-                    </View>
+                    {
+                        additionButtons.map((row, rowIndex) => {
+                            return (
+                                <View
+                                    style={[styles.Btncontainer, { display: !showBasicBtn ? 'flex' : 'none' }]}
+                                    key={rowIndex}
+                                >
+                                    {
+                                        row.map((button) =>
+                                            <Pressable style={styles.btn}
+                                                key={button + row.length}
+                                                onPress={() => handleInputText(button)}>
+                                                <Text style={styles.textBtn}>{button}</Text>
+                                            </Pressable>
+                                        )
+                                    }
+                                </View>
+                            );
+                        })
+                    }
+
 
 
                     {/* Special button */}
@@ -277,6 +301,8 @@ export default function MyCalculator() {
 
 }
 
+
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -301,6 +327,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     headerContainer: {
+        flex: 3,
         margin: 8,
         paddingHorizontal: 16,
         borderColor: 'white',
@@ -314,6 +341,7 @@ const styles = StyleSheet.create({
         position: 'relative'
     },
     bodyContainer: {
+        flex: 5,
         width: '95%',
         backgroundColor: 'rgb(1,1,1)',
         alignItems: 'center',
@@ -322,26 +350,29 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     Btncontainer: {
+        flex: 1,
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         flexWrap: 'wrap',
         flexDirection: 'row',
         width: '100%'
     },
     btnSpec: {
+        flex: 1,
         margin: 8,
         backgroundColor: 'rgb(26,26,26)',
         width: '20%',
-        height: 50,
+        height: 75,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10
     },
     btn: {
+        flex: 1,
         margin: 8,
         backgroundColor: 'rgb(26,26,26)',
         width: '20%',
-        height: 50,
+        height: 75,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10
