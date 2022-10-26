@@ -17,7 +17,7 @@ export default function CalHistory(props) {
 
     return (
         <View style={[styles.container,
-        { display: props.myDisplayHistory ? 'none' : 'flex' }]}>
+        { display: props.myDisplayHistory ? 'flex' : 'none' }]}>
             {/* History icon, click to hide history */}
             <Pressable
                 onPress={() => { props.mySetDisplayHistory(!props.myDisplayHistory) }}

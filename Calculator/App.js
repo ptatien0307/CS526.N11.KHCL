@@ -8,8 +8,6 @@ import CalHistory from './CalHistory';
 export default function MyCalculator() {
 
     const { width, height } = useWindowDimensions();
-    const margin = height * 0.01;
-    // console.log(width, height);
 
     // Initilize useState and Button
     const [inputText, setInputText] = useState('');
@@ -19,7 +17,7 @@ export default function MyCalculator() {
     const [isContinuous, setIsContinuous] = useState(true);
     const [isFirst, setIsFirst] = useState(true);
     const [showBlinker, setShowBlinker] = useState(true);
-    const [showHistory, setShowHistory] = useState(true);
+    const [showHistory, setShowHistory] = useState(false);
     const [calHistory, setCalHistory] = useState([]);
 
     // Initialize button 
@@ -160,7 +158,7 @@ export default function MyCalculator() {
     return (
         <View style={[styles.container]}>
             {/* View calculator, including input, output and button */}
-            <View style={[styles.calculator, { display: !showHistory ? 'none' : 'flex' }]}>
+            <View style={[styles.calculator, { display: !showHistory ? 'flex' : 'none' }]}>
 
                 <View style={[styles.headerContainer]}>
                     {/* Input text */}
@@ -289,7 +287,7 @@ export default function MyCalculator() {
 
 
             {/* View history, if history is mounted, then calculator is unmounted and vice versa*/}
-            <View style={[styles.history, { display: showHistory ? 'none' : 'flex' }]}>
+            <View style={[styles.history, { display: showHistory ? 'flex' : 'none' }]}>
                 <CalHistory
                     myCalHistory={calHistory}
                     myDisplayHistory={showHistory}
@@ -362,7 +360,7 @@ const styles = StyleSheet.create({
         margin: 8,
         backgroundColor: 'rgb(26,26,26)',
         width: '20%',
-        height: 75,
+        height: 50,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10
@@ -372,7 +370,7 @@ const styles = StyleSheet.create({
         margin: 8,
         backgroundColor: 'rgb(26,26,26)',
         width: '20%',
-        height: 75,
+        height: 50,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10
