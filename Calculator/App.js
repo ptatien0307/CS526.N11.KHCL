@@ -357,13 +357,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgb(1,1,1)',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        flexWrap: 'wrap',
         flexDirection: 'column',
     },
     // Contains both basic and additional button except 4 special button
     buttonLayoutContainer: {
         flex: 4,
-        alignItems: 'center',
         justifyContent: 'space-evenly',
         width: '100%'
     },
@@ -379,8 +377,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        flexWrap: 'wrap',
-        flexDirection: 'col',
+        flexDirection: 'column',
         width: '100%'
     },
     Btncontainer: {
