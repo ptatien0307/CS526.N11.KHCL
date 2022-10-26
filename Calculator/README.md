@@ -5,10 +5,10 @@
     
     >   wsl
     
-    >   docker run -u $(id -u) -it --rm --name calculator -p 19000-19010:19000-19010 -v \`pwd`:/current node:16.18.0 bash
+    >   docker run -u $(id -u) -it --rm --name calculator -p 19000-19010:19000-19010 -v `pwd`:/current node:16.18.0 bash
     
     >   cd current
-    >   
+ 
     >   git clone https://github.com/ptatien0307/CS526.N11.KHCL.git
 
     >   cd CS526.N11.KHCL/Calculator
@@ -27,7 +27,7 @@
 
     > press w
 
-    > Then, open this link on browser **http://localhost:19006**
+    > Then, open this link on browser http://localhost:19006
 <img src="https://user-images.githubusercontent.com/79583501/196731578-e727c74c-576f-47f9-9402-1212e9bdf34b.png" style="display: block;margin-left: auto;margin-right: auto;"/>
     <h3> 3.2. To run this calculator on mobile (make sure that your mobile and laptop have to connect same private wifi)</h3>
     
