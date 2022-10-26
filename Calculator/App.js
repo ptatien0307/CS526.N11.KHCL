@@ -8,7 +8,6 @@ import CalHistory from './CalHistory';
 export default function MyCalculator() {
 
     const { width, height } = useWindowDimensions();
-
     // Initilize useState and Button
     const [inputText, setInputText] = useState('');
     const [outputText, setOutputText] = useState('');
@@ -162,16 +161,16 @@ export default function MyCalculator() {
 
                 <View style={[styles.headerContainer]}>
                     {/* Input text */}
-                    <Text style={styles.text}>
+                    <Text style={[styles.text, {fontSize : width > height ? 50 : 90}]}>
                         {textToShow}
-                        <Text style={[styles.text, { color: showBlinker ? 'rgb(217,129,47)' : 'rgb(1,1,1)' }]}>
+                        <Text style={[styles.text, { color: showBlinker ? 'rgb(217,129,47)' : 'rgb(1,1,1)', fontSize : width > height ? 50 : 90 }]}>
                             |
                         </Text>
 
                     </Text>
 
                     {/* Output text */}
-                    <Text style={styles.outText}>
+                    <Text style={[styles.outText, {fontSize : width > height ? 35 : 60}]}>
                         {outputText + ' '}
                     </Text>
 
@@ -190,53 +189,66 @@ export default function MyCalculator() {
                 </View>
 
 
-
                 <View style={[styles.bodyContainer]}>
 
-                    {/* Basic Button */}
-                    {
-                        basicButtons.map((row, rowIndex) => {
-                            return (
-                                <View
-                                    style={[styles.Btncontainer, { display: showBasicBtn ? 'flex' : 'none' }]}
-                                    key={row + rowIndex}
-                                >
-                                    {
-                                        row.map((button) =>
-                                            <Pressable style={styles.btn}
-                                                key={button + row.length}
-                                                onPress={() => handleInputText(button)}>
-                                                <Text style={styles.textBtn}>{button}</Text>
-                                            </Pressable>
-                                        )
-                                    }
-                                </View>
-                            );
-                        })
-                    }
+                    <View
+                        style={[styles.buttonLayoutContainer, { flexDirection: width > height ? 'row' : 'column' }]}
+                    >
+                        {/* Basic Button */}
+
+                        <View style={[styles.basicButtonsContainer, { display: showBasicBtn ? 'flex' : 'none' }]}
+                        >
+                            {
+                                basicButtons.map((row, rowIndex) => {
+                                    return (
+                                        <View
+                                            style={[styles.Btncontainer]}
+                                            key={row + rowIndex}
+                                        >
+                                            {
+                                                row.map((button) =>
+                                                    <Pressable style={styles.btn}
+                                                        key={button + row.length}
+                                                        onPress={() => handleInputText(button)}>
+                                                        <Text style={styles.textBtn}>{button}</Text>
+                                                    </Pressable>
+                                                )
+                                            }
+                                        </View>
+                                    );
+                                })
+                            }
+                        </View>
 
 
-                    {/* Additional Button */}
-                    {
-                        additionButtons.map((row, rowIndex) => {
-                            return (
-                                <View
-                                    style={[styles.Btncontainer, { display: !showBasicBtn ? 'flex' : 'none' }]}
-                                    key={rowIndex}
-                                >
-                                    {
-                                        row.map((button) =>
-                                            <Pressable style={styles.btn}
-                                                key={button + row.length}
-                                                onPress={() => handleInputText(button)}>
-                                                <Text style={styles.textBtn}>{button}</Text>
-                                            </Pressable>
-                                        )
-                                    }
-                                </View>
-                            );
-                        })
-                    }
+
+
+                        {/* Additional Button */}
+                        <View style={[styles.additionalButtonsContainer, { display: width > height ? 'flex' : !showBasicBtn ? 'flex' : 'none' }]}>
+                            {
+                                additionButtons.map((row, rowIndex) => {
+                                    return (
+                                        <View
+                                            style={[styles.Btncontainer]}
+                                            key={rowIndex}
+                                        >
+                                            {
+                                                row.map((button) =>
+                                                    <Pressable style={styles.btn}
+                                                        key={button + row.length}
+                                                        onPress={() => handleInputText(button)}>
+                                                        <Text style={styles.textBtn}>{button}</Text>
+                                                    </Pressable>
+                                                )
+                                            }
+                                        </View>
+                                    );
+                                })
+                            }
+                        </View>
+                    </View>
+
+
 
 
 
@@ -245,7 +257,7 @@ export default function MyCalculator() {
                         style={styles.Btncontainer}>
                         {/* Delete character button */}
                         <Pressable
-                            style={[styles.btnSpec]}
+                            style={[styles.btn]}
                             onPress={() => {
                                 setInputText(inputText.slice(0, -1));
                                 setTextToShow(textToShow.slice(0, -1));
@@ -256,7 +268,7 @@ export default function MyCalculator() {
 
                         {/* AC Button */}
                         <Pressable
-                            style={styles.btnSpec}
+                            style={styles.btn}
                             onPress={() => {
                                 setInputText('');
                                 setOutputText('');
@@ -269,14 +281,15 @@ export default function MyCalculator() {
 
                         {/* Go to other math button */}
                         <Pressable
-                            style={styles.btnSpec}
-                            onPress={() => setShowBasicBtn(!showBasicBtn)}>
+                            style={styles.btn}
+                            onPress={() => setShowBasicBtn(!showBasicBtn)}
+                            disabled={width > height ? true : false}>
                             <Text style={styles.textBtnSpec}>Math</Text>
                         </Pressable>
 
                         {/* Equal button */}
                         <Pressable
-                            style={styles.btnSpec}
+                            style={styles.btn}
                             onPress={() => handleInputText('=')}>
                             <Text style={styles.textBtnSpec}>=</Text>
                         </Pressable>
@@ -347,30 +360,42 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         flexDirection: 'column',
     },
+    // Contains both basic and additional button except 4 special button
+    buttonLayoutContainer: {
+        flex: 4,
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        width: '100%'
+    },
+    basicButtonsContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        flexWrap: 'wrap',
+        flexDirection: 'col',
+        width: '100%'
+    },
+    additionalButtonsContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        flexWrap: 'wrap',
+        flexDirection: 'col',
+        width: '100%'
+    },
     Btncontainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'space-around',
-        flexWrap: 'wrap',
+        justifyContent: 'space-evenly',
         flexDirection: 'row',
         width: '100%'
-    },
-    btnSpec: {
-        flex: 1,
-        margin: 8,
-        backgroundColor: 'rgb(26,26,26)',
-        width: '20%',
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 10
     },
     btn: {
         flex: 1,
         margin: 8,
         backgroundColor: 'rgb(26,26,26)',
         width: '20%',
-        height: 50,
+        height: '90%',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10
@@ -386,12 +411,10 @@ const styles = StyleSheet.create({
     text: {
         flex: 2,
         color: 'white',
-        fontSize: 45,
     },
     outText: {
         flex: 1,
         color: 'white',
-        fontSize: 35,
     },
     icon: {
         color: 'rgb(218,139,48)',
