@@ -6,9 +6,9 @@ import CalHistory from './CalHistory';
 
 
 export default function MyCalculator() {
+    let identify = 0
 
-    const { width, height } = useWindowDimensions();
-    // Initilize useState and Button
+    // Initilize useState
     const [inputText, setInputText] = useState('');
     const [outputText, setOutputText] = useState('');
     const [showBasicBtn, setShowBasicBtn] = useState(true);
@@ -18,6 +18,9 @@ export default function MyCalculator() {
     const [showBlinker, setShowBlinker] = useState(true);
     const [showHistory, setShowHistory] = useState(false);
     const [calHistory, setCalHistory] = useState([]);
+    const [historyID, setHistoryID] = useState(0);
+    const { width, height } = useWindowDimensions();
+
 
     // Initialize button 
     const basicButtons = [['7', '8', '9', '/'], ['4', '5', '6', '*'], ['1', '2', '3', '-'], ['0', '.', '+', '%']];
@@ -57,12 +60,13 @@ export default function MyCalculator() {
 
             setCalHistory([
                 {
+                    id: historyID + textToShow.length + result.toString().length,
                     in: textToShow,
                     out: result,
                     inFound: 0,
                     outFound: 0
                 }, ...calHistory]);
-
+            setHistoryID(historyID + 1)
         }
 
         else if (button === 'sin' | button === 'cos' | button === 'tan' | button === 'log' | button === 'ln') {
