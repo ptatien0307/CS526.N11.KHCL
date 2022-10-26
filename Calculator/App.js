@@ -163,19 +163,21 @@ export default function MyCalculator() {
             <View style={[styles.calculator, { display: !showHistory ? 'flex' : 'none' }]}>
 
                 <View style={[styles.headerContainer]}>
-                    {/* Input text */}
-                    <Text style={[styles.text, { fontSize: width > height ? '3rem' : '3.75rem' }]}>
-                        {textToShow}
-                        <Text style={[styles.text, { color: showBlinker ? 'rgb(217,129,47)' : 'rgb(1,1,1)', fontSize: width > height ? '3rem' : '3.75rem' }]}>
-                            |
+                    <View style={styles.inoutContainer}>
+                        {/* Input text */}
+                        <Text style={[styles.text, { fontSize: width > height ? 50 : 90 }]}>
+                            {textToShow}
+                            <Text style={[styles.text, { color: showBlinker ? 'rgb(217,129,47)' : 'rgb(1,1,1)', fontSize: width > height ? 50 : 90 }]}>
+                                |
+                            </Text>
+
                         </Text>
 
-                    </Text>
-
-                    {/* Output text */}
-                    <Text style={[styles.outText, { fontSize: width > height ? '2.5rem' : '3rem' }]}>
-                        {`${outputText} `}
-                    </Text>
+                        {/* Output text */}
+                        <Text style={[styles.outText, { fontSize: width > height ? 35 : 60 }]}>
+                            {outputText + ' '}
+                        </Text>
+                    </View>
 
                     {/* History icon */}
                     <View style={styles.icon}>
