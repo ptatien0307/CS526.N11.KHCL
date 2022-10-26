@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, ScrollView, TextInput, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import React, { useState, useEffect } from 'react';
+
+
 export default function CalHistory(props) {
 
     const [searchedHistory, setSearchedHistory] = useState([])
@@ -12,7 +14,20 @@ export default function CalHistory(props) {
         setSearchedHistory([...props.myCalHistory])
     }, [props.myCalHistory])
 
-
+    const highlightSearchText = (string, str_to_highlight) => {
+        let y = string.replaceAll(str_to_highlight, `_${str_to_highlight}_`)
+        let arr = y.split('_')
+        return(<Text> 
+            {arr.map(x => {
+                if (x === str_to_highlight)
+                    return (<Text style = {{backgroundColor: 'orange'}} >{x}</Text>)
+                else
+                    return (<Text>{x}</Text>)
+                })
+            }
+            </Text>
+        )
+    }
 
 
     return (
@@ -73,20 +88,14 @@ export default function CalHistory(props) {
                             // Highlight background of input or output or both if including searchText
                             <View style={styles.box}>
                                 {/*View input text */}
-                                <Text style={[styles.inputText,
-                                {
-                                    backgroundColor: element.inFound ? 'rgb(217,129,47)' : 'none',
-                                    color: element.inFound ? 'black' : 'rgba(128,128,128,0.5)'
-                                }]}>
-                                    {element.in}</Text>
+                                <Text style={styles.inputText}>
+                                    {element.inFound ? highlightSearchText(element.in, searchText): element.in}
+                                </Text>
+
 
                                 {/*View output text */}
-                                <Text style={[styles.outputText,
-                                {
-                                    backgroundColor: element.outFound ? 'rgb(217,129,47)' : 'none',
-                                    color: element.outFound ? 'black' : 'white'
-                                }]}>
-                                    {'=' + element.out}</Text>
+                                <Text style={styles.outputText}>
+                                    {element.outFound ? highlightSearchText(element.out, searchText): element.out}</Text>
                             </View>
                         )
                     }
@@ -143,7 +152,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     outputText: {
-        color: 'white',
+        color: 'rgb(150,150,150)',
         fontSize: 30,
     },
     box: {
