@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TextInput, Pressable } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TextInput, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import React, { useState, useEffect } from 'react';
 
@@ -17,18 +17,33 @@ export default function CalHistory(props) {
     const highlightSearchText = (string, str_to_highlight) => {
         let y = string.replaceAll(str_to_highlight, `_${str_to_highlight}_`)
         let arr = y.split('_')
-        return(<Text> 
+        return (<Text>
             {arr.map(x => {
                 if (x === str_to_highlight)
-                    return (<Text style = {{backgroundColor: 'orange', color: 'black'}} >{x}</Text>)
+                    return (<Text style={{ backgroundColor: 'orange', color: 'black' }} >{x}</Text>)
                 else
                     return (<Text>{x}</Text>)
-                })
+            })
             }
-            </Text>
+        </Text>
         )
     }
 
+    const renderItem = ({ item }) => {
+        return (
+            <View style={styles.box}>
+                {/*View input text */}
+                <Text style={styles.inputText}>
+                    {item.inFound ? highlightSearchText(item.in, searchText) : item.in}
+                </Text>
+
+
+                {/*View output text */}
+                <Text style={styles.outputText}>
+                    {item.outFound ? highlightSearchText(item.out, searchText) : item.out}</Text>
+            </View>
+        )
+    }
 
     return (
         <View style={[styles.container,
@@ -59,49 +74,38 @@ export default function CalHistory(props) {
 
             {/* View History */}
             <View style={styles.scrollContainer}>
-                <ScrollView>
-                    {
-                        searchedHistory.filter(element => {
-                            // if searchText is empty, refresh searchedHistory
-                            if (searchText === '') {
+
+
+                <FlatList
+                    // filter calculation history to find text that includes searchText
+                    data={searchedHistory.filter(element => {
+                        // if searchText is empty, refresh searchedHistory
+                        if (searchText === '') {
+                            element.inFound = 0
+                            element.outFound = 0
+                        }
+                        else {
+                            // check if input or output text includes searchText
+                            if (element.in.includes(searchText) && searchText !== '')
+                                element.inFound = 1
+                            else
                                 element.inFound = 0
+
+                            if (element.out.includes(searchText) && searchText !== '')
+                                element.outFound = 1
+                            else
                                 element.outFound = 0
-                            }
-                            else {
-                                // check if input or output text includes searchText
-                                if (element.in.includes(searchText) && searchText !== '')
-                                    element.inFound = 1
-                                else
-                                    element.inFound = 0
-
-                                if (element.out.includes(searchText) && searchText !== '')
-                                    element.outFound = 1
-                                else
-                                    element.outFound = 0
-                            }
+                        }
 
 
-                            // return pair of input and output if one of the two includes searchText
-                            return element.in.includes(searchText) || element.out.includes(searchText)
-                        }).map(element =>
+                        // return pair of input and output if one of the two includes searchText
+                        return element.in.includes(searchText) || element.out.includes(searchText)
+                    })}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id}
+                    stickyHeaderIndices={[]}
+                />
 
-                            // Highlight background of input or output or both if including searchText
-                            <View style={styles.box}>
-                                {/*View input text */}
-                                <Text style={styles.inputText}>
-                                    {element.inFound ? highlightSearchText(element.in, searchText): element.in}
-                                </Text>
-
-
-                                {/*View output text */}
-                                <Text style={styles.outputText}>
-                                    {element.outFound ? highlightSearchText(element.out, searchText): element.out}</Text>
-                            </View>
-                        )
-                    }
-
-
-                </ScrollView >
             </View>
 
 
