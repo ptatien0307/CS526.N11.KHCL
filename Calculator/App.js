@@ -161,16 +161,16 @@ export default function MyCalculator() {
 
                 <View style={[styles.headerContainer]}>
                     {/* Input text */}
-                    <Text style={[styles.text, {fontSize : width > height ? 50 : 90}]}>
+                    <Text style={[styles.text, { fontSize: width > height ? 50 : 90 }]}>
                         {textToShow}
-                        <Text style={[styles.text, { color: showBlinker ? 'rgb(217,129,47)' : 'rgb(1,1,1)', fontSize : width > height ? 50 : 90 }]}>
+                        <Text style={[styles.text, { color: showBlinker ? 'rgb(217,129,47)' : 'rgb(1,1,1)', fontSize: width > height ? 50 : 90 }]}>
                             |
                         </Text>
 
                     </Text>
 
                     {/* Output text */}
-                    <Text style={[styles.outText, {fontSize : width > height ? 35 : 60}]}>
+                    <Text style={[styles.outText, { fontSize: width > height ? 35 : 60 }]}>
                         {outputText + ' '}
                     </Text>
 
@@ -261,6 +261,7 @@ export default function MyCalculator() {
                             onPress={() => {
                                 setInputText(inputText.slice(0, -1));
                                 setTextToShow(textToShow.slice(0, -1));
+                                setIsFirst(false)
                             }}
                         >
                             <Text style={styles.textBtnSpec}>DEL</Text>
