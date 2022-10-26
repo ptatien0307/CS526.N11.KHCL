@@ -178,17 +178,19 @@ export default function MyCalculator() {
                     </Text>
 
                     {/* History icon */}
-                    <Pressable
-                        onPress={() => { setShowHistory(!showHistory); }}
-                        style={styles.icon}>
-                        {({ pressed }) => (
-                            <Icon
-                                name="history"
-                                size={20}
-                                color={pressed ? 'black' : 'rgb(218,139,48)'}
-                            />
-                        )}
-                    </Pressable>
+                    <View style={styles.icon}>
+                        <Pressable
+                            onPress={() => { setShowHistory(!showHistory); }}
+                        >
+                            {({ pressed }) => (
+                                <Icon
+                                    name="history"
+                                    size={20}
+                                    color={pressed ? 'black' : 'rgb(218,139,48)'}
+                                />
+                            )}
+                        </Pressable>
+                    </View>
                 </View>
 
 
@@ -354,6 +356,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-end',
         position: 'relative'
+    },
+    inoutContainer: {
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
     },
     bodyContainer: {
         flex: 5,
