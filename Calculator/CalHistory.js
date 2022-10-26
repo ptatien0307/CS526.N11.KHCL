@@ -40,6 +40,7 @@ export default function CalHistory(props) {
 
                 {/*View output text */}
                 <Text style={styles.outputText}>
+                    =
                     {item.outFound ? highlightSearchText(item.out, searchText) : item.out}</Text>
             </View>
         )

@@ -6,7 +6,6 @@ import CalHistory from './CalHistory';
 
 
 export default function MyCalculator() {
-    let identify = 0
 
     // Initilize useState
     const [inputText, setInputText] = useState('');
