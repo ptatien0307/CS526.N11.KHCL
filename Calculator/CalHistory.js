@@ -20,7 +20,7 @@ export default function CalHistory(props) {
         return(<Text> 
             {arr.map(x => {
                 if (x === str_to_highlight)
-                    return (<Text style = {{backgroundColor: 'orange'}} >{x}</Text>)
+                    return (<Text style = {{backgroundColor: 'orange', color: 'black'}} >{x}</Text>)
                 else
                     return (<Text>{x}</Text>)
                 })
