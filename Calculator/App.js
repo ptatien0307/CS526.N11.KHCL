@@ -8,7 +8,6 @@ import CalHistory from './CalHistory';
 export default function MyCalculator() {
 
     const { width, height } = useWindowDimensions();
-
     // Initilize useState and Button
     const [inputText, setInputText] = useState('');
     const [outputText, setOutputText] = useState('');
@@ -32,8 +31,6 @@ export default function MyCalculator() {
         }, 500);
         return () => clearInterval(interval);
     }, []);
-
-    console.log(width > height ? 'row' : 'column')
 
     // Handle button function
     const handleInputText = (button) => {
@@ -164,16 +161,16 @@ export default function MyCalculator() {
 
                 <View style={[styles.headerContainer]}>
                     {/* Input text */}
-                    <Text style={styles.text}>
+                    <Text style={[styles.text, {fontSize : width > height ? 50 : 90}]}>
                         {textToShow}
-                        <Text style={[styles.text, { color: showBlinker ? 'rgb(217,129,47)' : 'rgb(1,1,1)' }]}>
+                        <Text style={[styles.text, { color: showBlinker ? 'rgb(217,129,47)' : 'rgb(1,1,1)', fontSize : width > height ? 50 : 90 }]}>
                             |
                         </Text>
 
                     </Text>
 
                     {/* Output text */}
-                    <Text style={styles.outText}>
+                    <Text style={[styles.outText, {fontSize : width > height ? 35 : 60}]}>
                         {outputText + ' '}
                     </Text>
 
@@ -285,7 +282,8 @@ export default function MyCalculator() {
                         {/* Go to other math button */}
                         <Pressable
                             style={styles.btn}
-                            onPress={() => setShowBasicBtn(!showBasicBtn)}>
+                            onPress={() => setShowBasicBtn(!showBasicBtn)}
+                            disabled={width > height ? true : false}>
                             <Text style={styles.textBtnSpec}>Math</Text>
                         </Pressable>
 
@@ -389,7 +387,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        flexWrap: 'wrap',
         flexDirection: 'row',
         width: '100%'
     },
@@ -414,12 +411,10 @@ const styles = StyleSheet.create({
     text: {
         flex: 2,
         color: 'white',
-        fontSize: 45,
     },
     outText: {
         flex: 1,
         color: 'white',
-        fontSize: 35,
     },
     icon: {
         color: 'rgb(218,139,48)',
