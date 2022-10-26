@@ -22,7 +22,7 @@ export default function MyCalculator() {
 
 
     // Initialize button 
-    const basicButtons = [['7', '8', '9', '/'], ['4', '5', '6', '*'], ['1', '2', '3', '-'], ['0', '.', '+', '%']];
+    const basicButtons = [['7', '8', '9', '/'], ['4', '5', '6', '*'], ['1', '2', '3', '-'], ['0', '.', '%', '+']];
     const additionButtons = [['sin', 'cos', 'tan', 'log'], ['ln', /*pi*/ decodeURI('%CF%80'), '^', /*square root*/decodeURI('%E2%88%9A')], ['(', ')']];
     const oneTimeButtons = ['+', '-', '*', '/', '.'];
 
@@ -65,7 +65,7 @@ export default function MyCalculator() {
                     inFound: 0,
                     outFound: 0
                 }, ...calHistory]);
-            setHistoryID(historyID + 1)
+            setHistoryID(historyID + 1);
         }
 
         else if (button === 'sin' | button === 'cos' | button === 'tan' | button === 'log' | button === 'ln') {
@@ -164,17 +164,17 @@ export default function MyCalculator() {
 
                 <View style={[styles.headerContainer]}>
                     {/* Input text */}
-                    <Text style={[styles.text, { fontSize: width > height ? 50 : 90 }]}>
+                    <Text style={[styles.text, { fontSize: width > height ? '3rem' : '3.75rem' }]}>
                         {textToShow}
-                        <Text style={[styles.text, { color: showBlinker ? 'rgb(217,129,47)' : 'rgb(1,1,1)', fontSize: width > height ? 50 : 90 }]}>
+                        <Text style={[styles.text, { color: showBlinker ? 'rgb(217,129,47)' : 'rgb(1,1,1)', fontSize: width > height ? '3rem' : '3.75rem' }]}>
                             |
                         </Text>
 
                     </Text>
 
                     {/* Output text */}
-                    <Text style={[styles.outText, { fontSize: width > height ? 35 : 60 }]}>
-                        {outputText + ' '}
+                    <Text style={[styles.outText, { fontSize: width > height ? '2.5rem' : '3rem' }]}>
+                        {`${outputText} `}
                     </Text>
 
                     {/* History icon */}
@@ -264,7 +264,7 @@ export default function MyCalculator() {
                             onPress={() => {
                                 setInputText(inputText.slice(0, -1));
                                 setTextToShow(textToShow.slice(0, -1));
-                                setIsFirst(false)
+                                setIsFirst(false);
                             }}
                         >
                             <Text style={styles.textBtnSpec}>DEL</Text>
@@ -414,7 +414,7 @@ const styles = StyleSheet.create({
     },
     outText: {
         flex: 1,
-        color: 'white',
+        color: 'rgb(218,139,48)',
     },
     icon: {
         color: 'rgb(218,139,48)',
