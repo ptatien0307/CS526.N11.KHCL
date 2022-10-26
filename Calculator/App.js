@@ -163,32 +163,36 @@ export default function MyCalculator() {
             <View style={[styles.calculator, { display: !showHistory ? 'flex' : 'none' }]}>
 
                 <View style={[styles.headerContainer]}>
-                    {/* Input text */}
-                    <Text style={[styles.text, { fontSize: width > height ? 50 : 90 }]}>
-                        {textToShow}
-                        <Text style={[styles.text, { color: showBlinker ? 'rgb(217,129,47)' : 'rgb(1,1,1)', fontSize: width > height ? 50 : 90 }]}>
-                            |
+                    <View style={styles.inoutContainer}>
+                        {/* Input text */}
+                        <Text style={[styles.text, { fontSize: width > height ? 50 : 90 }]}>
+                            {textToShow}
+                            <Text style={[styles.text, { color: showBlinker ? 'rgb(217,129,47)' : 'rgb(1,1,1)', fontSize: width > height ? 50 : 90 }]}>
+                                |
+                            </Text>
+
                         </Text>
 
-                    </Text>
-
-                    {/* Output text */}
-                    <Text style={[styles.outText, { fontSize: width > height ? 35 : 60 }]}>
-                        {outputText + ' '}
-                    </Text>
+                        {/* Output text */}
+                        <Text style={[styles.outText, { fontSize: width > height ? 35 : 60 }]}>
+                            {outputText + ' '}
+                        </Text>
+                    </View>
 
                     {/* History icon */}
-                    <Pressable
-                        onPress={() => { setShowHistory(!showHistory); }}
-                        style={styles.icon}>
-                        {({ pressed }) => (
-                            <Icon
-                                name="history"
-                                size={20}
-                                color={pressed ? 'black' : 'rgb(218,139,48)'}
-                            />
-                        )}
-                    </Pressable>
+                    <View style={styles.icon}>
+                        <Pressable
+                            onPress={() => { setShowHistory(!showHistory); }}
+                        >
+                            {({ pressed }) => (
+                                <Icon
+                                    name="history"
+                                    size={20}
+                                    color={pressed ? 'black' : 'rgb(218,139,48)'}
+                                />
+                            )}
+                        </Pressable>
+                    </View>
                 </View>
 
 
@@ -354,6 +358,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-end',
         position: 'relative'
+    },
+    inoutContainer: {
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
     },
     bodyContainer: {
         flex: 5,
