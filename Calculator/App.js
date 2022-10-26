@@ -369,8 +369,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        flexWrap: 'wrap',
-        flexDirection: 'col',
+        flexDirection: 'column',
         width: '100%'
     },
     additionalButtonsContainer: {
