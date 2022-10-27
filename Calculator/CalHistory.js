@@ -31,7 +31,12 @@ export default function CalHistory(props) {
 
     const renderItem = ({ item }) => {
         return (
-            <View style={styles.box}>
+            <Pressable style={styles.box}
+            onPress={() => { 
+                props.mySetInputText(item.act)
+                props.mySetTextToShow(item.in)
+                props.mySetOutputText(item.out)
+                props.mySetDisplayHistory(!props.myDisplayHistory) }}>
                 {/*View input text */}
                 <Text style={styles.inputText}>
                     {item.inFound ? highlightSearchText(item.in, searchText) : item.in}
@@ -42,7 +47,7 @@ export default function CalHistory(props) {
                 <Text style={styles.outputText}>
                     =
                     {item.outFound ? highlightSearchText(item.out, searchText) : item.out}</Text>
-            </View>
+            </Pressable>
         )
     }
 

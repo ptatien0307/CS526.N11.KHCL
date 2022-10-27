@@ -60,6 +60,7 @@ export default function MyCalculator() {
             setCalHistory([
                 {
                     id: historyID + textToShow.length + result.toString().length,
+                    act: inputText,
                     in: textToShow,
                     out: result,
                     inFound: 0,
@@ -311,6 +312,9 @@ export default function MyCalculator() {
             <View style={[styles.history, { display: showHistory ? 'flex' : 'none' }]}>
                 <CalHistory
                     myCalHistory={calHistory}
+                    mySetInputText={setInputText}
+                    mySetTextToShow={setTextToShow}
+                    mySetOutputText={setOutputText}
                     myDisplayHistory={showHistory}
                     mySetDisplayHistory={setShowHistory}>
                 </CalHistory>
