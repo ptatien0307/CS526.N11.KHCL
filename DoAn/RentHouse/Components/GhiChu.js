@@ -23,17 +23,34 @@ export default function App({ navigation, route }) {
                 <View style={styles.noteContent}>
                     <Text>{item.id}. {item.noteContent}</Text>
                 </View>
-                <TouchableHighlight onPress={() => { onPressEdit(item) }}>
-                    <Icon name="edit" size={20} style={[styles.editIcon, { display: mountEdit ? 'flex' : 'none' }]} />
-                </TouchableHighlight>
+                <View style={styles.viewIcon}>
+                    <TouchableHighlight onPress={() => { handleEditItem(item) }}>
+                        <Icon name="edit" size={20} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
+                    </TouchableHighlight>
+
+                    <TouchableHighlight onPress={() => { handleDeleteItem(item) }}>
+                        <Icon name="remove" size={25} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
+                    </TouchableHighlight>
+                </View>
             </View>
         )
     }
 
-    const onPressEdit = (item) => {
+    const handleEditItem = (item) => {
         setIsEditModalVisible(true)
         setInputText(item.noteContent)
         setEditItemID(item.id)
+    }
+
+    const handleDeleteItem = (deleteItem) => {
+        console.log(deleteItem.id)
+        const newNote = notes.reduce((res, currItem) => {
+            if (currItem.id != deleteItem.id)
+                res.push(currItem)
+            return res
+        }, [])
+        setNotes(newNote) // set local notes
+        route.params.setNotes(newNote) // set global notes
     }
 
 
@@ -107,8 +124,7 @@ export default function App({ navigation, route }) {
                                 }
                                 return item
                             })
-                            setNotes(newNote)
-                            route.params.setNotes(newNote)
+                            route.params.setNotes(newNote) // Set for global note
                             setIsEditModalVisible(false)
                         }}>
                         <Text>SAVE</Text>
@@ -121,6 +137,8 @@ export default function App({ navigation, route }) {
             <TouchableHighlight onPress={() => { handleAddNote() }}>
                 <Icon name="plus-circle" size={35} />
             </TouchableHighlight>
+
+
 
             {/* View add modal */}
             <Modal
@@ -153,8 +171,8 @@ export default function App({ navigation, route }) {
                                         id: notes[notes.length - 1].id + 1,
                                         noteContent: inputText
                                     }]
-                                setNotes(newNote)
-                                route.params.setNotes(newNote)
+                                setNotes(newNote) // set local notes
+                                route.params.setNotes(newNote) // set global note
                                 setInputText('')
                                 setIsAddModalVisible(false)
                             }
@@ -207,5 +225,11 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    viewIcon: {
+        flexDirection: 'row'
+    },
+    icon: {
+        marginHorizontal: 4,
     }
 });
