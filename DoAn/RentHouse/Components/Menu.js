@@ -1,11 +1,13 @@
 import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 import { useState } from 'react';
 export default function App({ navigation }) {
+    const [WATER, setWATER] = useState(10000)
+    const [ELECTRICITY, setELECTRICITY] = useState(3000)
     let DATA = [
         {
             id: 1,
             roomName: 'Phong 1',
-            roomStatus: 'trong',
+            roomStatus: null,
             price: 800000,
             contractDay: '23/11/2022',
             deposit: 400000,
@@ -14,95 +16,124 @@ export default function App({ navigation }) {
                 { id: 2, memberName: 'Pham Tran Anh Tien' },
                 { id: 3, memberName: 'Pham Tran Anh Tien' },
                 { id: 4, memberName: 'Pham Tran Anh Tien' },
-            ]
+            ],
+            tienDien: ELECTRICITY,
+            tienNuoc: WATER,
         },
         {
             id: 2,
             roomName: 'Phong 2',
-            roomStatus: '3 nguoi',
+            roomStatus: null,
             price: 800000,
             contractDay: '12/12/2022',
             deposit: 0,
             members: [
                 { id: 1, memberName: 'Pham Tran Anh Tien' },
                 { id: 2, memberName: 'Pham Tran Anh Tien' },
-            ]
+            ],
+            tienDien: ELECTRICITY,
+            tienNuoc: WATER,
         },
         {
             id: 3,
             roomName: 'Phong 3',
-            roomStatus: 'Trong',
+            roomStatus: null,
             price: 800000,
             contractDay: '',
             deposit: 0,
-            members: []
+            members: [],
+            tienDien: ELECTRICITY,
+            tienNuoc: WATER,
         },
         {
             id: 4,
             roomName: 'Phong 4',
-            roomStatus: '1 nguoi',
+            roomStatus: null,
             price: 800000,
             contractDay: '',
             deposit: 0,
             members: [
                 { id: 1, memberName: 'Pham Tran Anh Tien' }
-            ]
+            ],
+            tienDien: ELECTRICITY,
+            tienNuoc: WATER,
         },
         {
             id: 5,
             roomName: 'Phong 5',
-            roomStatus: 'trong',
+            roomStatus: null,
             price: 800000,
             contractDay: '',
             deposit: 0,
-            members: []
+            members: [],
+            tienDien: ELECTRICITY,
+            tienNuoc: WATER,
         },
         {
             id: 6,
             roomName: 'Phong 6',
-            roomStatus: 'trong',
+            roomStatus: null,
             price: 800000,
             contractDay: '',
             deposit: 0,
-            members: []
+            members: [],
+            tienDien: ELECTRICITY,
+            tienNuoc: WATER,
         },
         {
             id: 7,
             roomName: 'Phong 7',
-            roomStatus: 'trong',
+            roomStatus: null,
             price: 800000,
             contractDay: '',
             deposit: 0,
-            members: []
+            members: [],
+            tienDien: ELECTRICITY,
+            tienNuoc: WATER,
         },
         {
             id: 8,
             roomName: 'Phong 8',
-            roomStatus: 'trong',
+            roomStatus: null,
             price: 800000,
             contractDay: '',
             deposit: 0,
-            members: []
+            members: [],
+            tienDien: ELECTRICITY,
+            tienNuoc: WATER,
         },
         {
             id: 9,
             roomName: 'Phong 9',
-            roomStatus: 'trong',
+            roomStatus: null,
             price: 800000,
             contractDay: '',
             deposit: 0,
-            members: []
+            members: [],
+            tienDien: ELECTRICITY,
+            tienNuoc: WATER,
         },
         {
             id: 10,
             roomName: 'Phong 10',
-            roomStatus: 'trong',
+            roomStatus: null,
             price: 800000,
             contractDay: '',
             deposit: 0,
-            members: []
+            members: [],
+            tienDien: ELECTRICITY,
+            tienNuoc: WATER,
         },
     ]
+    let newDATA = DATA.map(item => {
+        if (item.members.length === 0)
+            item.roomStatus = 'Trong'
+        else
+            item.roomStatus = item.members.length + ' nguoi'
+        return item
+    })
+
+
     let NOTE = [
         {
             id: 1,
@@ -125,7 +156,10 @@ export default function App({ navigation }) {
             noteContent: 'Do something 5'
         },
     ]
-    const [roomList, setRoomList] = useState(DATA)
+
+
+
+    const [roomList, setRoomList] = useState(newDATA)
 
     const [notes, setNotes] = useState(NOTE)
 

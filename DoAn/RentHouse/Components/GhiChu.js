@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableHighlight, Modal, TextInput, Alert } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {
 
@@ -25,11 +25,11 @@ export default function App({ navigation, route }) {
                 </View>
                 <View style={styles.viewIcon}>
                     <TouchableHighlight onPress={() => { handleEditItem(item) }}>
-                        <Icon name="edit" size={20} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
+                        <FontAwesomeIcon name="edit" size={20} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
                     </TouchableHighlight>
 
                     <TouchableHighlight onPress={() => { handleDeleteItem(item) }}>
-                        <Icon name="remove" size={25} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
+                        <FontAwesomeIcon name="remove" size={25} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
                     </TouchableHighlight>
                 </View>
             </View>

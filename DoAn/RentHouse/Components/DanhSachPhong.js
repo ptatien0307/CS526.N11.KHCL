@@ -29,7 +29,9 @@ export default function App({ navigation, route }) {
             price: 800000,
             contractDay: '0',
             deposit: 0,
-            members: []
+            members: [],
+            tienDien: ELECTRICITY,
+            tienDien: WATER,
         }])
 
         route.params.setRoomList([...roomList, {
@@ -39,7 +41,9 @@ export default function App({ navigation, route }) {
             price: 800000,
             contractDay: '0',
             deposit: 0,
-            members: []
+            members: [],
+            tienDien: ELECTRICITY,
+            tienDien: WATER,
         }])
     }
 

@@ -1,5 +1,7 @@
 import { StyleSheet, View, Text, TouchableHighlight, FlatList, TextInput, Modal, Alert } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+
 import { useState } from 'react';
 export default function App({ navigation, route }) {
 
@@ -53,14 +55,14 @@ export default function App({ navigation, route }) {
 
                 {/* Back to menu button */}
                 <TouchableHighlight onPress={() => { navigation.goBack() }}>
-                    <Icon name="arrow-left" size={35} />
+                    <FontAwesomeIcon name="arrow-left" size={35} />
                 </TouchableHighlight>
 
                 <Text>CHI TIET PHONG</Text>
 
                 {/* Edit info button */}
                 <TouchableHighlight onPress={() => { setMountEdit(!mountEdit) }}>
-                    <Icon name="edit" size={35} />
+                    <FontAwesomeIcon name="edit" size={35} />
                 </TouchableHighlight>
             </View>
 
@@ -93,7 +95,7 @@ export default function App({ navigation, route }) {
                                         <Text>{specRoom.roomName}</Text>
                                     </View>
                                     <TouchableHighlight onPress={() => { onPressEdit('roomName') }}>
-                                        <Icon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
                                     </TouchableHighlight>
                                 </View>
 
@@ -103,7 +105,7 @@ export default function App({ navigation, route }) {
                                         <Text>{specRoom.contractDay}</Text>
                                     </View>
                                     <TouchableHighlight onPress={() => { onPressEdit('contractDay') }}>
-                                        <Icon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
                                     </TouchableHighlight>
                                 </View>
 
@@ -116,7 +118,7 @@ export default function App({ navigation, route }) {
                                         <Text>{specRoom.price}</Text>
                                     </View>
                                     <TouchableHighlight onPress={() => { onPressEdit('price') }}>
-                                        <Icon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
                                     </TouchableHighlight>
                                 </View>
 
@@ -126,7 +128,7 @@ export default function App({ navigation, route }) {
                                         <Text>{specRoom.deposit}</Text>
                                     </View>
                                     <TouchableHighlight onPress={() => { onPressEdit('deposit') }}>
-                                        <Icon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
                                     </TouchableHighlight>
                                 </View>
 
@@ -143,8 +145,27 @@ export default function App({ navigation, route }) {
                             </FlatList>
                         </View>
 
+
+                        <View style={styles.chiSoDichVu}>
+                            <View style={styles.dichVu}>
+                                <IonIcon name="water" size={20} style={{ marginRight: 20 }} />
+                                <Text>{specRoom.tienNuoc} đ/khối</Text>
+                            </View>
+                            <View style={styles.dichVu}>
+                                <FontAwesomeIcon name="bolt" size={20} style={{ marginLeft: 4, marginRight: 26 }} />
+                                <Text>{specRoom.tienDien} đ/kwh</Text>
+                            </View>
+                        </View>
+
                     </View>
                 </View>}
+
+
+
+
+
+
+
 
                 {/* View Bill */}
                 {!mountInfo && <View style={styles.info}>
@@ -165,7 +186,7 @@ export default function App({ navigation, route }) {
                 <View style={styles.modalView}>
 
                     <TouchableHighlight onPress={() => { setIsModalVisible(!isModalVisible) }}>
-                        <Icon name="times-circle" size={20} />
+                        <FontAwesomeIcon name="times-circle" size={20} />
                     </TouchableHighlight>
 
                     <Text>Change Text:</Text>
@@ -311,11 +332,25 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         width: '90%',
         height: 'auto',
+        marginVertical: 4,
     },
     member: {
         fontSize: 20,
         marginVertical: 8,
         marginLeft: 8,
+    },
+    chiSoDichVu: {
+        borderColor: 'black',
+        borderRadius: 15,
+        borderWidth: 2,
+        width: '90%',
+        height: 'auto',
+        marginVertical: 4,
+    },
+    dichVu: {
+        flexDirection: 'row',
+        marginVertical: 4,
+
     },
     modalView: {
         flex: 1,
