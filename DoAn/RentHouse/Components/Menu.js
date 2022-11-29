@@ -19,6 +19,11 @@ export default function App({ navigation }) {
             ],
             tienDien: ELECTRICITY,
             tienNuoc: WATER,
+            billHistory: [
+                { id: 1, month: 5, money: 875000 },
+                { id: 2, month: 6, money: 890000 },
+                { id: 3, month: 7, money: 850000 },
+            ]
         },
         {
             id: 2,
@@ -125,7 +130,8 @@ export default function App({ navigation }) {
             tienNuoc: WATER,
         },
     ]
-    let newDATA = DATA.map(item => {
+
+    let modifiedDATA = DATA.map(item => {
         if (item.members.length === 0)
             item.roomStatus = 'Trong'
         else
@@ -159,7 +165,7 @@ export default function App({ navigation }) {
 
 
 
-    const [roomList, setRoomList] = useState(newDATA)
+    const [roomList, setRoomList] = useState(modifiedDATA)
 
     const [notes, setNotes] = useState(NOTE)
 

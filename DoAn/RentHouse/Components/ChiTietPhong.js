@@ -27,6 +27,13 @@ export default function App({ navigation, route }) {
         )
     }
 
+    const renderBills = ({ item }) => {
+        return (
+            <View style={styles.bill}>
+                <Text style={{ fontSize: 20 }}>Tháng {item.month}: {item.money}</Text>
+            </View>
+        )
+    }
 
     const onPressEdit = (type) => {
         setIsModalVisible(true)
@@ -168,11 +175,14 @@ export default function App({ navigation, route }) {
 
 
                 {/* View Bill */}
-                {!mountInfo && <View style={styles.info}>
-                    {/* View room details */}
-                    <View style={styles.infoContainer}>
-                        <Text>BILL HISTORY</Text>
-                    </View>
+                {!mountInfo && <View style={styles.billInfo}>
+                    {/* View bill details */}
+                    <FlatList
+                        data={specRoom.billHistory}
+                        renderItem={renderBills}
+                        keyExtractor={item => item.id}>
+                    </FlatList>
+
                 </View>}
             </View>
 
@@ -275,6 +285,10 @@ const styles = StyleSheet.create({
         height: '90%',
         alignItems: 'center',
     },
+    billInfo: {
+        flex: 1,
+        width: '90%'
+    },
     row: {
         width: '90%',
         height: '10%',
@@ -298,7 +312,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-
     infoContainer: {
         width: '90%',
         height: '90%',
@@ -350,7 +363,16 @@ const styles = StyleSheet.create({
     dichVu: {
         flexDirection: 'row',
         marginVertical: 4,
-
+    },
+    bill: {
+        width: '100%',
+        height: 50,
+        borderColor: 'black',
+        borderRadius: 15,
+        borderWidth: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 4,
     },
     modalView: {
         flex: 1,
