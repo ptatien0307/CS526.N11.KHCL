@@ -25,7 +25,7 @@ export default function App({ navigation, route }) {
                 </View>
                 <View style={styles.viewIcon}>
                     <TouchableHighlight onPress={() => { handleEditItem(item) }}>
-                        <FontAwesomeIcon name="edit" size={20} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
+                        <FontAwesomeIcon name="pencil" size={20} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
                     </TouchableHighlight>
 
                     <TouchableHighlight onPress={() => { handleDeleteItem(item) }}>
@@ -78,7 +78,7 @@ export default function App({ navigation, route }) {
             <View style={styles.header}>
                 {/* Back to menu button */}
                 <TouchableHighlight onPress={() => { navigation.goBack() }}>
-                    <Icon name="arrow-left" size={35} />
+                    <FontAwesomeIcon name="arrow-left" size={35} />
                 </TouchableHighlight>
 
                 <Text>GHI CHU</Text>
@@ -86,7 +86,7 @@ export default function App({ navigation, route }) {
 
                 {/* Edit info button */}
                 <TouchableHighlight onPress={() => { setMountEdit(!mountEdit) }}>
-                    <Icon name="edit" size={35} />
+                    <FontAwesomeIcon name="edit" size={35} />
                 </TouchableHighlight>
             </View>
 
@@ -135,7 +135,7 @@ export default function App({ navigation, route }) {
 
             {/* Add note button */}
             <TouchableHighlight onPress={() => { handleAddNote() }}>
-                <Icon name="plus-circle" size={35} />
+                <FontAwesomeIcon name="plus-circle" size={35} />
             </TouchableHighlight>
 
 
@@ -147,7 +147,7 @@ export default function App({ navigation, route }) {
                 onRequestClose={() => { setIsAddModalVisible(false) }}>
                 <View style={styles.modalView}>
                     <TouchableHighlight onPress={() => { setIsAddModalVisible(!isAddModalVisible) }}>
-                        <Icon name="times-circle" size={20} />
+                        <FontAwesomeIcon name="times-circle" size={20} />
                     </TouchableHighlight>
                     <Text>Add note:</Text>
 
@@ -220,6 +220,9 @@ const styles = StyleSheet.create({
     },
     noteContent: {
         height: 25,
+        borderBottomColor: 'black',
+        borderBottomWidth: 1,
+        width: '100%',
     },
     modalView: {
         flex: 1,
@@ -227,7 +230,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     viewIcon: {
-        flexDirection: 'row'
+        position: 'absolute',
+        flexDirection: 'row',
+        right: 0,
     },
     icon: {
         marginHorizontal: 4,
