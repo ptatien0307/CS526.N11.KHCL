@@ -173,7 +173,7 @@ export default function App({ navigation }) {
         <View style={styles.container}>
 
             {/* Header */}
-            <View style={styles.header}>
+            <View style={[styles.header, styles.myBorder]}>
                 <Text>TEN NHA TRO</Text>
             </View>
 
@@ -184,12 +184,12 @@ export default function App({ navigation }) {
                 <View style={styles.row}>
 
                     {/* Go to room list */}
-                    <TouchableHighlight style={styles.feature} onPress={() => { navigation.navigate("DanhSachPhong", { roomList, setRoomList }) }}>
+                    <TouchableHighlight style={[styles.feature, styles.myBorder]} onPress={() => { navigation.navigate("DanhSachPhong", { roomList, setRoomList }) }}>
                         <Text>DANH SACH PHONG</Text>
                     </TouchableHighlight>
 
                     {/* Go to bill */}
-                    <TouchableHighlight style={styles.feature} onPress={() => { }}>
+                    <TouchableHighlight style={[styles.feature, styles.myBorder]} onPress={() => { }}>
                         <Text>LAP HOA DON</Text>
                     </TouchableHighlight>
 
@@ -200,12 +200,12 @@ export default function App({ navigation }) {
                 <View style={styles.row}>
 
                     {/* Cai dat dich vu */}
-                    <TouchableHighlight style={styles.feature} onPress={() => { }}>
+                    <TouchableHighlight style={[styles.feature, styles.myBorder]} onPress={() => { }}>
                         <Text>CAI DAT DICH VU</Text>
                     </TouchableHighlight>
 
                     {/* Ghi chu */}
-                    <TouchableHighlight style={styles.feature} onPress={() => { navigation.navigate("GhiChu", { notes, setNotes }) }}>
+                    <TouchableHighlight style={[styles.feature, styles.myBorder]} onPress={() => { navigation.navigate("GhiChu", { notes, setNotes }) }}>
                         <Text>GHI CHU</Text>
                     </TouchableHighlight>
 
@@ -226,34 +226,32 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
     },
     header: {
-        width: '93%',
-        height: '25%',
+        marginTop: 12,
+        flex: 1,
+        width: '90%',
         alignItems: 'center',
-        justifyContent: 'space-evenly',
-        borderRadius: 15,
-        borderWidth: 2,
-
+        justifyContent: 'center',
     },
     body: {
-        width: '100%',
-        height: '65%',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        flexDirection: 'column',
+        flex: 4,
+        width: '90%'
     },
     row: {
         width: '100%',
         height: '50%',
         alignItems: 'center',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
         flexDirection: 'row',
     },
     feature: {
         width: '45%',
-        height: '90%',
-        borderRadius: 15,
-        borderWidth: 2,
+        height: '85%',
         alignItems: 'center',
         justifyContent: 'space-evenly',
+    },
+    myBorder: {
+        borderRadius: 15,
+        borderWidth: 2,
+        borderColor: 'black',
     }
 });

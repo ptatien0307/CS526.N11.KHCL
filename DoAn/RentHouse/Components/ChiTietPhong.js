@@ -29,7 +29,7 @@ export default function App({ navigation, route }) {
 
     const renderBills = ({ item }) => {
         return (
-            <View style={styles.bill}>
+            <View style={[styles.bill, styles.myBorder]}>
                 <Text style={{ fontSize: 20 }}>Tháng {item.month}: {item.money}</Text>
             </View>
         )
@@ -58,7 +58,7 @@ export default function App({ navigation, route }) {
         <View style={styles.container}>
 
             {/* Header */}
-            <View style={styles.header}>
+            <View style={[styles.header, styles.myBorder]}>
 
                 {/* Back to menu button */}
                 <TouchableHighlight onPress={() => { navigation.goBack() }}>
@@ -90,14 +90,14 @@ export default function App({ navigation, route }) {
                 {/* View info */}
                 {mountInfo && <View style={styles.info}>
                     {/* View room details */}
-                    <View style={styles.infoContainer}>
+                    <View style={[styles.infoContainer, styles.myBorder]}>
 
                         {/* View basic info */}
                         <View style={styles.basicInfoContainer}>
 
                             <View style={styles.infoRow}>
 
-                                <View style={styles.basicInfo}>
+                                <View style={[styles.basicInfo, styles.myBorder]}>
                                     <View>
                                         <Text>{specRoom.roomName}</Text>
                                     </View>
@@ -106,7 +106,7 @@ export default function App({ navigation, route }) {
                                     </TouchableHighlight>
                                 </View>
 
-                                <View style={styles.basicInfo}>
+                                <View style={[styles.basicInfo, styles.myBorder]}>
                                     <View>
                                         <Text>Ngay lap hop dong:</Text>
                                         <Text>{specRoom.contractDay}</Text>
@@ -119,7 +119,7 @@ export default function App({ navigation, route }) {
                             </View>
                             <View style={styles.infoRow}>
 
-                                <View style={styles.basicInfo}>
+                                <View style={[styles.basicInfo, styles.myBorder]}>
                                     <View>
                                         <Text>Gia thue:</Text>
                                         <Text>{specRoom.price}</Text>
@@ -129,7 +129,7 @@ export default function App({ navigation, route }) {
                                     </TouchableHighlight>
                                 </View>
 
-                                <View style={styles.basicInfo}>
+                                <View style={[styles.basicInfo, styles.myBorder]}>
                                     <View>
                                         <Text>Tien coc:</Text>
                                         <Text>{specRoom.deposit}</Text>
@@ -144,7 +144,7 @@ export default function App({ navigation, route }) {
                         </View>
 
                         {/* View members */}
-                        <View style={styles.membersContainer}>
+                        <View style={[styles.membersContainer, styles.myBorder]}>
                             <FlatList
                                 data={specRoom.members}
                                 renderItem={renderMembers}
@@ -153,7 +153,7 @@ export default function App({ navigation, route }) {
                         </View>
 
 
-                        <View style={styles.chiSoDichVu}>
+                        <View style={[styles.chiSoDichVu, styles.myBorder]}>
                             <View style={styles.dichVu}>
                                 <IonIcon name="water" size={20} style={{ marginRight: 20 }} />
                                 <Text>{specRoom.tienNuoc} đ/khối</Text>
@@ -258,9 +258,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderColor: 'black',
-        borderRadius: 15,
-        borderWidth: 2,
         marginVertical: 4,
         paddingHorizontal: 8,
     },
@@ -276,9 +273,6 @@ const styles = StyleSheet.create({
         height: 25,
         marginTop: 8,
         marginRight: 4,
-        borderColor: 'black',
-        borderRadius: 15,
-        borderWidth: 2,
     },
     info: {
         width: '100%',
@@ -315,9 +309,6 @@ const styles = StyleSheet.create({
     infoContainer: {
         width: '90%',
         height: '90%',
-        borderColor: 'black',
-        borderRadius: 15,
-        borderWidth: 2,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
@@ -331,8 +322,6 @@ const styles = StyleSheet.create({
     basicInfo: {
         width: '45%',
         height: '100%',
-        borderRadius: 15,
-        borderWidth: 2,
         alignItems: 'center',
         justifyContent: 'space-between',
         position: 'relative',
@@ -340,9 +329,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
     },
     membersContainer: {
-        borderColor: 'black',
-        borderRadius: 15,
-        borderWidth: 2,
         width: '90%',
         height: 'auto',
         marginVertical: 4,
@@ -353,9 +339,6 @@ const styles = StyleSheet.create({
         marginLeft: 8,
     },
     chiSoDichVu: {
-        borderColor: 'black',
-        borderRadius: 15,
-        borderWidth: 2,
         width: '90%',
         height: 'auto',
         marginVertical: 4,
@@ -367,9 +350,6 @@ const styles = StyleSheet.create({
     bill: {
         width: '100%',
         height: 50,
-        borderColor: 'black',
-        borderRadius: 15,
-        borderWidth: 2,
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 4,
@@ -378,5 +358,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    myBorder: {
+        borderColor: 'black',
+        borderRadius: 15,
+        borderWidth: 2,
     }
 });

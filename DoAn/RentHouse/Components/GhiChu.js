@@ -43,7 +43,6 @@ export default function App({ navigation, route }) {
     }
 
     const handleDeleteItem = (deleteItem) => {
-        console.log(deleteItem.id)
         const newNote = notes.reduce((res, currItem) => {
             if (currItem.id != deleteItem.id)
                 res.push(currItem)
@@ -161,16 +160,28 @@ export default function App({ navigation, route }) {
 
                     <TouchableHighlight style={styles.saveButton}
                         onPress={() => {
+                            let newNote = []
                             if (inputText === '') {
                                 createAlertButton()
                             }
                             else {
-                                const newNote = [
-                                    ...notes,
-                                    {
-                                        id: notes[notes.length - 1].id + 1,
-                                        noteContent: inputText
-                                    }]
+                                if (notes.length === 0) {
+                                    newNote = [
+                                        {
+                                            id: 1,
+                                            noteContent: inputText
+                                        }
+                                    ]
+                                }
+                                else {
+                                    newNote = [
+                                        ...notes,
+                                        {
+                                            id: notes[notes.length - 1].id + 1,
+                                            noteContent: inputText
+                                        }
+                                    ]
+                                }
                                 setNotes(newNote) // set local notes
                                 route.params.setNotes(newNote) // set global note
                                 setInputText('')

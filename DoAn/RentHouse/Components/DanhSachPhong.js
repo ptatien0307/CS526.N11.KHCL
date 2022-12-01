@@ -13,7 +13,7 @@ export default function App({ navigation, route }) {
                     setRoomList,
                 })
             }}>
-                <View style={styles.room}>
+                <View style={[styles.room, styles.myBorder]}>
                     <View><Text>{item.roomName}</Text></View>
                     <View><Text>TINH TRANG: {item.roomStatus}</Text></View>
                 </View>
@@ -30,8 +30,8 @@ export default function App({ navigation, route }) {
             contractDay: '0',
             deposit: 0,
             members: [],
-            tienDien: ELECTRICITY,
-            tienDien: WATER,
+            // tienDien: ELECTRICITY,
+            // tienNuoc: WATER,
         }])
 
         route.params.setRoomList([...roomList, {
@@ -42,8 +42,8 @@ export default function App({ navigation, route }) {
             contractDay: '0',
             deposit: 0,
             members: [],
-            tienDien: ELECTRICITY,
-            tienDien: WATER,
+            // tienDien: ELECTRICITY,
+            // tienNuoc: WATER,
         }])
     }
 
@@ -56,7 +56,7 @@ export default function App({ navigation, route }) {
         <View style={styles.container}>
 
             {/* Header */}
-            <View style={styles.header}>
+            <View style={[styles.header, styles.myBorder]}>
 
                 {/* Back to menu button */}
                 <TouchableHighlight onPress={() => { navigation.navigate("Menu") }}>
@@ -101,12 +101,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderColor: 'black',
-        borderRadius: 15,
-        borderWidth: 2,
         marginTop: 8,
         paddingHorizontal: 8,
-
     },
     body: {
         flex: 1,
@@ -119,8 +115,11 @@ const styles = StyleSheet.create({
         marginHorizontal: 'auto',
         height: 70,
         width: '100%',
+
+    },
+    myBorder: {
         borderColor: 'black',
         borderRadius: 15,
         borderWidth: 2,
-    },
+    }
 });
