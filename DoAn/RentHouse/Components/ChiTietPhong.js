@@ -193,53 +193,60 @@ export default function App({ navigation, route }) {
                 visible={isModalVisible}
                 onRequestClose={() => { setIsModalVisible(false) }}>
 
-                <View style={styles.modalView}>
-
-                    <TouchableHighlight onPress={() => { setIsModalVisible(!isModalVisible) }}>
-                        <FontAwesomeIcon name="times-circle" size={20} />
-                    </TouchableHighlight>
-
-                    <Text>Change Text:</Text>
-
-                    <TextInput
-                        onChangeText={(text) => { setInputText(text) }}
-                        defaultValue={inputText}
-                        editable={true}
-                        multiline={false}
-                        maxLength={256}>
-                    </TextInput>
-
-                    <TouchableHighlight style={styles.saveButton}
-                        onPress={() => {
-                            if (inputText === '') {
-                                createAlertButton()
-
-                            }
-                            else {
-                                setSpecRoom({ ...specRoom, [editItemContent]: inputText })
+                <View style={styles.modalContainer}>
+                    <View style={[styles.modalView, styles.myBorder]}>
+                        <View style={{ position: 'absolute', top: 10, right: 10 }}>
+                            <TouchableHighlight onPress={() => { setIsModalVisible(!isModalVisible) }}>
+                                <FontAwesomeIcon name="times-circle" size={20} />
+                            </TouchableHighlight>
+                        </View>
 
 
-                                const newRoomList = route.params.roomList.map(item => {
-                                    if (item.id === editItemID) {
-                                        if (editItemContent === 'contractDay') item.contractDay = inputText
-                                        else if (editItemContent === 'price') item.price = inputText
-                                        else if (editItemContent === 'deposit') item.deposit = inputText
-                                        else if (editItemContent === 'roomName') item.roomName = inputText
+                        <Text style={[styles.textTitle, styles.myBorder]}> Change Text</Text>
 
+
+                        <TextInput
+                            style={[styles.myBorder, styles.text]}
+
+                            onChangeText={(text) => { setInputText(text) }}
+                            defaultValue={inputText}
+                            editable={true}
+                            multiline={false}
+                            maxLength={256}>
+                        </TextInput>
+
+                        <TouchableHighlight style={styles.saveButton}
+                            onPress={() => {
+                                if (inputText === '') {
+                                    createAlertButton()
+
+                                }
+                                else {
+                                    setSpecRoom({ ...specRoom, [editItemContent]: inputText })
+
+
+                                    const newRoomList = route.params.roomList.map(item => {
+                                        if (item.id === editItemID) {
+                                            if (editItemContent === 'contractDay') item.contractDay = inputText
+                                            else if (editItemContent === 'price') item.price = inputText
+                                            else if (editItemContent === 'deposit') item.deposit = inputText
+                                            else if (editItemContent === 'roomName') item.roomName = inputText
+
+                                            return item
+                                        }
                                         return item
-                                    }
-                                    return item
-                                })
-                                route.params.setRoomList(newRoomList)
-                                setInputText('')
-                                setIsModalVisible(false)
-                            }
+                                    })
+                                    route.params.setRoomList(newRoomList)
+                                    setInputText('')
+                                    setIsModalVisible(false)
+                                }
 
-                        }}>
+                            }}>
+                            <Text style={{ fontSize: 20 }}>SAVE</Text>
 
-                        <Text>SAVE</Text>
 
-                    </TouchableHighlight>
+                        </TouchableHighlight>
+                    </View>
                 </View>
             </Modal>
         </View>
@@ -354,10 +361,39 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginVertical: 4,
     },
-    modalView: {
-        flex: 1,
+    modalContainer: {
+        width: '100%',
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    modalView: {
+        width: '80%',
+        height: '80%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    saveButton: {
+        marginTop: 8,
+        width: '30%',
+        height: '10%',
+        fontSize: 25,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    textTitle: {
+        marginVertical: 8,
+        paddingHorizontal: 8,
+        width: 'auto',
+        fontSize: 25,
+        textAlign: 'center',
+        backgroundColor: 'black',
+        color: 'white'
+    },
+    text: {
+        marginVertical: 8,
+        paddingLeft: 4,
+        width: '80%',
     },
     myBorder: {
         borderColor: 'black',
