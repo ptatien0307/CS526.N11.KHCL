@@ -139,7 +139,6 @@ export default function App({ navigation }) {
         return item
     })
 
-
     let NOTE = [
         {
             id: 1,
@@ -184,13 +183,17 @@ export default function App({ navigation }) {
                 <View style={styles.row}>
 
                     {/* Go to room list */}
-                    <TouchableHighlight style={[styles.feature, styles.myBorder]} onPress={() => { navigation.navigate("DanhSachPhong", { roomList, setRoomList }) }}>
+                    <TouchableHighlight
+                        style={[styles.feature, styles.myBorder]}
+                        onPress={() => { navigation.navigate("DanhSachPhong", { roomList, setRoomList }) }}>
                         <Text>DANH SACH PHONG</Text>
 
                     </TouchableHighlight>
 
                     {/* Go to bill */}
-                    <TouchableHighlight style={[styles.feature, styles.myBorder]} onPress={() => { }}>
+                    <TouchableHighlight
+                        style={[styles.feature, styles.myBorder]}
+                        onPress={() => { }}>
                         <Text>LAP HOA DON</Text>
                     </TouchableHighlight>
 
@@ -201,12 +204,16 @@ export default function App({ navigation }) {
                 <View style={styles.row}>
 
                     {/* Cai dat dich vu */}
-                    <TouchableHighlight style={[styles.feature, styles.myBorder]} onPress={() => { }}>
+                    <TouchableHighlight
+                        style={[styles.feature, styles.myBorder]}
+                        onPress={() => { }}>
                         <Text>CAI DAT DICH VU</Text>
                     </TouchableHighlight>
 
                     {/* Ghi chu */}
-                    <TouchableHighlight style={[styles.feature, styles.myBorder]} onPress={() => { navigation.navigate("GhiChu", { notes, setNotes }) }}>
+                    <TouchableHighlight
+                        style={[styles.feature, styles.myBorder]}
+                        onPress={() => { navigation.navigate("GhiChu", { notes, setNotes }) }}>
                         <Text>GHI CHU</Text>
                     </TouchableHighlight>
 

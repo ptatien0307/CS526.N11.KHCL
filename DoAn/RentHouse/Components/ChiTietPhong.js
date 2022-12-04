@@ -38,8 +38,13 @@ export default function App({ navigation, route }) {
     const renderMembers = ({ item }) => {
         return (
             <View style={styles.member}>
+                {/* Member icon */}
                 <FontAwesomeIcon name="user" size={20} style={{ marginRight: 8 }} />
+
+                {/* View info */}
                 {viewMoreInfo(item)}
+
+                {/* Read more or less info button */}
                 <TouchableHighlight style={{ position: 'absolute', right: 0 }} onPress={() => {
                     if (viewMoreID.includes(item.id)) {
                         let newIDList = viewMoreID.filter(mem => mem !== item.id)
@@ -68,7 +73,6 @@ export default function App({ navigation, route }) {
         setEditItemID(specRoom.id)
         setEditItemContent(type)
     }
-
 
     const createAlertButton = () => {
         Alert.alert(
