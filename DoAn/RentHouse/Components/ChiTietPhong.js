@@ -248,7 +248,6 @@ export default function App({ navigation, route }) {
                         {/* Edit content */}
                         <TextInput
                             style={[styles.myBorder, styles.text]}
-
                             onChangeText={(text) => { setInputText(text) }}
                             defaultValue={inputText}
                             editable={true}
