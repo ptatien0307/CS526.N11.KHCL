@@ -1,8 +1,8 @@
 import { StyleSheet, View, Text, TouchableHighlight, FlatList, TextInput, Modal, Alert, Touchable } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-
 import { useState } from 'react';
+import { ModalEdit } from './Modal';
 export default function App({ navigation, route }) {
 
     const [specRoom, setSpecRoom] = useState(route.params.specRoom)
@@ -13,7 +13,7 @@ export default function App({ navigation, route }) {
 
 
 
-    const [isModalVisible, setIsModalVisible] = useState(false)
+    const [isEditModalVisible, setIsEditModalVisible] = useState(false)
     const [inputText, setInputText] = useState('')
 
     const [editItemID, setEditItemID] = useState()
@@ -68,18 +68,18 @@ export default function App({ navigation, route }) {
     }
 
     const onPressEdit = (type) => {
-        setIsModalVisible(true)
+        setIsEditModalVisible(true)
         setInputText(specRoom[type])
         setEditItemID(specRoom.id)
         setEditItemContent(type)
     }
 
-    const createAlertButton = () => {
+    const alertEmptyDialog = () => {
         Alert.alert(
             "Error",
             "Empty note",
             [
-                { text: "OK", onPress: () => console.log("OK Pressed") },
+                { text: "OK", onPress: () => console.log("OK Pressed") }
             ]
         )
     }
@@ -111,17 +111,18 @@ export default function App({ navigation, route }) {
 
                 {/* Info and Bill button */}
                 <View style={styles.row}>
-                    <TouchableHighlight style={styles.feature} onPress={() => { if (!mountInfo) setMountInfo(!mountInfo) }}>
+                    <TouchableHighlight style={[styles.feature, styles.myBorder]}
+                        onPress={() => { if (!mountInfo) setMountInfo(!mountInfo) }}>
                         <Text>THONG TIN</Text>
                     </TouchableHighlight>
 
-                    <TouchableHighlight style={styles.feature} onPress={() => { if (mountInfo) setMountInfo(!mountInfo) }}>
+                    <TouchableHighlight style={[styles.feature, styles.myBorder]}
+                        onPress={() => { if (mountInfo) setMountInfo(!mountInfo) }}>
                         <Text>LICH SU HOA DON</Text>
                     </TouchableHighlight>
                 </View>
-
                 {/* View info */}
-                {mountInfo && <View style={styles.info}>
+                {mountInfo && <View style={styles.roomInfo}>
                     {/* View room details */}
                     <View style={[styles.infoContainer, styles.myBorder]}>
 
@@ -227,71 +228,22 @@ export default function App({ navigation, route }) {
             </View>
 
 
-            {/* View modal */}
-            <Modal
-                animationType='fade'
-                visible={isModalVisible}
-                onRequestClose={() => { setIsModalVisible(false) }}>
+            {/* Modal for edit room */}
+            <ModalEdit
+                setIsEditModalVisible={setIsEditModalVisible}
+                isEditModalVisible={isEditModalVisible}
+                editItemID={editItemID}
+                editItemContent={editItemContent}
+                setInputText={setInputText}
+                inputText={inputText}
+                alertEmptyDialog={alertEmptyDialog}
+                setSpecRoom={setSpecRoom}
+                specRoom={specRoom}
+                setGlobalRoomList={route.params.setRoomList}
+                roomList={route.params.roomList}
+                isEditNote={false}>
+            </ModalEdit>
 
-                <View style={styles.modalContainer}>
-                    <View style={[styles.modalView, styles.myBorder]}>
-
-                        {/* Close modal */}
-                        <View style={{ position: 'absolute', top: 10, right: 10 }}>
-                            <TouchableHighlight onPress={() => { setIsModalVisible(!isModalVisible) }}>
-                                <FontAwesomeIcon name="times-circle" size={20} />
-                            </TouchableHighlight>
-                        </View>
-
-                        {/* Title modal */}
-                        <Text style={[styles.textTitle, styles.myBorder]}> Change Text</Text>
-
-
-                        {/* Edit content */}
-                        <TextInput
-                            style={[styles.myBorder, styles.text]}
-                            onChangeText={(text) => { setInputText(text) }}
-                            defaultValue={inputText}
-                            editable={true}
-                            multiline={false}
-                            maxLength={256}>
-                        </TextInput>
-
-
-                        {/* Save button  */}
-                        <TouchableHighlight style={styles.saveButton}
-                            onPress={() => {
-                                // If edit content is empty, notify alert
-                                if (inputText === '') {
-                                    createAlertButton()
-                                }
-                                else {
-                                    setSpecRoom({ ...specRoom, [editItemContent]: inputText })
-                                    const newRoomList = route.params.roomList.map(item => {
-                                        if (item.id === editItemID) {
-                                            if (editItemContent === 'contractDay') item.contractDay = inputText
-                                            else if (editItemContent === 'price') item.price = inputText
-                                            else if (editItemContent === 'deposit') item.deposit = inputText
-                                            else if (editItemContent === 'roomName') item.roomName = inputText
-
-                                            return item
-                                        }
-                                        return item
-                                    })
-                                    route.params.setRoomList(newRoomList)
-                                    setInputText('')
-                                    setIsModalVisible(false)
-                                }
-
-                            }}>
-                            <Text style={{ fontSize: 20 }}>SAVE</Text>
-
-
-                        </TouchableHighlight>
-
-                    </View>
-                </View>
-            </Modal>
         </View>
     );
 
@@ -307,9 +259,8 @@ const styles = StyleSheet.create({
         height: '10%',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        marginVertical: 4,
-        paddingHorizontal: 8,
+        justifyContent: 'space-around',
+        marginTop: 8,
     },
     body: {
         width: '100%',
@@ -317,14 +268,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    title: {
-        textAlign: 'center',
-        width: '90%',
-        height: 25,
-        marginTop: 8,
-        marginRight: 4,
-    },
-    info: {
+    roomInfo: {
         width: '100%',
         height: '90%',
         alignItems: 'center',
@@ -351,8 +295,6 @@ const styles = StyleSheet.create({
     feature: {
         width: '45%',
         height: '90%',
-        borderRadius: 15,
-        borderWidth: 2,
         alignItems: 'center',
         justifyContent: 'center',
     },

@@ -30,8 +30,8 @@ export default function App({ navigation, route }) {
             contractDay: '0',
             deposit: 0,
             members: [],
-            // tienDien: ELECTRICITY,
-            // tienNuoc: WATER,
+            tienDien: route.params.ELECTRICITY,
+            tienNuoc: route.params.WATER,
         }])
 
         route.params.setRoomList([...roomList, {
@@ -42,8 +42,8 @@ export default function App({ navigation, route }) {
             contractDay: '0',
             deposit: 0,
             members: [],
-            // tienDien: ELECTRICITY,
-            // tienNuoc: WATER,
+            tienDien: route.params.ELECTRICITY,
+            tienNuoc: route.params.WATER,
         }])
     }
 
@@ -93,16 +93,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'flex-start',
     },
     header: {
         width: '90%',
         height: '10%',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         marginTop: 8,
-        paddingHorizontal: 8,
     },
     body: {
         flex: 1,
@@ -112,10 +110,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingLeft: 16,
         marginVertical: 8,
-        marginHorizontal: 'auto',
         height: 70,
         width: '100%',
-
     },
     myBorder: {
         borderColor: 'black',

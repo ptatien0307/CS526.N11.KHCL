@@ -185,7 +185,7 @@ export default function App({ navigation }) {
                     {/* Go to room list */}
                     <TouchableHighlight
                         style={[styles.feature, styles.myBorder]}
-                        onPress={() => { navigation.navigate("DanhSachPhong", { roomList, setRoomList }) }}>
+                        onPress={() => { navigation.navigate("DanhSachPhong", { roomList, setRoomList, ELECTRICITY, WATER }) }}>
                         <Text>DANH SACH PHONG</Text>
 
                     </TouchableHighlight>

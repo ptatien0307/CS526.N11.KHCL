@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableHighlight, Modal, TextInput, Alert } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-
+import { ModalAdd, ModalEdit } from './Modal';
 export default function App({ navigation, route }) {
 
     const [notes, setNotes] = useState(route.params.notes)
@@ -12,7 +12,7 @@ export default function App({ navigation, route }) {
     const [inputText, setInputText] = useState('')
 
 
-    const createAlertButton = () => {
+    const alertEmptyDialog = () => {
         Alert.alert(
             "Error",
             "Empty note",
@@ -22,7 +22,7 @@ export default function App({ navigation, route }) {
         )
     }
 
-    const asycnDelete = () => {
+    const alertDeleteDialog = () => {
         return new Promise((resolve, reject) => {
             Alert.alert(
                 'Title',
@@ -35,8 +35,9 @@ export default function App({ navigation, route }) {
             )
         })
     }
+
     const handleDeleteItem = async (deleteItem) => {
-        let isConfirm = await asycnDelete()
+        let isConfirm = await alertDeleteDialog()
         if (isConfirm) {
             const newNote = notes.reduce((res, currItem) => {
                 if (currItem.id != deleteItem.id)
@@ -48,6 +49,15 @@ export default function App({ navigation, route }) {
         }
     }
 
+    const handleEditItem = (item) => {
+        setIsEditModalVisible(true)
+        setInputText(item.noteContent)
+        setEditItemID(item.id)
+    }
+
+    const handleAddNote = () => {
+        setIsAddModalVisible(true)
+    }
 
     const renderItem = ({ item }) => {
         return (
@@ -62,9 +72,7 @@ export default function App({ navigation, route }) {
                     </TouchableHighlight>
 
 
-                    <TouchableHighlight onPress={() => {
-                        handleDeleteItem(item)
-                    }}>
+                    <TouchableHighlight onPress={() => { handleDeleteItem(item) }}>
                         <FontAwesomeIcon name="remove" size={25} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
                     </TouchableHighlight>
                 </View>
@@ -72,18 +80,8 @@ export default function App({ navigation, route }) {
         )
     }
 
-    const handleEditItem = (item) => {
-        setIsEditModalVisible(true)
-        setInputText(item.noteContent)
-        setEditItemID(item.id)
-    }
 
 
-    const handleAddNote = () => {
-        setIsAddModalVisible(true)
-    }
-
-    { console.log('re-render') }
 
 
     return (
@@ -115,138 +113,37 @@ export default function App({ navigation, route }) {
                 </FlatList>
             </View>
 
-
-            {/* View edit modal */}
-            <Modal
-                animationType='fade'
-                visible={isEditModalVisible}
-                onRequestClose={() => { setIsEditModalVisible(false) }}>
-                <View style={styles.modalContainer}>
-                    <View style={[styles.modalView, styles.myBorder]}>
-
-                        {/* Close button */}
-                        <View style={{ position: 'absolute', top: 10, right: 10 }}>
-                            <TouchableHighlight onPress={() => { setIsEditModalVisible(!isEditModalVisible) }}>
-                                <FontAwesomeIcon name="times-circle" size={20} />
-                            </TouchableHighlight>
-                        </View>
-
-                        {/* Title modal */}
-                        <Text style={[styles.textTitle, styles.myBorder]}> Change Text</Text>
-
-                        {/* Edit content */}
-                        <TextInput
-                            style={[styles.myBorder, styles.text]}
-                            onChangeText={(text) => { setInputText(text) }}
-                            defaultValue={inputText}
-                            editable={true}
-                            multiline={false}
-                            maxLength={256}>
-                        </TextInput>
-
-                        {/* Save button */}
-                        <TouchableHighlight style={styles.saveButton}
-                            onPress={() => {
-                                // If edit content is empty, notify alert
-                                if (inputText === '') {
-                                    createAlertButton()
-                                }
-                                else {
-                                    const newNote = notes.map(item => {
-                                        if (item.id === editItemID) {
-                                            item.noteContent = inputText
-                                            return item
-                                        }
-                                        return item
-                                    })
-                                    route.params.setNotes(newNote) // Set for global note
-                                    setIsEditModalVisible(false)
-                                }
-                            }}>
-
-
-                            <Text style={{ fontSize: 20 }}>SAVE</Text>
-
-                        </TouchableHighlight>
-                    </View>
-                </View>
-
-            </Modal >
-
-
             {/* Add note button */}
             <TouchableHighlight onPress={() => { handleAddNote() }}>
                 <FontAwesomeIcon name="plus-circle" size={35} />
             </TouchableHighlight >
 
 
+            {/* Modal for edit note */}
+            <ModalEdit
+                setIsEditModalVisible={setIsEditModalVisible}
+                isEditModalVisible={isEditModalVisible}
+                editItemID={editItemID}
+                setInputText={setInputText}
+                inputText={inputText}
+                alertEmptyDialog={alertEmptyDialog}
+                notes={notes}
+                setGlobalNotes={route.params.setNotes}
+                isEditNote={true}>
+            </ModalEdit>
 
-            {/* View add modal */}
-            < Modal
-                animationType='fade'
-                visible={isAddModalVisible}
-                onRequestClose={() => { setIsAddModalVisible(false) }}>
-                <View style={styles.modalContainer}>
-                    <View style={[styles.modalView, styles.myBorder]}>
+            {/* Modal for add note */}
+            <ModalAdd
+                setIsAddModalVisible={setIsAddModalVisible}
+                isAddModalVisible={isAddModalVisible}
+                setInputText={setInputText}
+                inputText={inputText}
+                alertEmptyDialog={alertEmptyDialog}
+                notes={notes}
+                setLocalNotes={setNotes}
+                setGlobalNotes={route.params.setNotes}>
+            </ModalAdd>
 
-                        {/* Close button */}
-                        <View style={{ position: 'absolute', top: 10, right: 10 }}>
-                            <TouchableHighlight onPress={() => { setIsAddModalVisible(!isAddModalVisible) }}>
-                                <FontAwesomeIcon name="times-circle" size={35} />
-                            </TouchableHighlight>
-                        </View>
-
-                        {/* Title modal */}
-                        <Text style={[styles.textTitle, styles.myBorder]} >Add note</Text>
-
-                        {/* Edit content */}
-                        <TextInput
-                            style={[styles.myBorder, styles.text]}
-                            onChangeText={(text) => { setInputText(text) }}
-                            defaultValue={inputText}
-                            editable={true}
-                            multiline={false}
-                            maxLength={256}>
-                        </TextInput>
-
-
-                        {/* Save button */}
-                        <TouchableHighlight style={[styles.saveButton, styles.myBorder]}
-                            onPress={() => {
-                                let newNote = []
-                                if (inputText === '') {
-                                    createAlertButton()
-                                }
-                                else {
-                                    if (notes.length === 0) {
-                                        newNote = [
-                                            {
-                                                id: 1,
-                                                noteContent: inputText
-                                            }
-                                        ]
-                                    }
-                                    else {
-                                        newNote = [
-                                            ...notes,
-                                            {
-                                                id: notes[notes.length - 1].id + 1,
-                                                noteContent: inputText
-                                            }
-                                        ]
-                                    }
-                                    setNotes(newNote) // set local notes
-                                    route.params.setNotes(newNote) // set global note
-                                    setInputText('')
-                                    setIsAddModalVisible(false)
-                                }
-
-                            }}>
-                            <Text style={{ fontSize: 20 }}>SAVE</Text>
-                        </TouchableHighlight>
-                    </View>
-                </View>
-            </Modal >
         </View >
     );
 }
