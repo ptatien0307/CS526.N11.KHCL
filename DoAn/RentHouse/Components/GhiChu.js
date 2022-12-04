@@ -7,14 +7,46 @@ export default function App({ navigation, route }) {
     const [notes, setNotes] = useState(route.params.notes)
     const [mountEdit, setMountEdit] = useState(false)
     const [editItemID, setEditItemID] = useState()
-
-
-
-
     const [isEditModalVisible, setIsEditModalVisible] = useState(false)
     const [isAddModalVisible, setIsAddModalVisible] = useState(false)
-
     const [inputText, setInputText] = useState('')
+
+
+    const createAlertButton = () => {
+        Alert.alert(
+            "Error",
+            "Empty note",
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+        )
+    }
+
+    const asycnDelete = () => {
+        return new Promise((resolve, reject) => {
+            Alert.alert(
+                'Title',
+                'Message',
+                [
+                    { text: 'YES', onPress: () => resolve(true) },
+                    { text: 'NO', onPress: () => resolve(false) }
+                ],
+                { cancelable: false }
+            )
+        })
+    }
+    const handleDeleteItem = async (deleteItem) => {
+        let isConfirm = await asycnDelete()
+        if (isConfirm) {
+            const newNote = notes.reduce((res, currItem) => {
+                if (currItem.id != deleteItem.id)
+                    res.push(currItem)
+                return res
+            }, [])
+            setNotes(newNote) // set local notes
+            route.params.setNotes(newNote) // set global notes
+        }
+    }
 
 
     const renderItem = ({ item }) => {
@@ -29,7 +61,10 @@ export default function App({ navigation, route }) {
                         <FontAwesomeIcon name="pencil" size={20} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
                     </TouchableHighlight>
 
-                    <TouchableHighlight onPress={() => { handleDeleteItem(item) }}>
+
+                    <TouchableHighlight onPress={() => {
+                        handleDeleteItem(item)
+                    }}>
                         <FontAwesomeIcon name="remove" size={25} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
                     </TouchableHighlight>
                 </View>
@@ -43,32 +78,12 @@ export default function App({ navigation, route }) {
         setEditItemID(item.id)
     }
 
-    const handleDeleteItem = (deleteItem) => {
-        const newNote = notes.reduce((res, currItem) => {
-            if (currItem.id != deleteItem.id)
-                res.push(currItem)
-            return res
-        }, [])
-        setNotes(newNote) // set local notes
-        route.params.setNotes(newNote) // set global notes
-    }
-
 
     const handleAddNote = () => {
         setIsAddModalVisible(true)
     }
 
-
-    const createAlertButton = () => {
-        Alert.alert(
-            "Error",
-            "Empty note",
-            [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-        )
-    }
-
+    { console.log('re-render') }
 
 
     return (

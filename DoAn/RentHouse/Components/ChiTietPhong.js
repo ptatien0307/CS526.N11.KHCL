@@ -79,10 +79,12 @@ export default function App({ navigation, route }) {
             "Error",
             "Empty note",
             [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
+                { text: "OK", onPress: () => console.log("OK Pressed") },
             ]
         )
     }
+
+
 
 
     return (
