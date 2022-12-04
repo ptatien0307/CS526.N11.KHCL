@@ -12,10 +12,10 @@ export default function App({ navigation }) {
             contractDay: '23/11/2022',
             deposit: 400000,
             members: [
-                { id: 1, memberName: 'Pham Tran Anh Tien' },
-                { id: 2, memberName: 'Pham Tran Anh Tien' },
-                { id: 3, memberName: 'Pham Tran Anh Tien' },
-                { id: 4, memberName: 'Pham Tran Anh Tien' },
+                { id: 1, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: 123456789 },
+                { id: 2, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: 123456789 },
+                { id: 3, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: 123456789 },
+                { id: 4, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: 123456789 },
             ],
             tienDien: ELECTRICITY,
             tienNuoc: WATER,
@@ -33,8 +33,8 @@ export default function App({ navigation }) {
             contractDay: '12/12/2022',
             deposit: 0,
             members: [
-                { id: 1, memberName: 'Pham Tran Anh Tien' },
-                { id: 2, memberName: 'Pham Tran Anh Tien' },
+                { id: 1, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: 123456789 },
+                { id: 2, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: 123456789 },
             ],
             tienDien: ELECTRICITY,
             tienNuoc: WATER,
@@ -58,7 +58,7 @@ export default function App({ navigation }) {
             contractDay: '',
             deposit: 0,
             members: [
-                { id: 1, memberName: 'Pham Tran Anh Tien' }
+                { id: 1, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: 123456789 }
             ],
             tienDien: ELECTRICITY,
             tienNuoc: WATER,
@@ -186,6 +186,7 @@ export default function App({ navigation }) {
                     {/* Go to room list */}
                     <TouchableHighlight style={[styles.feature, styles.myBorder]} onPress={() => { navigation.navigate("DanhSachPhong", { roomList, setRoomList }) }}>
                         <Text>DANH SACH PHONG</Text>
+
                     </TouchableHighlight>
 
                     {/* Go to bill */}

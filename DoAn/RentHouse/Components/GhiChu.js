@@ -109,16 +109,17 @@ export default function App({ navigation, route }) {
                 <View style={styles.modalContainer}>
                     <View style={[styles.modalView, styles.myBorder]}>
 
-
+                        {/* Close button */}
                         <View style={{ position: 'absolute', top: 10, right: 10 }}>
                             <TouchableHighlight onPress={() => { setIsEditModalVisible(!isEditModalVisible) }}>
                                 <FontAwesomeIcon name="times-circle" size={20} />
                             </TouchableHighlight>
                         </View>
 
-
+                        {/* Title modal */}
                         <Text style={[styles.textTitle, styles.myBorder]}> Change Text</Text>
 
+                        {/* Edit content */}
                         <TextInput
                             style={[styles.myBorder, styles.text]}
                             onChangeText={(text) => { setInputText(text) }}
@@ -128,8 +129,10 @@ export default function App({ navigation, route }) {
                             maxLength={256}>
                         </TextInput>
 
+                        {/* Save button */}
                         <TouchableHighlight style={styles.saveButton}
                             onPress={() => {
+                                // If edit content is empty, notify alert
                                 if (inputText === '') {
                                     createAlertButton()
                                 }
@@ -170,14 +173,18 @@ export default function App({ navigation, route }) {
                 onRequestClose={() => { setIsAddModalVisible(false) }}>
                 <View style={styles.modalContainer}>
                     <View style={[styles.modalView, styles.myBorder]}>
+
+                        {/* Close button */}
                         <View style={{ position: 'absolute', top: 10, right: 10 }}>
                             <TouchableHighlight onPress={() => { setIsAddModalVisible(!isAddModalVisible) }}>
                                 <FontAwesomeIcon name="times-circle" size={35} />
                             </TouchableHighlight>
                         </View>
 
+                        {/* Title modal */}
                         <Text style={[styles.textTitle, styles.myBorder]} >Add note</Text>
 
+                        {/* Edit content */}
                         <TextInput
                             style={[styles.myBorder, styles.text]}
                             onChangeText={(text) => { setInputText(text) }}
@@ -187,6 +194,8 @@ export default function App({ navigation, route }) {
                             maxLength={256}>
                         </TextInput>
 
+
+                        {/* Save button */}
                         <TouchableHighlight style={[styles.saveButton, styles.myBorder]}
                             onPress={() => {
                                 let newNote = []

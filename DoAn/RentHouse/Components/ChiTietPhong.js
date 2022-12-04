@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableHighlight, FlatList, TextInput, Modal, Alert } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight, FlatList, TextInput, Modal, Alert, Touchable } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
@@ -15,14 +15,41 @@ export default function App({ navigation, route }) {
 
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [inputText, setInputText] = useState('')
+
     const [editItemID, setEditItemID] = useState()
     const [editItemContent, setEditItemContent] = useState()
 
+    const [viewMoreID, setViewMoreID] = useState([])
+
+
+    const viewMoreInfo = (item) => {
+        if (viewMoreID.includes(item.id))
+            return (
+                <View>
+                    <Text>{item.memberName}</Text>
+                    <Text>{item.dateOfBirth}</Text>
+                    <Text>{item.CCCD}</Text>
+                </View>
+            )
+        else
+            return <Text>{item.memberName}</Text>
+    }
 
     const renderMembers = ({ item }) => {
         return (
             <View style={styles.member}>
-                <Text>{item.memberName}</Text>
+                <FontAwesomeIcon name="user" size={20} style={{ marginRight: 8 }} />
+                {viewMoreInfo(item)}
+                <TouchableHighlight style={{ position: 'absolute', right: 0 }} onPress={() => {
+                    if (viewMoreID.includes(item.id)) {
+                        let newIDList = viewMoreID.filter(mem => mem !== item.id)
+                        setViewMoreID(newIDList)
+                    }
+                    else
+                        setViewMoreID([...viewMoreID, item.id])
+                }}>
+                    <IonIcon name="ellipsis-vertical" size={20} />
+                </TouchableHighlight>
             </View>
         )
     }
@@ -97,6 +124,7 @@ export default function App({ navigation, route }) {
 
                             <View style={styles.infoRow}>
 
+                                {/* Room name */}
                                 <View style={[styles.basicInfo, styles.myBorder]}>
                                     <View>
                                         <Text>{specRoom.roomName}</Text>
@@ -106,9 +134,10 @@ export default function App({ navigation, route }) {
                                     </TouchableHighlight>
                                 </View>
 
+                                {/* Contract day */}
                                 <View style={[styles.basicInfo, styles.myBorder]}>
                                     <View>
-                                        <Text>Ngay lap hop dong:</Text>
+                                        <Text>Hop dong:</Text>
                                         <Text>{specRoom.contractDay}</Text>
                                     </View>
                                     <TouchableHighlight onPress={() => { onPressEdit('contractDay') }}>
@@ -117,8 +146,11 @@ export default function App({ navigation, route }) {
                                 </View>
 
                             </View>
-                            <View style={styles.infoRow}>
 
+
+
+                            <View style={styles.infoRow}>
+                                {/* Price */}
                                 <View style={[styles.basicInfo, styles.myBorder]}>
                                     <View>
                                         <Text>Gia thue:</Text>
@@ -129,6 +161,9 @@ export default function App({ navigation, route }) {
                                     </TouchableHighlight>
                                 </View>
 
+
+
+                                {/* Deposit */}
                                 <View style={[styles.basicInfo, styles.myBorder]}>
                                     <View>
                                         <Text>Tien coc:</Text>
@@ -152,7 +187,7 @@ export default function App({ navigation, route }) {
                             </FlatList>
                         </View>
 
-
+                        {/* Water and electricity */}
                         <View style={[styles.chiSoDichVu, styles.myBorder]}>
                             <View style={styles.dichVu}>
                                 <IonIcon name="water" size={20} style={{ marginRight: 20 }} />
@@ -176,7 +211,6 @@ export default function App({ navigation, route }) {
 
                 {/* View Bill */}
                 {!mountInfo && <View style={styles.billInfo}>
-                    {/* View bill details */}
                     <FlatList
                         data={specRoom.billHistory}
                         renderItem={renderBills}
@@ -195,16 +229,19 @@ export default function App({ navigation, route }) {
 
                 <View style={styles.modalContainer}>
                     <View style={[styles.modalView, styles.myBorder]}>
+
+                        {/* Close modal */}
                         <View style={{ position: 'absolute', top: 10, right: 10 }}>
                             <TouchableHighlight onPress={() => { setIsModalVisible(!isModalVisible) }}>
                                 <FontAwesomeIcon name="times-circle" size={20} />
                             </TouchableHighlight>
                         </View>
 
-
+                        {/* Title modal */}
                         <Text style={[styles.textTitle, styles.myBorder]}> Change Text</Text>
 
 
+                        {/* Edit content */}
                         <TextInput
                             style={[styles.myBorder, styles.text]}
 
@@ -215,16 +252,16 @@ export default function App({ navigation, route }) {
                             maxLength={256}>
                         </TextInput>
 
+
+                        {/* Save button  */}
                         <TouchableHighlight style={styles.saveButton}
                             onPress={() => {
+                                // If edit content is empty, notify alert
                                 if (inputText === '') {
                                     createAlertButton()
-
                                 }
                                 else {
                                     setSpecRoom({ ...specRoom, [editItemContent]: inputText })
-
-
                                     const newRoomList = route.params.roomList.map(item => {
                                         if (item.id === editItemID) {
                                             if (editItemContent === 'contractDay') item.contractDay = inputText
@@ -246,6 +283,7 @@ export default function App({ navigation, route }) {
 
 
                         </TouchableHighlight>
+
                     </View>
                 </View>
             </Modal>
@@ -331,16 +369,19 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'space-between',
-        position: 'relative',
         flexDirection: 'row',
         paddingHorizontal: 8,
     },
     membersContainer: {
         width: '90%',
         height: 'auto',
+        minHeight: 50,
         marginVertical: 4,
     },
     member: {
+        justifyContent: 'flex-start',
+        height: 45,
+        flexDirection: 'row',
         fontSize: 20,
         marginVertical: 8,
         marginLeft: 8,
