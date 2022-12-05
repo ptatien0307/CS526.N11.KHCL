@@ -62,7 +62,12 @@ export default function App({ navigation, route }) {
     const renderBills = ({ item }) => {
         return (
             <View style={[styles.bill, styles.myBorder]}>
-                <Text style={{ fontSize: 20 }}>Tháng {item.month}: {item.money}</Text>
+                <Text style={{ fontSize: 20 }}> {item.monthYear}</Text>
+                {/* <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignContent: 'space-around' }}>
+                    <View>{item.total}</View>
+                    <View>{item.collected}</View>
+                    <View>{item.total - item.collected}</View>
+                </View> */}
             </View>
         )
     }
@@ -121,6 +126,11 @@ export default function App({ navigation, route }) {
                         <Text>LICH SU HOA DON</Text>
                     </TouchableHighlight>
                 </View>
+
+
+
+
+
                 {/* View info */}
                 {mountInfo && <View style={styles.roomInfo}>
                     {/* View room details */}
@@ -319,6 +329,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 8,
     },
+    bill: {
+        width: '100%',
+        height: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 4,
+    },
     membersContainer: {
         width: '90%',
         height: 'auto',
@@ -341,47 +358,6 @@ const styles = StyleSheet.create({
     dichVu: {
         flexDirection: 'row',
         marginVertical: 4,
-    },
-    bill: {
-        width: '100%',
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginVertical: 4,
-    },
-    modalContainer: {
-        width: '100%',
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    modalView: {
-        width: '80%',
-        height: '80%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    saveButton: {
-        marginTop: 8,
-        width: '30%',
-        height: '10%',
-        fontSize: 25,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    textTitle: {
-        marginVertical: 8,
-        paddingHorizontal: 8,
-        width: 'auto',
-        fontSize: 25,
-        textAlign: 'center',
-        backgroundColor: 'black',
-        color: 'white'
-    },
-    text: {
-        marginVertical: 8,
-        paddingLeft: 4,
-        width: '80%',
     },
     myBorder: {
         borderColor: 'black',

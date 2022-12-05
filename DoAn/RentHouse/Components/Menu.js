@@ -20,9 +20,9 @@ export default function App({ navigation }) {
             tienDien: ELECTRICITY,
             tienNuoc: WATER,
             billHistory: [
-                { id: 1, month: 5, money: '875000' },
-                { id: 2, month: 6, money: '890000' },
-                { id: 3, month: 7, money: '850000' },
+                { id: 1, monthYear: '5/2022', total: '875000', collected: '200000', remained: '' },
+                { id: 2, monthYear: '6/2022', total: '890000', collected: '200000', remained: '' },
+                { id: 3, monthYear: '7/2022', total: '850000', collected: '200000', remained: '' },
             ]
         },
         {
