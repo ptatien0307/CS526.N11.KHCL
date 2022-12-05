@@ -10,7 +10,7 @@ export default function App({ navigation, route }) {
     const [isEditModalVisible, setIsEditModalVisible] = useState(false)
     const [isAddModalVisible, setIsAddModalVisible] = useState(false)
     const [inputText, setInputText] = useState('')
-
+    const chooseItemEdit = [true, false, false]
 
     const alertEmptyDialog = () => {
         Alert.alert(
@@ -129,7 +129,7 @@ export default function App({ navigation, route }) {
                 alertEmptyDialog={alertEmptyDialog}
                 notes={notes}
                 setGlobalNotes={route.params.setNotes}
-                isEditNote={true}>
+                chooseItemEdit={chooseItemEdit}>
             </ModalEdit>
 
             {/* Modal for add note */}

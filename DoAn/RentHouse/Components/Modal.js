@@ -2,9 +2,6 @@ import { StyleSheet, View, Text, TouchableHighlight, Modal, TextInput } from 're
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 
-
-
-
 export function ModalAdd(params) {
     return (
         <View style={styles.container}>
@@ -115,6 +112,31 @@ export function ModalEdit(params) {
         }
     }
 
+    const editBill = () => {
+        if (params.inputText === '')
+            params.alertEmptyDialog()
+        else {
+            const newBillHistory = params.billHistory.map(item => {
+                if (item.id === params.editBillID) {
+                    item.collected = params.inputText
+                    return item
+                }
+                return item
+            })
+            params.setSpecRoom({ ...params.specRoom, [params.editItemContent]: newBillHistory })
+            const newRoomList = params.roomList.map(item => {
+                if (item.id === params.editItemID) {
+                    item[params.editItemContent] = newBillHistory
+                    return item
+                }
+                return item
+            })
+            params.setGlobalRoomList(newRoomList)
+            params.setInputText('')
+            params.setIsEditModalVisible(false)
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Modal
@@ -126,7 +148,7 @@ export function ModalEdit(params) {
 
                         {/* Close button */}
                         <View style={{ position: 'absolute', top: 10, right: 10 }}>
-                            <TouchableHighlight onPress={() => { params.setIsEditModalVisible(!isEditModalVisible) }}>
+                            <TouchableHighlight onPress={() => { params.setIsEditModalVisible(!params.isEditModalVisible) }}>
                                 <FontAwesomeIcon name="times-circle" size={20} />
                             </TouchableHighlight>
                         </View>
@@ -147,10 +169,12 @@ export function ModalEdit(params) {
                         {/* Save button */}
                         <TouchableHighlight style={styles.saveButton}
                             onPress={() => {
-                                if (params.isEditNote)
+                                if (params.chooseItemEdit[0])
                                     editNote()
-                                else
+                                else if (params.chooseItemEdit[1])
                                     editRoom()
+                                else
+                                    editBill()
                             }}>
 
 
