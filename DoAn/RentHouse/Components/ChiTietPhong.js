@@ -9,7 +9,6 @@ export default function App({ navigation, route }) {
     const [mountInfo, setMountInfo] = useState(true)
     const [mountEdit, setMountEdit] = useState(false)
 
-
     const [isEditModalVisible, setIsEditModalVisible] = useState(false)
     const [inputText, setInputText] = useState('')
 
@@ -17,8 +16,6 @@ export default function App({ navigation, route }) {
     const [editItemID, setEditItemID] = useState()
     const [editItemContent, setEditItemContent] = useState()
     const [chooseItemEdit, setChooseItemEdit] = useState([])
-
-
 
     const [viewMoreID, setViewMoreID] = useState([])
 
@@ -81,42 +78,55 @@ export default function App({ navigation, route }) {
     }
 
     const renderBills = ({ item }) => {
+        // Compute total money
+        item.total = parseInt((item.dienMoi - item.dienCu) * specRoom.donGiaDien) +
+            parseInt((item.nuocMoi - item.nuocCu) * specRoom.donGiaNuoc) + parseInt(specRoom.price)
+
+
         return (
-            <View style={[styles.billInfo, styles.myBorder]}>
+            <TouchableHighlight onPress={() => {
+                navigation.navigate("ChiTietHoaDon", {
+                    specBill: item,
+                    specRoom
+                })
+            }}>
+                <View style={[styles.billInfo, styles.myBorder]}>
 
-                {/* Bill month year */}
-                <View style={styles.billDay}>
-                    <Text style={{ fontSize: 20 }}> {item.monthYear}</Text>
-                </View>
-
-                {/* Bill money: total, collected, remained */}
-                <View style={styles.billMoney}>
-
-                    {/* Total */}
-                    <View style={[styles.myBorder, styles.money]}>
-                        <Text>Tổng tiền:</Text>
-                        <Text style={{ fontWeight: 'bold' }}>{item.total}</Text>
+                    {/* Bill month year */}
+                    <View style={styles.billDay}>
+                        <Text style={{ fontSize: 20 }}> {item.monthYear}</Text>
                     </View>
 
-                    {/* Collected */}
-                    <View style={[styles.myBorder, styles.money, { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }]}>
-                        <View>
-                            <Text>Đã thu:</Text>
-                            <Text style={{ fontWeight: 'bold' }}>{item.collected}</Text>
+                    {/* Bill money: total, collected, remained */}
+                    <View style={styles.billMoney}>
+                        {/* Total */}
+                        <View style={[styles.myBorder, styles.money]}>
+                            <Text>Tổng tiền:</Text>
+                            <Text style={{ fontWeight: 'bold' }}>
+                                {item.total}
+                            </Text>
                         </View>
-                        <TouchableHighlight onPress={() => { onPressEdit(['billHistory', item.id, 'collected']) }}>
-                            <FontAwesomeIcon name="pencil" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                        </TouchableHighlight>
-                    </View>
+
+                        {/* Collected */}
+                        <View style={[styles.myBorder, styles.money, { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }]}>
+                            <View>
+                                <Text>Đã thu:</Text>
+                                <Text style={{ fontWeight: 'bold' }}>{item.collected}</Text>
+                            </View>
+                            <TouchableHighlight onPress={() => { onPressEdit(['billHistory', item.id, 'collected']) }}>
+                                <FontAwesomeIcon name="pencil" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                            </TouchableHighlight>
+                        </View>
 
 
-                    {/* Remained */}
-                    <View style={[styles.myBorder, styles.money]}>
-                        <Text>Còn lại: </Text>
-                        <Text style={{ fontWeight: 'bold' }}>{item.total - item.collected}</Text>
+                        {/* Remained */}
+                        <View style={[styles.myBorder, styles.money]}>
+                            <Text>Còn lại: </Text>
+                            <Text style={{ fontWeight: 'bold' }}>{item.total - item.collected}</Text>
+                        </View>
                     </View>
                 </View>
-            </View>
+            </TouchableHighlight>
         )
     }
 
@@ -259,11 +269,11 @@ export default function App({ navigation, route }) {
                         <View style={[styles.chiSoDichVu, styles.myBorder]}>
                             <View style={styles.dichVu}>
                                 <IonIcon name="water" size={20} style={{ marginRight: 20 }} />
-                                <Text>{specRoom.tienNuoc} đ/khối</Text>
+                                <Text>{specRoom.donGiaNuoc} đ/khối</Text>
                             </View>
                             <View style={styles.dichVu}>
                                 <FontAwesomeIcon name="bolt" size={20} style={{ marginLeft: 4, marginRight: 26 }} />
-                                <Text>{specRoom.tienDien} đ/kwh</Text>
+                                <Text>{specRoom.donGiaDien} đ/kwh</Text>
                             </View>
                         </View>
 

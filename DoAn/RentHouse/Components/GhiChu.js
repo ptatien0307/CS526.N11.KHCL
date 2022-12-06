@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, FlatList, TouchableHighlight, Modal, TextInput, Alert } from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableHighlight, Alert } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { ModalAdd, ModalEdit } from './Modal';
 export default function App({ navigation, route }) {
@@ -23,7 +23,7 @@ export default function App({ navigation, route }) {
     }
 
     const alertDeleteDialog = () => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             Alert.alert(
                 'Title',
                 'Message',

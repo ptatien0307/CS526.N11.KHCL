@@ -8,7 +8,7 @@ import Menu from './Components/Menu.js'
 import DanhSachPhong from './Components/DanhSachPhong.js'
 import ChiTietPhong from './Components/ChiTietPhong.js'
 import GhiChu from './Components/GhiChu.js'
-
+import ChiTietHoaDon from './Components/ChiTietHoaDon.js'
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -22,6 +22,9 @@ export default function App() {
           headerShown: false,
         }} />
         <Stack.Screen name="ChiTietPhong" component={ChiTietPhong} options={{
+          headerShown: false,
+        }} />
+        <Stack.Screen name="ChiTietHoaDon" component={ChiTietHoaDon} options={{
           headerShown: false,
         }} />
         <Stack.Screen name="GhiChu" component={GhiChu} options={{

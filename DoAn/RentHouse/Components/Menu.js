@@ -1,11 +1,14 @@
 import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 import { useState } from 'react';
+
+
 export default function App({ navigation }) {
-    const [WATER, setWATER] = useState(10000)
-    const [ELECTRICITY, setELECTRICITY] = useState(3000)
+    const [WATER, setWATER] = useState('10000')
+    const [ELECTRICITY, setELECTRICITY] = useState('3000')
+
     let DATA = [
         {
-            id: 1,
+            id: '1',
             roomName: 'Phong 1',
             roomStatus: null,
             price: '800000',
@@ -17,16 +20,16 @@ export default function App({ navigation }) {
                 { id: 3, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789' },
                 { id: 4, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789' },
             ],
-            tienDien: ELECTRICITY,
-            tienNuoc: WATER,
+            donGiaDien: ELECTRICITY,
+            donGiaNuoc: WATER,
             billHistory: [
-                { id: 1, monthYear: '5/2022', total: '875000', collected: '200000', remained: '' },
-                { id: 2, monthYear: '6/2022', total: '890000', collected: '200000', remained: '' },
-                { id: 3, monthYear: '7/2022', total: '850000', collected: '200000', remained: '' },
+                { id: 1, monthYear: '5/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
+                { id: 2, monthYear: '6/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
+                { id: 3, monthYear: '7/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
             ]
         },
         {
-            id: 2,
+            id: '2',
             roomName: 'Phong 2',
             roomStatus: null,
             price: '800000',
@@ -36,98 +39,31 @@ export default function App({ navigation }) {
                 { id: 1, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789' },
                 { id: 2, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789' },
             ],
-            tienDien: ELECTRICITY,
-            tienNuoc: WATER,
+            donGiaDien: ELECTRICITY,
+            donGiaNuoc: WATER,
+            billHistory: [
+                { id: 1, monthYear: '5/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
+                { id: 2, monthYear: '6/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
+                { id: 3, monthYear: '7/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
+            ]
         },
         {
-            id: 3,
+            id: '3',
             roomName: 'Phong 3',
             roomStatus: null,
             price: '800000',
             contractDay: '',
             deposit: '0',
-            members: [],
-            tienDien: ELECTRICITY,
-            tienNuoc: WATER,
-        },
-        {
-            id: 4,
-            roomName: 'Phong 4',
-            roomStatus: null,
-            price: '800000',
-            contractDay: '',
-            deposit: '0',
             members: [
-                { id: 1, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789' }
+                { id: 1, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789' },
             ],
-            tienDien: ELECTRICITY,
-            tienNuoc: WATER,
-        },
-        {
-            id: 5,
-            roomName: 'Phong 5',
-            roomStatus: null,
-            price: '800000',
-            contractDay: '',
-            deposit: '0',
-            members: [],
-            tienDien: ELECTRICITY,
-            tienNuoc: WATER,
-        },
-        {
-            id: 6,
-            roomName: 'Phong 6',
-            roomStatus: null,
-            price: '800000',
-            contractDay: '',
-            deposit: '0',
-            members: [],
-            tienDien: ELECTRICITY,
-            tienNuoc: WATER,
-        },
-        {
-            id: 7,
-            roomName: 'Phong 7',
-            roomStatus: null,
-            price: '800000',
-            contractDay: '',
-            deposit: '0',
-            members: [],
-            tienDien: ELECTRICITY,
-            tienNuoc: WATER,
-        },
-        {
-            id: 8,
-            roomName: 'Phong 8',
-            roomStatus: null,
-            price: '800000',
-            contractDay: '',
-            deposit: '0',
-            members: [],
-            tienDien: ELECTRICITY,
-            tienNuoc: WATER,
-        },
-        {
-            id: 9,
-            roomName: 'Phong 9',
-            roomStatus: null,
-            price: '800000',
-            contractDay: '',
-            deposit: '0',
-            members: [],
-            tienDien: ELECTRICITY,
-            tienNuoc: WATER,
-        },
-        {
-            id: 10,
-            roomName: 'Phong 10',
-            roomStatus: null,
-            price: '800000',
-            contractDay: '',
-            deposit: '0',
-            members: [],
-            tienDien: ELECTRICITY,
-            tienNuoc: WATER,
+            donGiaDien: ELECTRICITY,
+            donGiaNuoc: WATER,
+            billHistory: [
+                { id: 1, monthYear: '5/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
+                { id: 2, monthYear: '6/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
+                { id: 3, monthYear: '7/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
+            ]
         },
     ]
 
@@ -162,38 +98,16 @@ export default function App({ navigation }) {
         },
     ]
 
-
-
-    const [roomList, setRoomList] = useState(modifiedDATA)
-
     const [notes, setNotes] = useState(NOTE)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    const [roomList, setRoomList] = useState(modifiedDATA)
 
 
     return (
         <View style={styles.container}>
-
             {/* Header */}
-            <View style={[styles.header, styles.myBorder]}>
+            <View View style={[styles.header, styles.myBorder]}>
                 <Text>TEN NHA TRO</Text>
-            </View>
+            </View >
 
             {/* Container */}
             <View style={styles.body}>
@@ -202,9 +116,10 @@ export default function App({ navigation }) {
                 <View style={styles.row}>
 
                     {/* Go to room list */}
-                    <TouchableHighlight
+                    <TouchableHighlight TouchableHighlight
                         style={[styles.feature, styles.myBorder]}
-                        onPress={() => { navigation.navigate("DanhSachPhong", { roomList, setRoomList, ELECTRICITY, WATER }) }}>
+                        onPress={() => { navigation.navigate("DanhSachPhong", { roomList, setRoomList, ELECTRICITY, WATER }) }
+                        }>
                         <Text>DANH SACH PHONG</Text>
 
                     </TouchableHighlight>
@@ -214,9 +129,9 @@ export default function App({ navigation }) {
                         style={[styles.feature, styles.myBorder]}
                         onPress={() => { }}>
                         <Text>LAP HOA DON</Text>
-                    </TouchableHighlight>
+                    </TouchableHighlight >
 
-                </View>
+                </View >
 
 
                 {/* Row */}
@@ -236,10 +151,10 @@ export default function App({ navigation }) {
                         <Text>GHI CHU</Text>
                     </TouchableHighlight>
 
-                </View>
+                </View >
 
 
-            </View>
+            </View >
 
 
         </View >
@@ -282,3 +197,5 @@ const styles = StyleSheet.create({
         borderColor: 'black',
     }
 });
+
+

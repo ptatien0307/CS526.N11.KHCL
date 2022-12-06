@@ -30,8 +30,8 @@ export default function App({ navigation, route }) {
             contractDay: '0',
             deposit: 0,
             members: [],
-            tienDien: route.params.ELECTRICITY,
-            tienNuoc: route.params.WATER,
+            donGiaDien: route.params.ELECTRICITY,
+            donGiaNuoc: route.params.WATER,
         }])
 
         route.params.setRoomList([...roomList, {
@@ -42,8 +42,8 @@ export default function App({ navigation, route }) {
             contractDay: '0',
             deposit: 0,
             members: [],
-            tienDien: route.params.ELECTRICITY,
-            tienNuoc: route.params.WATER,
+            donGiaDien: route.params.ELECTRICITY,
+            donGiaNuoc: route.params.WATER,
         }])
     }
 
