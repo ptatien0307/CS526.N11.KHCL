@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 
 export default function App({ navigation }) {
-    const [WATER, setWATER] = useState('10000')
+    const [WATER, setWATER] = useState('3000')
     const [ELECTRICITY, setELECTRICITY] = useState('3000')
 
     let DATA = [

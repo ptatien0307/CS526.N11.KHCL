@@ -79,7 +79,7 @@ export default function App({ navigation, route }) {
                         <View>
                             <Text>Tiền nước</Text>
                             <Text>{`Số cũ: ${billItem.nuocCu}, số mới: ${billItem.nuocMoi}`}</Text>
-                            <Text style={{ fontWeight: 'bold' }}>{`${billItem.nuocMoi - billItem.nuocCu} KWh x ${roomItem.donGiaNuoc}đ`}</Text>
+                            <Text style={{ fontWeight: 'bold' }}>{`${billItem.nuocMoi - billItem.nuocCu} Khối x ${roomItem.donGiaNuoc}đ`}</Text>
                         </View>
                         <View >
                             <Text>Thành tiền</Text>
