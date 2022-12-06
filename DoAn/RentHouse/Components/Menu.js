@@ -168,6 +168,25 @@ export default function App({ navigation }) {
 
     const [notes, setNotes] = useState(NOTE)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     return (
         <View style={styles.container}>
 
