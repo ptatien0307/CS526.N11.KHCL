@@ -94,7 +94,7 @@ export default function App({ navigation, route }) {
                     <FontAwesomeIcon name="arrow-left" size={35} />
                 </TouchableHighlight>
 
-                <Text>GHI CHU</Text>
+                <Text>GHI CHÚ</Text>
 
 
                 {/* Edit info button */}
@@ -115,7 +115,9 @@ export default function App({ navigation, route }) {
 
             {/* Add note button */}
             <TouchableHighlight onPress={() => { handleAddNote() }}>
-                <FontAwesomeIcon name="plus-circle" size={35} />
+                <View style={styles.addNote}>
+                    <Text style={styles.textTitle}>+ THÊM GHI CHÚ</Text>
+                </View>
             </TouchableHighlight >
 
 
@@ -169,6 +171,7 @@ const styles = StyleSheet.create({
     body: {
         width: '90%',
         minHeight: '50%',
+        maxHeight: '80%',
         borderColor: 'black',
         borderRadius: 15,
         borderWidth: 2,
@@ -186,52 +189,43 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         width: '100%',
     },
-    modalContainer: {
-        width: '100%',
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    modalView: {
-        width: '80%',
-        height: '80%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    saveButton: {
-        marginTop: 8,
-        width: '30%',
-        height: '10%',
-        fontSize: 25,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    textTitle: {
-        marginVertical: 8,
-        paddingHorizontal: 8,
-        width: 'auto',
-        fontSize: 25,
-        textAlign: 'center',
-        backgroundColor: 'black',
-        color: 'white'
-    },
-    text: {
-        marginVertical: 8,
-        paddingLeft: 4,
-        width: '80%',
-    },
     viewIcon: {
         position: 'absolute',
-        flexDirection: 'row',
         right: 0,
+        flexDirection: 'row',
     },
     icon: {
         marginHorizontal: 4,
+    },
+
+
+
+
+
+
+
+    textTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'white',
+    },
+    textBold: {
+        fontWeight: 'bold',
+    },
+    textBoldRight: {
+        fontWeight: 'bold',
+        textAlign: 'right',
+    },
+    addNote: {
+        backgroundColor: 'black',
+        borderRadius: 10,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
     },
     myBorder: {
         borderColor: 'black',
         borderRadius: 15,
         borderWidth: 2,
-    },
+    }
 
 });

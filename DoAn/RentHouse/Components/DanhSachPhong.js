@@ -13,9 +13,16 @@ export default function App({ navigation, route }) {
                     setRoomList,
                 })
             }}>
-                <View style={[styles.room, styles.myBorder]}>
-                    <View><Text>{item.roomName}</Text></View>
-                    <View><Text>TINH TRANG: {item.roomStatus}</Text></View>
+                <View style={[styles.room, styles.myBackground]}>
+                    {/* Room name */}
+                    <View>
+                        <Text style={styles.styleRoomName}>{item.roomName}</Text>
+                    </View>
+
+                    {/* Room status */}
+                    <View>
+                        <Text>TÌNH TRẠNG: {item.roomStatus}</Text>
+                    </View>
                 </View>
             </TouchableHighlight>
         )
@@ -56,7 +63,7 @@ export default function App({ navigation, route }) {
         <View style={styles.container}>
 
             {/* Header */}
-            <View style={[styles.header, styles.myBorder]}>
+            <View style={[styles.header, styles.myBackground]}>
 
                 {/* Back to menu button */}
                 <TouchableHighlight onPress={() => { navigation.navigate("Menu") }}>
@@ -64,7 +71,7 @@ export default function App({ navigation, route }) {
                 </TouchableHighlight>
 
                 {/* Title */}
-                <Text>DANH SACH PHONG</Text>
+                <Text style={styles.textTitleStyle}>DANH SÁCH PHÒNG</Text>
 
                 {/* Add room button */}
                 <TouchableHighlight onPress={() => { handleAddRoom() }}>
@@ -100,22 +107,36 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        marginTop: 8,
+        marginVertical: 8,
     },
     body: {
-        flex: 1,
+        height: '90%',
         width: '90%',
     },
     room: {
+        flex: 1,
         justifyContent: 'center',
         paddingLeft: 16,
-        marginVertical: 8,
-        height: 70,
+        paddingVertical: 16,
+        marginBottom: 8,
         width: '100%',
     },
-    myBorder: {
-        borderColor: 'black',
-        borderRadius: 15,
-        borderWidth: 2,
-    }
+
+
+
+
+
+    styleRoomName: {
+        fontWeight: 'bold',
+    },
+    textTitleStyle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    myBackground: {
+
+        backgroundColor: '#dfdfdf',
+        borderRadius: 10,
+    },
 });

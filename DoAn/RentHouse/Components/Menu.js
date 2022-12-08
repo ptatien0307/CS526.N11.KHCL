@@ -9,7 +9,7 @@ export default function App({ navigation }) {
     let DATA = [
         {
             id: '1',
-            roomName: 'Phong 1',
+            roomName: 'Phòng 1',
             roomStatus: null,
             price: '800000',
             contractDay: '23/11/2022',
@@ -30,7 +30,7 @@ export default function App({ navigation }) {
         },
         {
             id: '2',
-            roomName: 'Phong 2',
+            roomName: 'Phòng 2',
             roomStatus: null,
             price: '800000',
             contractDay: '12/12/2022',
@@ -49,7 +49,7 @@ export default function App({ navigation }) {
         },
         {
             id: '3',
-            roomName: 'Phong 3',
+            roomName: 'Phòng 3',
             roomStatus: null,
             price: '800000',
             contractDay: '',
@@ -69,9 +69,9 @@ export default function App({ navigation }) {
 
     let modifiedDATA = DATA.map(item => {
         if (item.members.length === 0)
-            item.roomStatus = 'Trong'
+            item.roomStatus = 'Trống'
         else
-            item.roomStatus = item.members.length + ' nguoi'
+            item.roomStatus = item.members.length + ' người'
         return item
     })
 
@@ -96,6 +96,10 @@ export default function App({ navigation }) {
             id: 5,
             noteContent: 'Do something 5'
         },
+        {
+            id: 6,
+            noteContent: 'Do something 5'
+        },
     ]
 
     const [notes, setNotes] = useState(NOTE)
@@ -105,8 +109,8 @@ export default function App({ navigation }) {
     return (
         <View style={styles.container}>
             {/* Header */}
-            <View View style={[styles.header, styles.myBorder]}>
-                <Text>TEN NHA TRO</Text>
+            <View View style={[styles.header, styles.myBackground]}>
+                <Text style={styles.textTitle}>TÊN NHÀ TRỌ</Text>
             </View >
 
             {/* Container */}
@@ -117,18 +121,18 @@ export default function App({ navigation }) {
 
                     {/* Go to room list */}
                     <TouchableHighlight TouchableHighlight
-                        style={[styles.feature, styles.myBorder]}
+                        style={[styles.feature, styles.myBackground]}
                         onPress={() => { navigation.navigate("DanhSachPhong", { roomList, setRoomList, ELECTRICITY, WATER }) }
                         }>
-                        <Text>DANH SACH PHONG</Text>
+                        <Text style={styles.textTitle}>DANH SÁCH PHÒNG</Text>
 
                     </TouchableHighlight>
 
                     {/* Go to bill */}
                     <TouchableHighlight
-                        style={[styles.feature, styles.myBorder]}
+                        style={[styles.feature, styles.myBackground]}
                         onPress={() => { }}>
-                        <Text>LAP HOA DON</Text>
+                        <Text style={styles.textTitle}>LẬP HÓA ĐƠN</Text>
                     </TouchableHighlight >
 
                 </View >
@@ -139,16 +143,16 @@ export default function App({ navigation }) {
 
                     {/* Cai dat dich vu */}
                     <TouchableHighlight
-                        style={[styles.feature, styles.myBorder]}
+                        style={[styles.feature, styles.myBackground]}
                         onPress={() => { }}>
-                        <Text>CAI DAT DICH VU</Text>
+                        <Text style={styles.textTitle}>CÀI ĐẶT DỊCH VỤ</Text>
                     </TouchableHighlight>
 
                     {/* Ghi chu */}
                     <TouchableHighlight
-                        style={[styles.feature, styles.myBorder]}
+                        style={[styles.feature, styles.myBackground]}
                         onPress={() => { navigation.navigate("GhiChu", { notes, setNotes }) }}>
-                        <Text>GHI CHU</Text>
+                        <Text style={styles.textTitle}>GHI CHÚ</Text>
                     </TouchableHighlight>
 
                 </View >
@@ -166,6 +170,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-evenly',
+        backgroundColor: '#ffffff'
     },
     header: {
         marginTop: 12,
@@ -191,11 +196,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-evenly',
     },
-    myBorder: {
-        borderRadius: 15,
-        borderWidth: 2,
-        borderColor: 'black',
-    }
+
+
+
+
+    myBackground: {
+        backgroundColor: '#dfdfdf',
+        borderRadius: 10,
+    },
+
+    textTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
 });
 
 
