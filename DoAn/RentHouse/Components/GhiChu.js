@@ -113,12 +113,7 @@ export default function App({ navigation, route }) {
                 </FlatList>
             </View>
 
-            {/* Add note button */}
-            <TouchableHighlight onPress={() => { handleAddNote() }}>
-                <View style={styles.addNote}>
-                    <Text style={styles.textTitle}>+ THÊM GHI CHÚ</Text>
-                </View>
-            </TouchableHighlight >
+
 
 
             {/* Modal for edit note */}
@@ -146,6 +141,13 @@ export default function App({ navigation, route }) {
                 setGlobalNotes={route.params.setNotes}>
             </ModalAdd>
 
+
+            {/* Add note button */}
+            <TouchableHighlight style={styles.addButton} onPress={() => { handleAddNote() }}>
+                <View>
+                    <Text style={styles.textTitle}>+ THÊM GHI CHÚ</Text>
+                </View>
+            </TouchableHighlight >
         </View >
     );
 }
@@ -155,6 +157,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
+        width: '100%',
     },
     header: {
         width: '90%',
@@ -216,11 +219,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'right',
     },
-    addNote: {
+    addButton: {
         backgroundColor: 'black',
         borderRadius: 10,
         paddingHorizontal: 8,
         paddingVertical: 4,
+        position: 'absolute',
+        bottom: 8,
     },
     myBorder: {
         borderColor: 'black',

@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 
 export default function App({ navigation }) {
-    const [WATER, setWATER] = useState('3000')
+    const [WATER, setWATER] = useState('12000')
     const [ELECTRICITY, setELECTRICITY] = useState('3000')
 
     let DATA = [
@@ -76,6 +76,102 @@ export default function App({ navigation }) {
     })
 
     let NOTE = [
+        {
+            id: 1,
+            noteContent: 'Do something 1'
+        },
+        {
+            id: 2,
+            noteContent: 'Do something 2'
+        },
+        {
+            id: 3,
+            noteContent: 'Do something 3'
+        },
+        {
+            id: 4,
+            noteContent: 'Do something 4'
+        },
+        {
+            id: 5,
+            noteContent: 'Do something 5'
+        },
+        {
+            id: 6,
+            noteContent: 'Do something 5'
+        },
+        {
+            id: 1,
+            noteContent: 'Do something 1'
+        },
+        {
+            id: 2,
+            noteContent: 'Do something 2'
+        },
+        {
+            id: 3,
+            noteContent: 'Do something 3'
+        },
+        {
+            id: 4,
+            noteContent: 'Do something 4'
+        },
+        {
+            id: 5,
+            noteContent: 'Do something 5'
+        },
+        {
+            id: 6,
+            noteContent: 'Do something 5'
+        },
+        {
+            id: 1,
+            noteContent: 'Do something 1'
+        },
+        {
+            id: 2,
+            noteContent: 'Do something 2'
+        },
+        {
+            id: 3,
+            noteContent: 'Do something 3'
+        },
+        {
+            id: 4,
+            noteContent: 'Do something 4'
+        },
+        {
+            id: 5,
+            noteContent: 'Do something 5'
+        },
+        {
+            id: 6,
+            noteContent: 'Do something 5'
+        },
+        {
+            id: 1,
+            noteContent: 'Do something 1'
+        },
+        {
+            id: 2,
+            noteContent: 'Do something 2'
+        },
+        {
+            id: 3,
+            noteContent: 'Do something 3'
+        },
+        {
+            id: 4,
+            noteContent: 'Do something 4'
+        },
+        {
+            id: 5,
+            noteContent: 'Do something 5'
+        },
+        {
+            id: 6,
+            noteContent: 'Do something 5'
+        },
         {
             id: 1,
             noteContent: 'Do something 1'

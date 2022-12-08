@@ -1,4 +1,3 @@
-
 import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -9,6 +8,9 @@ import DanhSachPhong from './Components/DanhSachPhong.js'
 import ChiTietPhong from './Components/ChiTietPhong.js'
 import GhiChu from './Components/GhiChu.js'
 import ChiTietHoaDon from './Components/ChiTietHoaDon.js'
+
+
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -41,5 +43,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });

@@ -30,8 +30,8 @@ export default function App({ navigation, route }) {
 
     const handleAddRoom = () => {
         setRoomList([...roomList, {
-            id: roomList[roomList.length - 1].id + 1,
-            roomName: 'Phong ' + (roomList[roomList.length - 1].id + 1),
+            id: parseInt(roomList[roomList.length - 1].id) + 1,
+            roomName: 'Phong ' + (parseInt(roomList[roomList.length - 1].id) + 1),
             roomStatus: 'trong',
             price: 800000,
             contractDay: '0',
@@ -42,8 +42,8 @@ export default function App({ navigation, route }) {
         }])
 
         route.params.setRoomList([...roomList, {
-            id: roomList[roomList.length - 1].id + 1,
-            roomName: 'Phong ' + (roomList[roomList.length - 1].id + 1),
+            id: parseInt(roomList[roomList.length - 1].id) + 1,
+            roomName: 'Phong ' + (parseInt(roomList[roomList.length - 1].id) + 1),
             roomStatus: 'trong',
             price: 800000,
             contractDay: '0',
@@ -73,10 +73,6 @@ export default function App({ navigation, route }) {
                 {/* Title */}
                 <Text style={styles.textTitleStyle}>DANH SÁCH PHÒNG</Text>
 
-                {/* Add room button */}
-                <TouchableHighlight onPress={() => { handleAddRoom() }}>
-                    <Icon name="plus-circle" size={35} />
-                </TouchableHighlight>
             </View>
 
 
@@ -91,6 +87,13 @@ export default function App({ navigation, route }) {
                 </FlatList>
 
             </View>
+
+            {/* Add room button */}
+            <TouchableHighlight style={styles.addButton} onPress={() => { handleAddRoom() }}>
+                <View>
+                    <Text style={styles.textTitle}>+ THÊM PHÒNG</Text>
+                </View>
+            </TouchableHighlight >
 
         </View>
     );
@@ -129,14 +132,27 @@ const styles = StyleSheet.create({
     styleRoomName: {
         fontWeight: 'bold',
     },
+
+    addButton: {
+        backgroundColor: 'black',
+        borderRadius: 10,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        position: 'absolute',
+        bottom: 8,
+    },
     textTitleStyle: {
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center'
     },
     myBackground: {
-
         backgroundColor: '#dfdfdf',
         borderRadius: 10,
+    },
+    textTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'white',
     },
 });
