@@ -55,14 +55,12 @@ export default function App({ navigation }) {
             contractDay: '',
             deposit: '0',
             members: [
-                { id: 1, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789' },
+
             ],
             donGiaDien: ELECTRICITY,
             donGiaNuoc: WATER,
             billHistory: [
-                { id: 1, monthYear: '5/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
-                { id: 2, monthYear: '6/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
-                { id: 3, monthYear: '7/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
+
             ]
         },
     ]

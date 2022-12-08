@@ -61,12 +61,12 @@ export default function App({ navigation, route }) {
 
     const renderItem = ({ item }) => {
         return (
-            <View style={styles.note}>
+            <View style={[styles.note, styles.myBackground]}>
                 <View style={styles.noteContent}>
                     <Text>{item.id}. {item.noteContent}</Text>
                 </View>
 
-                <View style={styles.viewIcon}>
+                <View style={styles.noteIcon}>
                     <TouchableHighlight onPress={() => { handleEditItem(item) }}>
                         <FontAwesomeIcon name="pencil" size={20} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
                     </TouchableHighlight>
@@ -89,18 +89,20 @@ export default function App({ navigation, route }) {
 
             {/* Header */}
             <View style={styles.header}>
-                {/* Back to menu button */}
-                <TouchableHighlight onPress={() => { navigation.goBack() }}>
-                    <FontAwesomeIcon name="arrow-left" size={35} />
-                </TouchableHighlight>
+                <View style={styles.headerTop}>
+                    {/* Back to menu button */}
+                    <TouchableHighlight onPress={() => { navigation.goBack() }}>
+                        <FontAwesomeIcon name="arrow-left" size={35} />
+                    </TouchableHighlight>
 
-                <Text>GHI CHÚ</Text>
+                    <Text style={styles.textTitleStyle}>GHI CHÚ</Text>
 
 
-                {/* Edit info button */}
-                <TouchableHighlight onPress={() => { setMountEdit(!mountEdit) }}>
-                    <FontAwesomeIcon name="edit" size={35} />
-                </TouchableHighlight>
+                    {/* Edit info button */}
+                    <TouchableHighlight onPress={() => { setMountEdit(!mountEdit) }}>
+                        <FontAwesomeIcon name="edit" size={35} />
+                    </TouchableHighlight>
+                </View>
             </View>
 
             {/* Body */}
@@ -143,11 +145,11 @@ export default function App({ navigation, route }) {
 
 
             {/* Add note button */}
-            <TouchableHighlight style={styles.addButton} onPress={() => { handleAddNote() }}>
-                <View>
+            <View style={styles.btnContainer}>
+                <TouchableHighlight style={styles.addButton} onPress={() => { handleAddNote() }}>
                     <Text style={styles.textTitle}>+ THÊM GHI CHÚ</Text>
-                </View>
-            </TouchableHighlight >
+                </TouchableHighlight >
+            </View>
         </View >
     );
 }
@@ -160,39 +162,47 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     header: {
-        width: '90%',
+        width: '100%',
         height: '10%',
-        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        borderColor: 'black',
-        borderRadius: 15,
-        borderWidth: 2,
-        marginVertical: 8,
-        paddingHorizontal: 8,
+        justifyContent: 'flex-start',
+        backgroundColor: '#dfdfdf',
+        paddingLeft: 8,
+        borderBottomWidth: 2,
+        position: 'absolute',
+        top: 0,
+        zIndex: 99,
+    },
+    headerTop: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
     },
     body: {
+        marginTop: 64,
         width: '90%',
         minHeight: '50%',
-        maxHeight: '80%',
-        borderColor: 'black',
-        borderRadius: 15,
-        borderWidth: 2,
+        maxHeight: '90%',
+        paddingLeft: 8,
     },
     note: {
-        margin: 8,
         flexDirection: 'row',
         paddingHorizontal: 8,
         justifyContent: 'space-between',
         alignItems: 'center',
+        borderLeftWidth: 5,
+        width: '100%',
+        marginBottom: 16,
     },
     noteContent: {
-        height: 25,
-        borderBottomColor: 'black',
-        borderBottomWidth: 1,
+        height: 50,
         width: '100%',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
     },
-    viewIcon: {
+    noteIcon: {
         position: 'absolute',
         right: 0,
         flexDirection: 'row',
@@ -206,7 +216,12 @@ const styles = StyleSheet.create({
 
 
 
-
+    textTitleStyle: {
+        marginLeft: 32,
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
     textTitle: {
         fontSize: 20,
         fontWeight: 'bold',
@@ -219,18 +234,32 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'right',
     },
+    btnContainer: {
+        width: '100%',
+        height: '7%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(223,223,223,0.8)',
+        position: 'absolute',
+        bottom: 0,
+    },
     addButton: {
+        width: '50%',
+        height: '90s%',
         backgroundColor: 'black',
         borderRadius: 10,
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        position: 'absolute',
-        bottom: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+
     },
     myBorder: {
         borderColor: 'black',
         borderRadius: 15,
         borderWidth: 2,
-    }
+    },
+    myBackground: {
+        backgroundColor: '#dfdfdf',
+        borderRadius: 10,
+    },
 
 });

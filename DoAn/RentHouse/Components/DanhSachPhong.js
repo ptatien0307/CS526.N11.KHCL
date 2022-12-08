@@ -63,16 +63,18 @@ export default function App({ navigation, route }) {
         <View style={styles.container}>
 
             {/* Header */}
-            <View style={[styles.header, styles.myBackground]}>
+            <View style={[styles.header]}>
 
-                {/* Back to menu button */}
-                <TouchableHighlight onPress={() => { navigation.navigate("Menu") }}>
-                    <Icon name="arrow-left" size={35} />
-                </TouchableHighlight>
+                <View style={styles.headerTop}>
+                    {/* Back to menu button */}
+                    <TouchableHighlight onPress={() => { navigation.navigate("Menu") }}>
+                        <Icon name="arrow-left" size={35} />
+                    </TouchableHighlight>
 
-                {/* Title */}
-                <Text style={styles.textTitleStyle}>DANH SÁCH PHÒNG</Text>
+                    {/* Title */}
+                    <Text style={styles.textTitleStyle}>DANH SÁCH PHÒNG</Text>
 
+                </View>
             </View>
 
 
@@ -105,16 +107,28 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     header: {
-        width: '90%',
+        width: '100%',
         height: '10%',
-        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around',
-        marginVertical: 8,
+        justifyContent: 'flex-start',
+        backgroundColor: '#dfdfdf',
+        paddingLeft: 8,
+        borderBottomWidth: 2,
+        position: 'absolute',
+        top: 0,
+        zIndex: 99,
+    },
+    headerTop: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
     },
     body: {
+        marginTop: 64,
         height: '90%',
-        width: '90%',
+        width: '95%',
     },
     room: {
         flex: 1,
@@ -123,6 +137,7 @@ const styles = StyleSheet.create({
         paddingVertical: 16,
         marginBottom: 8,
         width: '100%',
+        borderLeftWidth: 5,
     },
 
 
@@ -132,7 +147,6 @@ const styles = StyleSheet.create({
     styleRoomName: {
         fontWeight: 'bold',
     },
-
     addButton: {
         backgroundColor: 'black',
         borderRadius: 10,
@@ -142,17 +156,19 @@ const styles = StyleSheet.create({
         bottom: 8,
     },
     textTitleStyle: {
+        marginLeft: 32,
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center'
-    },
-    myBackground: {
-        backgroundColor: '#dfdfdf',
-        borderRadius: 10,
     },
     textTitle: {
         fontSize: 20,
         fontWeight: 'bold',
         color: 'white',
     },
+    myBackground: {
+        backgroundColor: '#dfdfdf',
+        borderRadius: 10,
+    },
+
 });

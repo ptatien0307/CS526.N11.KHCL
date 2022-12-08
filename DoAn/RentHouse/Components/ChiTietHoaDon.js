@@ -22,14 +22,16 @@ export default function App({ navigation, route }) {
         <View style={styles.container}>
 
             {/* Header */}
-            <View style={[styles.header, styles.myBackground]}>
+            <View style={[styles.header]}>
 
-                {/* Back to menu button */}
-                <TouchableHighlight onPress={() => { navigation.goBack() }}>
-                    <FontAwesomeIcon name="arrow-left" size={35} />
-                </TouchableHighlight>
+                <View style={styles.headerTop}>
+                    {/* Back to menu button */}
+                    <TouchableHighlight onPress={() => { navigation.goBack() }}>
+                        <FontAwesomeIcon name="arrow-left" size={35} />
+                    </TouchableHighlight>
 
-                <Text style={styles.textTitle}>CHI TIẾT HÓA ĐƠN</Text>
+                    <Text style={styles.textTitleStyle}>CHI TIẾT HÓA ĐƠN</Text>
+                </View>
 
             </View>
 
@@ -119,14 +121,25 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     header: {
-        width: '90%',
+        width: '100%',
         height: '10%',
-        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around',
-        marginVertical: 8,
+        justifyContent: 'flex-start',
+        backgroundColor: '#dfdfdf',
+        marginBottom: 8,
+        paddingLeft: 8,
+        borderBottomWidth: 2,
+        position: 'absolute',
+        top: 0,
+        zIndex: 99,
     },
-
+    headerTop: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+    },
 
 
     body: {
@@ -172,7 +185,12 @@ const styles = StyleSheet.create({
 
 
 
-
+    textTitleStyle: {
+        marginLeft: 32,
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
     textTitle: {
         fontSize: 20,
         fontWeight: 'bold',
