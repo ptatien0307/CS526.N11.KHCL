@@ -61,12 +61,12 @@ export default function App({ navigation, route }) {
 
     const renderItem = ({ item }) => {
         return (
-            <View style={styles.note}>
+            <View style={[styles.note, styles.myBackground]}>
                 <View style={styles.noteContent}>
                     <Text>{item.id}. {item.noteContent}</Text>
                 </View>
 
-                <View style={styles.viewIcon}>
+                <View style={styles.noteIcon}>
                     <TouchableHighlight onPress={() => { handleEditItem(item) }}>
                         <FontAwesomeIcon name="pencil" size={20} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
                     </TouchableHighlight>
@@ -89,18 +89,20 @@ export default function App({ navigation, route }) {
 
             {/* Header */}
             <View style={styles.header}>
-                {/* Back to menu button */}
-                <TouchableHighlight onPress={() => { navigation.goBack() }}>
-                    <FontAwesomeIcon name="arrow-left" size={35} />
-                </TouchableHighlight>
+                <View style={styles.headerTop}>
+                    {/* Back to menu button */}
+                    <TouchableHighlight onPress={() => { navigation.goBack() }}>
+                        <FontAwesomeIcon name="arrow-left" size={35} />
+                    </TouchableHighlight>
 
-                <Text>GHI CHU</Text>
+                    <Text style={styles.textTitleStyle}>GHI CHÚ</Text>
 
 
-                {/* Edit info button */}
-                <TouchableHighlight onPress={() => { setMountEdit(!mountEdit) }}>
-                    <FontAwesomeIcon name="edit" size={35} />
-                </TouchableHighlight>
+                    {/* Edit info button */}
+                    <TouchableHighlight onPress={() => { setMountEdit(!mountEdit) }}>
+                        <FontAwesomeIcon name="edit" size={35} />
+                    </TouchableHighlight>
+                </View>
             </View>
 
             {/* Body */}
@@ -113,10 +115,7 @@ export default function App({ navigation, route }) {
                 </FlatList>
             </View>
 
-            {/* Add note button */}
-            <TouchableHighlight onPress={() => { handleAddNote() }}>
-                <FontAwesomeIcon name="plus-circle" size={35} />
-            </TouchableHighlight >
+
 
 
             {/* Modal for edit note */}
@@ -144,6 +143,13 @@ export default function App({ navigation, route }) {
                 setGlobalNotes={route.params.setNotes}>
             </ModalAdd>
 
+
+            {/* Add note button */}
+            <View style={styles.btnContainer}>
+                <TouchableHighlight style={styles.addButton} onPress={() => { handleAddNote() }}>
+                    <Text style={styles.textTitle}>+ THÊM GHI CHÚ</Text>
+                </TouchableHighlight >
+            </View>
         </View >
     );
 }
@@ -153,85 +159,107 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
+        width: '100%',
     },
     header: {
-        width: '90%',
-        height: '10%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        borderColor: 'black',
-        borderRadius: 15,
-        borderWidth: 2,
-        marginVertical: 8,
-        paddingHorizontal: 8,
-    },
-    body: {
-        width: '90%',
-        minHeight: '50%',
-        borderColor: 'black',
-        borderRadius: 15,
-        borderWidth: 2,
-    },
-    note: {
-        margin: 8,
-        flexDirection: 'row',
-        paddingHorizontal: 8,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    noteContent: {
-        height: 25,
-        borderBottomColor: 'black',
-        borderBottomWidth: 1,
         width: '100%',
+        height: '10%',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        backgroundColor: '#dfdfdf',
+        paddingLeft: 8,
+        borderBottomWidth: 2,
+        position: 'absolute',
+        top: 0,
+        zIndex: 99,
     },
-    modalContainer: {
+    headerTop: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
         width: '100%',
         height: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
-    modalView: {
-        width: '80%',
-        height: '80%',
-        alignItems: 'center',
-        justifyContent: 'center',
+    body: {
+        marginTop: 64,
+        width: '90%',
+        minHeight: '50%',
+        maxHeight: '90%',
+        paddingLeft: 8,
     },
-    saveButton: {
-        marginTop: 8,
-        width: '30%',
-        height: '10%',
-        fontSize: 25,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    textTitle: {
-        marginVertical: 8,
-        paddingHorizontal: 8,
-        width: 'auto',
-        fontSize: 25,
-        textAlign: 'center',
-        backgroundColor: 'black',
-        color: 'white'
-    },
-    text: {
-        marginVertical: 8,
-        paddingLeft: 4,
-        width: '80%',
-    },
-    viewIcon: {
-        position: 'absolute',
+    note: {
         flexDirection: 'row',
+        paddingHorizontal: 8,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderLeftWidth: 5,
+        width: '100%',
+        marginBottom: 16,
+    },
+    noteContent: {
+        height: 50,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+    },
+    noteIcon: {
+        position: 'absolute',
         right: 0,
+        flexDirection: 'row',
     },
     icon: {
         marginHorizontal: 4,
+    },
+
+
+
+
+
+
+    textTitleStyle: {
+        marginLeft: 32,
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    textTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'white',
+    },
+    textBold: {
+        fontWeight: 'bold',
+    },
+    textBoldRight: {
+        fontWeight: 'bold',
+        textAlign: 'right',
+    },
+    btnContainer: {
+        width: '100%',
+        height: '7%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(223,223,223,0.8)',
+        position: 'absolute',
+        bottom: 0,
+    },
+    addButton: {
+        width: '50%',
+        height: '90s%',
+        backgroundColor: 'black',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+
     },
     myBorder: {
         borderColor: 'black',
         borderRadius: 15,
         borderWidth: 2,
+    },
+    myBackground: {
+        backgroundColor: '#dfdfdf',
+        borderRadius: 10,
     },
 
 });

@@ -22,19 +22,17 @@ export default function App({ navigation, route }) {
         <View style={styles.container}>
 
             {/* Header */}
-            <View style={[styles.header, styles.myBorder]}>
+            <View style={[styles.header]}>
 
-                {/* Back to menu button */}
-                <TouchableHighlight onPress={() => { navigation.goBack() }}>
-                    <FontAwesomeIcon name="arrow-left" size={35} />
-                </TouchableHighlight>
+                <View style={styles.headerTop}>
+                    {/* Back to menu button */}
+                    <TouchableHighlight onPress={() => { navigation.goBack() }}>
+                        <FontAwesomeIcon name="arrow-left" size={35} />
+                    </TouchableHighlight>
 
-                <Text>CHI TIET HOA DON</Text>
+                    <Text style={styles.textTitleStyle}>CHI TIẾT HÓA ĐƠN</Text>
+                </View>
 
-                {/* Edit info button */}
-                <TouchableHighlight onPress={() => { setMountEdit(!mountEdit) }}>
-                    <FontAwesomeIcon name="edit" size={35} />
-                </TouchableHighlight>
             </View>
 
             {/* Body */}
@@ -45,52 +43,52 @@ export default function App({ navigation, route }) {
                     {/* Name and day */}
                     <View>
                         <Text style={{ fontSize: 20 }}>{roomItem.roomName}</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>{billItem.monthYear}</Text>
+                        <Text style={styles.textTitle}>{billItem.monthYear}</Text>
                     </View>
 
                     {/* Price */}
-                    <View style={[styles.detailItem, styles.myBorder]}>
+                    <View style={[styles.detailItem, styles.myBackground]}>
                         <View>
                             <Text>Tiền phòng</Text>
-                            <Text style={{ fontWeight: 'bold' }}>30 ngày, giá: {roomItem.price}</Text>
+                            <Text style={styles.textBold}>30 ngày, giá: {roomItem.price}đ</Text>
                         </View>
                         <View >
                             <Text>Thành tiền</Text>
-                            <Text style={{ fontWeight: 'bold', textAlign: 'right' }}>{roomItem.price}đ</Text>
+                            <Text style={styles.textBoldRight}>{roomItem.price}đ</Text>
                         </View>
                     </View>
 
                     {/* Electricity */}
-                    <View style={[styles.detailItem, styles.myBorder]}>
+                    <View style={[styles.detailItem, styles.myBackground]}>
                         <View>
                             <Text>Tiền điện</Text>
                             <Text>{`Số cũ: ${billItem.dienCu}, số mới: ${billItem.dienMoi}`}</Text>
-                            <Text style={{ fontWeight: 'bold' }}>{`${billItem.dienMoi - billItem.dienCu} KWh x ${roomItem.donGiaDien}đ`}</Text>
+                            <Text style={styles.textBold}>{`${billItem.dienMoi - billItem.dienCu} KWh x ${roomItem.donGiaDien}đ`}</Text>
                         </View>
                         <View >
                             <Text>Thành tiền</Text>
-                            <Text style={{ fontWeight: 'bold', textAlign: 'right' }}>{`${(billItem.dienMoi - billItem.dienCu) * roomItem.donGiaDien}đ`}</Text>
+                            <Text style={styles.textBoldRight}>{`${(billItem.dienMoi - billItem.dienCu) * roomItem.donGiaDien}đ`}</Text>
                         </View>
 
                     </View>
 
                     {/* Water */}
-                    <View style={[styles.detailItem, styles.myBorder]}>
+                    <View style={[styles.detailItem, styles.myBackground]}>
                         <View>
                             <Text>Tiền nước</Text>
                             <Text>{`Số cũ: ${billItem.nuocCu}, số mới: ${billItem.nuocMoi}`}</Text>
-                            <Text style={{ fontWeight: 'bold' }}>{`${billItem.nuocMoi - billItem.nuocCu} Khối x ${roomItem.donGiaNuoc}đ`}</Text>
+                            <Text style={styles.textBold}>{`${billItem.nuocMoi - billItem.nuocCu} KWh x ${roomItem.donGiaNuoc}đ`}</Text>
                         </View>
                         <View >
                             <Text>Thành tiền</Text>
-                            <Text style={{ fontWeight: 'bold', textAlign: 'right' }}>{`${(billItem.nuocMoi - billItem.nuocCu) * roomItem.donGiaNuoc}đ`}</Text>
+                            <Text style={styles.textBoldRight}>{`${(billItem.nuocMoi - billItem.nuocCu) * roomItem.donGiaNuoc}đ`}</Text>
                         </View>
                     </View>
 
                     {/* Total */}
-                    <View style={[styles.detailItemRight, styles.myBorder]}>
+                    <View style={[styles.detailItemRight, styles.myBackground]}>
                         <Text>Tổng cộng kỳ này</Text>
-                        <Text style={{ fontWeight: 'bold', textAlign: 'right' }}>{billItem.total}đ</Text>
+                        <Text style={styles.textBoldRight}>{billItem.total}đ</Text>
                     </View>
                 </View>
 
@@ -98,16 +96,16 @@ export default function App({ navigation, route }) {
                 <View style={[styles.sum, styles.myBorder]}>
                     <View style={[styles.detailItemRight, { borderBottomWidth: 2 }]}>
                         <Text>Khách hàng trả</Text>
-                        <Text style={{ fontWeight: 'bold', textAlign: 'right' }}>1000000đ</Text>
+                        <Text style={styles.textBoldRight}>{billItem.collected}đ</Text>
                     </View>
-                    <View style={[styles.detailItem, styles.count]}>
+                    <View style={[styles.detailItem, styles.myBackground]}>
                         <View>
                             <Text>Số lần thu</Text>
-                            <Text style={{ fontWeight: 'bold' }}>1 lần</Text>
+                            <Text style={styles.textBold}>1 lần</Text>
                         </View>
                         <View>
                             <Text>Tổng phải thu</Text>
-                            <Text style={{ fontWeight: 'bold', textAlign: 'right' }}>55000đ</Text>
+                            <Text style={styles.textBoldRight}>{billItem.total - billItem.collected}đ</Text>
                         </View>
                     </View>
                 </View>
@@ -123,14 +121,25 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     header: {
-        width: '90%',
+        width: '100%',
         height: '10%',
-        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around',
-        marginTop: 8,
+        justifyContent: 'flex-start',
+        backgroundColor: '#dfdfdf',
+        marginBottom: 8,
+        paddingLeft: 8,
+        borderBottomWidth: 2,
+        position: 'absolute',
+        top: 0,
+        zIndex: 99,
     },
-
+    headerTop: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+    },
 
 
     body: {
@@ -143,7 +152,6 @@ const styles = StyleSheet.create({
         width: '90%',
         height: 'auto',
         alignItems: 'center',
-        marginTop: 8,
         paddingBottom: 4,
     },
     detailItem: {
@@ -172,16 +180,32 @@ const styles = StyleSheet.create({
         marginTop: 8,
         paddingBottom: 4,
     },
-    count: {
-        marginRight: 40,
-        marginLeft: 40,
-        marginTop: 10,
-        paddingTop: 20,
-        paddingBottom: 20,
-        backgroundColor: '#68a0cf',
+
+
+
+
+
+    textTitleStyle: {
+        marginLeft: 32,
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    textTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    textBold: {
+        fontWeight: 'bold',
+    },
+    textBoldRight: {
+        fontWeight: 'bold',
+        textAlign: 'right',
+    },
+    myBackground: {
+        backgroundColor: '#dfdfdf',
         borderRadius: 10,
-        borderWidth: 2,
-        borderColor: '#fff',
     },
     myBorder: {
         borderColor: 'black',

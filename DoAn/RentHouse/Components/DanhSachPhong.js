@@ -13,9 +13,16 @@ export default function App({ navigation, route }) {
                     setRoomList,
                 })
             }}>
-                <View style={[styles.room, styles.myBorder]}>
-                    <View><Text>{item.roomName}</Text></View>
-                    <View><Text>TINH TRANG: {item.roomStatus}</Text></View>
+                <View style={[styles.room, styles.myBackground]}>
+                    {/* Room name */}
+                    <View>
+                        <Text style={styles.styleRoomName}>{item.roomName}</Text>
+                    </View>
+
+                    {/* Room status */}
+                    <View>
+                        <Text>TÌNH TRẠNG: {item.roomStatus}</Text>
+                    </View>
                 </View>
             </TouchableHighlight>
         )
@@ -23,8 +30,8 @@ export default function App({ navigation, route }) {
 
     const handleAddRoom = () => {
         setRoomList([...roomList, {
-            id: roomList[roomList.length - 1].id + 1,
-            roomName: 'Phong ' + (roomList[roomList.length - 1].id + 1),
+            id: parseInt(roomList[roomList.length - 1].id) + 1,
+            roomName: 'Phong ' + (parseInt(roomList[roomList.length - 1].id) + 1),
             roomStatus: 'trong',
             price: 800000,
             contractDay: '0',
@@ -35,8 +42,8 @@ export default function App({ navigation, route }) {
         }])
 
         route.params.setRoomList([...roomList, {
-            id: roomList[roomList.length - 1].id + 1,
-            roomName: 'Phong ' + (roomList[roomList.length - 1].id + 1),
+            id: parseInt(roomList[roomList.length - 1].id) + 1,
+            roomName: 'Phong ' + (parseInt(roomList[roomList.length - 1].id) + 1),
             roomStatus: 'trong',
             price: 800000,
             contractDay: '0',
@@ -56,20 +63,18 @@ export default function App({ navigation, route }) {
         <View style={styles.container}>
 
             {/* Header */}
-            <View style={[styles.header, styles.myBorder]}>
+            <View style={[styles.header]}>
 
-                {/* Back to menu button */}
-                <TouchableHighlight onPress={() => { navigation.navigate("Menu") }}>
-                    <Icon name="arrow-left" size={35} />
-                </TouchableHighlight>
+                <View style={styles.headerTop}>
+                    {/* Back to menu button */}
+                    <TouchableHighlight onPress={() => { navigation.navigate("Menu") }}>
+                        <Icon name="arrow-left" size={35} />
+                    </TouchableHighlight>
 
-                {/* Title */}
-                <Text>DANH SACH PHONG</Text>
+                    {/* Title */}
+                    <Text style={styles.textTitleStyle}>DANH SÁCH PHÒNG</Text>
 
-                {/* Add room button */}
-                <TouchableHighlight onPress={() => { handleAddRoom() }}>
-                    <Icon name="plus-circle" size={35} />
-                </TouchableHighlight>
+                </View>
             </View>
 
 
@@ -85,6 +90,13 @@ export default function App({ navigation, route }) {
 
             </View>
 
+            {/* Add room button */}
+            <TouchableHighlight style={styles.addButton} onPress={() => { handleAddRoom() }}>
+                <View>
+                    <Text style={styles.textTitle}>+ THÊM PHÒNG</Text>
+                </View>
+            </TouchableHighlight >
+
         </View>
     );
 }
@@ -95,27 +107,68 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     header: {
-        width: '90%',
+        width: '100%',
         height: '10%',
-        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around',
-        marginTop: 8,
+        justifyContent: 'flex-start',
+        backgroundColor: '#dfdfdf',
+        paddingLeft: 8,
+        borderBottomWidth: 2,
+        position: 'absolute',
+        top: 0,
+        zIndex: 99,
+    },
+    headerTop: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
     },
     body: {
-        flex: 1,
-        width: '90%',
+        marginTop: 64,
+        height: '90%',
+        width: '95%',
     },
     room: {
+        flex: 1,
         justifyContent: 'center',
         paddingLeft: 16,
-        marginVertical: 8,
-        height: 70,
+        paddingVertical: 16,
+        marginBottom: 8,
         width: '100%',
+        borderLeftWidth: 5,
     },
-    myBorder: {
-        borderColor: 'black',
-        borderRadius: 15,
-        borderWidth: 2,
-    }
+
+
+
+
+
+    styleRoomName: {
+        fontWeight: 'bold',
+    },
+    addButton: {
+        backgroundColor: 'black',
+        borderRadius: 10,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        position: 'absolute',
+        bottom: 8,
+    },
+    textTitleStyle: {
+        marginLeft: 32,
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    textTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'white',
+    },
+    myBackground: {
+        backgroundColor: '#dfdfdf',
+        borderRadius: 10,
+    },
+
 });

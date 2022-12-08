@@ -24,9 +24,9 @@ export default function App({ navigation, route }) {
         if (viewMoreID.includes(item.id))
             return (
                 <View>
-                    <Text>{item.memberName}</Text>
-                    <Text>{item.dateOfBirth}</Text>
-                    <Text>{item.CCCD}</Text>
+                    <Text>Họ và Tên: {item.memberName}</Text>
+                    <Text>Ngày sinh: {item.dateOfBirth}</Text>
+                    <Text>CCCD: {item.CCCD}</Text>
                 </View>
             )
         else
@@ -90,11 +90,11 @@ export default function App({ navigation, route }) {
                     specRoom
                 })
             }}>
-                <View style={[styles.billInfo, styles.myBorder]}>
+                <View style={[styles.billInfo, styles.myBackground]}>
 
                     {/* Bill month year */}
                     <View style={styles.billDay}>
-                        <Text style={{ fontSize: 20 }}> {item.monthYear}</Text>
+                        <Text style={styles.textTitle}> {item.monthYear}</Text>
                     </View>
 
                     {/* Bill money: total, collected, remained */}
@@ -102,8 +102,8 @@ export default function App({ navigation, route }) {
                         {/* Total */}
                         <View style={[styles.myBorder, styles.money]}>
                             <Text>Tổng tiền:</Text>
-                            <Text style={{ fontWeight: 'bold' }}>
-                                {item.total}
+                            <Text style={styles.textBold}>
+                                {item.total}đ
                             </Text>
                         </View>
 
@@ -111,7 +111,9 @@ export default function App({ navigation, route }) {
                         <View style={[styles.myBorder, styles.money, { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }]}>
                             <View>
                                 <Text>Đã thu:</Text>
-                                <Text style={{ fontWeight: 'bold' }}>{item.collected}</Text>
+                                <Text style={styles.textBold}>
+                                    {item.collected}đ
+                                </Text>
                             </View>
                             <TouchableHighlight onPress={() => { onPressEdit(['billHistory', item.id, 'collected']) }}>
                                 <FontAwesomeIcon name="pencil" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
@@ -122,7 +124,9 @@ export default function App({ navigation, route }) {
                         {/* Remained */}
                         <View style={[styles.myBorder, styles.money]}>
                             <Text>Còn lại: </Text>
-                            <Text style={{ fontWeight: 'bold' }}>{item.total - item.collected}</Text>
+                            <Text style={styles.textBold}>
+                                {item.total - item.collected}đ
+                            </Text>
                         </View>
                     </View>
                 </View>
@@ -147,148 +151,145 @@ export default function App({ navigation, route }) {
         <View style={styles.container}>
 
             {/* Header */}
-            <View style={[styles.header, styles.myBorder]}>
+            <View style={[styles.header]}>
 
-                {/* Back to menu button */}
-                <TouchableHighlight onPress={() => { navigation.goBack() }}>
-                    <FontAwesomeIcon name="arrow-left" size={35} />
-                </TouchableHighlight>
+                <View style={styles.headerTop}>
+                    {/* Back to DanhSachPhong button */}
+                    <TouchableHighlight onPress={() => { navigation.goBack() }}>
+                        <FontAwesomeIcon name="arrow-left" size={35} />
+                    </TouchableHighlight>
 
-                <Text>CHI TIET PHONG</Text>
-
-                {/* Edit info button */}
-                <TouchableHighlight onPress={() => { setMountEdit(!mountEdit) }}>
-                    <FontAwesomeIcon name="edit" size={35} />
-                </TouchableHighlight>
-            </View>
-
-            {/* Body */}
-            <View style={styles.body}>
+                    <Text style={styles.textTitleStyle}>CHI TIẾT PHÒNG</Text>
+                </View>
 
                 {/* Info and Bill button */}
-                <View style={styles.row}>
-                    <TouchableHighlight style={[styles.feature, styles.myBorder]}
+                <View style={styles.headerBot}>
+                    <TouchableHighlight style={[styles.headerBtn, { borderBottomWidth: mountInfo ? 4 : 0 }]}
                         onPress={() => {
                             if (!mountInfo)
                                 setMountInfo(!mountInfo)
                             if (mountEdit)
                                 setMountEdit(!mountEdit)
                         }}>
-                        <Text>THONG TIN</Text>
+                        <Text style={styles.textBold}>THÔNG TIN</Text>
                     </TouchableHighlight>
 
-                    <TouchableHighlight style={[styles.feature, styles.myBorder]}
+                    <TouchableHighlight style={[styles.headerBtn, { borderBottomWidth: !mountInfo ? 4 : 0 }]}
                         onPress={() => {
                             if (mountInfo)
                                 setMountInfo(!mountInfo)
                             if (mountEdit)
                                 setMountEdit(!mountEdit)
                         }}>
-                        <Text>LICH SU HOA DON</Text>
+                        <Text style={styles.textBold}>LỊCH SỬ HÓA ĐƠN</Text>
                     </TouchableHighlight>
                 </View>
+            </View>
 
-
-
-
-
+            {/* Body */}
+            <View style={styles.body}>
                 {/* View info */}
-                {mountInfo && <View style={styles.roomInfo}>
+                {mountInfo && <View style={styles.infoContainer}>
                     {/* View room details */}
-                    <View style={[styles.infoContainer, styles.myBorder]}>
+                    <View style={[styles.basicInfo, styles.myBorder]}>
+                        <View style={styles.bodyHeader}>
+                            <Text>Thông tin cơ bản</Text>
+                            {/* Edit info button */}
+                            <TouchableHighlight onPress={() => {
+                                setMountEdit(!mountEdit)
 
-                        {/* View basic info */}
-                        <View style={styles.basicInfoContainer}>
-
-                            <View style={styles.infoRow}>
-
-                                {/* Room name */}
-                                <View style={[styles.basicInfo, styles.myBorder]}>
-                                    <View>
-                                        <Text>{specRoom.roomName}</Text>
-                                    </View>
-                                    <TouchableHighlight onPress={() => { onPressEdit(['roomName']) }}>
-                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                    </TouchableHighlight>
+                            }}>
+                                <FontAwesomeIcon name="edit" size={20} />
+                            </TouchableHighlight>
+                        </View>
+                        <View style={styles.infoRow}>
+                            {/* Room name */}
+                            <View style={[styles.rowItem, styles.myBackground]}>
+                                <View>
+                                    <Text>Tên phòng:</Text>
+                                    <Text style={styles.textBold}>{specRoom.roomName}</Text>
                                 </View>
-
-                                {/* Contract day */}
-                                <View style={[styles.basicInfo, styles.myBorder]}>
-                                    <View>
-                                        <Text>Hop dong:</Text>
-                                        <Text>{specRoom.contractDay}</Text>
-                                    </View>
-                                    <TouchableHighlight onPress={() => { onPressEdit(['contractDay']) }}>
-                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                    </TouchableHighlight>
-                                </View>
-
+                                <TouchableHighlight onPress={() => { onPressEdit(['roomName']) }}>
+                                    <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                </TouchableHighlight>
                             </View>
 
-
-
-                            <View style={styles.infoRow}>
-                                {/* Price */}
-                                <View style={[styles.basicInfo, styles.myBorder]}>
-                                    <View>
-                                        <Text>Gia thue:</Text>
-                                        <Text>{specRoom.price}</Text>
-                                    </View>
-                                    <TouchableHighlight onPress={() => { onPressEdit(['price']) }}>
-                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                    </TouchableHighlight>
+                            {/* Contract day */}
+                            <View style={[styles.rowItem, styles.myBackground]}>
+                                <View>
+                                    <Text>Ngày đến:</Text>
+                                    <Text style={styles.textBold}>{specRoom.contractDay}</Text>
                                 </View>
+                                <TouchableHighlight onPress={() => { onPressEdit(['contractDay']) }}>
+                                    <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                </TouchableHighlight>
+                            </View>
 
-
-
-                                {/* Deposit */}
-                                <View style={[styles.basicInfo, styles.myBorder]}>
-                                    <View>
-                                        <Text>Tien coc:</Text>
-                                        <Text>{specRoom.deposit}</Text>
-                                    </View>
-                                    <TouchableHighlight onPress={() => { onPressEdit(['deposit']) }}>
-                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                    </TouchableHighlight>
+                        </View>
+                        <View style={styles.infoRow}>
+                            {/* Price */}
+                            <View style={[styles.rowItem, styles.myBackground]}>
+                                <View>
+                                    <Text>Giá thuê:</Text>
+                                    <Text style={styles.textBold}>{specRoom.price}</Text>
                                 </View>
+                                <TouchableHighlight onPress={() => { onPressEdit(['price']) }}>
+                                    <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                </TouchableHighlight>
+                            </View>
 
+                            {/* Deposit */}
+                            <View style={[styles.rowItem, styles.myBackground]}>
+                                <View>
+                                    <Text>Tiền cọc:</Text>
+                                    <Text style={styles.textBold}>{specRoom.deposit}</Text>
+                                </View>
+                                <TouchableHighlight onPress={() => { onPressEdit(['deposit']) }}>
+                                    <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                </TouchableHighlight>
                             </View>
 
                         </View>
 
-                        {/* View members */}
-                        <View style={[styles.membersContainer, styles.myBorder]}>
+                    </View>
+
+
+                    {/* View members */}
+                    <View style={[styles.memberInfo, styles.myBorder]}>
+                        <View style={[styles.bodyHeader, { height: '10%', marginBottom: 16 }]}>
+                            <Text>Thông tin người ở</Text>
+                        </View>
+                        <View style={[styles.memberContainer, styles.myBackground]}>
                             <FlatList
                                 data={specRoom.members}
                                 renderItem={renderMembers}
                                 keyExtractor={item => item.id}>
                             </FlatList>
                         </View>
+                    </View>
 
-                        {/* Water and electricity */}
-                        <View style={[styles.chiSoDichVu, styles.myBorder]}>
-                            <View style={styles.dichVu}>
+                    {/* Water and electricity */}
+                    <View style={[styles.serviceInfo, styles.myBorder]}>
+                        <View style={[styles.bodyHeader, { marginBottom: 16 }]}>
+                            <Text>Thông tin dịch vụ</Text>
+                        </View>
+                        <View style={[styles.serviceContainer, styles.myBackground]}>
+                            <View style={styles.service}>
                                 <IonIcon name="water" size={20} style={{ marginRight: 20 }} />
                                 <Text>{specRoom.donGiaNuoc} đ/khối</Text>
                             </View>
-                            <View style={styles.dichVu}>
+                            <View style={styles.service}>
                                 <FontAwesomeIcon name="bolt" size={20} style={{ marginLeft: 4, marginRight: 26 }} />
                                 <Text>{specRoom.donGiaDien} đ/kwh</Text>
                             </View>
                         </View>
-
                     </View>
+
                 </View>}
 
 
-
-
-
-
-
-
                 {/* View Bill */}
-                {!mountInfo && <View style={styles.billContainer}>
+                {!mountInfo && <View style={[styles.billContainer, styles.myBorder]}>
                     <FlatList
                         data={specRoom.billHistory}
                         renderItem={renderBills}
@@ -296,7 +297,6 @@ export default function App({ navigation, route }) {
                     </FlatList>
                 </View>}
             </View>
-
 
             {/* Modal for edit room */}
             <ModalEdit
@@ -323,7 +323,10 @@ export default function App({ navigation, route }) {
                 chooseItemEdit={chooseItemEdit}>
             </ModalEdit>
 
-        </View>
+        </View >
+
+
+
     );
 
 }
@@ -332,108 +335,142 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
+        width: '100%',
     },
     header: {
-        width: '90%',
-        height: '10%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        marginTop: 8,
-    },
-
-
-
-    body: {
         width: '100%',
-        height: '90%',
+        height: '18%',
         alignItems: 'center',
         justifyContent: 'flex-start',
+        backgroundColor: '#dfdfdf',
+        borderBottomWidth: 2,
+        position: 'absolute',
+        top: 0,
+        zIndex: 99,
     },
-    row: {
-        width: '90%',
-        height: '10%',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        marginVertical: 4,
-    },
-    roomInfo: {
-        width: '100%',
-        height: '90%',
-        alignItems: 'center',
-    },
-    infoRow: {
-        width: '100%',
-        height: '45%',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-    },
-    feature: {
-        width: '45%',
-        height: '90%',
+    headerBtn: {
+        width: '50%',
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
     },
-    infoContainer: {
-        width: '90%',
+    headerTop: {
+        width: '100%',
+        height: '50%',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        borderBottomWidth: 2,
+        paddingLeft: 8,
+    },
+    headerBot: {
+        width: '100%',
+        height: '50%',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        flexDirection: 'row',
+    },
+
+
+    body: {
+        marginTop: 128,
+        width: '100%',
         height: '90%',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    basicInfoContainer: {
+    infoContainer: {
+        width: '100%',
+        height: '90%',
+        alignItems: 'center',
+    },
+    basicInfo: {
         width: '90%',
         height: '30%',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginVertical: 4,
+        padding: 8,
+        marginBottom: 8,
     },
-    basicInfo: {
+    bodyHeader: {
+        width: '100%',
+        height: '20%',
+        borderBottomWidth: 2,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+
+
+
+    infoRow: {
+        flexDirection: 'row',
+        width: '100%',
+        height: '30%',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    rowItem: {
         width: '45%',
         height: '100%',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        paddingLeft: 8,
         flexDirection: 'row',
-        paddingHorizontal: 8,
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
+
+
+
+
+
 
 
     billContainer: {
-        flex: 1,
-        width: '90%'
+        height: '90%',
+        width: '90%',
+        padding: 8,
     },
     billInfo: {
+        flex: 1,
+        justifyContent: 'space-around',
+        alignItems: 'flex-start',
+        paddingVertical: 8,
+        marginBottom: 8,
         width: '100%',
-        height: 100,
-        marginVertical: 4,
     },
     billDay: {
         width: '100%',
         height: '30%',
-        textAlign: 'center'
+        textAlign: 'center',
+        marginBottom: 8,
     },
     billMoney: {
         width: '100%',
         height: '70%',
         flexDirection: 'row',
         justifyContent: 'space-around',
-        alignContent: 'center'
+        alignItems: 'center'
     },
     money: {
         paddingLeft: 8,
         width: '30%',
-        height: '95%',
+        height: '80%',
         justifyContent: 'center',
     },
 
 
-
-    membersContainer: {
+    memberInfo: {
         width: '90%',
+        height: '60%',
+        minHeight: 50,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 8,
+        marginBottom: 8,
+    },
+    memberContainer: {
+        width: '100%',
         height: 'auto',
         minHeight: 50,
-        marginVertical: 4,
     },
     member: {
         justifyContent: 'flex-start',
@@ -446,18 +483,41 @@ const styles = StyleSheet.create({
 
 
 
-    chiSoDichVu: {
+    serviceInfo: {
         width: '90%',
-        height: 'auto',
-        marginVertical: 4,
+        height: '25%',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 8,
     },
-    dichVu: {
+    serviceContainer: {
+        width: '100%',
+        height: 'auto',
+    },
+    service: {
         flexDirection: 'row',
         marginVertical: 4,
     },
 
 
-
+    textTitleStyle: {
+        marginLeft: 32,
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    textTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    textBold: {
+        fontWeight: 'bold',
+    },
+    myBackground: {
+        backgroundColor: '#dfdfdf',
+        borderRadius: 10,
+    },
     myBorder: {
         borderColor: 'black',
         borderRadius: 15,
