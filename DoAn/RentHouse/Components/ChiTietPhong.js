@@ -19,15 +19,14 @@ export default function App({ navigation, route }) {
 
     const [viewMoreID, setViewMoreID] = useState([])
 
-    const setGlobalRoomList = route.params.setRoomList
 
     const viewMoreInfo = (item) => {
         if (viewMoreID.includes(item.id))
             return (
                 <View>
-                    <Text>{item.memberName}</Text>
-                    <Text>{item.dateOfBirth}</Text>
-                    <Text>{item.CCCD}</Text>
+                    <Text>Họ và Tên: {item.memberName}</Text>
+                    <Text>Ngày sinh: {item.dateOfBirth}</Text>
+                    <Text>CCCD: {item.CCCD}</Text>
                 </View>
             )
         else
@@ -195,6 +194,13 @@ export default function App({ navigation, route }) {
                     <View style={[styles.basicInfo, styles.myBorder]}>
                         <View style={styles.bodyHeader}>
                             <Text>Thông tin cơ bản</Text>
+                            {/* Edit info button */}
+                            <TouchableHighlight onPress={() => {
+                                setMountEdit(!mountEdit)
+
+                            }}>
+                                <FontAwesomeIcon name="edit" size={20} />
+                            </TouchableHighlight>
                         </View>
                         <View style={styles.infoRow}>
                             {/* Room name */}
@@ -311,13 +317,13 @@ export default function App({ navigation, route }) {
                 setSpecRoom={setSpecRoom}
                 specRoom={specRoom}
 
-                setGlobalRoomList={setGlobalRoomList}
+                setGlobalRoomList={route.params.setRoomList}
                 roomList={route.params.roomList}
 
                 chooseItemEdit={chooseItemEdit}>
             </ModalEdit>
 
-        </View>
+        </View >
 
 
 
@@ -355,7 +361,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         flexDirection: 'row',
         borderBottomWidth: 2,
-        paddingVertical: 8,
+        paddingLeft: 8,
     },
     headerBot: {
         width: '100%',
@@ -390,6 +396,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '20%',
         borderBottomWidth: 2,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
 
 
@@ -405,6 +413,9 @@ const styles = StyleSheet.create({
         width: '45%',
         height: '100%',
         paddingLeft: 8,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
 
 
