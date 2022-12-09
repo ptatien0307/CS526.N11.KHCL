@@ -3,11 +3,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 
-import Menu from './Components/Menu.js'
-import DanhSachPhong from './Components/DanhSachPhong.js'
-import ChiTietPhong from './Components/ChiTietPhong.js'
-import GhiChu from './Components/GhiChu.js'
-import ChiTietHoaDon from './Components/ChiTietHoaDon.js'
+import Menu from './src/Components/Menu.js'
+import DanhSachPhong from './src/Components/DanhSachPhong.js'
+import ChiTietPhong from './src/Components/ChiTietPhong.js'
+import GhiChu from './src/Components/GhiChu.js'
+import ChiTietHoaDon from './src/Components/ChiTietHoaDon.js'
 
 
 const Stack = createNativeStackNavigator();
