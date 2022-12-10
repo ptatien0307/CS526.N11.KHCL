@@ -15,10 +15,10 @@ export default function App({ navigation }) {
             contractDay: '23/11/2022',
             deposit: '400000',
             members: [
-                { id: 1, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789' },
-                { id: 2, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789' },
-                { id: 3, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789' },
-                { id: 4, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789' },
+                { id: 1, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789', ngayCapCCCD: '01/01/2021', noiCapCCCD: 'Vĩnh Long', job: 'Sinh viên', sex: 1, address: 'ấp Phước Hòa, xã Hòa Phú, huyện Long Hồ, tỉnh Vĩnh Long' },
+                { id: 2, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789', ngayCapCCCD: '01/01/2021', noiCapCCCD: 'Vĩnh Long', job: 'Sinh viên', sex: 1, address: 'ấp Phước Hòa, xã Hòa Phú, huyện Long Hồ, tỉnh Vĩnh Long' },
+                { id: 3, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789', ngayCapCCCD: '01/01/2021', noiCapCCCD: 'Vĩnh Long', job: 'Sinh viên', sex: 1, address: 'ấp Phước Hòa, xã Hòa Phú, huyện Long Hồ, tỉnh Vĩnh Long' },
+                { id: 4, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789', ngayCapCCCD: '01/01/2021', noiCapCCCD: 'Vĩnh Long', job: 'Sinh viên', sex: 1, address: 'ấp Phước Hòa, xã Hòa Phú, huyện Long Hồ, tỉnh Vĩnh Long' },
             ],
             donGiaDien: ELECTRICITY,
             donGiaNuoc: WATER,
@@ -26,6 +26,7 @@ export default function App({ navigation }) {
                 { id: 1, monthYear: '5/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
                 { id: 2, monthYear: '6/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
                 { id: 3, monthYear: '7/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
+
             ]
         },
         {
@@ -36,8 +37,8 @@ export default function App({ navigation }) {
             contractDay: '12/12/2022',
             deposit: '0',
             members: [
-                { id: 1, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789' },
-                { id: 2, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789' },
+                { id: 1, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789', ngayCapCCCD: '01/01/2021', noiCapCCCD: 'Vĩnh Long', job: 'Sinh viên', sex: 1, address: 'ấp Phước Hòa, xã Hòa Phú, huyện Long Hồ, tỉnh Vĩnh Long' },
+                { id: 2, memberName: 'Pham Tran Anh Tien', dateOfBirth: '03/07/2002', CCCD: '123456789', ngayCapCCCD: '01/01/2021', noiCapCCCD: 'Vĩnh Long', job: 'Sinh viên', sex: 1, address: 'ấp Phước Hòa, xã Hòa Phú, huyện Long Hồ, tỉnh Vĩnh Long' },
             ],
             donGiaDien: ELECTRICITY,
             donGiaNuoc: WATER,

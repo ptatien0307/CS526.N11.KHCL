@@ -8,7 +8,7 @@ import DanhSachPhong from './src/Components/DanhSachPhong.js'
 import ChiTietPhong from './src/Components/ChiTietPhong.js'
 import GhiChu from './src/Components/GhiChu.js'
 import ChiTietHoaDon from './src/Components/ChiTietHoaDon.js'
-
+import ChiTietNguoiO from './src/Components/ChiTietNguoiO.js'
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +23,9 @@ export default function App() {
           headerShown: false,
         }} />
         <Stack.Screen name="ChiTietPhong" component={ChiTietPhong} options={{
+          headerShown: false,
+        }} />
+        <Stack.Screen name="ChiTietNguoiO" component={ChiTietNguoiO} options={{
           headerShown: false,
         }} />
         <Stack.Screen name="ChiTietHoaDon" component={ChiTietHoaDon} options={{
