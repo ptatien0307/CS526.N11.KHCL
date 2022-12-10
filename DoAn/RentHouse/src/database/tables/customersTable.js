@@ -1,3 +1,5 @@
+`use strict`;
+
 export const createCustomersTable = `
     CREATE TABLE IF NOT EXISTS customers (
         customerID INTEGER PRIMARY KEY AUTOINCREMENT,

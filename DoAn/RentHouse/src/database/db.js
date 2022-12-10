@@ -1,4 +1,5 @@
 `use strict`;
+
 import { openDatabase } from `expo-sqlite`;
 
 const dbName = `renthouse.db`;
