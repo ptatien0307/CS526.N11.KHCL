@@ -158,7 +158,7 @@ export function ModalEdit(params) {
 
                         {/* Edit content */}
                         <TextInput
-                            style={[styles.myBorder, styles.text]}
+                            style={[styles.myBorder]}
                             onChangeText={(text) => { params.setInputText(text) }}
                             defaultValue={params.inputText}
                             editable={true}

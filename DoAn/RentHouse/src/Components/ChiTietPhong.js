@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { ModalEdit } from './Modal';
 export default function App({ navigation, route }) {
 
+    let globalRoomList = route.params.roomList
+    console.log(globalRoomList)
     const [specRoom, setSpecRoom] = useState(route.params.specRoom)
     const [mountInfo, setMountInfo] = useState(true)
     const [mountEdit, setMountEdit] = useState(false)
@@ -16,6 +18,12 @@ export default function App({ navigation, route }) {
     const [editItemID, setEditItemID] = useState()
     const [editItemContent, setEditItemContent] = useState()
     const [chooseItemEdit, setChooseItemEdit] = useState([])
+
+
+    const [isMemberMenuVisible, setIsMemberMenuVisible] = useState(false)
+
+
+
 
     const renderMembers = ({ item }) => {
         return (
@@ -161,116 +169,135 @@ export default function App({ navigation, route }) {
             </View>
 
             {/* Body */}
-            <View style={{ width: '100%' }}>
-                <ScrollView contentContainerStyle={styles.body}>
-                    {/* View info */}
-                    {mountInfo && <View style={styles.infoContainer}>
-                        {/* View room details */}
-                        <View style={[styles.basicInfo, styles.myBorder]}>
-                            <View style={styles.bodyHeader}>
-                                <Text>Thông tin cơ bản</Text>
-                                {/* Edit info button */}
-                                <TouchableHighlight onPress={() => {
-                                    setMountEdit(!mountEdit)
+            <View style={styles.body}>
+                {/* View info */}
+                {mountInfo && <View style={styles.infoContainer}>
+                    {/* View room details */}
+                    <View style={[styles.basicInfo, styles.myBorder]}>
+                        <View style={styles.bodyHeader}>
+                            <Text>Thông tin cơ bản</Text>
+                            {/* Edit info button */}
+                            <TouchableHighlight onPress={() => {
+                                setMountEdit(!mountEdit)
 
-                                }}>
-                                    <FontAwesomeIcon name="edit" size={20} />
+                            }}>
+                                <FontAwesomeIcon name="edit" size={20} />
+                            </TouchableHighlight>
+                        </View>
+                        <View style={styles.infoRow}>
+                            {/* Room name */}
+                            <View style={[styles.rowItem, styles.myBackground]}>
+                                <View>
+                                    <Text>Tên phòng:</Text>
+                                    <Text style={styles.textBold}>{specRoom.roomName}</Text>
+                                </View>
+                                <TouchableHighlight onPress={() => { onPressEdit(['roomName']) }}>
+                                    <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
                                 </TouchableHighlight>
                             </View>
-                            <View style={styles.infoRow}>
-                                {/* Room name */}
-                                <View style={[styles.rowItem, styles.myBackground]}>
-                                    <View>
-                                        <Text>Tên phòng:</Text>
-                                        <Text style={styles.textBold}>{specRoom.roomName}</Text>
-                                    </View>
-                                    <TouchableHighlight onPress={() => { onPressEdit(['roomName']) }}>
-                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                    </TouchableHighlight>
-                                </View>
 
-                                {/* Contract day */}
-                                <View style={[styles.rowItem, styles.myBackground]}>
-                                    <View>
-                                        <Text>Ngày đến:</Text>
-                                        <Text style={styles.textBold}>{specRoom.contractDay}</Text>
-                                    </View>
-                                    <TouchableHighlight onPress={() => { onPressEdit(['contractDay']) }}>
-                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                    </TouchableHighlight>
+                            {/* Contract day */}
+                            <View style={[styles.rowItem, styles.myBackground]}>
+                                <View>
+                                    <Text>Ngày đến:</Text>
+                                    <Text style={styles.textBold}>{specRoom.contractDay}</Text>
                                 </View>
-
+                                <TouchableHighlight onPress={() => { onPressEdit(['contractDay']) }}>
+                                    <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                </TouchableHighlight>
                             </View>
-                            <View style={styles.infoRow}>
-                                {/* Price */}
-                                <View style={[styles.rowItem, styles.myBackground]}>
-                                    <View>
-                                        <Text>Giá thuê:</Text>
-                                        <Text style={styles.textBold}>{specRoom.price}</Text>
-                                    </View>
-                                    <TouchableHighlight onPress={() => { onPressEdit(['price']) }}>
-                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                    </TouchableHighlight>
-                                </View>
 
-                                {/* Deposit */}
-                                <View style={[styles.rowItem, styles.myBackground]}>
-                                    <View>
-                                        <Text>Tiền cọc:</Text>
-                                        <Text style={styles.textBold}>{specRoom.deposit}</Text>
-                                    </View>
-                                    <TouchableHighlight onPress={() => { onPressEdit(['deposit']) }}>
-                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                    </TouchableHighlight>
+                        </View>
+                        <View style={styles.infoRow}>
+                            {/* Price */}
+                            <View style={[styles.rowItem, styles.myBackground]}>
+                                <View>
+                                    <Text>Giá thuê:</Text>
+                                    <Text style={styles.textBold}>{specRoom.price}</Text>
                                 </View>
-
+                                <TouchableHighlight onPress={() => { onPressEdit(['price']) }}>
+                                    <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                </TouchableHighlight>
                             </View>
+
+                            {/* Deposit */}
+                            <View style={[styles.rowItem, styles.myBackground]}>
+                                <View>
+                                    <Text>Tiền cọc:</Text>
+                                    <Text style={styles.textBold}>{specRoom.deposit}</Text>
+                                </View>
+                                <TouchableHighlight onPress={() => { onPressEdit(['deposit']) }}>
+                                    <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                </TouchableHighlight>
+                            </View>
+
+                        </View>
+                    </View>
+
+
+                    {/* View members */}
+                    <View style={[styles.memberInfo, styles.myBorder]}>
+                        <View style={[styles.bodyHeader, { height: '10%', marginBottom: 16 }]}>
+                            <Text>Thông tin người ở</Text>
+                            <TouchableHighlight onPress={() => { setIsMemberMenuVisible(!isMemberMenuVisible) }}>
+                                <FontAwesomeIcon name="navicon" size={20} />
+                            </TouchableHighlight>
+                        </View>
+                        <View style={[styles.memberContainer]}>
+                            <FlatList
+                                data={specRoom.members}
+                                renderItem={renderMembers}
+                                keyExtractor={item => item.id}>
+                            </FlatList>
                         </View>
 
+                        {isMemberMenuVisible && <View style={styles.memberMenuContainer}>
+                            <TouchableHighlight style={styles.memberMenu}
+                                onPress={() => {
+                                    navigation.navigate('ThemNguoiO', {
+                                        setIsMemberMenuVisible,
+                                        specRoom,
+                                        setSpecRoom,
+                                        globalRoomList,
+                                        setGlobalRoomList: route.params.setRoomList
+                                    })
+                                }}>
+                                <Text>Thêm</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight style={styles.memberMenu} onPress={() => { navigation.navigate() }}>
+                                <Text>Chỉnh sửa</Text>
+                            </TouchableHighlight>
+                        </View>}
+                    </View>
 
-                        {/* View members */}
-                        <View style={[styles.memberInfo, styles.myBorder]}>
-                            <View style={[styles.bodyHeader, { height: '10%', marginBottom: 16 }]}>
-                                <Text>Thông tin người ở</Text>
+                    {/* Water and electricity */}
+                    <View style={[styles.serviceInfo, styles.myBorder]}>
+                        <View style={[styles.bodyHeader, { height: '20%', marginBottom: 16 }]}>
+                            <Text>Thông tin dịch vụ</Text>
+                        </View>
+                        <View style={[styles.serviceContainer]}>
+                            <View style={[styles.service, styles.myBackground]}>
+                                <IonIcon name="water" size={20} style={{ marginRight: 20 }} />
+                                <Text>{specRoom.donGiaNuoc} đ/khối</Text>
                             </View>
-                            <View style={[styles.memberContainer]}>
-                                <FlatList
-                                    data={specRoom.members}
-                                    renderItem={renderMembers}
-                                    keyExtractor={item => item.id}>
-                                </FlatList>
+                            <View style={[styles.service, styles.myBackground]}>
+                                <FontAwesomeIcon name="bolt" size={20} style={{ marginLeft: 4, marginRight: 26 }} />
+                                <Text>{specRoom.donGiaDien} đ/kwh</Text>
                             </View>
                         </View>
+                    </View>
 
-                        {/* Water and electricity */}
-                        <View style={[styles.serviceInfo, styles.myBorder]}>
-                            <View style={[styles.bodyHeader, { marginBottom: 16 }]}>
-                                <Text>Thông tin dịch vụ</Text>
-                            </View>
-                            <View style={[styles.serviceContainer]}>
-                                <View style={[styles.service, styles.myBackground]}>
-                                    <IonIcon name="water" size={20} style={{ marginRight: 20 }} />
-                                    <Text>{specRoom.donGiaNuoc} đ/khối</Text>
-                                </View>
-                                <View style={[styles.service, styles.myBackground]}>
-                                    <FontAwesomeIcon name="bolt" size={20} style={{ marginLeft: 4, marginRight: 26 }} />
-                                    <Text>{specRoom.donGiaDien} đ/kwh</Text>
-                                </View>
-                            </View>
-                        </View>
-
-                    </View>}
+                </View>}
 
 
-                    {/* View Bill */}
-                    {!mountInfo && <View style={[styles.billContainer, styles.myBorder]}>
-                        <FlatList
-                            data={specRoom.billHistory}
-                            renderItem={renderBills}
-                            keyExtractor={item => item.id}>
-                        </FlatList>
-                    </View>}
-                </ScrollView>
+                {/* View Bill */}
+                {!mountInfo && <View style={[styles.billContainer, styles.myBorder]}>
+                    <FlatList
+                        data={specRoom.billHistory}
+                        renderItem={renderBills}
+                        keyExtractor={item => item.id}>
+                    </FlatList>
+                </View>}
             </View>
 
             {/* Modal for edit room */}
@@ -350,7 +377,7 @@ const styles = StyleSheet.create({
     body: {
         marginTop: 128,
         width: '100%',
-        height: '90%',
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'flex-start',
         flex: 1,
@@ -369,7 +396,7 @@ const styles = StyleSheet.create({
     },
     basicInfo: {
         width: '90%',
-        height: '30%',
+        height: '70%',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 8,
@@ -437,8 +464,8 @@ const styles = StyleSheet.create({
 
     memberInfo: {
         width: '90%',
-        height: '60%',
-        minHeight: 50,
+        height: 'auto',
+        minHeight: '150%',
         justifyContent: 'flex-start',
         alignItems: 'center',
         padding: 8,
@@ -463,7 +490,7 @@ const styles = StyleSheet.create({
 
     serviceInfo: {
         width: '90%',
-        height: '30%',
+        height: '70%',
         justifyContent: 'flex-start',
         alignItems: 'center',
         padding: 8,
@@ -481,6 +508,28 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingLeft: 16
     },
+
+
+    memberMenuContainer: {
+        borderWidth: 2,
+        backgroundColor: 'white',
+        width: '50%',
+        height: '30%',
+        position: 'absolute',
+        top: 30,
+        right: 8,
+        justifyContent: 'space-around'
+    },
+    memberMenu: {
+        width: '100%',
+        height: '50%',
+    },
+
+
+
+
+
+
 
 
     textTitleStyle: {
