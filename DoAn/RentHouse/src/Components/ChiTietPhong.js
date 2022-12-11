@@ -6,7 +6,8 @@ import { ModalEdit } from './Modal';
 export default function App({ navigation, route }) {
 
     const globalRoomList = route.params.roomList
-    const [specRoom, setSpecRoom] = useState(route.params.specRoom)
+
+    const [currRoom, setCurrRoom] = useState(route.params.currRoom)
     const [mountInfo, setMountInfo] = useState(true)
 
 
@@ -41,16 +42,16 @@ export default function App({ navigation, route }) {
     const handleDeleteMember = async (deleteMember) => {
         let isConfirm = await alertDeleteDialog()
         if (isConfirm) {
-            const newMemberList = specRoom.members.reduce((res, currMember) => {
+            const newMemberList = currRoom.members.reduce((res, currMember) => {
                 if (currMember.id != deleteMember.id)
                     res.push(currMember)
                 return res
             }, [])
 
-            setSpecRoom({ ...specRoom, members: newMemberList })
-            const newRoomList = route.params.roomList.map(item => {
-                if (item.id === specRoom.id) {
-                    return { ...specRoom, members: newMemberList }
+            setCurrRoom({ ...currRoom, members: newMemberList })
+            const newRoomList = globalRoomList.map(item => {
+                if (item.id === currRoom.id) {
+                    return { ...currRoom, members: newMemberList }
                 }
                 return item
             })
@@ -65,11 +66,14 @@ export default function App({ navigation, route }) {
             <TouchableHighlight
                 onPress={() => { navigation.navigate('ChiTietNguoiO', { member: item }) }}>
                 <View style={[styles.member, styles.myBackground]}>
+
                     {/* Member icon */}
                     <FontAwesomeIcon name="user" size={20} style={{ marginRight: 32 }} />
+
                     {/* Member name */}
                     <Text>{item.memberName}</Text>
 
+                    {/* Delete member icon */}
                     <TouchableHighlight
                         style={styles.deleteIcon}
                         onPress={() => {
@@ -77,25 +81,26 @@ export default function App({ navigation, route }) {
                         }}>
                         <FontAwesomeIcon name="remove" size={25} style={[styles.icon, { display: mounDelete ? 'flex' : 'none' }]} />
                     </TouchableHighlight>
+
                 </View>
             </TouchableHighlight >
         )
     }
 
     const onPressEdit = (params) => {
-        if (params.length === 3) {
+        if (params.length === 3) { // Edit bill
             setChooseItemEdit([false, false, true])
             setEditBillID(params[1])
             setIsEditModalVisible(true)
-            setInputText(specRoom[params[0]][params[1] - 1][params[2]])
-            setEditItemID(specRoom.id)
+            setInputText(currRoom[params[0]][params[1] - 1][params[2]])
+            setEditItemID(currRoom.id)
             setEditItemContent(params[0])
         }
-        else {
+        else { // Edit basic info
             setChooseItemEdit([false, true, false])
             setIsEditModalVisible(true)
-            setInputText(specRoom[params[0]])
-            setEditItemID(specRoom.id)
+            setInputText(currRoom[params[0]])
+            setEditItemID(currRoom.id)
             setEditItemContent(params[0])
         }
 
@@ -104,15 +109,15 @@ export default function App({ navigation, route }) {
 
     const renderBills = ({ item }) => {
         // Compute total money
-        item.total = parseInt((item.dienMoi - item.dienCu) * specRoom.donGiaDien) +
-            parseInt((item.nuocMoi - item.nuocCu) * specRoom.donGiaNuoc) + parseInt(specRoom.price)
+        item.total = parseInt((item.dienMoi - item.dienCu) * currRoom.donGiaDien) +
+            parseInt((item.nuocMoi - item.nuocCu) * currRoom.donGiaNuoc) + parseInt(currRoom.price)
 
 
         return (
             <TouchableHighlight onPress={() => {
                 navigation.navigate("ChiTietHoaDon", {
                     specBill: item,
-                    specRoom
+                    currRoom
                 })
             }}>
                 <View style={[styles.billInfo, styles.myBackground]}>
@@ -184,7 +189,7 @@ export default function App({ navigation, route }) {
                         <FontAwesomeIcon name="arrow-left" size={35} />
                     </TouchableHighlight>
 
-                    <Text style={styles.textTitleStyle}>CHI TIẾT PHÒNG</Text>
+                    <Text style={styles.stackTitle}>CHI TIẾT PHÒNG</Text>
                 </View>
 
                 {/* Info and Bill button */}
@@ -218,7 +223,9 @@ export default function App({ navigation, route }) {
                     {/* View room details */}
                     <View style={[styles.basicInfo, styles.myBorder]}>
                         <View style={styles.bodyHeader}>
+
                             <Text>Thông tin cơ bản</Text>
+
                             {/* Edit info button */}
                             <TouchableHighlight onPress={() => {
                                 setMountEdit(!mountEdit)
@@ -226,13 +233,16 @@ export default function App({ navigation, route }) {
                             }}>
                                 <FontAwesomeIcon name="edit" size={20} />
                             </TouchableHighlight>
+
                         </View>
+
+
                         <View style={styles.infoRow}>
                             {/* Room name */}
                             <View style={[styles.rowItem, styles.myBackground]}>
                                 <View>
                                     <Text>Tên phòng:</Text>
-                                    <Text style={styles.textBold}>{specRoom.roomName}</Text>
+                                    <Text style={styles.textBold}>{currRoom.roomName}</Text>
                                 </View>
                                 <TouchableHighlight onPress={() => { onPressEdit(['roomName']) }}>
                                     <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
@@ -243,7 +253,7 @@ export default function App({ navigation, route }) {
                             <View style={[styles.rowItem, styles.myBackground]}>
                                 <View>
                                     <Text>Ngày đến:</Text>
-                                    <Text style={styles.textBold}>{specRoom.contractDay}</Text>
+                                    <Text style={styles.textBold}>{currRoom.contractDay}</Text>
                                 </View>
                                 <TouchableHighlight onPress={() => { onPressEdit(['contractDay']) }}>
                                     <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
@@ -251,12 +261,13 @@ export default function App({ navigation, route }) {
                             </View>
 
                         </View>
+
                         <View style={styles.infoRow}>
                             {/* Price */}
                             <View style={[styles.rowItem, styles.myBackground]}>
                                 <View>
                                     <Text>Giá thuê:</Text>
-                                    <Text style={styles.textBold}>{specRoom.price}</Text>
+                                    <Text style={styles.textBold}>{currRoom.price}</Text>
                                 </View>
                                 <TouchableHighlight onPress={() => { onPressEdit(['price']) }}>
                                     <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
@@ -267,7 +278,7 @@ export default function App({ navigation, route }) {
                             <View style={[styles.rowItem, styles.myBackground]}>
                                 <View>
                                     <Text>Tiền cọc:</Text>
-                                    <Text style={styles.textBold}>{specRoom.deposit}</Text>
+                                    <Text style={styles.textBold}>{currRoom.deposit}</Text>
                                 </View>
                                 <TouchableHighlight onPress={() => { onPressEdit(['deposit']) }}>
                                     <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
@@ -277,30 +288,36 @@ export default function App({ navigation, route }) {
                         </View>
                     </View>
 
-
                     {/* View members */}
                     <View style={[styles.memberInfo, styles.myBorder]}>
                         <View style={[styles.bodyHeader, { height: '10%', marginBottom: 16 }]}>
+
                             <Text>Thông tin người ở</Text>
+
+                            {/* Sub menu icon */}
                             <TouchableHighlight onPress={() => { setIsSubMenuVisible(!isSubMenuVisible) }}>
                                 <FontAwesomeIcon name="navicon" size={20} />
                             </TouchableHighlight>
+
                         </View>
+
+                        {/* View members  */}
                         <View style={[styles.memberContainer]}>
                             <FlatList
-                                data={specRoom.members}
+                                data={currRoom.members}
                                 renderItem={renderMembers}
                                 keyExtractor={item => item.id}>
                             </FlatList>
                         </View>
 
+                        {/* Sub menu */}
                         {isSubMenuVisible && <View style={styles.subMenuContainer}>
                             <TouchableHighlight style={styles.subMenu}
                                 onPress={() => {
                                     navigation.navigate('ThemNguoiO', {
                                         setIsSubMenuVisible,
-                                        specRoom,
-                                        setSpecRoom,
+                                        currRoom,
+                                        setCurrRoom,
                                         globalRoomList,
                                         setGlobalRoomList: route.params.setRoomList
                                     })
@@ -327,11 +344,11 @@ export default function App({ navigation, route }) {
                         <View style={[styles.serviceContainer]}>
                             <View style={[styles.service, styles.myBackground]}>
                                 <IonIcon name="water" size={20} style={{ marginRight: 20 }} />
-                                <Text>{specRoom.donGiaNuoc} đ/khối</Text>
+                                <Text>{currRoom.donGiaNuoc} đ/khối</Text>
                             </View>
                             <View style={[styles.service, styles.myBackground]}>
                                 <FontAwesomeIcon name="bolt" size={20} style={{ marginLeft: 4, marginRight: 26 }} />
-                                <Text>{specRoom.donGiaDien} đ/kwh</Text>
+                                <Text>{currRoom.donGiaDien} đ/kwh</Text>
                             </View>
                         </View>
                     </View>
@@ -342,7 +359,7 @@ export default function App({ navigation, route }) {
                 {/* View Bill */}
                 {!mountInfo && <View style={[styles.billContainer, styles.myBorder]}>
                     <FlatList
-                        data={specRoom.billHistory}
+                        data={currRoom.billHistory}
                         renderItem={renderBills}
                         keyExtractor={item => item.id}>
                     </FlatList>
@@ -357,7 +374,7 @@ export default function App({ navigation, route }) {
                 editItemID={editItemID}
                 editItemContent={editItemContent}
 
-                billHistory={specRoom.billHistory}
+                billHistory={currRoom.billHistory}
                 editBillID={editBillID}
 
                 setInputText={setInputText}
@@ -365,11 +382,11 @@ export default function App({ navigation, route }) {
 
                 alertEmptyDialog={alertEmptyDialog}
 
-                setSpecRoom={setSpecRoom}
-                specRoom={specRoom}
+                setCurrRoom={setCurrRoom}
+                currRoom={currRoom}
 
                 setGlobalRoomList={route.params.setRoomList}
-                roomList={globalRoomList}
+                globalRoomList={globalRoomList}
 
                 chooseItemEdit={chooseItemEdit}>
             </ModalEdit>
@@ -478,7 +495,7 @@ const styles = StyleSheet.create({
 
 
     billContainer: {
-        height: '90%',
+        height: '190%',
         width: '90%',
         padding: 8,
     },
@@ -584,7 +601,7 @@ const styles = StyleSheet.create({
 
 
 
-    textTitleStyle: {
+    stackTitle: {
         marginLeft: 32,
         fontSize: 20,
         fontWeight: 'bold',

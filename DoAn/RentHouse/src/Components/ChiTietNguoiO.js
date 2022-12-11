@@ -21,7 +21,7 @@ export default function App({ navigation, route }) {
                         <FontAwesomeIcon name="arrow-left" size={35} />
                     </TouchableHighlight>
 
-                    <Text style={styles.textTitleStyle}>THÔNG TIN KHÁCH THUÊ</Text>
+                    <Text style={styles.stackTitle}>THÔNG TIN KHÁCH THUÊ</Text>
                 </View>
             </View>
 
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     title: {
         fontWeight: 'bold',
     },
-    textTitleStyle: {
+    stackTitle: {
         marginLeft: 32,
         fontSize: 20,
         fontWeight: 'bold',

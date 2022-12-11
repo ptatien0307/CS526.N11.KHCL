@@ -27,8 +27,8 @@ export default function App({ navigation, route }) {
 
     const alertEmptyDialog = () => {
         Alert.alert(
-            "Error",
-            "Empty note",
+            "Lỗi",
+            "Nội dung ghi chú bị bỏ trống.",
             [
                 { text: "OK", onPress: () => console.log("OK Pressed") }
             ]
@@ -108,7 +108,7 @@ export default function App({ navigation, route }) {
                         <FontAwesomeIcon name="arrow-left" size={35} />
                     </TouchableHighlight>
 
-                    <Text style={styles.textTitleStyle}>GHI CHÚ</Text>
+                    <Text style={styles.stackTitle}>GHI CHÚ</Text>
 
 
                     {/* Edit info button */}
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     },
 
 
-    textTitleStyle: {
+    stackTitle: {
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center'

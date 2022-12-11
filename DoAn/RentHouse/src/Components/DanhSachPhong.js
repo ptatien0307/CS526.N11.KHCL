@@ -6,9 +6,11 @@ export default function App({ navigation, route }) {
 
     const renderItem = ({ item }) => {
         return (
+
+            // Go to specific room
             <TouchableHighlight onPress={() => {
                 navigation.navigate("ChiTietPhong", {
-                    specRoom: roomList[item.id - 1],
+                    currRoom: roomList[item.id - 1],
                     roomList,
                     setRoomList,
                 })
@@ -72,7 +74,7 @@ export default function App({ navigation, route }) {
                     </TouchableHighlight>
 
                     {/* Title */}
-                    <Text style={styles.textTitleStyle}>DANH SÁCH PHÒNG</Text>
+                    <Text style={styles.stackTitle}>DANH SÁCH PHÒNG</Text>
 
                 </View>
             </View>
@@ -155,7 +157,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 8,
     },
-    textTitleStyle: {
+
+
+    stackTitle: {
         marginLeft: 32,
         fontSize: 20,
         fontWeight: 'bold',

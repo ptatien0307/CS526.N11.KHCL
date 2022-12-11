@@ -4,7 +4,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import { useState } from 'react';
 export default function App({ navigation, route }) {
     const [billItem, setBillItem] = useState(route.params.specBill)
-    const [roomItem, setRoomItem] = useState(route.params.specRoom)
+    const [roomItem, setRoomItem] = useState(route.params.currRoom)
     const formatNumber = (q) => {
         return q.toLocaleString({
             style: 'currency',
@@ -30,7 +30,7 @@ export default function App({ navigation, route }) {
                         <FontAwesomeIcon name="arrow-left" size={35} />
                     </TouchableHighlight>
 
-                    <Text style={styles.textTitleStyle}>CHI TIẾT HÓA ĐƠN</Text>
+                    <Text style={styles.stackTitle}>CHI TIẾT HÓA ĐƠN</Text>
                 </View>
 
             </View>
@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
 
 
     body: {
+        marginTop: 80,
         width: '100%',
         height: '90%',
         alignItems: 'center',
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
 
 
 
-    textTitleStyle: {
+    stackTitle: {
         marginLeft: 32,
         fontSize: 20,
         fontWeight: 'bold',
