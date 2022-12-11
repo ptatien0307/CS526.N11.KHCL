@@ -12,13 +12,12 @@ export default function App({ navigation, route }) {
 
 
 
-
     const [isEditModalVisible, setIsEditModalVisible] = useState(false)
     const [inputText, setInputText] = useState('')
     const [editBillID, setEditBillID] = useState()
     const [editItemID, setEditItemID] = useState()
     const [editItemContent, setEditItemContent] = useState()
-    const [chooseItemEdit, setChooseItemEdit] = useState([])
+    const [chooseItemEdit, setChooseItemEdit] = useState()
 
 
     const [isSubMenuVisible, setIsSubMenuVisible] = useState(false)
@@ -37,6 +36,16 @@ export default function App({ navigation, route }) {
                 { cancelable: false }
             )
         })
+    }
+
+    const alertEmptyDialog = () => {
+        Alert.alert(
+            "Lỗi",
+            "Thông tin chỉnh sửa bị bỏ trống.",
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+        )
     }
 
     const handleDeleteMember = async (deleteMember) => {
@@ -59,12 +68,20 @@ export default function App({ navigation, route }) {
         }
     }
 
-
-
     const renderMembers = ({ item }) => {
         return (
             <TouchableHighlight
-                onPress={() => { navigation.navigate('ChiTietNguoiO', { member: item }) }}>
+                onPress={() => {
+                    navigation.navigate('ChiTietNguoiO',
+                        {
+                            member: item,
+                            currRoom,
+                            setCurrRoom,
+                            globalRoomList,
+                            setGlobalRoomList: route.params.setRoomList,
+                            memberList: currRoom.members,
+                        })
+                }}>
                 <View style={[styles.member, styles.myBackground]}>
 
                     {/* Member icon */}
@@ -89,7 +106,7 @@ export default function App({ navigation, route }) {
 
     const onPressEdit = (params) => {
         if (params.length === 3) { // Edit bill
-            setChooseItemEdit([false, false, true])
+            setChooseItemEdit(3)
             setEditBillID(params[1])
             setIsEditModalVisible(true)
             setInputText(currRoom[params[0]][params[1] - 1][params[2]])
@@ -97,7 +114,7 @@ export default function App({ navigation, route }) {
             setEditItemContent(params[0])
         }
         else { // Edit basic info
-            setChooseItemEdit([false, true, false])
+            setChooseItemEdit(2)
             setIsEditModalVisible(true)
             setInputText(currRoom[params[0]])
             setEditItemID(currRoom.id)
@@ -164,15 +181,7 @@ export default function App({ navigation, route }) {
         )
     }
 
-    const alertEmptyDialog = () => {
-        Alert.alert(
-            "Error",
-            "Empty note",
-            [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-        )
-    }
+
 
 
 
@@ -319,7 +328,8 @@ export default function App({ navigation, route }) {
                                         currRoom,
                                         setCurrRoom,
                                         globalRoomList,
-                                        setGlobalRoomList: route.params.setRoomList
+                                        setGlobalRoomList: route.params.setRoomList,
+                                        memberList: currRoom.members,
                                     })
                                 }}>
                                 <Text>THÊM</Text>

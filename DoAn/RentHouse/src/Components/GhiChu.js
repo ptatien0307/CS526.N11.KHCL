@@ -23,7 +23,6 @@ export default function App({ navigation, route }) {
 
 
 
-    const chooseItemEdit = [true, false, false]
 
     const alertEmptyDialog = () => {
         Alert.alert(
@@ -174,7 +173,7 @@ export default function App({ navigation, route }) {
                 alertEmptyDialog={alertEmptyDialog}
                 notes={notes}
                 setGlobalNotes={route.params.setNotes}
-                chooseItemEdit={chooseItemEdit}>
+                chooseItemEdit={1}>
             </ModalEdit>
 
             {/* Modal for add note */}

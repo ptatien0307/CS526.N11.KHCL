@@ -137,6 +137,33 @@ export function ModalEdit(params) {
         }
     }
 
+    const editMember = () => {
+        if (params.inputText === '')
+            params.alertEmptyDialog()
+        else {
+            console.log(params.memberList)
+            params.setMember({ ...params.member, [params.editItemContent]: params.inputText })
+            const newMemberList = params.memberList.map(item => {
+                if (item.id === params.editItemID) {
+                    return { ...params.member, [params.editItemContent]: params.inputText }
+                }
+                return item
+            })
+
+            params.setCurrRoom({ ...params.currRoom, members: newMemberList })
+
+            const newGlobalRoomList = params.globalRoomList.map(item => {
+                if (item.id === params.currRoom.id) {
+                    return { ...params.currRoom, members: newMemberList }
+                }
+                return item
+            })
+            params.setGlobalRoomList(newGlobalRoomList)
+            params.setInputText('')
+            params.setIsEditModalVisible(false)
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Modal
@@ -169,12 +196,14 @@ export function ModalEdit(params) {
                         {/* Save button */}
                         <TouchableHighlight style={styles.saveButton}
                             onPress={() => {
-                                if (params.chooseItemEdit[0])
+                                if (params.chooseItemEdit === 1)
                                     editNote()
-                                else if (params.chooseItemEdit[1])
+                                else if (params.chooseItemEdit === 2)
                                     editRoom()
-                                else
+                                else if (params.chooseItemEdit === 3)
                                     editBill()
+                                else if (params.chooseItemEdit === 4)
+                                    editMember()
                             }}>
 
 

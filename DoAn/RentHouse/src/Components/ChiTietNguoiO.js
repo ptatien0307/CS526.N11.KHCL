@@ -1,13 +1,35 @@
-import { StyleSheet, View, Text, TouchableHighlight, CheckBox, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight, CheckBox } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import { ModalEdit } from './Modal';
+
 import { useState } from 'react';
 export default function App({ navigation, route }) {
 
     const [member, setMember] = useState(route.params.member)
 
+    const [mountEdit, setMountEdit] = useState(false)
+    const [isEditModalVisible, setIsEditModalVisible] = useState(false)
+    const [editItemID, setEditItemID] = useState()
+    const [editItemContent, setEditItemContent] = useState()
+    const [inputText, setInputText] = useState('')
 
+    const onPressEdit = (editContent) => {
+        console.log(member[editContent])
+        setIsEditModalVisible(true)
+        setInputText(member[editContent])
+        setEditItemID(member.id)
+        setEditItemContent(editContent)
+    }
 
+    const alertEmptyDialog = () => {
+        Alert.alert(
+            "Lỗi",
+            "Thông tin chỉnh sửa bị bỏ trống.",
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+        )
+    }
 
     return (
         <View style={styles.container}>
@@ -22,6 +44,12 @@ export default function App({ navigation, route }) {
                     </TouchableHighlight>
 
                     <Text style={styles.stackTitle}>THÔNG TIN KHÁCH THUÊ</Text>
+                    <TouchableHighlight onPress={() => {
+                        setMountEdit(!mountEdit)
+
+                    }}>
+                        <FontAwesomeIcon name="edit" size={35} />
+                    </TouchableHighlight>
                 </View>
             </View>
 
@@ -32,6 +60,9 @@ export default function App({ navigation, route }) {
                 <View style={[styles.item, styles.myBackground]}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Họ tên:</Text>
+                        <TouchableHighlight onPress={() => { onPressEdit('memberName') }}>
+                            <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                        </TouchableHighlight>
                     </View>
                     <View>
                         <Text>{member.memberName}</Text>
@@ -42,7 +73,11 @@ export default function App({ navigation, route }) {
                 <View style={[styles.item, styles.myBackground]}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Ngày sinh:</Text>
+                        <TouchableHighlight onPress={() => { onPressEdit('dateOfBirth') }}>
+                            <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                        </TouchableHighlight>
                     </View>
+
                     <View>
                         <Text>{member.dateOfBirth}</Text>
                     </View>
@@ -53,6 +88,9 @@ export default function App({ navigation, route }) {
                 <View style={[styles.item, styles.myBackground]}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Giới tính:</Text>
+                        <TouchableHighlight onPress={() => { onPressEdit('sex') }}>
+                            <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                        </TouchableHighlight>
                     </View>
                     <View style={[styles.row, { justifyContent: 'flex-start' }]}>
                         <View style={{ flexDirection: 'row', marginRight: 104 }}>
@@ -78,6 +116,9 @@ export default function App({ navigation, route }) {
                 <View style={[styles.item, styles.myBackground]}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Địa chỉ thường trú:</Text>
+                        <TouchableHighlight onPress={() => { onPressEdit('address') }}>
+                            <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                        </TouchableHighlight>
                     </View>
                     <View>
                         <Text>{member.address}</Text>
@@ -90,6 +131,9 @@ export default function App({ navigation, route }) {
                     <View>
                         <View style={styles.titleContainer}>
                             <Text style={styles.title}>CCCD:</Text>
+                            <TouchableHighlight onPress={() => { onPressEdit('CCCD') }}>
+                                <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                            </TouchableHighlight>
                         </View>
                         <View>
                             <Text>{member.CCCD}</Text>
@@ -101,6 +145,9 @@ export default function App({ navigation, route }) {
                         <View style={styles.itemRow}>
                             <View style={styles.titleContainer}>
                                 <Text style={styles.title}>Ngày cấp</Text>
+                                <TouchableHighlight onPress={() => { onPressEdit('ngayCapCCCD') }}>
+                                    <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                </TouchableHighlight>
                             </View>
                             <View>
                                 <Text>{member.ngayCapCCCD}</Text>
@@ -111,6 +158,9 @@ export default function App({ navigation, route }) {
                         <View style={styles.itemRow}>
                             <View style={styles.titleContainer}>
                                 <Text style={styles.title}>Nơi cấp</Text>
+                                <TouchableHighlight onPress={() => { onPressEdit('noiCapCCCD') }}>
+                                    <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                </TouchableHighlight>
                             </View>
                             <View>
                                 <Text>{member.noiCapCCCD}</Text>
@@ -125,6 +175,9 @@ export default function App({ navigation, route }) {
                     <View>
                         <View style={styles.titleContainer}>
                             <Text style={styles.title}>Nghề nghiệp:</Text>
+                            <TouchableHighlight onPress={() => { onPressEdit('job') }}>
+                                <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                            </TouchableHighlight>
                         </View>
                         <View>
                             <Text>{member.job}</Text>
@@ -133,6 +186,32 @@ export default function App({ navigation, route }) {
                 </View>
             </View>
 
+            {/* Modal for edit */}
+            <ModalEdit
+                setIsEditModalVisible={setIsEditModalVisible}
+                isEditModalVisible={isEditModalVisible}
+
+                editItemContent={editItemContent}
+                editItemID={editItemID}
+
+
+                setInputText={setInputText}
+                inputText={inputText}
+
+
+                memberList={route.params.memberList}
+                member={member}
+                setMember={setMember}
+                setCurrRoom={route.params.setCurrRoom}
+                currRoom={route.params.currRoom}
+
+                alertEmptyDialog={alertEmptyDialog}
+
+                setGlobalRoomList={route.params.setGlobalRoomList}
+                globalRoomList={route.params.globalRoomList}
+
+                chooseItemEdit={4}>
+            </ModalEdit>
         </View >
 
     );
@@ -152,7 +231,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
         backgroundColor: '#dfdfdf',
-        paddingLeft: 8,
         borderBottomWidth: 2,
         position: 'absolute',
         top: 0,
@@ -160,7 +238,7 @@ const styles = StyleSheet.create({
     },
     headerTop: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-around',
         alignItems: 'center',
         width: '100%',
         height: '100%',
@@ -191,16 +269,21 @@ const styles = StyleSheet.create({
         width: '45%',
     },
     titleContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         borderBottomWidth: 2,
         height: '20%',
         paddingBottom: 24,
         marginBottom: 8,
     },
+
+
+
+
     title: {
         fontWeight: 'bold',
     },
     stackTitle: {
-        marginLeft: 32,
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center'
