@@ -1,7 +1,9 @@
 import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import IonIcon from 'react-native-vector-icons/Ionicons';
 import { useState } from 'react';
+
+
+
 export default function App({ navigation, route }) {
     const [billItem, setBillItem] = useState(route.params.specBill)
     const [roomItem, setRoomItem] = useState(route.params.currRoom)
@@ -15,10 +17,6 @@ export default function App({ navigation, route }) {
 
 
     return (
-
-
-
-
         <View style={styles.container}>
 
             {/* Header */}

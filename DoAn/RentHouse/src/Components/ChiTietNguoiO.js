@@ -1,21 +1,14 @@
-import { StyleSheet, View, Text, TouchableHighlight, CheckBox } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import Checkbox from 'expo-checkbox';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { ModalEdit } from './Modal';
-
 import { useState } from 'react';
+
+
 export default function App({ navigation, route }) {
 
     const [member, setMember] = useState(route.params.member)
 
-    const alertEmptyDialog = () => {
-        Alert.alert(
-            "Lỗi",
-            "Thông tin chỉnh sửa bị bỏ trống.",
-            [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-        )
-    }
+
 
     return (
         <View style={styles.container}>
@@ -84,7 +77,7 @@ export default function App({ navigation, route }) {
                     <View style={[styles.row, { justifyContent: 'flex-start' }]}>
                         <View style={{ flexDirection: 'row', marginRight: 104 }}>
                             <View>
-                                <CheckBox value={parseInt(member.sex)} />
+                                <Checkbox value={parseInt(member.sex)} />
                             </View>
                             <View style={{ marginLeft: 8 }}>
                                 <Text>Nam</Text>
@@ -92,7 +85,7 @@ export default function App({ navigation, route }) {
                         </View>
                         <View style={{ flexDirection: 'row' }}>
                             <View>
-                                <CheckBox value={!parseInt(member.sex)} />
+                                <Checkbox value={!parseInt(member.sex)} />
                             </View>
                             <View style={{ marginLeft: 8 }}>
                                 <Text>Nữ</Text>

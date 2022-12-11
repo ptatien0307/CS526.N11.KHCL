@@ -1,4 +1,5 @@
-import { StyleSheet, View, TextInput, TouchableHighlight, CheckBox, Text } from 'react-native';
+import { StyleSheet, View, TextInput, TouchableHighlight, Text } from 'react-native';
+import Checkbox from 'expo-checkbox';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useState } from 'react';
 export default function App({ navigation, route }) {
@@ -116,7 +117,7 @@ export default function App({ navigation, route }) {
                     <View style={[styles.row, { justifyContent: 'flex-start' }]}>
                         <View style={{ flexDirection: 'row', marginRight: 104 }}>
                             <View>
-                                <CheckBox value={male} onValueChange={setMale} />
+                                <Checkbox value={male} onValueChange={setMale} />
                             </View>
                             <View style={{ marginLeft: 8 }}>
                                 <Text>Nam</Text>
@@ -124,7 +125,7 @@ export default function App({ navigation, route }) {
                         </View>
                         <View style={{ flexDirection: 'row' }}>
                             <View>
-                                <CheckBox value={female} onValueChange={setFemale} />
+                                <Checkbox value={female} onValueChange={setFemale} />
                             </View>
                             <View style={{ marginLeft: 8 }}>
                                 <Text>Nữ</Text>

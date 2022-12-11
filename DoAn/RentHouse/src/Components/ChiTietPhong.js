@@ -1,8 +1,10 @@
-import { StyleSheet, View, Text, TouchableHighlight, FlatList, Alert, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight, FlatList } from 'react-native';
+import { useState } from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import { useState } from 'react';
-import { ModalEdit } from './Modal';
+import { ModalEdit } from './modal';
+import { alertDeleteDialog, alertEmptyDialog } from './dialog';
+
 export default function App({ navigation, route }) {
 
     const globalRoomList = route.params.roomList
@@ -24,32 +26,8 @@ export default function App({ navigation, route }) {
     const [mountEdit, setMountEdit] = useState(false)
     const [mounDelete, setMountDelete] = useState(false)
 
-    const alertDeleteDialog = () => {
-        return new Promise((resolve) => {
-            Alert.alert(
-                'Xóa khách thuê',
-                'Bạn có chắc chắn muốn xóa khách thuê này ?',
-                [
-                    { text: 'YES', onPress: () => resolve(true) },
-                    { text: 'NO', onPress: () => resolve(false) }
-                ],
-                { cancelable: false }
-            )
-        })
-    }
-
-    const alertEmptyDialog = () => {
-        Alert.alert(
-            "Lỗi",
-            "Thông tin chỉnh sửa bị bỏ trống.",
-            [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-        )
-    }
-
     const handleDeleteMember = async (deleteMember) => {
-        let isConfirm = await alertDeleteDialog()
+        let isConfirm = await alertDeleteDialog('Xóa khách thuê', 'Bạn có chắc muốn xóa khách thuê này ?')
         if (isConfirm) {
             const newMemberList = currRoom.members.reduce((res, currMember) => {
                 if (currMember.id != deleteMember.id)
@@ -57,13 +35,21 @@ export default function App({ navigation, route }) {
                 return res
             }, [])
 
-            setCurrRoom({ ...currRoom, members: newMemberList })
+            let newRoomStatus = ''
+            if (newMemberList.length === 0)
+                newRoomStatus = 'Trống'
+            else
+                newRoomStatus = newMemberList.length + ' người'
+
+
             const newRoomList = globalRoomList.map(item => {
                 if (item.id === currRoom.id) {
-                    return { ...currRoom, members: newMemberList }
+                    return { ...currRoom, members: newMemberList, roomStatus: newRoomStatus }
                 }
                 return item
             })
+            setCurrRoom({ ...currRoom, members: newMemberList })
+
             route.params.setRoomList(newRoomList)
         }
     }
@@ -370,6 +356,30 @@ export default function App({ navigation, route }) {
                 </View>}
             </View>
 
+            {/* Modal for basic info */}
+            <ModalEdit
+                setIsEditModalVisible={setIsEditModalVisible}
+                isEditModalVisible={isEditModalVisible}
+
+                editItemID={editItemID}
+                editItemContent={editItemContent}
+
+                billHistory={currRoom.billHistory}
+                editBillID={editBillID}
+
+                setInputText={setInputText}
+                inputText={inputText}
+
+                alertEmptyDialog={alertEmptyDialog}
+
+                setCurrRoom={setCurrRoom}
+                currRoom={currRoom}
+
+                setGlobalRoomList={route.params.setRoomList}
+                globalRoomList={globalRoomList}
+
+                chooseItemEdit={chooseItemEdit}>
+            </ModalEdit>
 
         </View >
 

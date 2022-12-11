@@ -11,7 +11,7 @@ export default function App({ navigation, route }) {
                 navigation.navigate("ChiTietPhong", {
                     currRoom: roomList[item.id - 1],
                     roomList,
-                    setRoomList,
+                    setRoomList: route.params.setRoomList,
                 })
             }}>
                 <View style={[styles.room, styles.myBackground]}>

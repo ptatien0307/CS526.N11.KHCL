@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, FlatList, TouchableHighlight, Alert } from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableHighlight } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { ModalAdd, ModalEdit } from './Modal';
+
+import { ModalAdd, ModalEdit } from './modal';
+import { alertDeleteDialog, alertEmptyDialog } from './dialog';
+
+
 export default function App({ navigation, route }) {
 
     const [notes, setNotes] = useState(route.params.notes)
@@ -22,34 +26,8 @@ export default function App({ navigation, route }) {
     const [isAddModalVisible, setIsAddModalVisible] = useState(false)
 
 
-
-
-    const alertEmptyDialog = () => {
-        Alert.alert(
-            "Lỗi",
-            "Nội dung ghi chú bị bỏ trống.",
-            [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-        )
-    }
-
-    const alertDeleteDialog = () => {
-        return new Promise((resolve) => {
-            Alert.alert(
-                'Xóa ghi chú',
-                'Bạn có chắc chắn muốn xóa ghi chú này ?',
-                [
-                    { text: 'YES', onPress: () => resolve(true) },
-                    { text: 'NO', onPress: () => resolve(false) }
-                ],
-                { cancelable: false }
-            )
-        })
-    }
-
     const handleDeleteNote = async (deleteNote) => {
-        let isConfirm = await alertDeleteDialog()
+        let isConfirm = await alertDeleteDialog('Xóa ghi chú', 'Bạn có chắc muốn xóa ghi chú này ?')
         if (isConfirm) {
             const newNoteList = notes.reduce((res, currNote) => {
                 if (currNote.id != deleteNote.id)
@@ -102,6 +80,8 @@ export default function App({ navigation, route }) {
             {/* Header */}
             <View style={styles.header}>
                 <View style={styles.headerTop}>
+
+
                     {/* Back to menu button */}
                     <TouchableHighlight onPress={() => { navigation.goBack() }}>
                         <FontAwesomeIcon name="arrow-left" size={35} />
@@ -147,6 +127,7 @@ export default function App({ navigation, route }) {
                             <Text>XÓA</Text>
                         </TouchableHighlight>
                     </View>}
+
                 </View>
             </View>
 
@@ -254,13 +235,15 @@ const styles = StyleSheet.create({
         width: '50%',
         height: '150%',
         position: 'absolute',
+        zIndex: 99,
         top: 70,
         right: 40,
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
     },
     subMenu: {
         width: '100%',
         height: '30%',
+        zIndex: 100,
     },
 
 
