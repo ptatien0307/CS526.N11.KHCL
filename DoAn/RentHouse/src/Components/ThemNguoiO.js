@@ -1,4 +1,4 @@
-import { StyleSheet, View, TextInput, TouchableHighlight, Text } from 'react-native';
+import { StyleSheet, View, TextInput, TouchableHighlight, Text, ScrollView } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useState } from 'react';
@@ -74,95 +74,18 @@ export default function App({ navigation, route }) {
 
             {/* Body */}
             <View style={[styles.body, styles.myBorder]}>
-                {/* Name */}
-                <View style={[styles.item, styles.myBackground]}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Họ tên:</Text>
-                    </View>
-                    <View>
-                        <TextInput
-                            style={[styles.myBorder, { paddingLeft: 8 }]}
-                            onChangeText={(text) => { setMemberName(text) }}
-                            placeholder='Nhập ...'
-                            editable={true}
-                            multiline={false}
-                            maxLength={256}></TextInput>
-                    </View>
-                </View>
-
-
-                {/* DataOfBirth */}
-                <View style={[styles.item, styles.myBackground]}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Ngày sinh:</Text>
-                    </View>
-                    <View>
-                        <TextInput
-                            style={[styles.myBorder, { paddingLeft: 8 }]}
-                            onChangeText={(text) => { setDateOfBirth(text) }}
-                            placeholder='Nhập ...'
-                            editable={true}
-                            multiline={false}
-                            maxLength={256}></TextInput>
-                    </View>
-
-                </View>
-
-
-                {/* Sex */}
-                <View style={[styles.item, styles.myBackground]}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Giới tính:</Text>
-                    </View>
-                    <View style={[styles.row, { justifyContent: 'flex-start' }]}>
-                        <View style={{ flexDirection: 'row', marginRight: 104 }}>
-                            <View>
-                                <Checkbox value={male} onValueChange={setMale} />
-                            </View>
-                            <View style={{ marginLeft: 8 }}>
-                                <Text>Nam</Text>
-                            </View>
-                        </View>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View>
-                                <Checkbox value={female} onValueChange={setFemale} />
-                            </View>
-                            <View style={{ marginLeft: 8 }}>
-                                <Text>Nữ</Text>
-                            </View>
-                        </View>
-                    </View>
-                </View>
-
-
-                {/* Address */}
-                <View style={[styles.item, styles.myBackground]}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Địa chỉ thường trú:</Text>
-                    </View>
-                    <View>
-                        <TextInput
-                            style={[styles.myBorder, { paddingLeft: 8 }]}
-                            onChangeText={(text) => { setAddress(text) }}
-                            placeholder='Nhập ...'
-                            editable={true}
-                            multiline={false}
-                            maxLength={256}></TextInput>
-                    </View>
-                </View>
-
-
-                {/* CCCD */}
-                <View style={[styles.item, styles.myBackground]}>
-
-                    <View>
+                <ScrollView
+                    style={{ width: '100%', height: '100%' }}
+                    contentContainerStyle={{ flex: 1, alignItems: 'center' }}>
+                    {/* Name */}
+                    <View style={[styles.item, styles.myBackground]}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>CCCD:</Text>
+                            <Text style={styles.title}>Họ tên:</Text>
                         </View>
                         <View>
                             <TextInput
                                 style={[styles.myBorder, { paddingLeft: 8 }]}
-                                onChangeText={(text) => { setCCCD(text) }}
+                                onChangeText={(text) => { setMemberName(text) }}
                                 placeholder='Nhập ...'
                                 editable={true}
                                 multiline={false}
@@ -170,69 +93,147 @@ export default function App({ navigation, route }) {
                         </View>
                     </View>
 
-                    <View style={styles.row}>
-                        {/* Day */}
-                        <View style={styles.itemRow}>
-                            <View style={styles.titleContainer}>
-                                <Text style={styles.title}>Ngày cấp</Text>
-                            </View>
-                            <View>
-                                <TextInput
-                                    style={[styles.myBorder, { paddingLeft: 8 }]}
-                                    onChangeText={(text) => { setNgayCapCCCD(text) }}
-                                    placeholder='Nhập ...'
-                                    editable={true}
-                                    multiline={false}
-                                    maxLength={256}></TextInput>
-                            </View>
-
-                        </View>
-                        {/* Place */}
-                        <View style={styles.itemRow}>
-                            <View style={styles.titleContainer}>
-                                <Text style={styles.title}>Nơi cấp</Text>
-                            </View>
-                            <View>
-                                <TextInput
-                                    style={[styles.myBorder, { paddingLeft: 8 }]}
-                                    onChangeText={(text) => { setNoiCapCCCD(text) }}
-                                    placeholder='Nhập ...'
-                                    editable={true}
-                                    multiline={false}
-                                    maxLength={256}></TextInput>
-                            </View>
-
-                        </View>
-                    </View>
-                </View>
-
-                {/* Job */}
-                <View style={[styles.item, styles.myBackground]}>
-                    <View>
+                    {/* DataOfBirth */}
+                    <View style={[styles.item, styles.myBackground]}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>Nghề nghiệp:</Text>
+                            <Text style={styles.title}>Ngày sinh:</Text>
                         </View>
                         <View>
                             <TextInput
                                 style={[styles.myBorder, { paddingLeft: 8 }]}
-                                onChangeText={(text) => { setJob(text) }}
+                                onChangeText={(text) => { setDateOfBirth(text) }}
+                                placeholder='Nhập ...'
+                                editable={true}
+                                multiline={false}
+                                maxLength={256}></TextInput>
+                        </View>
+
+                    </View>
+
+                    {/* Sex */}
+                    <View style={[styles.item, styles.myBackground]}>
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>Giới tính:</Text>
+                        </View>
+                        <View style={[styles.row, { justifyContent: 'flex-start' }]}>
+                            <View style={{ flexDirection: 'row', marginRight: 104 }}>
+                                <View>
+                                    <Checkbox value={male} onValueChange={setMale} />
+                                </View>
+                                <View style={{ marginLeft: 8 }}>
+                                    <Text>Nam</Text>
+                                </View>
+                            </View>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View>
+                                    <Checkbox value={female} onValueChange={setFemale} />
+                                </View>
+                                <View style={{ marginLeft: 8 }}>
+                                    <Text>Nữ</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+
+                    {/* Address */}
+                    <View style={[styles.item, styles.myBackground]}>
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>Địa chỉ thường trú:</Text>
+                        </View>
+                        <View>
+                            <TextInput
+                                style={[styles.myBorder, { paddingLeft: 8 }]}
+                                onChangeText={(text) => { setAddress(text) }}
                                 placeholder='Nhập ...'
                                 editable={true}
                                 multiline={false}
                                 maxLength={256}></TextInput>
                         </View>
                     </View>
-                </View>
 
+                    {/* CCCD */}
+                    <View style={[styles.item, styles.myBackground]}>
+
+                        <View>
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.title}>CCCD:</Text>
+                            </View>
+                            <View>
+                                <TextInput
+                                    style={[styles.myBorder, { paddingLeft: 8 }]}
+                                    onChangeText={(text) => { setCCCD(text) }}
+                                    placeholder='Nhập ...'
+                                    editable={true}
+                                    multiline={false}
+                                    maxLength={256}></TextInput>
+                            </View>
+                        </View>
+
+                        <View style={styles.row}>
+                            {/* Day */}
+                            <View style={styles.itemRow}>
+                                <View style={styles.titleContainer}>
+                                    <Text style={styles.title}>Ngày cấp</Text>
+                                </View>
+                                <View>
+                                    <TextInput
+                                        style={[styles.myBorder, { paddingLeft: 8 }]}
+                                        onChangeText={(text) => { setNgayCapCCCD(text) }}
+                                        placeholder='Nhập ...'
+                                        editable={true}
+                                        multiline={false}
+                                        maxLength={256}></TextInput>
+                                </View>
+
+                            </View>
+                            {/* Place */}
+                            <View style={styles.itemRow}>
+                                <View style={styles.titleContainer}>
+                                    <Text style={styles.title}>Nơi cấp</Text>
+                                </View>
+                                <View>
+                                    <TextInput
+                                        style={[styles.myBorder, { paddingLeft: 8 }]}
+                                        onChangeText={(text) => { setNoiCapCCCD(text) }}
+                                        placeholder='Nhập ...'
+                                        editable={true}
+                                        multiline={false}
+                                        maxLength={256}></TextInput>
+                                </View>
+
+                            </View>
+                        </View>
+                    </View>
+
+                    {/* Job */}
+                    <View style={[styles.item, styles.myBackground]}>
+                        <View>
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.title}>Nghề nghiệp:</Text>
+                            </View>
+                            <View>
+                                <TextInput
+                                    style={[styles.myBorder, { paddingLeft: 8 }]}
+                                    onChangeText={(text) => { setJob(text) }}
+                                    placeholder='Nhập ...'
+                                    editable={true}
+                                    multiline={false}
+                                    maxLength={256}></TextInput>
+                            </View>
+                        </View>
+                    </View>
+
+                    {/* Add room button */}
+                    <TouchableHighlight style={styles.addButton} onPress={() => { handleAddMember() }}>
+                        <View>
+                            <Text style={styles.textTitle}>+ THÊM KHÁCH THUÊ</Text>
+                        </View>
+                    </TouchableHighlight >
+                </ScrollView>
 
             </View>
 
-            {/* Add room button */}
-            <TouchableHighlight style={styles.addButton} onPress={() => { handleAddMember() }}>
-                <View>
-                    <Text style={styles.textTitle}>+ THÊM KHÁCH THUÊ</Text>
-                </View>
-            </TouchableHighlight >
+
         </View >
 
     );
@@ -269,13 +270,11 @@ const styles = StyleSheet.create({
 
 
     body: {
-        height: 'auto',
-
+        height: '90%',
         marginTop: 72,
         width: '90%',
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingTop: 16
     },
     item: {
         width: '90%',

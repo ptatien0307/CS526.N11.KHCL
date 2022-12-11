@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableHighlight, FlatList } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight, FlatList, ScrollView } from 'react-native';
 import { useState } from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -208,144 +208,149 @@ export default function App({ navigation, route }) {
 
             {/* Body */}
             <View style={styles.body}>
-                {/* View info */}
-                {mountInfo && <View style={styles.infoContainer}>
-                    {/* View room details */}
-                    <View style={[styles.basicInfo, styles.myBorder]}>
-                        <View style={styles.bodyHeader}>
+                <ScrollView
+                    style={{ width: '100%', height: '100%' }}
+                    contentContainerStyle={{ flex: 1, alignItems: 'center' }}>
+                    {/* View info */}
+                    {mountInfo && <View style={styles.infoContainer}>
+                        {/* View room details */}
+                        <View style={[styles.basicInfo, styles.myBorder]}>
+                            <View style={styles.bodyHeader}>
 
-                            <Text>Thông tin cơ bản</Text>
+                                <Text>Thông tin cơ bản</Text>
 
-                            {/* Edit info button */}
-                            <TouchableHighlight onPress={() => {
-                                setMountEdit(!mountEdit)
+                                {/* Edit info button */}
+                                <TouchableHighlight onPress={() => {
+                                    setMountEdit(!mountEdit)
 
-                            }}>
-                                <FontAwesomeIcon name="edit" size={20} />
-                            </TouchableHighlight>
-
-                        </View>
-
-
-                        <View style={styles.infoRow}>
-                            {/* Room name */}
-                            <View style={[styles.rowItem, styles.myBackground]}>
-                                <View>
-                                    <Text>Tên phòng:</Text>
-                                    <Text style={styles.textBold}>{currRoom.roomName}</Text>
-                                </View>
-                                <TouchableHighlight onPress={() => { onPressEdit(['roomName']) }}>
-                                    <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                </TouchableHighlight>
-                            </View>
-
-                            {/* Contract day */}
-                            <View style={[styles.rowItem, styles.myBackground]}>
-                                <View>
-                                    <Text>Ngày đến:</Text>
-                                    <Text style={styles.textBold}>{currRoom.contractDay}</Text>
-                                </View>
-                                <TouchableHighlight onPress={() => { onPressEdit(['contractDay']) }}>
-                                    <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                </TouchableHighlight>
-                            </View>
-
-                        </View>
-
-                        <View style={styles.infoRow}>
-                            {/* Price */}
-                            <View style={[styles.rowItem, styles.myBackground]}>
-                                <View>
-                                    <Text>Giá thuê:</Text>
-                                    <Text style={styles.textBold}>{currRoom.price}</Text>
-                                </View>
-                                <TouchableHighlight onPress={() => { onPressEdit(['price']) }}>
-                                    <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                </TouchableHighlight>
-                            </View>
-
-                            {/* Deposit */}
-                            <View style={[styles.rowItem, styles.myBackground]}>
-                                <View>
-                                    <Text>Tiền cọc:</Text>
-                                    <Text style={styles.textBold}>{currRoom.deposit}</Text>
-                                </View>
-                                <TouchableHighlight onPress={() => { onPressEdit(['deposit']) }}>
-                                    <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                </TouchableHighlight>
-                            </View>
-
-                        </View>
-                    </View>
-
-                    {/* View members */}
-                    <View style={[styles.memberInfo, styles.myBorder]}>
-                        <View style={[styles.bodyHeader, { height: '10%', marginBottom: 16 }]}>
-
-                            <Text>Thông tin người ở</Text>
-
-                            {/* Sub menu icon */}
-                            <TouchableHighlight onPress={() => { setIsSubMenuVisible(!isSubMenuVisible) }}>
-                                <FontAwesomeIcon name="navicon" size={20} />
-                            </TouchableHighlight>
-
-                        </View>
-
-                        {/* View members  */}
-                        <View style={[styles.memberContainer]}>
-                            <FlatList
-                                data={currRoom.members}
-                                renderItem={renderMembers}
-                                keyExtractor={item => item.id}>
-                            </FlatList>
-                        </View>
-
-                        {/* Sub menu */}
-                        {isSubMenuVisible && <View style={styles.subMenuContainer}>
-                            <TouchableHighlight style={styles.subMenu}
-                                onPress={() => {
-                                    navigation.navigate('ThemNguoiO', {
-                                        setIsSubMenuVisible,
-                                        currRoom,
-                                        setCurrRoom,
-                                        globalRoomList,
-                                        setGlobalRoomList: route.params.setRoomList,
-                                        memberList: currRoom.members,
-                                    })
                                 }}>
-                                <Text>THÊM</Text>
-                            </TouchableHighlight>
+                                    <FontAwesomeIcon name="edit" size={20} />
+                                </TouchableHighlight>
 
-
-                            <TouchableHighlight style={styles.subMenu}
-                                onPress={() => {
-                                    setMountDelete(!mounDelete)
-                                    setIsSubMenuVisible(false)
-                                }}>
-                                <Text>XÓA</Text>
-                            </TouchableHighlight>
-                        </View>}
-                    </View>
-
-                    {/* Water and electricity */}
-                    <View style={[styles.serviceInfo, styles.myBorder]}>
-                        <View style={[styles.bodyHeader, { height: '20%', marginBottom: 16 }]}>
-                            <Text>Thông tin dịch vụ</Text>
-                        </View>
-                        <View style={[styles.serviceContainer]}>
-                            <View style={[styles.service, styles.myBackground]}>
-                                <IonIcon name="water" size={20} style={{ marginRight: 20 }} />
-                                <Text>{currRoom.donGiaNuoc} đ/khối</Text>
                             </View>
-                            <View style={[styles.service, styles.myBackground]}>
-                                <FontAwesomeIcon name="bolt" size={20} style={{ marginLeft: 4, marginRight: 26 }} />
-                                <Text>{currRoom.donGiaDien} đ/kwh</Text>
+
+
+                            <View style={styles.infoRow}>
+                                {/* Room name */}
+                                <View style={[styles.rowItem, styles.myBackground]}>
+                                    <View>
+                                        <Text>Tên phòng:</Text>
+                                        <Text style={styles.textBold}>{currRoom.roomName}</Text>
+                                    </View>
+                                    <TouchableHighlight onPress={() => { onPressEdit(['roomName']) }}>
+                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                    </TouchableHighlight>
+                                </View>
+
+                                {/* Contract day */}
+                                <View style={[styles.rowItem, styles.myBackground]}>
+                                    <View>
+                                        <Text>Ngày đến:</Text>
+                                        <Text style={styles.textBold}>{currRoom.contractDay}</Text>
+                                    </View>
+                                    <TouchableHighlight onPress={() => { onPressEdit(['contractDay']) }}>
+                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                    </TouchableHighlight>
+                                </View>
+
+                            </View>
+
+                            <View style={styles.infoRow}>
+                                {/* Price */}
+                                <View style={[styles.rowItem, styles.myBackground]}>
+                                    <View>
+                                        <Text>Giá thuê:</Text>
+                                        <Text style={styles.textBold}>{currRoom.price}</Text>
+                                    </View>
+                                    <TouchableHighlight onPress={() => { onPressEdit(['price']) }}>
+                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                    </TouchableHighlight>
+                                </View>
+
+                                {/* Deposit */}
+                                <View style={[styles.rowItem, styles.myBackground]}>
+                                    <View>
+                                        <Text>Tiền cọc:</Text>
+                                        <Text style={styles.textBold}>{currRoom.deposit}</Text>
+                                    </View>
+                                    <TouchableHighlight onPress={() => { onPressEdit(['deposit']) }}>
+                                        <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
+                                    </TouchableHighlight>
+                                </View>
+
                             </View>
                         </View>
-                    </View>
-                </View>}
+
+                        {/* View members */}
+                        <View style={[styles.memberInfo, styles.myBorder]}>
+                            <View style={[styles.bodyHeader, { height: '10%', marginBottom: 16 }]}>
+
+                                <Text>Thông tin người ở</Text>
+
+                                {/* Sub menu icon */}
+                                <TouchableHighlight onPress={() => { setIsSubMenuVisible(!isSubMenuVisible) }}>
+                                    <FontAwesomeIcon name="navicon" size={20} />
+                                </TouchableHighlight>
+
+                            </View>
+
+                            {/* View members  */}
+                            <View style={[styles.memberContainer]}>
+                                <FlatList
+                                    data={currRoom.members}
+                                    renderItem={renderMembers}
+                                    keyExtractor={item => item.id}>
+                                </FlatList>
+                            </View>
+
+                            {/* Sub menu */}
+                            {isSubMenuVisible && <View style={styles.subMenuContainer}>
+                                <TouchableHighlight style={styles.subMenu}
+                                    onPress={() => {
+                                        navigation.navigate('ThemNguoiO', {
+                                            setIsSubMenuVisible,
+                                            currRoom,
+                                            setCurrRoom,
+                                            globalRoomList,
+                                            setGlobalRoomList: route.params.setRoomList,
+                                            memberList: currRoom.members,
+                                        })
+                                    }}>
+                                    <Text>THÊM</Text>
+                                </TouchableHighlight>
 
 
+                                <TouchableHighlight style={styles.subMenu}
+                                    onPress={() => {
+                                        setMountDelete(!mounDelete)
+                                        setIsSubMenuVisible(false)
+                                    }}>
+                                    <Text>XÓA</Text>
+                                </TouchableHighlight>
+                            </View>}
+                        </View>
+
+                        {/* Water and electricity */}
+                        <View style={[styles.serviceInfo, styles.myBorder]}>
+                            <View style={[styles.bodyHeader, { height: '20%', marginBottom: 16 }]}>
+                                <Text>Thông tin dịch vụ</Text>
+                            </View>
+                            <View style={[styles.serviceContainer]}>
+                                <View style={[styles.service, styles.myBackground]}>
+                                    <IonIcon name="water" size={20} style={{ marginRight: 20 }} />
+                                    <Text>{currRoom.donGiaNuoc} đ/khối</Text>
+                                </View>
+                                <View style={[styles.service, styles.myBackground]}>
+                                    <FontAwesomeIcon name="bolt" size={20} style={{ marginLeft: 4, marginRight: 26 }} />
+                                    <Text>{currRoom.donGiaDien} đ/kwh</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>}
+
+
+
+                </ScrollView>
                 {/* View Bill */}
                 {!mountInfo && <View style={[styles.billContainer, styles.myBorder]}>
                     <FlatList
@@ -355,6 +360,11 @@ export default function App({ navigation, route }) {
                     </FlatList>
                 </View>}
             </View>
+
+
+
+
+
 
             {/* Modal for basic info */}
             <ModalEdit
@@ -381,6 +391,7 @@ export default function App({ navigation, route }) {
                 chooseItemEdit={chooseItemEdit}>
             </ModalEdit>
 
+
         </View >
 
 
@@ -389,11 +400,11 @@ export default function App({ navigation, route }) {
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
         flexDirection: 'column',
         width: '100%',
+        height: '100%'
     },
     header: {
         width: '100%',
@@ -402,6 +413,9 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         backgroundColor: '#dfdfdf',
         borderBottomWidth: 2,
+        position: 'absolute',
+        top: 0,
+        zIndex: 10
     },
     headerBtn: {
         width: '50%',
@@ -428,8 +442,9 @@ const styles = StyleSheet.create({
 
 
     body: {
+        margin: 100,
         width: '100%',
-        height: '100%',
+        height: '85%',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
@@ -447,7 +462,7 @@ const styles = StyleSheet.create({
     },
     basicInfo: {
         width: '90%',
-        height: '20%',
+        height: '25%',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 8,
@@ -473,7 +488,7 @@ const styles = StyleSheet.create({
 
     memberInfo: {
         width: '90%',
-        height: '60%',
+        height: '55%',
         justifyContent: 'flex-start',
         alignItems: 'center',
         padding: 8,
@@ -498,7 +513,7 @@ const styles = StyleSheet.create({
 
     serviceInfo: {
         width: '90%',
-        height: '20%',
+        height: '25%',
         justifyContent: 'flex-start',
         alignItems: 'center',
         padding: 8,
@@ -526,7 +541,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 30,
         right: 8,
-        justifyContent: 'space-around'
     },
     subMenu: {
         width: '100%',
@@ -541,7 +555,7 @@ const styles = StyleSheet.create({
 
 
     billContainer: {
-        height: '80%',
+        height: '100%',
         width: '90%',
         padding: 8,
     },

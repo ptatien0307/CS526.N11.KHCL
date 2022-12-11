@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight, ScrollView } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useState } from 'react';
@@ -44,118 +44,122 @@ export default function App({ navigation, route }) {
 
             {/* Body */}
             <View style={[styles.body, styles.myBorder]}>
-                {/* Name */}
-                <View style={[styles.item, styles.myBackground]}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Họ tên:</Text>
-
-                    </View>
-                    <View>
-                        <Text>{member.memberName}</Text>
-                    </View>
-                </View>
-
-                {/* DataOfBirth */}
-                <View style={[styles.item, styles.myBackground]}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Ngày sinh:</Text>
-
-                    </View>
-
-                    <View>
-                        <Text>{member.dateOfBirth}</Text>
-                    </View>
-
-                </View>
-
-                {/* Sex */}
-                <View style={[styles.item, styles.myBackground]}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Giới tính:</Text>
-
-                    </View>
-                    <View style={[styles.row, { justifyContent: 'flex-start' }]}>
-                        <View style={{ flexDirection: 'row', marginRight: 104 }}>
-                            <View>
-                                <Checkbox value={parseInt(member.sex)} />
-                            </View>
-                            <View style={{ marginLeft: 8 }}>
-                                <Text>Nam</Text>
-                            </View>
-                        </View>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View>
-                                <Checkbox value={!parseInt(member.sex)} />
-                            </View>
-                            <View style={{ marginLeft: 8 }}>
-                                <Text>Nữ</Text>
-                            </View>
-                        </View>
-                    </View>
-                </View>
-
-                {/* Address */}
-                <View style={[styles.item, styles.myBackground]}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Địa chỉ thường trú:</Text>
-
-                    </View>
-                    <View>
-                        <Text>{member.address}</Text>
-                    </View>
-                </View>
-
-                {/* CCCD */}
-                <View style={[styles.item, styles.myBackground]}>
-
-                    <View>
+                <ScrollView
+                    style={{ width: '100%', height: '100%' }}
+                    contentContainerStyle={{ flex: 1, alignItems: 'center' }}>
+                    {/* Name */}
+                    <View style={[styles.item, styles.myBackground]}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>CCCD:</Text>
+                            <Text style={styles.title}>Họ tên:</Text>
 
                         </View>
                         <View>
-                            <Text>{member.CCCD}</Text>
+                            <Text>{member.memberName}</Text>
                         </View>
                     </View>
 
-                    <View style={styles.row}>
-                        {/* Day */}
-                        <View style={styles.itemRow}>
-                            <View style={styles.titleContainer}>
-                                <Text style={styles.title}>Ngày cấp</Text>
-
-                            </View>
-                            <View>
-                                <Text>{member.ngayCapCCCD}</Text>
-                            </View>
-
-                        </View>
-                        {/* Place */}
-                        <View style={styles.itemRow}>
-                            <View style={styles.titleContainer}>
-                                <Text style={styles.title}>Nơi cấp</Text>
-
-                            </View>
-                            <View>
-                                <Text>{member.noiCapCCCD}</Text>
-                            </View>
-
-                        </View>
-                    </View>
-                </View>
-
-                {/* Job */}
-                <View style={[styles.item, styles.myBackground]}>
-                    <View>
+                    {/* DataOfBirth */}
+                    <View style={[styles.item, styles.myBackground]}>
                         <View style={styles.titleContainer}>
-                            <Text style={styles.title}>Nghề nghiệp:</Text>
+                            <Text style={styles.title}>Ngày sinh:</Text>
+
+                        </View>
+
+                        <View>
+                            <Text>{member.dateOfBirth}</Text>
+                        </View>
+
+                    </View>
+
+                    {/* Sex */}
+                    <View style={[styles.item, styles.myBackground]}>
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>Giới tính:</Text>
+
+                        </View>
+                        <View style={[styles.row, { justifyContent: 'flex-start' }]}>
+                            <View style={{ flexDirection: 'row', marginRight: 104 }}>
+                                <View>
+                                    <Checkbox value={parseInt(member.sex)} />
+                                </View>
+                                <View style={{ marginLeft: 8 }}>
+                                    <Text>Nam</Text>
+                                </View>
+                            </View>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View>
+                                    <Checkbox value={!parseInt(member.sex)} />
+                                </View>
+                                <View style={{ marginLeft: 8 }}>
+                                    <Text>Nữ</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+
+                    {/* Address */}
+                    <View style={[styles.item, styles.myBackground]}>
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>Địa chỉ thường trú:</Text>
 
                         </View>
                         <View>
-                            <Text>{member.job}</Text>
+                            <Text>{member.address}</Text>
                         </View>
                     </View>
-                </View>
+
+                    {/* CCCD */}
+                    <View style={[styles.item, styles.myBackground]}>
+
+                        <View>
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.title}>CCCD:</Text>
+
+                            </View>
+                            <View>
+                                <Text>{member.CCCD}</Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.row}>
+                            {/* Day */}
+                            <View style={styles.itemRow}>
+                                <View style={styles.titleContainer}>
+                                    <Text style={styles.title}>Ngày cấp</Text>
+
+                                </View>
+                                <View>
+                                    <Text>{member.ngayCapCCCD}</Text>
+                                </View>
+
+                            </View>
+                            {/* Place */}
+                            <View style={styles.itemRow}>
+                                <View style={styles.titleContainer}>
+                                    <Text style={styles.title}>Nơi cấp</Text>
+
+                                </View>
+                                <View>
+                                    <Text>{member.noiCapCCCD}</Text>
+                                </View>
+
+                            </View>
+                        </View>
+                    </View>
+
+                    {/* Job */}
+                    <View style={[styles.item, styles.myBackground]}>
+                        <View>
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.title}>Nghề nghiệp:</Text>
+
+                            </View>
+                            <View>
+                                <Text>{member.job}</Text>
+                            </View>
+                        </View>
+                    </View>
+                </ScrollView>
             </View>
 
 
@@ -181,7 +185,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         position: 'absolute',
         top: 0,
-        zIndex: 99,
+        zIndex: 10,
     },
     headerTop: {
         flexDirection: 'row',
@@ -196,10 +200,9 @@ const styles = StyleSheet.create({
     body: {
         marginTop: 72,
         width: '90%',
-        height: 'auto',
+        height: '90%',
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingTop: 16
     },
     item: {
         width: '90%',

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight, ScrollView } from 'react-native';
 import { useState } from 'react';
 
 
@@ -99,6 +99,7 @@ export default function App({ navigation }) {
             id: 6,
             noteContent: 'Do something 5'
         },
+
     ]
 
     const [notes, setNotes] = useState(NOTE)
@@ -166,6 +167,7 @@ export default function App({ navigation }) {
 }
 const styles = StyleSheet.create({
     container: {
+        height: '100%',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-evenly',

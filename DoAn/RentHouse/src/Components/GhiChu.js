@@ -235,10 +235,10 @@ const styles = StyleSheet.create({
         width: '50%',
         height: '150%',
         position: 'absolute',
-        zIndex: 99,
         top: 70,
         right: 40,
-        justifyContent: 'space-around',
+        zIndex: 100,
+        elevation: 100
     },
     subMenu: {
         width: '100%',
