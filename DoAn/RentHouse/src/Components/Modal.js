@@ -141,7 +141,6 @@ export function ModalEdit(params) {
         if (params.inputText === '')
             params.alertEmptyDialog()
         else {
-            console.log(params.memberList)
             params.setMember({ ...params.member, [params.editItemContent]: params.inputText })
             const newMemberList = params.memberList.map(item => {
                 if (item.id === params.editItemID) {

@@ -10,6 +10,9 @@ import GhiChu from './src/Components/GhiChu.js'
 import ChiTietHoaDon from './src/Components/ChiTietHoaDon.js'
 import ChiTietNguoiO from './src/Components/ChiTietNguoiO.js'
 import ThemNguoiO from './src/Components/ThemNguoiO.js'
+import ChinhSuaCHiTietNguoiO from './src/Components/ChinhSuaChiTietNguoiO.js'
+
+
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +33,9 @@ export default function App() {
           headerShown: false,
         }} />
         <Stack.Screen name="ThemNguoiO" component={ThemNguoiO} options={{
+          headerShown: false,
+        }} />
+        <Stack.Screen name="ChinhSuaCHiTietNguoiO" component={ChinhSuaCHiTietNguoiO} options={{
           headerShown: false,
         }} />
         <Stack.Screen name="ChiTietHoaDon" component={ChiTietHoaDon} options={{

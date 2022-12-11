@@ -1,11 +1,23 @@
-import { StyleSheet, View, Text, TouchableHighlight, CheckBox } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight, CheckBox, TextInput } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { ModalEdit } from './Modal';
 
 import { useState } from 'react';
 export default function App({ navigation, route }) {
 
     const [member, setMember] = useState(route.params.member)
+
+    const [memberName, setMemberName] = useState(member.memberName)
+    const [dateOfBirth, setDateOfBirth] = useState(member.dateOfBirth)
+    const [address, setAddress] = useState(member.address)
+    const [CCCD, setCCCD] = useState(member.CCCD)
+    const [ngayCapCCCD, setNgayCapCCCD] = useState(member.ngayCapCCCD)
+    const [noiCapCCCD, setNoiCapCCCD] = useState(member.noiCapCCCD)
+    const [job, setJob] = useState(member.job)
+
+
+    const [sex, setSex] = useState(member.sex)
+    const [male, setMale] = useState(parseInt(sex) ? true : false)
+    const [female, setFemale] = useState(parseInt(!sex) ? true : false)
 
     const alertEmptyDialog = () => {
         Alert.alert(
@@ -17,6 +29,37 @@ export default function App({ navigation, route }) {
         )
     }
 
+
+    const handleSave = () => {
+
+        const newMember = {
+            id: member.id,
+            memberName: memberName,
+            dateOfBirth: dateOfBirth,
+            CCCD: CCCD,
+            ngayCapCCCD: ngayCapCCCD,
+            noiCapCCCD: noiCapCCCD,
+            job: job,
+            sex: sex,
+            address: address
+        }
+        const newMemberList = route.params.memberList.map(item => {
+            if (item.id === member.id)
+                return newMember
+            return item
+        })
+        route.params.setMember(newMember)
+        route.params.setCurrRoom({ ...route.params.currRoom, members: newMemberList })
+
+        const newGlobalRoomList = route.params.globalRoomList.map(item => {
+            if (item.id === route.params.currRoom.id) {
+                return { ...route.params.currRoom, members: newMemberList }
+            }
+            return item
+        })
+        route.params.setGlobalRoomList(newGlobalRoomList)
+        navigation.goBack()
+    }
     return (
         <View style={styles.container}>
 
@@ -29,22 +72,7 @@ export default function App({ navigation, route }) {
                         <FontAwesomeIcon name="arrow-left" size={35} />
                     </TouchableHighlight>
 
-                    <Text style={styles.stackTitle}>THÔNG TIN KHÁCH THUÊ</Text>
-                    <TouchableHighlight onPress={() => {
-                        navigation.navigate('ChinhSuaCHiTietNguoiO',
-                            {
-                                member,
-                                setMember,
-                                currRoom: route.params.currRoom,
-                                setCurrRoom: route.params.setCurrRoom,
-                                memberList: route.params.memberList,
-                                globalRoomList: route.params.globalRoomList,
-                                setGlobalRoomList: route.params.setGlobalRoomList
-                            })
-
-                    }}>
-                        <FontAwesomeIcon name="edit" size={35} />
-                    </TouchableHighlight>
+                    <Text style={styles.stackTitle}>CHỈNH SỬA THÔNG TIN KHÁCH THUÊ</Text>
                 </View>
             </View>
 
@@ -55,36 +83,50 @@ export default function App({ navigation, route }) {
                 <View style={[styles.item, styles.myBackground]}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Họ tên:</Text>
-
                     </View>
                     <View>
-                        <Text>{member.memberName}</Text>
+                        <TextInput
+                            style={[styles.myBorder, { paddingLeft: 8 }]}
+                            onChangeText={(text) => { setMemberName(text) }}
+                            defaultValue={memberName}
+                            editable={true}
+                            multiline={false}
+                            maxLength={256}></TextInput>
                     </View>
                 </View>
+
 
                 {/* DataOfBirth */}
                 <View style={[styles.item, styles.myBackground]}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Ngày sinh:</Text>
-
                     </View>
-
                     <View>
-                        <Text>{member.dateOfBirth}</Text>
+                        <TextInput
+                            style={[styles.myBorder, { paddingLeft: 8 }]}
+                            onChangeText={(text) => { setDateOfBirth(text) }}
+                            defaultValue={dateOfBirth}
+                            editable={true}
+                            multiline={false}
+                            maxLength={256}></TextInput>
                     </View>
 
                 </View>
+
 
                 {/* Sex */}
                 <View style={[styles.item, styles.myBackground]}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Giới tính:</Text>
-
                     </View>
                     <View style={[styles.row, { justifyContent: 'flex-start' }]}>
                         <View style={{ flexDirection: 'row', marginRight: 104 }}>
                             <View>
-                                <CheckBox value={parseInt(member.sex)} />
+                                <CheckBox value={male} onValueChange={() => {
+                                    setFemale(false)
+                                    setMale(true)
+                                    setSex(1)
+                                }} />
                             </View>
                             <View style={{ marginLeft: 8 }}>
                                 <Text>Nam</Text>
@@ -92,7 +134,11 @@ export default function App({ navigation, route }) {
                         </View>
                         <View style={{ flexDirection: 'row' }}>
                             <View>
-                                <CheckBox value={!parseInt(member.sex)} />
+                                <CheckBox value={female} onValueChange={() => {
+                                    setMale(false)
+                                    setFemale(true)
+                                    setSex(0)
+                                }} />
                             </View>
                             <View style={{ marginLeft: 8 }}>
                                 <Text>Nữ</Text>
@@ -101,16 +147,23 @@ export default function App({ navigation, route }) {
                     </View>
                 </View>
 
+
                 {/* Address */}
                 <View style={[styles.item, styles.myBackground]}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Địa chỉ thường trú:</Text>
-
                     </View>
                     <View>
-                        <Text>{member.address}</Text>
+                        <TextInput
+                            style={[styles.myBorder, { paddingLeft: 8 }]}
+                            onChangeText={(text) => { setAddress(text) }}
+                            defaultValue={address}
+                            editable={true}
+                            multiline={false}
+                            maxLength={256}></TextInput>
                     </View>
                 </View>
+
 
                 {/* CCCD */}
                 <View style={[styles.item, styles.myBackground]}>
@@ -118,10 +171,15 @@ export default function App({ navigation, route }) {
                     <View>
                         <View style={styles.titleContainer}>
                             <Text style={styles.title}>CCCD:</Text>
-
                         </View>
                         <View>
-                            <Text>{member.CCCD}</Text>
+                            <TextInput
+                                style={[styles.myBorder, { paddingLeft: 8 }]}
+                                onChangeText={(text) => { setCCCD(text) }}
+                                defaultValue={CCCD}
+                                editable={true}
+                                multiline={false}
+                                maxLength={256}></TextInput>
                         </View>
                     </View>
 
@@ -130,10 +188,15 @@ export default function App({ navigation, route }) {
                         <View style={styles.itemRow}>
                             <View style={styles.titleContainer}>
                                 <Text style={styles.title}>Ngày cấp</Text>
-
                             </View>
                             <View>
-                                <Text>{member.ngayCapCCCD}</Text>
+                                <TextInput
+                                    style={[styles.myBorder, { paddingLeft: 8 }]}
+                                    onChangeText={(text) => { setNgayCapCCCD(text) }}
+                                    defaultValue={ngayCapCCCD}
+                                    editable={true}
+                                    multiline={false}
+                                    maxLength={256}></TextInput>
                             </View>
 
                         </View>
@@ -141,10 +204,15 @@ export default function App({ navigation, route }) {
                         <View style={styles.itemRow}>
                             <View style={styles.titleContainer}>
                                 <Text style={styles.title}>Nơi cấp</Text>
-
                             </View>
                             <View>
-                                <Text>{member.noiCapCCCD}</Text>
+                                <TextInput
+                                    style={[styles.myBorder, { paddingLeft: 8 }]}
+                                    onChangeText={(text) => { setNoiCapCCCD(text) }}
+                                    defaultValue={noiCapCCCD}
+                                    editable={true}
+                                    multiline={false}
+                                    maxLength={256}></TextInput>
                             </View>
 
                         </View>
@@ -156,16 +224,28 @@ export default function App({ navigation, route }) {
                     <View>
                         <View style={styles.titleContainer}>
                             <Text style={styles.title}>Nghề nghiệp:</Text>
-
                         </View>
                         <View>
-                            <Text>{member.job}</Text>
+                            <TextInput
+                                style={[styles.myBorder, { paddingLeft: 8 }]}
+                                onChangeText={(text) => { setJob(text) }}
+                                defaultValue={job}
+                                editable={true}
+                                multiline={false}
+                                maxLength={256}></TextInput>
                         </View>
                     </View>
                 </View>
+
+
             </View>
 
-
+            {/* Add room button */}
+            <TouchableHighlight style={styles.addButton} onPress={() => { handleSave() }}>
+                <View>
+                    <Text style={styles.textTitle}>LƯU CHỈNH SỬA</Text>
+                </View>
+            </TouchableHighlight >
         </View >
 
     );
@@ -233,7 +313,17 @@ const styles = StyleSheet.create({
 
 
 
-
+    addButton: {
+        backgroundColor: 'black',
+        borderRadius: 10,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+    },
+    textTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'white',
+    },
     title: {
         fontWeight: 'bold',
     },

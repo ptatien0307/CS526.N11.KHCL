@@ -2,9 +2,9 @@ import { StyleSheet, View, TextInput, TouchableHighlight, CheckBox, Text } from 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useState } from 'react';
 export default function App({ navigation, route }) {
-    const specRoom = route.params.specRoom
+    const currRoom = route.params.currRoom
 
-    const memberList = route.params.specRoom.members
+    const memberList = route.params.currRoom.members
     let lastMemberID = null
     if (memberList.length !== 0)
         lastMemberID = memberList[memberList.length - 1].id
@@ -40,10 +40,10 @@ export default function App({ navigation, route }) {
         }
         const newMemberList = [...memberList, newMember]
 
-        route.params.setSpecRoom({ ...route.params.specRoom, members: newMemberList })
+        route.params.setCurrRoom({ ...route.params.currRoom, members: newMemberList })
         const newRoomList = (route.params.globalRoomList).map(item => {
-            if (item.id === specRoom.id) {
-                let newItem = { ...route.params.specRoom, members: newMemberList }
+            if (item.id === currRoom.id) {
+                let newItem = { ...route.params.currRoom, members: newMemberList }
                 newItem.roomStatus = newItem.members.length + ' người'
                 return newItem
             }
