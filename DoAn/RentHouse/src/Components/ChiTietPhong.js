@@ -5,23 +5,58 @@ import { useState } from 'react';
 import { ModalEdit } from './Modal';
 export default function App({ navigation, route }) {
 
-    let globalRoomList = route.params.roomList
-    console.log(globalRoomList)
+    const globalRoomList = route.params.roomList
     const [specRoom, setSpecRoom] = useState(route.params.specRoom)
     const [mountInfo, setMountInfo] = useState(true)
-    const [mountEdit, setMountEdit] = useState(false)
+
+
+
 
     const [isEditModalVisible, setIsEditModalVisible] = useState(false)
     const [inputText, setInputText] = useState('')
-
     const [editBillID, setEditBillID] = useState()
     const [editItemID, setEditItemID] = useState()
     const [editItemContent, setEditItemContent] = useState()
     const [chooseItemEdit, setChooseItemEdit] = useState([])
 
 
-    const [isMemberMenuVisible, setIsMemberMenuVisible] = useState(false)
+    const [isSubMenuVisible, setIsSubMenuVisible] = useState(false)
+    const [mountEdit, setMountEdit] = useState(false)
+    const [mounDelete, setMountDelete] = useState(false)
 
+    const alertDeleteDialog = () => {
+        return new Promise((resolve) => {
+            Alert.alert(
+                'Xóa khách thuê',
+                'Bạn có chắc chắn muốn xóa khách thuê này ?',
+                [
+                    { text: 'YES', onPress: () => resolve(true) },
+                    { text: 'NO', onPress: () => resolve(false) }
+                ],
+                { cancelable: false }
+            )
+        })
+    }
+
+    const handleDeleteMember = async (deleteMember) => {
+        let isConfirm = await alertDeleteDialog()
+        if (isConfirm) {
+            const newMemberList = specRoom.members.reduce((res, currMember) => {
+                if (currMember.id != deleteMember.id)
+                    res.push(currMember)
+                return res
+            }, [])
+
+            setSpecRoom({ ...specRoom, members: newMemberList })
+            const newRoomList = route.params.roomList.map(item => {
+                if (item.id === specRoom.id) {
+                    return { ...specRoom, members: newMemberList }
+                }
+                return item
+            })
+            route.params.setRoomList(newRoomList)
+        }
+    }
 
 
 
@@ -34,6 +69,14 @@ export default function App({ navigation, route }) {
                     <FontAwesomeIcon name="user" size={20} style={{ marginRight: 32 }} />
                     {/* Member name */}
                     <Text>{item.memberName}</Text>
+
+                    <TouchableHighlight
+                        style={styles.deleteIcon}
+                        onPress={() => {
+                            handleDeleteMember(item)
+                        }}>
+                        <FontAwesomeIcon name="remove" size={25} style={[styles.icon, { display: mounDelete ? 'flex' : 'none' }]} />
+                    </TouchableHighlight>
                 </View>
             </TouchableHighlight >
         )
@@ -239,7 +282,7 @@ export default function App({ navigation, route }) {
                     <View style={[styles.memberInfo, styles.myBorder]}>
                         <View style={[styles.bodyHeader, { height: '10%', marginBottom: 16 }]}>
                             <Text>Thông tin người ở</Text>
-                            <TouchableHighlight onPress={() => { setIsMemberMenuVisible(!isMemberMenuVisible) }}>
+                            <TouchableHighlight onPress={() => { setIsSubMenuVisible(!isSubMenuVisible) }}>
                                 <FontAwesomeIcon name="navicon" size={20} />
                             </TouchableHighlight>
                         </View>
@@ -251,21 +294,27 @@ export default function App({ navigation, route }) {
                             </FlatList>
                         </View>
 
-                        {isMemberMenuVisible && <View style={styles.memberMenuContainer}>
-                            <TouchableHighlight style={styles.memberMenu}
+                        {isSubMenuVisible && <View style={styles.subMenuContainer}>
+                            <TouchableHighlight style={styles.subMenu}
                                 onPress={() => {
                                     navigation.navigate('ThemNguoiO', {
-                                        setIsMemberMenuVisible,
+                                        setIsSubMenuVisible,
                                         specRoom,
                                         setSpecRoom,
                                         globalRoomList,
                                         setGlobalRoomList: route.params.setRoomList
                                     })
                                 }}>
-                                <Text>Thêm</Text>
+                                <Text>THÊM</Text>
                             </TouchableHighlight>
-                            <TouchableHighlight style={styles.memberMenu} onPress={() => { navigation.navigate() }}>
-                                <Text>Chỉnh sửa</Text>
+
+
+                            <TouchableHighlight style={styles.subMenu}
+                                onPress={() => {
+                                    setMountDelete(!mounDelete)
+                                    setIsSubMenuVisible(false)
+                                }}>
+                                <Text>XÓA</Text>
                             </TouchableHighlight>
                         </View>}
                     </View>
@@ -320,7 +369,7 @@ export default function App({ navigation, route }) {
                 specRoom={specRoom}
 
                 setGlobalRoomList={route.params.setRoomList}
-                roomList={route.params.roomList}
+                roomList={globalRoomList}
 
                 chooseItemEdit={chooseItemEdit}>
             </ModalEdit>
@@ -510,7 +559,7 @@ const styles = StyleSheet.create({
     },
 
 
-    memberMenuContainer: {
+    subMenuContainer: {
         borderWidth: 2,
         backgroundColor: 'white',
         width: '50%',
@@ -520,13 +569,16 @@ const styles = StyleSheet.create({
         right: 8,
         justifyContent: 'space-around'
     },
-    memberMenu: {
+    subMenu: {
         width: '100%',
         height: '50%',
     },
 
 
-
+    deleteIcon: {
+        position: 'absolute',
+        right: 8,
+    },
 
 
 

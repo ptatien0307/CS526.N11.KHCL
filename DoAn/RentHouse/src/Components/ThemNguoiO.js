@@ -50,6 +50,7 @@ export default function App({ navigation, route }) {
             return item
         })
         route.params.setGlobalRoomList(newRoomList)
+        route.params.setIsSubMenuVisible(false)
         navigation.goBack()
     }
 

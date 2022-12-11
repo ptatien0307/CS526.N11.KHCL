@@ -5,11 +5,24 @@ import { ModalAdd, ModalEdit } from './Modal';
 export default function App({ navigation, route }) {
 
     const [notes, setNotes] = useState(route.params.notes)
+
     const [mountEdit, setMountEdit] = useState(false)
+    const [mounDelete, setMountDelete] = useState(false)
+    const [isSubMenuVisible, setIsSubMenuVisible] = useState(false)
+
+
+
+
     const [editItemID, setEditItemID] = useState()
+    const [inputText, setInputText] = useState('')
+
+
+
     const [isEditModalVisible, setIsEditModalVisible] = useState(false)
     const [isAddModalVisible, setIsAddModalVisible] = useState(false)
-    const [inputText, setInputText] = useState('')
+
+
+
     const chooseItemEdit = [true, false, false]
 
     const alertEmptyDialog = () => {
@@ -25,8 +38,8 @@ export default function App({ navigation, route }) {
     const alertDeleteDialog = () => {
         return new Promise((resolve) => {
             Alert.alert(
-                'Title',
-                'Message',
+                'Xóa ghi chú',
+                'Bạn có chắc chắn muốn xóa ghi chú này ?',
                 [
                     { text: 'YES', onPress: () => resolve(true) },
                     { text: 'NO', onPress: () => resolve(false) }
@@ -36,23 +49,23 @@ export default function App({ navigation, route }) {
         })
     }
 
-    const handleDeleteItem = async (deleteItem) => {
+    const handleDeleteNote = async (deleteNote) => {
         let isConfirm = await alertDeleteDialog()
         if (isConfirm) {
-            const newNote = notes.reduce((res, currItem) => {
-                if (currItem.id != deleteItem.id)
-                    res.push(currItem)
+            const newNoteList = notes.reduce((res, currNote) => {
+                if (currNote.id != deleteNote.id)
+                    res.push(currNote)
                 return res
             }, [])
-            setNotes(newNote) // set local notes
-            route.params.setNotes(newNote) // set global notes
+            setNotes(newNoteList) // set local notes
+            route.params.setNotes(newNoteList) // set global notes
         }
     }
 
-    const handleEditItem = (item) => {
+    const handleEditNote = (note) => {
         setIsEditModalVisible(true)
-        setInputText(item.noteContent)
-        setEditItemID(item.id)
+        setInputText(note.noteContent)
+        setEditItemID(note.id)
     }
 
     const handleAddNote = () => {
@@ -67,13 +80,13 @@ export default function App({ navigation, route }) {
                 </View>
 
                 <View style={styles.noteIcon}>
-                    <TouchableHighlight onPress={() => { handleEditItem(item) }}>
+                    <TouchableHighlight onPress={() => { handleEditNote(item) }}>
                         <FontAwesomeIcon name="pencil" size={20} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
                     </TouchableHighlight>
 
 
-                    <TouchableHighlight onPress={() => { handleDeleteItem(item) }}>
-                        <FontAwesomeIcon name="remove" size={25} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
+                    <TouchableHighlight onPress={() => { handleDeleteNote(item) }}>
+                        <FontAwesomeIcon name="remove" size={25} style={[styles.icon, { display: mounDelete ? 'flex' : 'none' }]} />
                     </TouchableHighlight>
                 </View>
             </View>
@@ -99,9 +112,42 @@ export default function App({ navigation, route }) {
 
 
                     {/* Edit info button */}
-                    <TouchableHighlight onPress={() => { setMountEdit(!mountEdit) }}>
-                        <FontAwesomeIcon name="edit" size={35} />
+                    <TouchableHighlight onPress={() => { setIsSubMenuVisible(!isSubMenuVisible) }}>
+                        <FontAwesomeIcon name="navicon" size={35} />
                     </TouchableHighlight>
+                    {isSubMenuVisible && <View style={styles.subMenuContainer}>
+
+                        <TouchableHighlight
+                            style={styles.subMenu}
+                            onPress={() => {
+                                handleAddNote()
+                                setIsSubMenuVisible(!isSubMenuVisible)
+                            }}>
+                            <Text>THÊM</Text>
+                        </TouchableHighlight>
+
+
+                        <TouchableHighlight
+                            style={styles.subMenu}
+                            onPress={() => {
+                                setMountEdit(!mountEdit)
+                                setIsSubMenuVisible(!isSubMenuVisible)
+                                setMountDelete(false)
+                            }}>
+                            <Text>CHỈNH SỬA</Text>
+                        </TouchableHighlight>
+
+
+                        <TouchableHighlight
+                            style={styles.subMenu}
+                            onPress={() => {
+                                setMountDelete(!mounDelete)
+                                setIsSubMenuVisible(!isSubMenuVisible)
+                                setMountEdit(false)
+                            }}>
+                            <Text>XÓA</Text>
+                        </TouchableHighlight>
+                    </View>}
                 </View>
             </View>
 
@@ -144,13 +190,8 @@ export default function App({ navigation, route }) {
             </ModalAdd>
 
 
-            {/* Add note button */}
-            <View style={styles.btnContainer}>
-                <TouchableHighlight style={styles.addButton} onPress={() => { handleAddNote() }}>
-                    <Text style={styles.textTitle}>+ THÊM GHI CHÚ</Text>
-                </TouchableHighlight >
-            </View>
-        </View >
+
+        </View>
     );
 }
 
@@ -165,9 +206,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '10%',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         backgroundColor: '#dfdfdf',
-        paddingLeft: 8,
         borderBottomWidth: 2,
         position: 'absolute',
         top: 0,
@@ -175,7 +215,7 @@ const styles = StyleSheet.create({
     },
     headerTop: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-around',
         alignItems: 'center',
         width: '100%',
         height: '100%',
@@ -213,19 +253,26 @@ const styles = StyleSheet.create({
 
 
 
-
+    subMenuContainer: {
+        borderWidth: 2,
+        backgroundColor: 'white',
+        width: '50%',
+        height: '150%',
+        position: 'absolute',
+        top: 70,
+        right: 40,
+        justifyContent: 'space-around'
+    },
+    subMenu: {
+        width: '100%',
+        height: '30%',
+    },
 
 
     textTitleStyle: {
-        marginLeft: 32,
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center'
-    },
-    textTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: 'white',
     },
     textBold: {
         fontWeight: 'bold',
@@ -243,15 +290,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
     },
-    addButton: {
-        width: '50%',
-        height: '90s%',
-        backgroundColor: 'black',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
 
-    },
     myBorder: {
         borderColor: 'black',
         borderRadius: 15,
