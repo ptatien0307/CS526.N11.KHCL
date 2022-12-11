@@ -208,9 +208,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#dfdfdf',
         borderBottomWidth: 2,
-        position: 'absolute',
-        top: 0,
-        zIndex: 99,
     },
     headerTop: {
         flexDirection: 'row',
@@ -220,7 +217,6 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     body: {
-        marginTop: 64,
         width: '90%',
         minHeight: '50%',
         maxHeight: '90%',

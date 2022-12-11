@@ -224,6 +224,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     modalContainer: {
+        flex: 1,
         width: '100%',
         height: '100%',
         alignItems: 'center',

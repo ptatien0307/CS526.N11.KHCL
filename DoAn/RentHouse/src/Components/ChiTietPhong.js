@@ -181,11 +181,6 @@ export default function App({ navigation, route }) {
         )
     }
 
-
-
-
-
-
     return (
         <View style={styles.container}>
 
@@ -362,7 +357,6 @@ export default function App({ navigation, route }) {
                             </View>
                         </View>
                     </View>
-
                 </View>}
 
 
@@ -376,55 +370,28 @@ export default function App({ navigation, route }) {
                 </View>}
             </View>
 
-            {/* Modal for edit room */}
-            <ModalEdit
-                setIsEditModalVisible={setIsEditModalVisible}
-                isEditModalVisible={isEditModalVisible}
-
-                editItemID={editItemID}
-                editItemContent={editItemContent}
-
-                billHistory={currRoom.billHistory}
-                editBillID={editBillID}
-
-                setInputText={setInputText}
-                inputText={inputText}
-
-                alertEmptyDialog={alertEmptyDialog}
-
-                setCurrRoom={setCurrRoom}
-                currRoom={currRoom}
-
-                setGlobalRoomList={route.params.setRoomList}
-                globalRoomList={globalRoomList}
-
-                chooseItemEdit={chooseItemEdit}>
-            </ModalEdit>
 
         </View >
 
 
 
     );
-
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
+        flexDirection: 'column',
         width: '100%',
     },
     header: {
         width: '100%',
-        height: '18%',
+        height: '15%',
         alignItems: 'center',
         justifyContent: 'flex-start',
         backgroundColor: '#dfdfdf',
         borderBottomWidth: 2,
-        position: 'absolute',
-        top: 0,
-        zIndex: 99,
     },
     headerBtn: {
         width: '50%',
@@ -451,12 +418,10 @@ const styles = StyleSheet.create({
 
 
     body: {
-        marginTop: 128,
         width: '100%',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        flex: 1,
     },
     bodyHeader: {
         width: '100%',
@@ -467,21 +432,17 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         width: '100%',
-        height: '90%',
+        height: '100%',
         alignItems: 'center',
     },
     basicInfo: {
         width: '90%',
-        height: '70%',
+        height: '20%',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 8,
         marginBottom: 8,
     },
-
-
-
-
     infoRow: {
         flexDirection: 'row',
         width: '100%',
@@ -500,48 +461,9 @@ const styles = StyleSheet.create({
 
 
 
-
-
-
-
-    billContainer: {
-        height: '190%',
-        width: '90%',
-        padding: 8,
-    },
-    billInfo: {
-        flex: 1,
-        justifyContent: 'space-around',
-        alignItems: 'flex-start',
-        paddingVertical: 8,
-        marginBottom: 8,
-        width: '100%',
-    },
-    billDay: {
-        width: '100%',
-        height: '30%',
-        textAlign: 'center',
-        marginBottom: 8,
-    },
-    billMoney: {
-        width: '100%',
-        height: '70%',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center'
-    },
-    money: {
-        paddingLeft: 8,
-        width: '30%',
-        height: '80%',
-        justifyContent: 'center',
-    },
-
-
     memberInfo: {
         width: '90%',
-        height: 'auto',
-        minHeight: '150%',
+        height: '60%',
         justifyContent: 'flex-start',
         alignItems: 'center',
         padding: 8,
@@ -566,7 +488,7 @@ const styles = StyleSheet.create({
 
     serviceInfo: {
         width: '90%',
-        height: '70%',
+        height: '20%',
         justifyContent: 'flex-start',
         alignItems: 'center',
         padding: 8,
@@ -608,6 +530,38 @@ const styles = StyleSheet.create({
     },
 
 
+    billContainer: {
+        height: '80%',
+        width: '90%',
+        padding: 8,
+    },
+    billInfo: {
+        flex: 1,
+        justifyContent: 'space-around',
+        alignItems: 'flex-start',
+        paddingVertical: 8,
+        marginBottom: 8,
+        width: '100%',
+    },
+    billDay: {
+        width: '100%',
+        height: '30%',
+        textAlign: 'center',
+        marginBottom: 8,
+    },
+    billMoney: {
+        width: '100%',
+        height: '70%',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
+    money: {
+        paddingLeft: 8,
+        width: '30%',
+        height: '80%',
+        justifyContent: 'center',
+    },
 
 
 
@@ -635,3 +589,8 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     }
 });
+
+
+
+
+

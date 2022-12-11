@@ -129,9 +129,6 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         paddingLeft: 8,
         borderBottomWidth: 2,
-        position: 'absolute',
-        top: 0,
-        zIndex: 99,
     },
     headerTop: {
         flexDirection: 'row',
@@ -143,7 +140,6 @@ const styles = StyleSheet.create({
 
 
     body: {
-        marginTop: 80,
         width: '100%',
         height: '90%',
         alignItems: 'center',

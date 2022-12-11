@@ -6,7 +6,6 @@ export default function App({ navigation, route }) {
 
     const renderItem = ({ item }) => {
         return (
-
             // Go to specific room
             <TouchableHighlight onPress={() => {
                 navigation.navigate("ChiTietPhong", {
@@ -116,9 +115,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#dfdfdf',
         paddingLeft: 8,
         borderBottomWidth: 2,
-        position: 'absolute',
-        top: 0,
-        zIndex: 99,
     },
     headerTop: {
         flexDirection: 'row',
@@ -128,7 +124,6 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     body: {
-        marginTop: 64,
         height: '90%',
         width: '95%',
     },
