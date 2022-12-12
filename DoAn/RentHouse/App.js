@@ -3,14 +3,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 
-import Menu from './src/Components/Menu.js'
-import DanhSachPhong from './src/Components/DanhSachPhong.js'
-import ChiTietPhong from './src/Components/ChiTietPhong.js'
-import GhiChu from './src/Components/GhiChu.js'
-import ChiTietHoaDon from './src/Components/ChiTietHoaDon.js'
-import ChiTietNguoiO from './src/Components/ChiTietNguoiO.js'
-import ThemNguoiO from './src/Components/ThemNguoiO.js'
-import ChinhSuaCHiTietNguoiO from './src/Components/ChinhSuaChiTietNguoiO.js'
+import Menu from './src/StackComponents/Menu.js'
+import DanhSachPhong from './src/StackComponents/DanhSachPhong.js'
+import ChiTietPhong from './src/StackComponents/ChiTietPhong.js'
+import GhiChu from './src/StackComponents/GhiChu.js'
+import ChiTietHoaDon from './src/StackComponents/ChiTietHoaDon.js'
+import ChiTietNguoiO from './src/StackComponents/ChiTietNguoiO.js'
+import ThemNguoiO from './src/StackComponents/ThemNguoiO.js'
+import ChinhSuaCHiTietNguoiO from './src/StackComponents/ChinhSuaChiTietNguoiO.js'
 
 
 

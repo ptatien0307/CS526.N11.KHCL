@@ -2,8 +2,8 @@ import { StyleSheet, View, Text, TouchableHighlight, FlatList, ScrollView } from
 import { useState } from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import { ModalEdit } from './modal';
-import { alertDeleteDialog, alertEmptyDialog } from './dialog';
+import { ModalEdit } from '../helpers/modal';
+import { alertDeleteDialog, alertEmptyDialog } from '../helpers/dialog';
 
 export default function App({ navigation, route }) {
 
