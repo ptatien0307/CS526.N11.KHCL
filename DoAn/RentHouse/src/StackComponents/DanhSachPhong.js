@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, FlatList, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useState } from 'react';
 export default function App({ navigation, route }) {
@@ -7,7 +7,7 @@ export default function App({ navigation, route }) {
     const renderItem = ({ item }) => {
         return (
             // Go to specific room
-            <TouchableHighlight onPress={() => {
+            <TouchableOpacity onPress={() => {
                 navigation.navigate("ChiTietPhong", {
                     currRoom: roomList[item.id - 1],
                     roomList,
@@ -25,7 +25,7 @@ export default function App({ navigation, route }) {
                         <Text>TÌNH TRẠNG: {item.roomStatus}</Text>
                     </View>
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         )
     }
 
@@ -68,9 +68,9 @@ export default function App({ navigation, route }) {
 
                 <View style={styles.headerTop}>
                     {/* Back to menu button */}
-                    <TouchableHighlight onPress={() => { navigation.navigate("Menu") }}>
+                    <TouchableOpacity onPress={() => { navigation.navigate("Menu") }}>
                         <Icon name="arrow-left" size={35} />
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                     {/* Title */}
                     <Text style={styles.stackTitle}>DANH SÁCH PHÒNG</Text>
@@ -92,11 +92,11 @@ export default function App({ navigation, route }) {
             </View>
 
             {/* Add room button */}
-            <TouchableHighlight style={styles.addButton} onPress={() => { handleAddRoom() }}>
+            <TouchableOpacity style={styles.addButton} onPress={() => { handleAddRoom() }}>
                 <View>
                     <Text style={styles.textTitle}>+ THÊM PHÒNG</Text>
                 </View>
-            </TouchableHighlight >
+            </TouchableOpacity >
 
         </View>
     );

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableHighlight, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import { useState } from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -56,7 +56,7 @@ export default function App({ navigation, route }) {
 
     const renderMembers = ({ item }) => {
         return (
-            <TouchableHighlight
+            <TouchableOpacity
                 onPress={() => {
                     navigation.navigate('ChiTietNguoiO',
                         {
@@ -77,16 +77,16 @@ export default function App({ navigation, route }) {
                     <Text>{item.memberName}</Text>
 
                     {/* Delete member icon */}
-                    <TouchableHighlight
+                    <TouchableOpacity
                         style={styles.deleteIcon}
                         onPress={() => {
                             handleDeleteMember(item)
                         }}>
                         <FontAwesomeIcon name="remove" size={25} style={[styles.icon, { display: mounDelete ? 'flex' : 'none' }]} />
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                 </View>
-            </TouchableHighlight >
+            </TouchableOpacity >
         )
     }
 
@@ -117,7 +117,7 @@ export default function App({ navigation, route }) {
 
 
         return (
-            <TouchableHighlight onPress={() => {
+            <TouchableOpacity onPress={() => {
                 navigation.navigate("ChiTietHoaDon", {
                     specBill: item,
                     currRoom
@@ -148,9 +148,9 @@ export default function App({ navigation, route }) {
                                     {item.collected}đ
                                 </Text>
                             </View>
-                            <TouchableHighlight onPress={() => { onPressEdit(['billHistory', item.id, 'collected']) }}>
+                            <TouchableOpacity onPress={() => { onPressEdit(['billHistory', item.id, 'collected']) }}>
                                 <FontAwesomeIcon name="pencil" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                            </TouchableHighlight>
+                            </TouchableOpacity>
                         </View>
 
 
@@ -163,7 +163,7 @@ export default function App({ navigation, route }) {
                         </View>
                     </View>
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         )
     }
 
@@ -175,16 +175,16 @@ export default function App({ navigation, route }) {
 
                 <View style={styles.headerTop}>
                     {/* Back to DanhSachPhong button */}
-                    <TouchableHighlight onPress={() => { navigation.goBack() }}>
+                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <FontAwesomeIcon name="arrow-left" size={35} />
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                     <Text style={styles.stackTitle}>CHI TIẾT PHÒNG</Text>
                 </View>
 
                 {/* Info and Bill button */}
                 <View style={styles.headerBot}>
-                    <TouchableHighlight style={[styles.headerBtn, { borderBottomWidth: mountInfo ? 4 : 0 }]}
+                    <TouchableOpacity style={[styles.headerBtn, { borderBottomWidth: mountInfo ? 4 : 0 }]}
                         onPress={() => {
                             if (!mountInfo)
                                 setMountInfo(!mountInfo)
@@ -192,9 +192,9 @@ export default function App({ navigation, route }) {
                                 setMountEdit(!mountEdit)
                         }}>
                         <Text style={styles.textBold}>THÔNG TIN</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
-                    <TouchableHighlight style={[styles.headerBtn, { borderBottomWidth: !mountInfo ? 4 : 0 }]}
+                    <TouchableOpacity style={[styles.headerBtn, { borderBottomWidth: !mountInfo ? 4 : 0 }]}
                         onPress={() => {
                             if (mountInfo)
                                 setMountInfo(!mountInfo)
@@ -202,7 +202,7 @@ export default function App({ navigation, route }) {
                                 setMountEdit(!mountEdit)
                         }}>
                         <Text style={styles.textBold}>LỊCH SỬ HÓA ĐƠN</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -220,12 +220,12 @@ export default function App({ navigation, route }) {
                                 <Text>Thông tin cơ bản</Text>
 
                                 {/* Edit info button */}
-                                <TouchableHighlight onPress={() => {
+                                <TouchableOpacity onPress={() => {
                                     setMountEdit(!mountEdit)
 
                                 }}>
                                     <FontAwesomeIcon name="edit" size={20} />
-                                </TouchableHighlight>
+                                </TouchableOpacity>
 
                             </View>
 
@@ -237,9 +237,9 @@ export default function App({ navigation, route }) {
                                         <Text>Tên phòng:</Text>
                                         <Text style={styles.textBold}>{currRoom.roomName}</Text>
                                     </View>
-                                    <TouchableHighlight onPress={() => { onPressEdit(['roomName']) }}>
+                                    <TouchableOpacity onPress={() => { onPressEdit(['roomName']) }}>
                                         <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                    </TouchableHighlight>
+                                    </TouchableOpacity>
                                 </View>
 
                                 {/* Contract day */}
@@ -248,9 +248,9 @@ export default function App({ navigation, route }) {
                                         <Text>Ngày đến:</Text>
                                         <Text style={styles.textBold}>{currRoom.contractDay}</Text>
                                     </View>
-                                    <TouchableHighlight onPress={() => { onPressEdit(['contractDay']) }}>
+                                    <TouchableOpacity onPress={() => { onPressEdit(['contractDay']) }}>
                                         <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                    </TouchableHighlight>
+                                    </TouchableOpacity>
                                 </View>
 
                             </View>
@@ -262,9 +262,9 @@ export default function App({ navigation, route }) {
                                         <Text>Giá thuê:</Text>
                                         <Text style={styles.textBold}>{currRoom.price}</Text>
                                     </View>
-                                    <TouchableHighlight onPress={() => { onPressEdit(['price']) }}>
+                                    <TouchableOpacity onPress={() => { onPressEdit(['price']) }}>
                                         <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                    </TouchableHighlight>
+                                    </TouchableOpacity>
                                 </View>
 
                                 {/* Deposit */}
@@ -273,9 +273,9 @@ export default function App({ navigation, route }) {
                                         <Text>Tiền cọc:</Text>
                                         <Text style={styles.textBold}>{currRoom.deposit}</Text>
                                     </View>
-                                    <TouchableHighlight onPress={() => { onPressEdit(['deposit']) }}>
+                                    <TouchableOpacity onPress={() => { onPressEdit(['deposit']) }}>
                                         <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                                    </TouchableHighlight>
+                                    </TouchableOpacity>
                                 </View>
 
                             </View>
@@ -288,9 +288,9 @@ export default function App({ navigation, route }) {
                                 <Text>Thông tin người ở</Text>
 
                                 {/* Sub menu icon */}
-                                <TouchableHighlight onPress={() => { setIsSubMenuVisible(!isSubMenuVisible) }}>
+                                <TouchableOpacity onPress={() => { setIsSubMenuVisible(!isSubMenuVisible) }}>
                                     <FontAwesomeIcon name="navicon" size={20} />
-                                </TouchableHighlight>
+                                </TouchableOpacity>
 
                             </View>
 
@@ -305,7 +305,7 @@ export default function App({ navigation, route }) {
 
                             {/* Sub menu */}
                             {isSubMenuVisible && <View style={styles.subMenuContainer}>
-                                <TouchableHighlight style={styles.subMenu}
+                                <TouchableOpacity style={styles.subMenu}
                                     onPress={() => {
                                         navigation.navigate('ThemNguoiO', {
                                             setIsSubMenuVisible,
@@ -317,16 +317,16 @@ export default function App({ navigation, route }) {
                                         })
                                     }}>
                                     <Text>THÊM</Text>
-                                </TouchableHighlight>
+                                </TouchableOpacity>
 
 
-                                <TouchableHighlight style={styles.subMenu}
+                                <TouchableOpacity style={styles.subMenu}
                                     onPress={() => {
                                         setMountDelete(!mounDelete)
                                         setIsSubMenuVisible(false)
                                     }}>
                                     <Text>XÓA</Text>
-                                </TouchableHighlight>
+                                </TouchableOpacity>
                             </View>}
                         </View>
 

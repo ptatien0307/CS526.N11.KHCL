@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, FlatList, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 import { ModalAdd, ModalEdit } from '../helpers/modal';
@@ -57,14 +57,14 @@ export default function App({ navigation, route }) {
                 </View>
 
                 <View style={styles.noteIcon}>
-                    <TouchableHighlight onPress={() => { handleEditNote(item) }}>
+                    <TouchableOpacity onPress={() => { handleEditNote(item) }}>
                         <FontAwesomeIcon name="pencil" size={20} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
 
-                    <TouchableHighlight onPress={() => { handleDeleteNote(item) }}>
+                    <TouchableOpacity onPress={() => { handleDeleteNote(item) }}>
                         <FontAwesomeIcon name="remove" size={25} style={[styles.icon, { display: mounDelete ? 'flex' : 'none' }]} />
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
             </View>
         )
@@ -83,30 +83,30 @@ export default function App({ navigation, route }) {
 
 
                     {/* Back to menu button */}
-                    <TouchableHighlight onPress={() => { navigation.goBack() }}>
+                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <FontAwesomeIcon name="arrow-left" size={35} />
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                     <Text style={styles.stackTitle}>GHI CHÚ</Text>
 
 
                     {/* Edit info button */}
-                    <TouchableHighlight onPress={() => { setIsSubMenuVisible(!isSubMenuVisible) }}>
+                    <TouchableOpacity onPress={() => { setIsSubMenuVisible(!isSubMenuVisible) }}>
                         <FontAwesomeIcon name="navicon" size={35} />
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                     {isSubMenuVisible && <View style={styles.subMenuContainer}>
 
-                        <TouchableHighlight
+                        <TouchableOpacity
                             style={styles.subMenu}
                             onPress={() => {
                                 handleAddNote()
                                 setIsSubMenuVisible(!isSubMenuVisible)
                             }}>
                             <Text>THÊM</Text>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
 
 
-                        <TouchableHighlight
+                        <TouchableOpacity
                             style={styles.subMenu}
                             onPress={() => {
                                 setMountEdit(!mountEdit)
@@ -114,10 +114,10 @@ export default function App({ navigation, route }) {
                                 setMountDelete(false)
                             }}>
                             <Text>CHỈNH SỬA</Text>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
 
 
-                        <TouchableHighlight
+                        <TouchableOpacity
                             style={styles.subMenu}
                             onPress={() => {
                                 setMountDelete(!mounDelete)
@@ -125,7 +125,7 @@ export default function App({ navigation, route }) {
                                 setMountEdit(false)
                             }}>
                             <Text>XÓA</Text>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     </View>}
 
                 </View>

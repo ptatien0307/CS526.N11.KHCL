@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useState } from 'react';
 
@@ -24,9 +24,9 @@ export default function App({ navigation, route }) {
 
                 <View style={styles.headerTop}>
                     {/* Back to menu button */}
-                    <TouchableHighlight onPress={() => { navigation.goBack() }}>
+                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <FontAwesomeIcon name="arrow-left" size={35} />
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                     <Text style={styles.stackTitle}>CHI TIẾT HÓA ĐƠN</Text>
                 </View>

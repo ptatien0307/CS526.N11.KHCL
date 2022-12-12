@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableHighlight, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useState } from 'react';
@@ -68,9 +68,9 @@ export default function App({ navigation, route }) {
 
                 <View style={styles.headerTop}>
                     {/* Back to button */}
-                    <TouchableHighlight onPress={() => { navigation.goBack() }}>
+                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <FontAwesomeIcon name="arrow-left" size={35} />
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                     <Text style={styles.stackTitle}>CHỈNH SỬA THÔNG TIN KHÁCH THUÊ</Text>
                 </View>
@@ -237,11 +237,11 @@ export default function App({ navigation, route }) {
                     </View>
 
                     {/* Add room button */}
-                    <TouchableHighlight style={styles.addButton} onPress={() => { handleSave() }}>
+                    <TouchableOpacity style={styles.addButton} onPress={() => { handleSave() }}>
                         <View>
                             <Text style={styles.textTitle}>LƯU CHỈNH SỬA</Text>
                         </View>
-                    </TouchableHighlight >
+                    </TouchableOpacity >
                 </ScrollView>
             </View>
 

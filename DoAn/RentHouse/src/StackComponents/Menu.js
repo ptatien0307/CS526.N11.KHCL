@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableHighlight, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 
 
@@ -120,20 +120,20 @@ export default function App({ navigation }) {
                 <View style={styles.row}>
 
                     {/* Go to room list */}
-                    <TouchableHighlight TouchableHighlight
+                    <TouchableOpacity TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
                         onPress={() => { navigation.navigate("DanhSachPhong", { roomList, setRoomList, ELECTRICITY, WATER }) }
                         }>
                         <Text style={styles.textTitle}>DANH SÁCH PHÒNG</Text>
 
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                     {/* Go to bill */}
-                    <TouchableHighlight
+                    <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
                         onPress={() => { }}>
                         <Text style={styles.textTitle}>LẬP HÓA ĐƠN</Text>
-                    </TouchableHighlight >
+                    </TouchableOpacity >
 
                 </View >
 
@@ -142,18 +142,18 @@ export default function App({ navigation }) {
                 <View style={styles.row}>
 
                     {/* Cai dat dich vu */}
-                    <TouchableHighlight
+                    <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
                         onPress={() => { }}>
                         <Text style={styles.textTitle}>CÀI ĐẶT DỊCH VỤ</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                     {/* Ghi chu */}
-                    <TouchableHighlight
+                    <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
                         onPress={() => { navigation.navigate("GhiChu", { notes, setNotes }) }}>
                         <Text style={styles.textTitle}>GHI CHÚ</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
                 </View >
 
