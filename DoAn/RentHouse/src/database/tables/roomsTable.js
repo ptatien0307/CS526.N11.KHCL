@@ -1,7 +1,5 @@
 `use strict`;
 
-`use strict`;
-
 export const createRoomsTable = `
     CREATE TABLE IF NOT EXISTS rooms (
         room_id INTEGER PRIMARY KEY AUTOINCREMENT,
