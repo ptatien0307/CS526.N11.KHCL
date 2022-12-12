@@ -25,35 +25,39 @@ export default function App({ navigation, route }) {
 
 
     const handleSave = () => {
-
-        const newMember = {
-            id: member.id,
-            memberName: memberName,
-            dateOfBirth: dateOfBirth,
-            CCCD: CCCD,
-            ngayCapCCCD: ngayCapCCCD,
-            noiCapCCCD: noiCapCCCD,
-            job: job,
-            sex: sex,
-            address: address
-        }
-        const newMemberList = route.params.memberList.map(item => {
-            if (item.id === member.id)
-                return newMember
-            return item
-        })
-        route.params.setMember(newMember)
-        route.params.setCurrRoom({ ...route.params.currRoom, members: newMemberList })
-
-        const newGlobalRoomList = route.params.globalRoomList.map(item => {
-            if (item.id === route.params.currRoom.id) {
-                return { ...route.params.currRoom, members: newMemberList }
+        if (memberName === '' || dateOfBirth === '' || address === '' || CCCD === '' || ngayCapCCCD === '' || noiCapCCCD === '' || job === '')
+            alertEmptyDialog()
+        else {
+            const newMember = {
+                id: member.id,
+                memberName: memberName,
+                dateOfBirth: dateOfBirth,
+                CCCD: CCCD,
+                ngayCapCCCD: ngayCapCCCD,
+                noiCapCCCD: noiCapCCCD,
+                job: job,
+                sex: sex,
+                address: address
             }
-            return item
-        })
-        route.params.setGlobalRoomList(newGlobalRoomList)
-        navigation.goBack()
-        editSuccessDialog()
+            const newMemberList = route.params.memberList.map(item => {
+                if (item.id === member.id)
+                    return newMember
+                return item
+            })
+            route.params.setMember(newMember)
+            route.params.setCurrRoom({ ...route.params.currRoom, members: newMemberList })
+
+            const newGlobalRoomList = route.params.globalRoomList.map(item => {
+                if (item.id === route.params.currRoom.id) {
+                    return { ...route.params.currRoom, members: newMemberList }
+                }
+                return item
+            })
+            route.params.setGlobalRoomList(newGlobalRoomList)
+            navigation.goBack()
+            editSuccessDialog()
+        }
+
     }
     return (
         <View style={styles.container}>

@@ -1,7 +1,7 @@
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, ScrollView } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { useState } from 'react';
-
+import { alertMissingDialog } from '../helpers/dialog';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {
@@ -26,35 +26,41 @@ export default function App({ navigation, route }) {
     const [job, setJob] = useState('')
 
     const handleAddMember = () => {
-        let gioiTinh = -1
-        if (male) gioiTinh = 1
-        else gioiTinh = 0
+        if (memberName === '' || dateOfBirth === '' || address === '' || CCCD === '' || ngayCapCCCD === '' || noiCapCCCD === '' || job === '')
+            alertMissingDialog()
+        else {
+            let gioiTinh = -1
+            if (male) gioiTinh = 1
+            else gioiTinh = 0
 
-        const newMember = {
-            id: lastMemberID + 1,
-            memberName: memberName,
-            dateOfBirth: dateOfBirth,
-            CCCD: CCCD,
-            ngayCapCCCD: ngayCapCCCD,
-            noiCapCCCD: noiCapCCCD,
-            job: job,
-            sex: gioiTinh,
-            address: address
-        }
-        const newMemberList = [...memberList, newMember]
-
-        route.params.setCurrRoom({ ...route.params.currRoom, members: newMemberList })
-        const newRoomList = (route.params.globalRoomList).map(item => {
-            if (item.id === currRoom.id) {
-                let newItem = { ...route.params.currRoom, members: newMemberList }
-                newItem.roomStatus = newItem.members.length + ' người'
-                return newItem
+            const newMember = {
+                id: lastMemberID + 1,
+                memberName: memberName,
+                dateOfBirth: dateOfBirth,
+                CCCD: CCCD,
+                ngayCapCCCD: ngayCapCCCD,
+                noiCapCCCD: noiCapCCCD,
+                job: job,
+                sex: gioiTinh,
+                address: address
             }
-            return item
-        })
-        route.params.setGlobalRoomList(newRoomList)
-        route.params.setIsSubMenuVisible(false)
-        navigation.goBack()
+            const newMemberList = [...memberList, newMember]
+
+            route.params.setCurrRoom({ ...route.params.currRoom, members: newMemberList })
+            const newRoomList = (route.params.globalRoomList).map(item => {
+                if (item.id === currRoom.id) {
+                    let newItem = { ...route.params.currRoom, members: newMemberList }
+                    newItem.roomStatus = newItem.members.length + ' người'
+                    return newItem
+                }
+                return item
+            })
+            route.params.setGlobalRoomList(newRoomList)
+            route.params.setIsSubMenuVisible(false)
+            navigation.goBack()
+            addSuccessDialog('Thêm khách thuê thành công.')
+        }
+
     }
 
     return (
