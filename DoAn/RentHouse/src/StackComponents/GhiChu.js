@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
 
 import { ModalAdd, ModalEdit } from '../helpers/modal';
-import { alertDeleteDialog, alertEmptyDialog } from '../helpers/dialog';
+import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog, deleteSuccessDialog } from '../helpers/dialog';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
@@ -36,6 +36,7 @@ export default function App({ navigation, route }) {
             }, [])
             setNotes(newNoteList) // set local notes
             route.params.setNotes(newNoteList) // set global notes
+            deleteSuccessDialog()
         }
     }
 
@@ -146,6 +147,8 @@ export default function App({ navigation, route }) {
             <ModalEdit
                 setIsEditModalVisible={setIsEditModalVisible}
                 isEditModalVisible={isEditModalVisible}
+                editSuccessDialog={editSuccessDialog}
+
                 editItemID={editItemID}
                 setInputText={setInputText}
                 inputText={inputText}

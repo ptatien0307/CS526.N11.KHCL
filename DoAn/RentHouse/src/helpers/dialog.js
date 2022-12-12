@@ -20,8 +20,27 @@ export const alertEmptyDialog = () => {
         "Lỗi",
         "Thông tin chỉnh sửa bị bỏ trống.",
         [
-            { text: "OK", onPress: () => console.log("OK Pressed") }
+            { text: "OK", onPress: () => console.log("OK is Pressed") }
         ]
     )
 }
 
+export const editSuccessDialog = () => {
+    Alert.alert(
+        "Thành công",
+        "Chỉnh sửa thành công.",
+        [
+            { text: "Quay lại", onPress: () => { } }
+        ]
+    )
+}
+
+export const deleteSuccessDialog = () => {
+    Alert.alert(
+        "Thành công",
+        "Xóa thành công.",
+        [
+            { text: "Quay lại", onPress: () => { } }
+        ]
+    )
+}

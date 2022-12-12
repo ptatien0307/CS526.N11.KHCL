@@ -3,7 +3,7 @@ import Checkbox from 'expo-checkbox';
 import { useState } from 'react';
 
 
-import { alertDeleteDialog, alertEmptyDialog } from '../helpers/dialog';
+import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog } from '../helpers/dialog';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {
@@ -53,6 +53,7 @@ export default function App({ navigation, route }) {
         })
         route.params.setGlobalRoomList(newGlobalRoomList)
         navigation.goBack()
+        editSuccessDialog()
     }
     return (
         <View style={styles.container}>

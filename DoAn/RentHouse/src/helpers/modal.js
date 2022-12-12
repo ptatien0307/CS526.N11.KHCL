@@ -90,6 +90,8 @@ export function ModalEdit(params) {
             params.setGlobalNotes(newNote) // Set for global note
             params.setInputText('')
             params.setIsEditModalVisible(false)
+            params.editSuccessDialog()
+
         }
     }
 
@@ -109,6 +111,8 @@ export function ModalEdit(params) {
             params.setGlobalRoomList(newGlobalRoomList)
             params.setInputText('')
             params.setIsEditModalVisible(false)
+            params.editSuccessDialog()
+
         }
     }
 
@@ -119,6 +123,7 @@ export function ModalEdit(params) {
             const newBillHistory = params.billHistory.map(item => {
                 if (item.id === params.editBillID) {
                     item.collected = params.inputText
+                    item.remained = item.total - item.collected
                     return item
                 }
                 return item
@@ -131,37 +136,15 @@ export function ModalEdit(params) {
                 }
                 return item
             })
+
             params.setGlobalRoomList(newGlobalRoomList)
             params.setInputText('')
             params.setIsEditModalVisible(false)
+            params.editSuccessDialog()
         }
     }
 
-    const editMember = () => {
-        if (params.inputText === '')
-            params.alertEmptyDialog()
-        else {
-            params.setMember({ ...params.member, [params.editItemContent]: params.inputText })
-            const newMemberList = params.memberList.map(item => {
-                if (item.id === params.editItemID) {
-                    return { ...params.member, [params.editItemContent]: params.inputText }
-                }
-                return item
-            })
 
-            params.setCurrRoom({ ...params.currRoom, members: newMemberList })
-
-            const newGlobalRoomList = params.globalRoomList.map(item => {
-                if (item.id === params.currRoom.id) {
-                    return { ...params.currRoom, members: newMemberList }
-                }
-                return item
-            })
-            params.setGlobalRoomList(newGlobalRoomList)
-            params.setInputText('')
-            params.setIsEditModalVisible(false)
-        }
-    }
 
     return (
         <View style={styles.container}>
@@ -201,8 +184,6 @@ export function ModalEdit(params) {
                                     editRoom()
                                 else if (params.chooseItemEdit === 3)
                                     editBill()
-                                else if (params.chooseItemEdit === 4)
-                                    editMember()
                             }}>
 
 

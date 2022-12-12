@@ -5,17 +5,22 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import { ModalEdit } from '../helpers/modal';
-import { alertDeleteDialog, alertEmptyDialog } from '../helpers/dialog';
+import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog, deleteSuccessDialog } from '../helpers/dialog';
 
 export default function App({ navigation, route }) {
 
     const globalRoomList = route.params.roomList
 
+
+
     const [currRoom, setCurrRoom] = useState(route.params.currRoom)
+    let billRemained = currRoom.billHistory.reduce((res, curr) => {
+        return res + curr.remained
+    }, 0)
+
+
+
     const [mountInfo, setMountInfo] = useState(true)
-
-
-
     const [isEditModalVisible, setIsEditModalVisible] = useState(false)
     const [inputText, setInputText] = useState('')
     const [editBillID, setEditBillID] = useState()
@@ -53,6 +58,7 @@ export default function App({ navigation, route }) {
             setCurrRoom({ ...currRoom, members: newMemberList })
 
             route.params.setRoomList(newRoomList)
+            deleteSuccessDialog()
         }
     }
 
@@ -113,11 +119,6 @@ export default function App({ navigation, route }) {
     }
 
     const renderBills = ({ item }) => {
-        // Compute total money
-        item.total = parseInt((item.dienMoi - item.dienCu) * currRoom.donGiaDien) +
-            parseInt((item.nuocMoi - item.nuocCu) * currRoom.donGiaNuoc) + parseInt(currRoom.price)
-
-
         return (
             <TouchableOpacity onPress={() => {
                 navigation.navigate("ChiTietHoaDon", {
@@ -354,8 +355,24 @@ export default function App({ navigation, route }) {
 
 
                 </ScrollView>
+
+
                 {/* View Bill */}
                 {!mountInfo && <View style={[styles.billContainer, styles.myBorder]}>
+                    <View style={styles.totalRemained}>
+                        <IonIcon name="notifications" size={30} style={{ color: 'white' }} />
+                        <View>
+                            <Text style={{ color: 'white' }}>Tổng số tiền phòng này còn thiếu là: </Text>
+                            <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                                {billRemained}
+                            </Text>
+                        </View>
+                    </View>
+                    <TouchableOpacity onPress={() => {
+                        setMountEdit(!mountEdit)
+                    }}>
+                        <FontAwesomeIcon name="edit" size={20} />
+                    </TouchableOpacity>
                     <FlatList
                         data={currRoom.billHistory}
                         renderItem={renderBills}
@@ -373,6 +390,7 @@ export default function App({ navigation, route }) {
             <ModalEdit
                 setIsEditModalVisible={setIsEditModalVisible}
                 isEditModalVisible={isEditModalVisible}
+                editSuccessDialog={editSuccessDialog}
 
                 editItemID={editItemID}
                 editItemContent={editItemContent}
@@ -591,6 +609,17 @@ const styles = StyleSheet.create({
         width: '30%',
         height: '80%',
         justifyContent: 'center',
+    },
+    totalRemained: {
+        borderRadius: 10,
+        backgroundColor: '#3c3f3e',
+        width: '100%',
+        height: '10%',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        marginBottom: 16,
+        padding: 8,
     },
 
 

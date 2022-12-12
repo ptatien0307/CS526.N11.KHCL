@@ -94,7 +94,7 @@ export default function App({ navigation, route }) {
                 {/* Sum */}
                 <View style={[styles.sum, styles.myBorder]}>
                     <View style={[styles.detailItemRight, { borderBottomWidth: 2 }]}>
-                        <Text>Khách hàng trả</Text>
+                        <Text>Khách đã trả</Text>
                         <Text style={styles.textBoldRight}>{billItem.collected}đ</Text>
                     </View>
                     <View style={[styles.detailItem, styles.myBackground]}>
