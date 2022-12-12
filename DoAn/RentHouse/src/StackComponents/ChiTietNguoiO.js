@@ -32,7 +32,7 @@ export default function App({ navigation, route }) {
                                 currRoom: route.params.currRoom,
                                 setCurrRoom: route.params.setCurrRoom,
                                 memberList: route.params.memberList,
-                                globalRoomList: route.params.globalRoomList,
+                                roomList: route.params.roomList,
                                 setGlobalRoomList: route.params.setGlobalRoomList
                             })
 

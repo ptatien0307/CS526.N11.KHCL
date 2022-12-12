@@ -47,13 +47,13 @@ export default function App({ navigation, route }) {
             route.params.setMember(newMember)
             route.params.setCurrRoom({ ...route.params.currRoom, members: newMemberList })
 
-            const newGlobalRoomList = route.params.globalRoomList.map(item => {
+            const newRoomList = route.params.roomList.map(item => {
                 if (item.id === route.params.currRoom.id) {
                     return { ...route.params.currRoom, members: newMemberList }
                 }
                 return item
             })
-            route.params.setGlobalRoomList(newGlobalRoomList)
+            route.params.setGlobalRoomList(newRoomList)
             navigation.goBack()
             editSuccessDialog()
         }

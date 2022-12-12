@@ -9,7 +9,7 @@ import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog, deleteSuccessDi
 
 export default function App({ navigation, route }) {
 
-    const globalRoomList = route.params.roomList
+    const roomList = route.params.roomList
 
 
 
@@ -33,6 +33,37 @@ export default function App({ navigation, route }) {
     const [mountEdit, setMountEdit] = useState(false)
     const [mounDelete, setMountDelete] = useState(false)
 
+    const deleteRoomInfomation = async () => {
+        let isConfirm = await alertDeleteDialog('Xóa thông tin', 'Khi xóa phòng, mọi thông thông về khách, hóa đơn sẽ bị xóa vĩnh viễn. Các chỉ số điện nước hiện tại sẽ được giữ lại.')
+        if (isConfirm) {
+            const newRoom = {
+                id: '1',
+                roomName: 'Phòng 1',
+                roomStatus: 'Trống',
+                price: '800000',
+                contractDay: '',
+                deposit: '',
+                members: [
+
+                ],
+                donGiaDien: currRoom.donGiaDien,
+                donGiaNuoc: currRoom.donGiaNuoc,
+                billHistory: [
+                ],
+                latestDien: currRoom.latestDien,
+                lastestNuoc: currRoom.lastestNuoc
+            }
+            setCurrRoom(newRoom)
+            const newRoomList = roomList.map(item => {
+                if (item.id === currRoom.id)
+                    return newRoom
+                return item
+            })
+            route.params.setGlobalRoomList(newRoomList)
+            route.params.setRoomList(newRoomList)
+
+        }
+    }
     const handleDeleteMember = async (deleteMember) => {
         let isConfirm = await alertDeleteDialog('Xóa khách thuê', 'Bạn có chắc muốn xóa khách thuê này ?')
         if (isConfirm) {
@@ -49,7 +80,7 @@ export default function App({ navigation, route }) {
                 newRoomStatus = newMemberList.length + ' người'
 
 
-            const newRoomList = globalRoomList.map(item => {
+            const newRoomList = roomList.map(item => {
                 if (item.id === currRoom.id) {
                     return { ...currRoom, members: newMemberList, roomStatus: newRoomStatus }
                 }
@@ -58,6 +89,7 @@ export default function App({ navigation, route }) {
             setCurrRoom({ ...currRoom, members: newMemberList })
 
             route.params.setRoomList(newRoomList)
+            route.params.setGlobalRoomList(newRoomList)
             deleteSuccessDialog()
         }
     }
@@ -71,8 +103,8 @@ export default function App({ navigation, route }) {
                             member: item,
                             currRoom,
                             setCurrRoom,
-                            globalRoomList,
-                            setGlobalRoomList: route.params.setRoomList,
+                            roomList,
+                            setGlobalRoomList: route.params.setGlobalRoomList,
                             memberList: currRoom.members,
                         })
                 }}>
@@ -178,11 +210,17 @@ export default function App({ navigation, route }) {
 
                 <View style={styles.headerTop}>
                     {/* Back to DanhSachPhong button */}
-                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
-                        <FontAwesomeIcon name="arrow-left" size={35} />
-                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+                        <TouchableOpacity onPress={() => { navigation.goBack() }}>
+                            <FontAwesomeIcon name="arrow-left" size={35} />
+                        </TouchableOpacity>
 
-                    <Text style={styles.stackTitle}>CHI TIẾT PHÒNG</Text>
+                        <Text style={styles.stackTitle}>CHI TIẾT PHÒNG</Text>
+                    </View>
+
+                    <TouchableOpacity onPress={() => { deleteRoomInfomation() }}>
+                        <Text>XÓA</Text>
+                    </TouchableOpacity>
                 </View>
 
                 {/* Info and Bill button */}
@@ -312,10 +350,14 @@ export default function App({ navigation, route }) {
                                     onPress={() => {
                                         navigation.navigate('ThemNguoiO', {
                                             setIsSubMenuVisible,
+
                                             currRoom,
                                             setCurrRoom,
-                                            globalRoomList,
-                                            setGlobalRoomList: route.params.setRoomList,
+
+                                            roomList,
+                                            setRoomList: route.params.setRoomList,
+                                            setGlobalRoomList: route.params.setGlobalRoomList,
+
                                             memberList: currRoom.members,
                                         })
                                     }}>
@@ -341,12 +383,26 @@ export default function App({ navigation, route }) {
                             </View>
                             <View style={[styles.serviceContainer]}>
                                 <View style={[styles.service, styles.myBackground]}>
-                                    <IonIcon name="water" size={20} style={{ marginRight: 20 }} />
-                                    <Text>{currRoom.donGiaNuoc} đ/khối</Text>
+
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                                        <IonIcon name="water" size={20} style={{ marginRight: 20 }} />
+                                        <Text>{currRoom.donGiaNuoc} đ/khối</Text>
+                                    </View>
+                                    <View style={[styles.lastestUnit, styles.myBorder]}>
+                                        <Text>{currRoom.lastestNuoc}</Text>
+                                    </View>
                                 </View>
+
+
                                 <View style={[styles.service, styles.myBackground]}>
-                                    <FontAwesomeIcon name="bolt" size={20} style={{ marginLeft: 4, marginRight: 26 }} />
-                                    <Text>{currRoom.donGiaDien} đ/kwh</Text>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                                        <FontAwesomeIcon name="bolt" size={20} style={{ marginLeft: 4, marginRight: 26 }} />
+                                        <Text>{currRoom.donGiaDien} đ/kwh</Text>
+                                    </View>
+                                    <View style={[styles.lastestUnit, styles.myBorder]}>
+
+                                        <Text>{currRoom.lastestDien}</Text>
+                                    </View>
                                 </View>
                             </View>
                         </View>
@@ -406,8 +462,9 @@ export default function App({ navigation, route }) {
                 setCurrRoom={setCurrRoom}
                 currRoom={currRoom}
 
-                setGlobalRoomList={route.params.setRoomList}
-                globalRoomList={globalRoomList}
+                setRoomList={route.params.setRoomList}
+                setGlobalRoomList={route.params.setGlobalRoomList}
+                roomList={roomList}
 
                 chooseItemEdit={chooseItemEdit}>
             </ModalEdit>
@@ -448,7 +505,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '50%',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         flexDirection: 'row',
         borderBottomWidth: 2,
         paddingLeft: 8,
@@ -550,7 +607,12 @@ const styles = StyleSheet.create({
         marginVertical: 4,
         height: '45%',
         alignItems: 'center',
-        paddingLeft: 16
+        justifyContent: 'space-between',
+        paddingHorizontal: 16
+    },
+    lastestUnit: {
+        width: '25%',
+        alignItems: 'center',
     },
 
 

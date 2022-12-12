@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {
     const [roomList, setRoomList] = useState(route.params.roomList)
-
     const renderItem = ({ item }) => {
         return (
             // Go to specific room
@@ -15,7 +14,8 @@ export default function App({ navigation, route }) {
                 navigation.navigate("ChiTietPhong", {
                     currRoom: roomList[item.id - 1],
                     roomList,
-                    setRoomList: route.params.setRoomList,
+                    setRoomList,
+                    setGlobalRoomList: route.params.setRoomList,
                 })
             }}>
                 <View style={[styles.room, styles.myBackground]}>

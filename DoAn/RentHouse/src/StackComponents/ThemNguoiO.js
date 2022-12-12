@@ -1,7 +1,7 @@
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, ScrollView } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { useState } from 'react';
-import { alertMissingDialog } from '../helpers/dialog';
+import { alertMissingDialog, addSuccessDialog } from '../helpers/dialog';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {
@@ -47,7 +47,7 @@ export default function App({ navigation, route }) {
             const newMemberList = [...memberList, newMember]
 
             route.params.setCurrRoom({ ...route.params.currRoom, members: newMemberList })
-            const newRoomList = (route.params.globalRoomList).map(item => {
+            const newRoomList = (route.params.roomList).map(item => {
                 if (item.id === currRoom.id) {
                     let newItem = { ...route.params.currRoom, members: newMemberList }
                     newItem.roomStatus = newItem.members.length + ' người'
@@ -56,6 +56,8 @@ export default function App({ navigation, route }) {
                 return item
             })
             route.params.setGlobalRoomList(newRoomList)
+            route.params.setRoomList(newRoomList)
+
             route.params.setIsSubMenuVisible(false)
             navigation.goBack()
             addSuccessDialog('Thêm khách thuê thành công.')

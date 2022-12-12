@@ -101,14 +101,15 @@ export function ModalEdit(params) {
             params.alertEmptyDialog()
         else {
             params.setCurrRoom({ ...params.currRoom, [params.editItemContent]: params.inputText })
-            const newGlobalRoomList = params.globalRoomList.map(item => {
+            const newRoomList = params.roomList.map(item => {
                 if (item.id === params.editItemID) {
                     item[params.editItemContent] = params.inputText
                     return item
                 }
                 return item
             })
-            params.setGlobalRoomList(newGlobalRoomList)
+            params.setGlobalRoomList(newRoomList)
+            params.setRoomList(newRoomList)
             params.setInputText('')
             params.setIsEditModalVisible(false)
             params.editSuccessDialog()
@@ -129,7 +130,7 @@ export function ModalEdit(params) {
                 return item
             })
             params.setCurrRoom({ ...params.currRoom, [params.editItemContent]: newBillHistory })
-            const newGlobalRoomList = params.globalRoomList.map(item => {
+            const newRoomList = params.roomList.map(item => {
                 if (item.id === params.editItemID) {
                     item[params.editItemContent] = newBillHistory
                     return item
@@ -137,7 +138,8 @@ export function ModalEdit(params) {
                 return item
             })
 
-            params.setGlobalRoomList(newGlobalRoomList)
+            params.setGlobalRoomList(newRoomList)
+            params.setRoomList(newRoomList)
             params.setInputText('')
             params.setIsEditModalVisible(false)
             params.editSuccessDialog()

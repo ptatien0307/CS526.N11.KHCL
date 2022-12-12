@@ -25,8 +25,10 @@ export default function App({ navigation }) {
             billHistory: [
                 { id: 1, monthYear: '5/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
                 { id: 2, monthYear: '6/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
-                { id: 3, monthYear: '7/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
-            ]
+                { id: 3, monthYear: '7/2022', dienCu: '1420', dienMoi: '1520', nuocCu: '90', nuocMoi: '120', total: '0', collected: '595000', remained: '0' },
+            ],
+            lastestDien: null,
+            lastestNuoc: null,
         },
         {
             id: '2',
@@ -45,7 +47,9 @@ export default function App({ navigation }) {
                 { id: 1, monthYear: '5/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
                 { id: 2, monthYear: '6/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
                 { id: 3, monthYear: '7/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '595000', remained: '0' },
-            ]
+            ],
+            lastestDien: null,
+            lastestNuoc: null,
         },
         {
             id: '3',
@@ -54,14 +58,12 @@ export default function App({ navigation }) {
             price: '800000',
             contractDay: '',
             deposit: '0',
-            members: [
-
-            ],
+            members: [],
             donGiaDien: ELECTRICITY,
             donGiaNuoc: WATER,
-            billHistory: [
-
-            ]
+            billHistory: [],
+            lastestDien: null,
+            lastestNuoc: null,
         },
     ]
 
@@ -70,10 +72,12 @@ export default function App({ navigation }) {
             item.roomStatus = 'Trống'
         else
             item.roomStatus = item.members.length + ' người'
-        return item
-    })
 
-    modifiedDATA.forEach(item => {
+        if (item.billHistory.length !== 0) {
+            item.lastestDien = item.billHistory[item.billHistory.length - 1].dienMoi
+            item.lastestNuoc = item.billHistory[item.billHistory.length - 1].nuocMoi
+        }
+
         item.billHistory.forEach(billItem => {
             let totalE = (billItem.dienMoi - billItem.dienCu) * ELECTRICITY
             let totalW = (billItem.nuocMoi - billItem.nuocCu) * WATER
@@ -81,9 +85,8 @@ export default function App({ navigation }) {
             billItem.total = parseInt(totalE) + parseInt(totalW) + parseInt(item.price)
             billItem.remained = billItem.total - billItem.collected
         })
+        return item
     })
-
-
 
     let NOTE = [
         {
