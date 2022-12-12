@@ -117,34 +117,6 @@ export function ModalEdit(params) {
         }
     }
 
-    const editBill = () => {
-        if (params.inputText === '')
-            params.alertEmptyDialog()
-        else {
-            const newBillHistory = params.billHistory.map(item => {
-                if (item.id === params.editBillID) {
-                    item.collected = params.inputText
-                    item.remained = item.total - item.collected
-                    return item
-                }
-                return item
-            })
-            params.setCurrRoom({ ...params.currRoom, [params.editItemContent]: newBillHistory })
-            const newRoomList = params.roomList.map(item => {
-                if (item.id === params.editItemID) {
-                    item[params.editItemContent] = newBillHistory
-                    return item
-                }
-                return item
-            })
-
-            params.setGlobalRoomList(newRoomList)
-            params.setRoomList(newRoomList)
-            params.setInputText('')
-            params.setIsEditModalVisible(false)
-            params.editSuccessDialog()
-        }
-    }
 
 
 
@@ -184,8 +156,6 @@ export function ModalEdit(params) {
                                     editNote()
                                 else if (params.chooseItemEdit === 2)
                                     editRoom()
-                                else if (params.chooseItemEdit === 3)
-                                    editBill()
                             }}>
 
 

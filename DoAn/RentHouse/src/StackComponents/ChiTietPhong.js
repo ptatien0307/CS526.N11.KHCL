@@ -154,8 +154,12 @@ export default function App({ navigation, route }) {
         return (
             <TouchableOpacity onPress={() => {
                 navigation.navigate("ChiTietHoaDon", {
-                    specBill: item,
-                    currRoom
+                    currBill: item,
+                    currRoom,
+                    setCurrRoom,
+                    roomList,
+                    setRoomList: route.params.setRoomList,
+                    setGlobalRoomList: route.params.setGlobalRoomList
                 })
             }}>
                 <View style={[styles.billInfo, styles.myBackground]}>
@@ -183,9 +187,6 @@ export default function App({ navigation, route }) {
                                     {item.collected}đ
                                 </Text>
                             </View>
-                            <TouchableOpacity onPress={() => { onPressEdit(['billHistory', item.id, 'collected']) }}>
-                                <FontAwesomeIcon name="pencil" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
-                            </TouchableOpacity>
                         </View>
 
 
@@ -214,12 +215,14 @@ export default function App({ navigation, route }) {
                         <TouchableOpacity onPress={() => { navigation.goBack() }}>
                             <FontAwesomeIcon name="arrow-left" size={35} />
                         </TouchableOpacity>
-
-                        <Text style={styles.stackTitle}>CHI TIẾT PHÒNG</Text>
+                        <View style={{ justifyContent: 'center' }}>
+                            <Text style={styles.stackTitle}>CHI TIẾT PHÒNG</Text>
+                        </View>
                     </View>
 
-                    <TouchableOpacity onPress={() => { deleteRoomInfomation() }}>
-                        <Text>XÓA</Text>
+                    <TouchableOpacity style={styles.deleteButton}
+                        onPress={() => { deleteRoomInfomation() }}>
+                        <Text style={[styles.textTitle, { color: 'white' }]}>XÓA</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -424,11 +427,7 @@ export default function App({ navigation, route }) {
                             </Text>
                         </View>
                     </View>
-                    <TouchableOpacity onPress={() => {
-                        setMountEdit(!mountEdit)
-                    }}>
-                        <FontAwesomeIcon name="edit" size={20} />
-                    </TouchableOpacity>
+
                     <FlatList
                         data={currRoom.billHistory}
                         renderItem={renderBills}
@@ -451,8 +450,6 @@ export default function App({ navigation, route }) {
                 editItemID={editItemID}
                 editItemContent={editItemContent}
 
-                billHistory={currRoom.billHistory}
-                editBillID={editBillID}
 
                 setInputText={setInputText}
                 inputText={inputText}
@@ -508,7 +505,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         borderBottomWidth: 2,
-        paddingLeft: 8,
+        paddingHorizontal: 8,
     },
     headerBot: {
         width: '100%',
@@ -638,7 +635,14 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 8,
     },
-
+    deleteButton: {
+        backgroundColor: 'black',
+        width: '15%',
+        height: '70%',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
 
     billContainer: {
         height: '100%',

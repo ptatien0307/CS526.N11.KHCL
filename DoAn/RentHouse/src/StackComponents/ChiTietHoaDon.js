@@ -6,8 +6,8 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 
 export default function App({ navigation, route }) {
-    const [billItem, setBillItem] = useState(route.params.specBill)
-    const [roomItem, setRoomItem] = useState(route.params.currRoom)
+    const [currBill, setCurrBill] = useState(route.params.currBill)
+    const currRoom = route.params.currRoom
     const formatNumber = (q) => {
         return q.toLocaleString({
             style: 'currency',
@@ -41,19 +41,19 @@ export default function App({ navigation, route }) {
 
                     {/* Name and day */}
                     <View>
-                        <Text style={{ fontSize: 20 }}>{roomItem.roomName}</Text>
-                        <Text style={styles.textTitle}>{billItem.monthYear}</Text>
+                        <Text style={{ fontSize: 20 }}>{currRoom.roomName}</Text>
+                        <Text style={styles.textTitle}>{currBill.monthYear}</Text>
                     </View>
 
                     {/* Price */}
                     <View style={[styles.detailItem, styles.myBackground]}>
                         <View>
                             <Text>Tiền phòng</Text>
-                            <Text style={styles.textBold}>30 ngày, giá: {roomItem.price}đ</Text>
+                            <Text style={styles.textBold}>30 ngày, giá: {currRoom.price}đ</Text>
                         </View>
                         <View >
                             <Text>Thành tiền</Text>
-                            <Text style={styles.textBoldRight}>{roomItem.price}đ</Text>
+                            <Text style={styles.textBoldRight}>{currRoom.price}đ</Text>
                         </View>
                     </View>
 
@@ -61,12 +61,12 @@ export default function App({ navigation, route }) {
                     <View style={[styles.detailItem, styles.myBackground]}>
                         <View>
                             <Text>Tiền điện</Text>
-                            <Text>{`Số cũ: ${billItem.dienCu}, số mới: ${billItem.dienMoi}`}</Text>
-                            <Text style={styles.textBold}>{`${billItem.dienMoi - billItem.dienCu} KWh x ${roomItem.donGiaDien}đ`}</Text>
+                            <Text>{`Số cũ: ${currBill.dienCu}, số mới: ${currBill.dienMoi}`}</Text>
+                            <Text style={styles.textBold}>{`${currBill.dienMoi - currBill.dienCu} KWh x ${currRoom.donGiaDien}đ`}</Text>
                         </View>
                         <View >
                             <Text>Thành tiền</Text>
-                            <Text style={styles.textBoldRight}>{`${(billItem.dienMoi - billItem.dienCu) * roomItem.donGiaDien}đ`}</Text>
+                            <Text style={styles.textBoldRight}>{`${(currBill.dienMoi - currBill.dienCu) * currRoom.donGiaDien}đ`}</Text>
                         </View>
 
                     </View>
@@ -75,19 +75,19 @@ export default function App({ navigation, route }) {
                     <View style={[styles.detailItem, styles.myBackground]}>
                         <View>
                             <Text>Tiền nước</Text>
-                            <Text>{`Số cũ: ${billItem.nuocCu}, số mới: ${billItem.nuocMoi}`}</Text>
-                            <Text style={styles.textBold}>{`${billItem.nuocMoi - billItem.nuocCu} KWh x ${roomItem.donGiaNuoc}đ`}</Text>
+                            <Text>{`Số cũ: ${currBill.nuocCu}, số mới: ${currBill.nuocMoi}`}</Text>
+                            <Text style={styles.textBold}>{`${currBill.nuocMoi - currBill.nuocCu} KWh x ${currRoom.donGiaNuoc}đ`}</Text>
                         </View>
                         <View >
                             <Text>Thành tiền</Text>
-                            <Text style={styles.textBoldRight}>{`${(billItem.nuocMoi - billItem.nuocCu) * roomItem.donGiaNuoc}đ`}</Text>
+                            <Text style={styles.textBoldRight}>{`${(currBill.nuocMoi - currBill.nuocCu) * currRoom.donGiaNuoc}đ`}</Text>
                         </View>
                     </View>
 
                     {/* Total */}
                     <View style={[styles.detailItemRight, styles.myBackground]}>
                         <Text>Tổng cộng kỳ này</Text>
-                        <Text style={styles.textBoldRight}>{billItem.total}đ</Text>
+                        <Text style={styles.textBoldRight}>{currBill.total}đ</Text>
                     </View>
                 </View>
 
@@ -95,20 +95,36 @@ export default function App({ navigation, route }) {
                 <View style={[styles.sum, styles.myBorder]}>
                     <View style={[styles.detailItemRight, { borderBottomWidth: 2 }]}>
                         <Text>Khách đã trả</Text>
-                        <Text style={styles.textBoldRight}>{billItem.collected}đ</Text>
+                        <Text style={styles.textBoldRight}>{currBill.collected}đ</Text>
                     </View>
                     <View style={[styles.detailItem, styles.myBackground]}>
                         <View>
                             <Text>Số lần thu</Text>
-                            <Text style={styles.textBold}>1 lần</Text>
+                            <Text style={styles.textBold}>{currBill.count} lần</Text>
                         </View>
                         <View>
                             <Text>Tổng phải thu</Text>
-                            <Text style={styles.textBoldRight}>{billItem.total - billItem.collected}đ</Text>
+                            <Text style={styles.textBoldRight}>{currBill.total - currBill.collected}đ</Text>
                         </View>
                     </View>
                 </View>
             </View>
+
+            <TouchableOpacity style={styles.collectButton}
+                onPress={() => {
+                    navigation.navigate('ThuTienHoaDon', {
+                        currBill,
+                        setCurrBill,
+                        billHistory: currRoom.billHistory,
+                        currRoom,
+                        setCurrRoom: route.params.setCurrRoom,
+                        setRoomList: route.params.setRoomList,
+                        setGlobalRoomList: route.params.setGlobalRoomList,
+                        roomList: route.params.roomList
+                    })
+                }}>
+                <Text style={{ color: 'white', textAlign: 'center' }}>THU TIỀN HÓA ĐƠN</Text>
+            </TouchableOpacity>
         </View >
     );
 
@@ -140,7 +156,7 @@ const styles = StyleSheet.create({
 
     body: {
         width: '100%',
-        height: '90%',
+        height: '80%',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
@@ -152,7 +168,7 @@ const styles = StyleSheet.create({
     },
     detailItem: {
         width: '90%',
-        minHeight: 75,
+        minHeight: 60,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -178,6 +194,16 @@ const styles = StyleSheet.create({
     },
 
 
+
+
+    collectButton: {
+        width: '90%',
+        height: '5%',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignContent: 'center',
+        backgroundColor: 'black'
+    },
 
 
 
