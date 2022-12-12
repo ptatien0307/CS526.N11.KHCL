@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 import { ModalAdd, ModalEdit } from '../helpers/modal';
 import { alertDeleteDialog, alertEmptyDialog } from '../helpers/dialog';
 
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {
 
@@ -80,8 +80,6 @@ export default function App({ navigation, route }) {
             {/* Header */}
             <View style={styles.header}>
                 <View style={styles.headerTop}>
-
-
                     {/* Back to menu button */}
                     <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <FontAwesomeIcon name="arrow-left" size={35} />
@@ -94,10 +92,11 @@ export default function App({ navigation, route }) {
                     <TouchableOpacity onPress={() => { setIsSubMenuVisible(!isSubMenuVisible) }}>
                         <FontAwesomeIcon name="navicon" size={35} />
                     </TouchableOpacity>
+
                     {isSubMenuVisible && <View style={styles.subMenuContainer}>
 
                         <TouchableOpacity
-                            style={styles.subMenu}
+                            style={[styles.subMenu, { borderBottomWidth: 2 }]}
                             onPress={() => {
                                 handleAddNote()
                                 setIsSubMenuVisible(!isSubMenuVisible)
@@ -105,9 +104,8 @@ export default function App({ navigation, route }) {
                             <Text>THÊM</Text>
                         </TouchableOpacity>
 
-
                         <TouchableOpacity
-                            style={styles.subMenu}
+                            style={[styles.subMenu, { borderBottomWidth: 2 }]}
                             onPress={() => {
                                 setMountEdit(!mountEdit)
                                 setIsSubMenuVisible(!isSubMenuVisible)
@@ -115,7 +113,6 @@ export default function App({ navigation, route }) {
                             }}>
                             <Text>CHỈNH SỬA</Text>
                         </TouchableOpacity>
-
 
                         <TouchableOpacity
                             style={styles.subMenu}
@@ -139,6 +136,7 @@ export default function App({ navigation, route }) {
                     renderItem={renderItem}
                     keyExtractor={item => item.id}>
                 </FlatList>
+
             </View>
 
 
@@ -202,6 +200,7 @@ const styles = StyleSheet.create({
         minHeight: '50%',
         maxHeight: '90%',
         paddingLeft: 8,
+        zIndex: -99
     },
     note: {
         flexDirection: 'row',
@@ -231,19 +230,20 @@ const styles = StyleSheet.create({
 
     subMenuContainer: {
         borderWidth: 2,
+        borderRadius: 10,
         backgroundColor: 'white',
         width: '50%',
-        height: '150%',
+        height: '200%',
         position: 'absolute',
         top: 70,
         right: 40,
-        zIndex: 100,
-        elevation: 100
+        backgroundColor: '#dfdfdf',
+        justifyContent: 'center'
     },
     subMenu: {
         width: '100%',
-        height: '30%',
-        zIndex: 100,
+        height: '33%',
+        justifyContent: 'center',
     },
 
 

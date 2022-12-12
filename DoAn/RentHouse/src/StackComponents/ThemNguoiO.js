@@ -1,7 +1,9 @@
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, ScrollView } from 'react-native';
 import Checkbox from 'expo-checkbox';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useState } from 'react';
+
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+
 export default function App({ navigation, route }) {
     const currRoom = route.params.currRoom
 

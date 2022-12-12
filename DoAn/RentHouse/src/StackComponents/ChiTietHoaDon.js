@@ -1,7 +1,8 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useState } from 'react';
 
+
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 
 export default function App({ navigation, route }) {

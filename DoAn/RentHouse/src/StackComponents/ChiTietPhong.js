@@ -1,7 +1,9 @@
 import { StyleSheet, View, Text, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import { useState } from 'react';
+
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+
 import { ModalEdit } from '../helpers/modal';
 import { alertDeleteDialog, alertEmptyDialog } from '../helpers/dialog';
 
@@ -305,7 +307,7 @@ export default function App({ navigation, route }) {
 
                             {/* Sub menu */}
                             {isSubMenuVisible && <View style={styles.subMenuContainer}>
-                                <TouchableOpacity style={styles.subMenu}
+                                <TouchableOpacity style={[styles.subMenu, { borderBottomWidth: 2 }]}
                                     onPress={() => {
                                         navigation.navigate('ThemNguoiO', {
                                             setIsSubMenuVisible,
@@ -320,7 +322,8 @@ export default function App({ navigation, route }) {
                                 </TouchableOpacity>
 
 
-                                <TouchableOpacity style={styles.subMenu}
+
+                                <TouchableOpacity style={[styles.subMenu]}
                                     onPress={() => {
                                         setMountDelete(!mounDelete)
                                         setIsSubMenuVisible(false)
@@ -535,16 +538,19 @@ const styles = StyleSheet.create({
 
     subMenuContainer: {
         borderWidth: 2,
+        borderRadius: 10,
         backgroundColor: 'white',
         width: '50%',
         height: '30%',
         position: 'absolute',
         top: 30,
         right: 8,
+        backgroundColor: '#dfdfdf'
     },
     subMenu: {
         width: '100%',
-        height: '50%',
+        height: '51%',
+        justifyContent: 'center',
     },
 
 

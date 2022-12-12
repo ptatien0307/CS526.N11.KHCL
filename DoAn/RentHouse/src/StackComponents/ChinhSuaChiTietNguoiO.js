@@ -1,7 +1,11 @@
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import Checkbox from 'expo-checkbox';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useState } from 'react';
+
+
+import { alertDeleteDialog, alertEmptyDialog } from '../helpers/dialog';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+
 export default function App({ navigation, route }) {
 
     const [member, setMember] = useState(route.params.member)
@@ -18,16 +22,6 @@ export default function App({ navigation, route }) {
     const [sex, setSex] = useState(member.sex)
     const [male, setMale] = useState(parseInt(sex) ? true : false)
     const [female, setFemale] = useState(parseInt(!sex) ? true : false)
-
-    const alertEmptyDialog = () => {
-        Alert.alert(
-            "Lỗi",
-            "Thông tin chỉnh sửa bị bỏ trống.",
-            [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-        )
-    }
 
 
     const handleSave = () => {
