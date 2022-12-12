@@ -10,13 +10,11 @@ export const createRoomsTable = `
         rental_fee INTEGER NOT NULL,
         deposit INTEGER NOT NULL,
         move_in_date INTEGER NOT NULL,
-        
         electricity_number INTEGER NOT NULL,
         water_number INTEGER NOT NULL,
         internet_number INTEGER NOT NULL,
         garbage INTEGER NOT NULL,
-
         customer_id INTEGER NOT NULL,
         FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
-    )
+    );
 `;

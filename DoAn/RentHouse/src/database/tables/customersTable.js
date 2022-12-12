@@ -7,12 +7,12 @@ export const createCustomersTable = `
         birthday TEXT NOT NULL,
         gender INTEGER NOT NULL,
         address TEXT NOT NULL,
-        citizen_id TEXT NOT NULL,
-        citizen_id_date TEXT NOT NULL,
-        citizen_id_place TEXT NOT NULL,
-        job TEXT NOT NULL,
-        phone TEXT NOT NULL,
-        temporary_residence TEXT NOT NULL,
+        citizen_id TEXT,
+        citizen_id_date TEXT,
+        citizen_id_place TEXT,
+        job TEXT,
+        phone TEXT,
+        temporary_residence INTEGER,
         UNIQUE (citizen_id)
     );
 `;
