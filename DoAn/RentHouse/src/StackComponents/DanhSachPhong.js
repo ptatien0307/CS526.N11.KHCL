@@ -45,33 +45,18 @@ export default function App({ navigation, route }) {
 	};
 
 	const handleAddRoom = () => {
-		setRoomList([...roomList, {
-			id: parseInt(roomList[roomList.length - 1].id) + 1,
-			roomName: 'Phong ' + (parseInt(roomList[roomList.length - 1].id) + 1),
-			roomStatus: 'trong',
-			price: 800000,
-			contractDay: '0',
-			deposit: 0,
-			members: [],
-			donGiaDien: route.params.ELECTRICITY,
-			donGiaNuoc: route.params.WATER,
-		}]);
-
-		route.params.setRoomList([
-			...roomList,
-			{
-				id: parseInt(roomList[roomList.length - 1].id) + 1,
-				roomName:
-					"Phong " + (parseInt(roomList[roomList.length - 1].id) + 1),
-				roomStatus: "trong",
-				price: 800000,
-				contractDay: "0",
-				deposit: 0,
-				members: [],
-				donGiaDien: route.params.ELECTRICITY,
-				donGiaNuoc: route.params.WATER,
-			},
-		]);
+		useEffect(() => {
+			db.transaction((tx) => {
+				tx.executeSql(
+					"select * from rooms",
+					[],
+					(_, { rows: { _array } }) => {
+						setRoomList(...roomList, _array);
+						route.params.setRoomList(...roomList, _array);
+					}
+				);
+			});
+		});
 	};
 
 	return (
