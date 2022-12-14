@@ -2,17 +2,16 @@
 
 export const createRoomsTable = `
     CREATE TABLE IF NOT EXISTS rooms (
-        room_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        room_number TEXT NOT NULL,
-        settlement_date INTEGER NOT NULL,
-        rental_fee INTEGER NOT NULL,
-        deposit INTEGER NOT NULL,
-        move_in_date INTEGER NOT NULL,
-        electricity_number INTEGER NOT NULL,
-        water_number INTEGER NOT NULL,
-        internet_number INTEGER NOT NULL,
-        garbage INTEGER NOT NULL,
-        customer_id INTEGER NOT NULL,
-        FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+        id                     INTEGER PRIMARY KEY,
+        name                   TEXT    NOT NULL,
+        settlement_date        INTEGER,
+        rental_fee             INTEGER NOT NULL,
+        deposit                INTEGER,
+        move_in_date           INTEGER,
+        old_electricity_number INTEGER NOT NULL,
+        old_water_number       INTEGER NOT NULL,
+        using_internet         INTEGER NOT NULL DEFAULT 0,
+        using_garbage          INTEGER NOT NULL DEFAULT 1,
+        status                 TEXT    NOT NULL DEFAULT ('Còn trống') 
     );
 `;
