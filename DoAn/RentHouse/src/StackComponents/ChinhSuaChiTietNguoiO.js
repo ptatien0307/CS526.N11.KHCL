@@ -40,7 +40,7 @@ export default function App({ navigation, route }) {
 	const [male, setMale] = useState(parseInt(sex) ? true : false);
 	const [female, setFemale] = useState(parseInt(!sex) ? true : false);
 
-	// BACK-END ___ EDIT MEMBER INFORMATION
+
 	const handleSave = () => {
 		if (memberName === '' || dateOfBirth === '' || address === '' || CCCD === '' || ngayCapCCCD === '' || noiCapCCCD === '' || job === '')
 			alertEmptyDialog();

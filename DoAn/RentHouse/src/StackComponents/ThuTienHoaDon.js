@@ -20,9 +20,6 @@ export default function App(params) {
 	const handleCollect = () => {
 		if (inputText === '')
 			alertEmptyDialog();
-		else if (parseInt(inputText) > params.currBill.remained) {
-			errorDialog('Vui lòng nhập số tiền nhỏ hơn số tiền mà phòng còn thiếu.');
-		}
 		else {
 			let collected = parseInt(params.currBill.collected) + parseInt(inputText);
 			let remained = params.currBill.total - collected;
@@ -31,7 +28,7 @@ export default function App(params) {
 			const newBillHistory = params.billHistory.map(item => {
 				if (item.id === params.currBill.id) {
 					item.collected = collected;
-					item.remained = remained;
+					item.remained = item.total - collected;
 					item.count = count;
 					return item;
 				}

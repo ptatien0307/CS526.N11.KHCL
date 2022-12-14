@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ThuTienHoaDon from './ThuTienHoaDon.js';
-import { LogBox } from 'react-native';
+
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 

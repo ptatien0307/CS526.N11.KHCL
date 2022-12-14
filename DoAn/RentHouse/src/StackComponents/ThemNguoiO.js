@@ -31,7 +31,6 @@ export default function App({ navigation, route }) {
 	const [noiCapCCCD, setNoiCapCCCD] = useState("");
 	const [job, setJob] = useState("");
 
-	// BACK-END ___ ADD MEMBER 
 	const handleAddMember = () => {
 		if (memberName === '' || dateOfBirth === '' || address === '' || CCCD === '' || ngayCapCCCD === '' || noiCapCCCD === '' || job === '')
 			alertMissingDialog();
