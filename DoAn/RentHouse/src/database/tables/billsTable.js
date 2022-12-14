@@ -24,4 +24,3 @@ export const createBillsTable = `
         REFERENCES rooms (id) 
     );
 `;
-
