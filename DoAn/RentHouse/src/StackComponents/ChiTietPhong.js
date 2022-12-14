@@ -1,5 +1,7 @@
 import { StyleSheet, View, Text, TouchableOpacity, FlatList, ScrollView } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { LogBox } from 'react-native';
+
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -8,11 +10,13 @@ import { ModalEdit } from '../helpers/modal';
 import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog, deleteSuccessDialog } from '../helpers/dialog';
 
 export default function App({ navigation, route }) {
+    useEffect(() => {
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    }, [])
+
+
 
     const roomList = route.params.roomList
-
-
-
     const [currRoom, setCurrRoom] = useState(route.params.currRoom)
     let billRemained = currRoom.billHistory.reduce((res, curr) => {
         return res + curr.remained
@@ -23,7 +27,6 @@ export default function App({ navigation, route }) {
     const [mountInfo, setMountInfo] = useState(true)
     const [isEditModalVisible, setIsEditModalVisible] = useState(false)
     const [inputText, setInputText] = useState('')
-    const [editBillID, setEditBillID] = useState()
     const [editItemID, setEditItemID] = useState()
     const [editItemContent, setEditItemContent] = useState()
     const [chooseItemEdit, setChooseItemEdit] = useState()
@@ -130,23 +133,12 @@ export default function App({ navigation, route }) {
         )
     }
 
-    const onPressEdit = (params) => {
-        if (params.length === 3) { // Edit bill
-            setChooseItemEdit(3)
-            setEditBillID(params[1])
-            setIsEditModalVisible(true)
-            setInputText(currRoom[params[0]][params[1] - 1][params[2]])
-            setEditItemID(currRoom.id)
-            setEditItemContent(params[0])
-        }
-        else { // Edit basic info
-            setChooseItemEdit(2)
-            setIsEditModalVisible(true)
-            setInputText(currRoom[params[0]])
-            setEditItemID(currRoom.id)
-            setEditItemContent(params[0])
-        }
-
+    const onPressEdit = (content) => {
+        setChooseItemEdit(2)
+        setIsEditModalVisible(true)
+        setInputText(currRoom[content])
+        setEditItemID(currRoom.id)
+        setEditItemContent(content)
 
     }
 
@@ -222,7 +214,7 @@ export default function App({ navigation, route }) {
 
                     <TouchableOpacity style={styles.deleteButton}
                         onPress={() => { deleteRoomInfomation() }}>
-                        <Text style={[styles.textTitle, { color: 'white' }]}>XÓA</Text>
+                        <Text style={styles.textTitleWhite}>XÓA</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -281,7 +273,7 @@ export default function App({ navigation, route }) {
                                         <Text>Tên phòng:</Text>
                                         <Text style={styles.textBold}>{currRoom.roomName}</Text>
                                     </View>
-                                    <TouchableOpacity onPress={() => { onPressEdit(['roomName']) }}>
+                                    <TouchableOpacity onPress={() => { onPressEdit('roomName') }}>
                                         <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
                                     </TouchableOpacity>
                                 </View>
@@ -292,7 +284,7 @@ export default function App({ navigation, route }) {
                                         <Text>Ngày đến:</Text>
                                         <Text style={styles.textBold}>{currRoom.contractDay}</Text>
                                     </View>
-                                    <TouchableOpacity onPress={() => { onPressEdit(['contractDay']) }}>
+                                    <TouchableOpacity onPress={() => { onPressEdit('contractDay') }}>
                                         <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
                                     </TouchableOpacity>
                                 </View>
@@ -306,7 +298,7 @@ export default function App({ navigation, route }) {
                                         <Text>Giá thuê:</Text>
                                         <Text style={styles.textBold}>{currRoom.price}</Text>
                                     </View>
-                                    <TouchableOpacity onPress={() => { onPressEdit(['price']) }}>
+                                    <TouchableOpacity onPress={() => { onPressEdit('price') }}>
                                         <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
                                     </TouchableOpacity>
                                 </View>
@@ -317,7 +309,7 @@ export default function App({ navigation, route }) {
                                         <Text>Tiền cọc:</Text>
                                         <Text style={styles.textBold}>{currRoom.deposit}</Text>
                                     </View>
-                                    <TouchableOpacity onPress={() => { onPressEdit(['deposit']) }}>
+                                    <TouchableOpacity onPress={() => { onPressEdit('deposit') }}>
                                         <FontAwesomeIcon name="edit" size={20} style={{ display: mountEdit ? 'flex' : 'none' }} />
                                     </TouchableOpacity>
                                 </View>
@@ -690,6 +682,9 @@ const styles = StyleSheet.create({
 
 
 
+
+
+
     stackTitle: {
         marginLeft: 32,
         fontSize: 20,
@@ -699,6 +694,12 @@ const styles = StyleSheet.create({
     textTitle: {
         fontSize: 20,
         fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    textTitleWhite: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'white',
         textAlign: 'center'
     },
     textBold: {

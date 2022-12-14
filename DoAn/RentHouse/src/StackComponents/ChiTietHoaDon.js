@@ -44,7 +44,7 @@ export default function App({ navigation, route }) {
 
                     {/* Name and day */}
                     <View>
-                        <Text style={{ fontSize: 20 }}>{currRoom.roomName}</Text>
+                        <Text style={styles.textTitle}>{currRoom.roomName}</Text>
                         <Text style={styles.textTitle}>{currBill.monthYear}</Text>
                     </View>
 
@@ -116,18 +116,8 @@ export default function App({ navigation, route }) {
             <TouchableOpacity style={styles.collectButton}
                 onPress={() => {
                     setIsThuTienModal(true)
-                    // navigation.navigate('ThuTienHoaDon', {
-                    //     currBill,
-                    //     setCurrBill,
-                    //     billHistory: currRoom.billHistory,
-                    //     currRoom,
-                    //     setCurrRoom: route.params.setCurrRoom,
-                    //     setRoomList: route.params.setRoomList,
-                    //     setGlobalRoomList: route.params.setGlobalRoomList,
-                    //     roomList: route.params.roomList
-                    // })
                 }}>
-                <Text style={{ color: 'white', textAlign: 'center' }}>THU TIỀN HÓA ĐƠN</Text>
+                <Text style={styles.textTitleWhite}>THU TIỀN HÓA ĐƠN</Text>
             </TouchableOpacity>
 
 
@@ -228,6 +218,12 @@ const styles = StyleSheet.create({
         marginLeft: 32,
         fontSize: 20,
         fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    textTitleWhite: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'white',
         textAlign: 'center'
     },
     textTitle: {

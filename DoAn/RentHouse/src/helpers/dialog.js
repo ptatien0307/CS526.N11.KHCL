@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 export const alertDeleteDialog = (title, message) => {
     return new Promise((resolve) => {
         Alert.alert(
-            'title',
+            title,
             message,
             [
                 { text: 'Xóa', onPress: () => resolve(true) },

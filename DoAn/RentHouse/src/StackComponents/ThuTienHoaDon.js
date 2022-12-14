@@ -86,7 +86,7 @@ export default function App(params) {
                             // params.setIsThuTienModal(false)
                             handleClose()
                         }}>
-                            <FontAwesomeIcon name="close" size={35} />
+                            <FontAwesomeIcon name="times-circle" size={40} />
                         </TouchableOpacity>
 
                     </View>
@@ -112,9 +112,9 @@ export default function App(params) {
                     </View>
 
                     <TouchableOpacity style={styles.button} onPress={() => { handleCollect() }}>
-                        <FontAwesomeIcon name="dollar" size={30} style={{ color: 'white', marginRight: 16 }} />
+                        <FontAwesomeIcon name="dollar" size={25} style={{ color: 'white', marginRight: 16 }} />
 
-                        <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'white' }}>THU TIỀN</Text>
+                        <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'white' }}>THU TIỀN</Text>
                     </TouchableOpacity>
                 </View >
             </Animated.View>

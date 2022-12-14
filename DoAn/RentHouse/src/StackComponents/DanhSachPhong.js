@@ -98,7 +98,7 @@ export default function App({ navigation, route }) {
             {/* Add room button */}
             <TouchableOpacity style={styles.addButton} onPress={() => { handleAddRoom() }}>
                 <View>
-                    <Text style={styles.textTitle}>+ THÊM PHÒNG</Text>
+                    <Text style={styles.textTitleWhite}>+ THÊM PHÒNG</Text>
                 </View>
             </TouchableOpacity >
 
@@ -164,10 +164,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center'
     },
-    textTitle: {
+    textTitleWhite: {
         fontSize: 20,
         fontWeight: 'bold',
         color: 'white',
+        textAlign: 'center'
     },
     myBackground: {
         backgroundColor: '#dfdfdf',
