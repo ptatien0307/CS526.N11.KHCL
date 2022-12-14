@@ -11,16 +11,6 @@ export default function App(params) {
 
     const [inputText, setInputText] = useState('')
 
-    useEffect(() => {
-        Animated.timing(inAnimetedValue, {
-            toValue: 0,
-            duration: 250,
-            useNativeDriver: false,
-        }).start()
-    }, [inAnimetedValue])
-
-
-
     const handleCollect = () => {
         if (inputText === '')
             alertEmptyDialog()
@@ -53,11 +43,36 @@ export default function App(params) {
     }
 
 
+    useEffect(() => {
+        Animated.timing(inAnimetedValue, {
+            toValue: 0,
+            duration: 250,
+            useNativeDriver: false,
+        }).start()
+    }, [inAnimetedValue])
+
+
+    const slideOutAnimation = () => {
+        return new Promise((resolve) => {
+            Animated.timing(outAnimetedValue, {
+                toValue: 470,
+                duration: 250,
+                useNativeDriver: false,
+            }).start(() => { resolve(1) })
+        })
+    }
+
+    const handleClose = async () => {
+        let temp = await slideOutAnimation()
+        if (temp)
+            params.setIsThuTienModal(false)
+    }
+
     return (
         <View style={[styles.container]}>
 
             <Animated.View style={[styles.modal, {
-                transform: [{ translateY: inAnimetedValue }]
+                transform: [{ translateY: outAnimetedValue }, { translateY: inAnimetedValue }]
             }]}>
                 {/* Header */}
                 <View style={[styles.header]}>
@@ -68,8 +83,8 @@ export default function App(params) {
 
 
                         <TouchableOpacity onPress={() => {
-                            params.setIsThuTienModal(false)
-
+                            // params.setIsThuTienModal(false)
+                            handleClose()
                         }}>
                             <FontAwesomeIcon name="close" size={35} />
                         </TouchableOpacity>
@@ -119,7 +134,7 @@ const styles = StyleSheet.create({
     },
     modal: {
         width: '100%',
-        height: '70%',
+        height: '75%',
         alignItems: 'center',
         justifyContent: 'flex-start',
         position: 'absolute',
