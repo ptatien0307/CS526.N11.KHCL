@@ -1,23 +1,36 @@
-import { StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
-import { useState } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, Animated } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
 
 import { alertEmptyDialog } from '../helpers/dialog';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 
-export default function App({ navigation, route }) {
+export default function App(params) {
+    const inAnimetedValue = useRef(new Animated.Value(470)).current
+    const outAnimetedValue = useRef(new Animated.Value(0)).current
+
     const [inputText, setInputText] = useState('')
+
+    useEffect(() => {
+        Animated.timing(inAnimetedValue, {
+            toValue: 0,
+            duration: 250,
+            useNativeDriver: false,
+        }).start()
+    }, [inAnimetedValue])
+
+
 
     const handleCollect = () => {
         if (inputText === '')
             alertEmptyDialog()
         else {
-            let collected = parseInt(route.params.currBill.collected) + parseInt(inputText)
-            let remained = route.params.currBill.total - collected
-            let count = parseInt(route.params.currBill.count) + 1
-            route.params.setCurrBill({ ...route.params.currBill, collected: collected, remained: remained, count: count })
-            const newBillHistory = route.params.billHistory.map(item => {
-                if (item.id === route.params.currBill.id) {
+            let collected = parseInt(params.currBill.collected) + parseInt(inputText)
+            let remained = params.currBill.total - collected
+            let count = parseInt(params.currBill.count) + 1
+            params.setCurrBill({ ...params.currBill, collected: collected, remained: remained, count: count })
+            const newBillHistory = params.billHistory.map(item => {
+                if (item.id === params.currBill.id) {
                     item.collected = collected
                     item.remained = item.total - collected
                     item.count = count
@@ -25,75 +38,100 @@ export default function App({ navigation, route }) {
                 }
                 return item
             })
-            route.params.setCurrRoom({ ...route.params.currRoom, billHistory: newBillHistory })
-            const newRoomList = route.params.roomList.map(item => {
-                if (item.id === route.params.currRoom.id) {
-                    return { ...route.params.currRoom, billHistory: newBillHistory }
+            params.setCurrRoom({ ...params.currRoom, billHistory: newBillHistory })
+            const newRoomList = params.roomList.map(item => {
+                if (item.id === params.currRoom.id) {
+                    return { ...params.currRoom, billHistory: newBillHistory }
                 }
                 return item
             })
 
-            route.params.setGlobalRoomList(newRoomList)
-            route.params.setRoomList(newRoomList)
+            params.setGlobalRoomList(newRoomList)
+            params.setRoomList(newRoomList)
             setInputText('')
         }
     }
 
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container]}>
 
-            {/* Header */}
-            <View style={[styles.header]}>
+            <Animated.View style={[styles.modal, {
+                transform: [{ translateY: inAnimetedValue }]
+            }]}>
+                {/* Header */}
+                <View style={[styles.header]}>
 
-                <View style={styles.headerTop}>
-                    {/* Back to menu button */}
-                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
-                        <FontAwesomeIcon name="arrow-left" size={35} />
+                    <View style={styles.headerTop}>
+
+                        <Text style={styles.stackTitle}>THU TIỀN</Text>
+
+
+                        <TouchableOpacity onPress={() => {
+                            params.setIsThuTienModal(false)
+
+                        }}>
+                            <FontAwesomeIcon name="close" size={35} />
+                        </TouchableOpacity>
+
+                    </View>
+
+                </View>
+
+                {/* Body */}
+                <View style={styles.body}>
+                    <View style={styles.nhap}>
+                        <Text style={{ fontSize: 25 }}>Nhập số tiền khách trả:</Text>
+                    </View>
+
+                    <TextInput style={[styles.input, styles.myBorder]}
+                        onChangeText={(text) => { setInputText(text) }}
+                        placeholder={'Nhập số tiền ...'}
+                        defaultValue={''}
+                    >
+                    </TextInput>
+
+                    <View style={[styles.thieu, styles.myBackground]}>
+                        <Text style={{ fontSize: 20, }}>Khách còn thiếu:</Text>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{params.currBill.remained}đ</Text>
+                    </View>
+
+                    <TouchableOpacity style={styles.button} onPress={() => { handleCollect() }}>
+                        <FontAwesomeIcon name="dollar" size={30} style={{ color: 'white', marginRight: 16 }} />
+
+                        <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'white' }}>THU TIỀN</Text>
                     </TouchableOpacity>
-
-                    <Text style={styles.stackTitle}>THU TIỀN</Text>
-                </View>
-
-            </View>
-
-            {/* Body */}
-            <View style={styles.body}>
-                <View style={styles.nhap}>
-                    <Text style={{ fontSize: 25 }}>Nhập số tiền khách trả:</Text>
-                </View>
-
-                <TextInput style={[styles.input, styles.myBorder]}
-                    onChangeText={(text) => { setInputText(text) }}
-                    placeholder={'Nhập số tiền ...'}
-                    defaultValue={''}
-                >
-                </TextInput>
-
-                <View style={[styles.thieu, styles.myBackground]}>
-                    <Text style={{ fontSize: 20, }}>Khách còn thiếu:</Text>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{route.params.currBill.remained}đ</Text>
-                </View>
-
-                <TouchableOpacity style={styles.button} onPress={() => { handleCollect() }}>
-                    <FontAwesomeIcon name="dollar" size={30} style={{ color: 'white', marginRight: 16 }} />
-
-                    <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'white' }}>THU TIỀN</Text>
-                </TouchableOpacity>
-            </View >
+                </View >
+            </Animated.View>
         </View>
     );
 
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        width: '100%',
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'flex-start',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        zIndex: 999,
+        position: 'absolute',
     },
+    modal: {
+        width: '100%',
+        height: '70%',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        position: 'absolute',
+        bottom: 0,
+        backgroundColor: 'white',
+    },
+
+
+
     header: {
         width: '100%',
-        height: '10%',
+        height: '15%',
         alignItems: 'center',
         justifyContent: 'flex-start',
         backgroundColor: '#dfdfdf',
@@ -122,7 +160,8 @@ const styles = StyleSheet.create({
         width: '90%',
         height: '10%',
         justifyContent: 'center',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        marginBottom: 8,
     },
     input: {
         width: '90%',
@@ -155,7 +194,8 @@ const styles = StyleSheet.create({
 
     stackTitle: {
         marginLeft: 32,
-        fontSize: 20,
+        marginRight: 128,
+        fontSize: 35,
         fontWeight: 'bold',
         textAlign: 'center'
     },

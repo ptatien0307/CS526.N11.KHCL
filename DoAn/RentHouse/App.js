@@ -45,9 +45,6 @@ export default function App() {
         <Stack.Screen name="ChiTietHoaDon" component={ChiTietHoaDon} options={{
           headerShown: false,
         }} />
-        <Stack.Screen name="ThuTienHoaDon" component={ThuTienHoaDon} options={{
-          headerShown: false,
-        }} />
         <Stack.Screen name="DanhSachHoaDon" component={DanhSachHoaDon} options={{
           headerShown: false,
         }} />

@@ -1,12 +1,15 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
-
+import ThuTienHoaDon from './ThuTienHoaDon.js'
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 
 export default function App({ navigation, route }) {
     const [currBill, setCurrBill] = useState(route.params.currBill)
+
+    const [isThuTienModal, setIsThuTienModal] = useState(false)
+
     const currRoom = route.params.currRoom
     const formatNumber = (q) => {
         return q.toLocaleString({
@@ -112,19 +115,33 @@ export default function App({ navigation, route }) {
 
             <TouchableOpacity style={styles.collectButton}
                 onPress={() => {
-                    navigation.navigate('ThuTienHoaDon', {
-                        currBill,
-                        setCurrBill,
-                        billHistory: currRoom.billHistory,
-                        currRoom,
-                        setCurrRoom: route.params.setCurrRoom,
-                        setRoomList: route.params.setRoomList,
-                        setGlobalRoomList: route.params.setGlobalRoomList,
-                        roomList: route.params.roomList
-                    })
+                    setIsThuTienModal(true)
+                    // navigation.navigate('ThuTienHoaDon', {
+                    //     currBill,
+                    //     setCurrBill,
+                    //     billHistory: currRoom.billHistory,
+                    //     currRoom,
+                    //     setCurrRoom: route.params.setCurrRoom,
+                    //     setRoomList: route.params.setRoomList,
+                    //     setGlobalRoomList: route.params.setGlobalRoomList,
+                    //     roomList: route.params.roomList
+                    // })
                 }}>
                 <Text style={{ color: 'white', textAlign: 'center' }}>THU TIỀN HÓA ĐƠN</Text>
             </TouchableOpacity>
+
+
+            {isThuTienModal && <ThuTienHoaDon
+                currBill={currBill}
+                setCurrBill={setCurrBill}
+                billHistory={currRoom.billHistory}
+                currRoom={currRoom}
+                setCurrRoom={route.params.setCurrRoom}
+                setRoomList={route.params.setRoomList}
+                setGlobalRoomList={route.params.setGlobalRoomList}
+                roomList={route.params.roomList}
+                setIsThuTienModal={setIsThuTienModal} >
+            </ThuTienHoaDon>}
         </View >
     );
 
