@@ -145,7 +145,7 @@ export default function App({ navigation }) {
                     {/* Go to bill */}
                     <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
-                        onPress={() => { }}>
+                        onPress={() => { navigation.navigate("LapHoaDon", {}) }}>
                         <Text style={styles.textTitle}>LẬP HÓA ĐƠN</Text>
                     </TouchableOpacity >
 
@@ -158,7 +158,7 @@ export default function App({ navigation }) {
                     {/* Cai dat dich vu */}
                     <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
-                        onPress={() => { }}>
+                        onPress={() => { navigation.navigate("ThietLapDichVu", {}) }}>
                         <Text style={styles.textTitle}>CÀI ĐẶT DỊCH VỤ</Text>
                     </TouchableOpacity>
 
@@ -171,6 +171,24 @@ export default function App({ navigation }) {
 
                 </View >
 
+                {/* Row */}
+                <View style={styles.row}>
+
+                    {/* Cai dat dich vu */}
+                    <TouchableOpacity
+                        style={[styles.feature, styles.myBackground]}
+                        onPress={() => { navigation.navigate("DanhSachHoaDon", {}) }}>
+                        <Text style={styles.textTitle}>THU TIỀN HÓA ĐƠN</Text>
+                    </TouchableOpacity>
+
+                    {/* Ghi chu */}
+                    <TouchableOpacity
+                        style={[styles.feature, styles.myBackground]}
+                        onPress={() => { navigation.navigate("HuongDan", {}) }}>
+                        <Text style={styles.textTitle}>HƯỚNG DẪN</Text>
+                    </TouchableOpacity>
+
+                </View >
 
             </View >
 
@@ -200,7 +218,7 @@ const styles = StyleSheet.create({
     },
     row: {
         width: '100%',
-        height: '50%',
+        height: '33%',
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',

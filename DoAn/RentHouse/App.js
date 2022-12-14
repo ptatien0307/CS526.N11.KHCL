@@ -12,6 +12,10 @@ import ChiTietNguoiO from './src/StackComponents/ChiTietNguoiO.js'
 import ThemNguoiO from './src/StackComponents/ThemNguoiO.js'
 import ChinhSuaCHiTietNguoiO from './src/StackComponents/ChinhSuaChiTietNguoiO.js'
 import ThuTienHoaDon from './src/StackComponents/ThuTienHoaDon.js'
+import DanhSachHoaDon from './src/StackComponents/DanhSachHoaDon.js'
+import ThietLapDichVu from './src/StackComponents/ThietLapDichVu.js'
+import HuongDan from './src/StackComponents/HuongDan.js'
+import LapHoaDon from './src/StackComponents/LapHoaDon.js'
 
 
 const Stack = createNativeStackNavigator();
@@ -44,7 +48,19 @@ export default function App() {
         <Stack.Screen name="ThuTienHoaDon" component={ThuTienHoaDon} options={{
           headerShown: false,
         }} />
+        <Stack.Screen name="DanhSachHoaDon" component={DanhSachHoaDon} options={{
+          headerShown: false,
+        }} />
+        <Stack.Screen name="ThietLapDichVu" component={ThietLapDichVu} options={{
+          headerShown: false,
+        }} />
+        <Stack.Screen name="HuongDan" component={HuongDan} options={{
+          headerShown: false,
+        }} />
         <Stack.Screen name="GhiChu" component={GhiChu} options={{
+          headerShown: false,
+        }} />
+        <Stack.Screen name="LapHoaDon" component={LapHoaDon} options={{
           headerShown: false,
         }} />
       </Stack.Navigator>
