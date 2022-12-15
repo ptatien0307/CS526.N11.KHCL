@@ -1,16 +1,12 @@
 "use strict";
 
-import { openDatabase } from "expo-sqlite";
-import { createCustomersTable } from "./tables/customersTable";
-import { createRoomsTable } from "./tables/roomsTable";
+import { createCustomersTable, populateCustomersTable } from "./tables/customersTable";
+import { createRoomsTable, populateRoomsTable } from "./tables/roomsTable";
 import { createBillsTable } from "./tables/billsTable";
 import { createServicePricesTable } from "./tables/servicePricesTable";
 
-const dbName = "renthouse.db";
 
-const db = openDatabase(dbName);
-
-const createTables = () => {
+const createTables = (db) => {
 	db.transaction((tx) => {
 		tx.executeSql(createCustomersTable);
 		tx.executeSql(createRoomsTable);
@@ -19,6 +15,23 @@ const createTables = () => {
 	});
 };
 
-export const createDatabase = () => {
-	createTables();
+const populateTables = (db) => {
+	db.transaction((tx) => {
+		tx.executeSql(populateRoomsTable);
+		tx.executeSql(populateCustomersTable);
+	});
+};
+
+export const createDatabase = (db) => {
+	createTables(db);
+	populateTables(db);
+};
+
+export const deleteDatabase = (db) => {
+	db.transaction(tx => {
+		tx.executeSql('DROP TABLE rooms');
+		tx.executeSql('DROP TABLE customers');
+		tx.executeSql('DROP TABLE bills');
+		tx.executeSql('DROP TABLE service_prices');
+	});
 };
