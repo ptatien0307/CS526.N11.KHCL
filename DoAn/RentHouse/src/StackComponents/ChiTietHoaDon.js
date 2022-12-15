@@ -1,11 +1,16 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ThuTienHoaDon from './ThuTienHoaDon.js'
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 
 export default function App({ navigation, route }) {
+    useEffect(() => {
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    }, [])
+
+
     const [currBill, setCurrBill] = useState(route.params.currBill)
 
     const [isThuTienModal, setIsThuTienModal] = useState(false)
