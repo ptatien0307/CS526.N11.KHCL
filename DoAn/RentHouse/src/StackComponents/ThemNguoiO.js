@@ -1,7 +1,7 @@
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, ScrollView } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { useState } from 'react';
-import { alertMissingDialog, addSuccessDialog } from '../helpers/dialog';
+import { alertMissingDialog, successDialog } from '../helpers/dialog';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {
@@ -60,7 +60,7 @@ export default function App({ navigation, route }) {
 
             route.params.setIsSubMenuVisible(false)
             navigation.goBack()
-            addSuccessDialog('Thêm khách thuê thành công.')
+            successDialog('Thêm khách thuê thành công.')
         }
 
     }
