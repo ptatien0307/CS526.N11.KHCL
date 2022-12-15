@@ -11,11 +11,10 @@ export default function App({ navigation, route }) {
         return (
             // Go to specific room
             <TouchableOpacity onPress={() => {
-                navigation.navigate("ThuTienHoaDon", {
+                navigation.navigate("ChiTietHoaDon", {
                     currBill: billList[item.id - 1],
                     billList,
                     setBillList,
-                    setGlobalBillList: route.params.setBillList,
                 })
             }}>
                 <View style={[styles.room, styles.myBackground]}>
@@ -25,18 +24,18 @@ export default function App({ navigation, route }) {
                     </View>
 
                     {/* Room status */}
-                    <View>
-                        <View style={[styles.bodyTop]}>
-                            <Text styles={styles.textBody}>Tổng tiền</Text>
-                            <Text styles={styles.textBody}>{item.totalMoney}</Text>
+                    <View style={styles.bodyTop}>
+                        <View>
+                            <Text style={styles.textBody}>Tổng tiền</Text>
+                            <Text style={styles.textBody}>{item.total}</Text>
                         </View>
-                        <View style={[styles.bodyTop]}>
-                            <Text styles={styles.textBody}>Đã thu</Text>
-                            <Text styles={styles.textBody}>{item.paidMoney}</Text>
+                        <View>
+                            <Text style={styles.textBody}>Đã thu</Text>
+                            <Text style={styles.textBody}>{item.collected}</Text>
                         </View>
-                        <View style={[styles.bodyTop]}>
-                            <Text styles={styles.textBody}>Còn lại</Text>
-                            <Text styles={styles.textBody}>{item.restMoney}</Text>
+                        <View>
+                            <Text style={styles.textBody}>Còn lại</Text>
+                            <Text style={styles.textBody}>{item.remained}</Text>
                         </View>
                     </View>
                 </View>
@@ -98,17 +97,25 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     body: {
-        height: '90%',
-        width: '95%',
+        height: '100%',
+        width: '100%',
     },
     bodyTop: {
-        flexDirection: 'col',
-        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
         alignItems: 'center',
         width: '100%',
         height: '100%',
     },
-
+    room: {
+        flex: 1,
+        justifyContent: 'center',
+        paddingLeft: 16,
+        paddingVertical: 16,
+        marginBottom: 8,
+        width: '100%',
+        borderLeftWidth: 5,
+    },
 
     styleRoomName: {
         fontWeight: 'bold',
@@ -124,6 +131,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: 'white',
+        flexDirection: 'row',
     },
     myBackground: {
         backgroundColor: '#dfdfdf',
@@ -131,7 +139,7 @@ const styles = StyleSheet.create({
     },
     textBody: {
         fontSize: 15,
-        textAlign: 'center'
+        textAlign: 'center',
     },
 
 });
