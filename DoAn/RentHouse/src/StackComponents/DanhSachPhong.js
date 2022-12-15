@@ -6,15 +6,43 @@ import {
 	FlatList,
 	TouchableOpacity,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useForceUpdate } from "../utils/utils";
 
-import Icon from "react-native-vector-icons/FontAwesome";
 
 const db = Sqlite.openDatabase("renthouse.db");
 
-export default function App({ navigation, route }) {
-	const [roomList, setRoomList] = useState(route.params.roomList);
+export default function App({ navigation }) {
+	const [roomList, setRoomList] = useState(null);
+
+	// Get room list from database
+	useEffect(() => {
+		db.transaction((tx) => {
+			tx.executeSql(
+				"SELECT * FROM rooms",
+				[],
+				(_, { rows: { _array } }) => {
+					_array.forEach((room) => {
+						tx.executeSql(
+							"SELECT COUNT(*) FROM customers WHERE room_id = ?",
+							[room.id],
+							(_, { rows: { _array } }) => {
+								room.customer_count = _array[0]["COUNT(*)"];
+							},
+							(_, error) => {
+								console.log(error);
+							}
+						);
+					});
+					setRoomList(_array);
+				},
+			);
+		});
+
+	}, []);
+
 	const renderItem = ({ item }) => {
+
 		return (
 			// Go to specific room
 			<TouchableOpacity
@@ -31,13 +59,13 @@ export default function App({ navigation, route }) {
 					{/* Room name */}
 					<View>
 						<Text style={styles.styleRoomName}>
-							{item.roomName}
+							{item.name}
 						</Text>
 					</View>
 
 					{/* Room status */}
 					<View>
-						<Text>TÌNH TRẠNG: {item.roomStatus}</Text>
+						<Text>TÌNH TRẠNG: {item.status !== "Còn trống" ? item.customer_count : item.status}</Text>
 					</View>
 				</View>
 			</TouchableOpacity>
@@ -45,39 +73,11 @@ export default function App({ navigation, route }) {
 	};
 
 	const handleAddRoom = () => {
-		useEffect(() => {
-			db.transaction((tx) => {
-				tx.executeSql(
-					"select * from rooms",
-					[],
-					(_, { rows: { _array } }) => {
-						setRoomList(...roomList, _array);
-						route.params.setRoomList(...roomList, _array);
-					}
-				);
-			});
-		});
+
 	};
 
 	return (
 		<View style={styles.container}>
-			{/* Header */}
-			<View style={[styles.header]}>
-				<View style={styles.headerTop}>
-					{/* Back to menu button */}
-					<TouchableOpacity
-						onPress={() => {
-							navigation.navigate("Menu");
-						}}
-					>
-						<Icon name="arrow-left" size={35} />
-					</TouchableOpacity>
-
-					{/* Title */}
-					<Text style={styles.stackTitle}>DANH SÁCH PHÒNG</Text>
-				</View>
-			</View>
-
 			{/* Body */}
 			<View style={styles.body}>
 				{/* View rooms */}
