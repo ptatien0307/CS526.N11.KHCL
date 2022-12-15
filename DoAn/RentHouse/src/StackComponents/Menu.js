@@ -2,6 +2,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 
 
+
 export default function App({ navigation }) {
     const [WATER, setWATER] = useState('12000')
     const [ELECTRICITY, setELECTRICITY] = useState('3000')
@@ -133,7 +134,7 @@ export default function App({ navigation }) {
                 {/* Row */}
                 <View style={styles.row}>
 
-                    {/* Go to room list */}
+                    {/* Danh sach phong */}
                     <TouchableOpacity TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
                         onPress={() => { navigation.navigate("DanhSachPhong", { roomList, setRoomList, ELECTRICITY, WATER }) }
@@ -142,7 +143,7 @@ export default function App({ navigation }) {
 
                     </TouchableOpacity>
 
-                    {/* Go to bill */}
+                    {/* Lap hoa don */}
                     <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
                         onPress={() => { navigation.navigate("LapHoaDon", {}) }}>
@@ -155,12 +156,27 @@ export default function App({ navigation }) {
                 {/* Row */}
                 <View style={styles.row}>
 
+                    {/* Thu tien hoa don */}
+                    <TouchableOpacity
+                        style={[styles.feature, styles.myBackground]}
+                        onPress={() => { navigation.navigate("DanhSachHoaDon", {}) }}>
+                        <Text style={styles.textTitle}>THU TIỀN HÓA ĐƠN</Text>
+                    </TouchableOpacity>
+
+
                     {/* Cai dat dich vu */}
                     <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
                         onPress={() => { navigation.navigate("ThietLapDichVu", {}) }}>
                         <Text style={styles.textTitle}>CÀI ĐẶT DỊCH VỤ</Text>
                     </TouchableOpacity>
+
+
+                </View >
+
+                {/* Row */}
+                <View style={styles.row}>
+
 
                     {/* Ghi chu */}
                     <TouchableOpacity
@@ -169,19 +185,7 @@ export default function App({ navigation }) {
                         <Text style={styles.textTitle}>GHI CHÚ</Text>
                     </TouchableOpacity>
 
-                </View >
-
-                {/* Row */}
-                <View style={styles.row}>
-
-                    {/* Cai dat dich vu */}
-                    <TouchableOpacity
-                        style={[styles.feature, styles.myBackground]}
-                        onPress={() => { navigation.navigate("DanhSachHoaDon", {}) }}>
-                        <Text style={styles.textTitle}>THU TIỀN HÓA ĐƠN</Text>
-                    </TouchableOpacity>
-
-                    {/* Ghi chu */}
+                    {/* Huong dan */}
                     <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
                         onPress={() => { navigation.navigate("HuongDan", {}) }}>
@@ -191,7 +195,6 @@ export default function App({ navigation }) {
                 </View >
 
             </View >
-
 
         </View >
     );
