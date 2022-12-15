@@ -9,7 +9,6 @@ import {
 import { useState, useEffect } from "react";
 import { useForceUpdate } from "../utils/utils";
 
-import Icon from "react-native-vector-icons/FontAwesome";
 
 const db = Sqlite.openDatabase("renthouse.db");
 

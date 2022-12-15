@@ -134,8 +134,10 @@ export default function App({ navigation }) {
 					{/* Go to room list */}
 					<TouchableOpacity TouchableOpacity
 						style={[styles.feature, styles.myBackground]}
-						onPress={() => { navigation.navigate("DanhSachPhong", { roomList, setRoomList, ELECTRICITY, WATER }); }
-						}>
+						onPress={() => {
+							navigation.navigate("DanhSachPhong");
+						}}
+					>
 						<Text style={styles.textTitle}>DANH SÁCH PHÒNG</Text>
 
 					</TouchableOpacity>
