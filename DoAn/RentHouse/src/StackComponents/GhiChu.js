@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
 
 import { ModalAdd, ModalEdit } from '../helpers/modal';
-import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog, deleteSuccessDialog, addSuccessDialog } from '../helpers/dialog';
+import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog, deleteSuccessDialog, successDialog } from '../helpers/dialog';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
@@ -48,7 +48,7 @@ export default function App({ navigation, route }) {
 
     const handleAddNote = () => {
         setIsAddModalVisible(true)
-        addSuccessDialog('Thêm ghi chú thành công.')
+        successDialog('Thêm ghi chú thành công.')
     }
 
     const renderItem = ({ item }) => {

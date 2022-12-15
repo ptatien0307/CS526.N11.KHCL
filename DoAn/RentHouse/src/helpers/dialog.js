@@ -45,7 +45,7 @@ export const editSuccessDialog = () => {
     )
 }
 
-export const addSuccessDialog = (message) => {
+export const successDialog = (message) => {
     Alert.alert(
         'Thành công',
         message,
@@ -54,6 +54,18 @@ export const addSuccessDialog = (message) => {
         ]
     )
 }
+
+
+export const errorDialog = (message) => {
+    Alert.alert(
+        'Lỗi',
+        message,
+        [
+            { text: "Quay lại", onPress: () => { } }
+        ]
+    )
+}
+
 
 export const deleteSuccessDialog = () => {
     Alert.alert(

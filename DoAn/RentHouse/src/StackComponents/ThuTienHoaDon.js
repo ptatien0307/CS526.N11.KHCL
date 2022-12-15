@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, Animated } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 
-import { alertEmptyDialog } from '../helpers/dialog';
+import { alertEmptyDialog, successDialog, errorDialog } from '../helpers/dialog';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 
@@ -14,6 +14,9 @@ export default function App(params) {
     const handleCollect = () => {
         if (inputText === '')
             alertEmptyDialog()
+        else if (parseInt(inputText) > params.currBill.remained) {
+            errorDialog('Vui lòng nhập số tiền nhỏ hơn số tiền mà phòng còn thiếu.')
+        }
         else {
             let collected = parseInt(params.currBill.collected) + parseInt(inputText)
             let remained = params.currBill.total - collected
@@ -22,7 +25,7 @@ export default function App(params) {
             const newBillHistory = params.billHistory.map(item => {
                 if (item.id === params.currBill.id) {
                     item.collected = collected
-                    item.remained = item.total - collected
+                    item.remained = remained
                     item.count = count
                     return item
                 }
@@ -38,7 +41,9 @@ export default function App(params) {
 
             params.setGlobalRoomList(newRoomList)
             params.setRoomList(newRoomList)
+            successDialog(`Đã thu thành công ${inputText}đ. ${params.currRoom.roomName} còn nợ ${remained}đ`)
             setInputText('')
+            handleClose()
         }
     }
 
@@ -83,7 +88,6 @@ export default function App(params) {
 
 
                         <TouchableOpacity onPress={() => {
-                            // params.setIsThuTienModal(false)
                             handleClose()
                         }}>
                             <FontAwesomeIcon name="times-circle" size={40} />
