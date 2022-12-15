@@ -17,6 +17,7 @@ import DanhSachHoaDon from './src/StackComponents/DanhSachHoaDon.js'
 import ThietLapDichVu from './src/StackComponents/ThietLapDichVu.js'
 import HuongDan from './src/StackComponents/HuongDan.js'
 import LapHoaDon from './src/StackComponents/LapHoaDon.js'
+import GhiChiSoDichVu from './src/StackComponents/GhiChiSoDichVu.js'
 
 
 const Stack = createNativeStackNavigator();
@@ -61,6 +62,9 @@ export default function App() {
         <Stack.Screen name="LapHoaDon" component={LapHoaDon} options={{
           headerShown: false,
         }} />
+        <Stack.Screen name="GhiChiSoDichVu" component={GhiChiSoDichVu} options={{
+          headerShown: false,
+        }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -74,4 +78,6 @@ export default function App() {
 //     background: app_styles.gray,
 //   },
 // };
+
+
 

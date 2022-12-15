@@ -63,9 +63,8 @@ export default function App(params) {
     }
 
     const handleClose = async () => {
-        let temp = await slideOutAnimation()
-        if (temp)
-            params.setIsThuTienModal(false)
+        await slideOutAnimation()
+        params.setIsThuTienModal(false)
     }
 
     return (
@@ -116,7 +115,7 @@ export default function App(params) {
 
                         <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'white' }}>THU TIỀN</Text>
                     </TouchableOpacity>
-                </View >
+                </View>
             </Animated.View>
         </View>
     );
