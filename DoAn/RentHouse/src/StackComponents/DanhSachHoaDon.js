@@ -6,9 +6,43 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 export default function App({ navigation, route }) {
+    const [billList, setBillList] = useState(route.params.billList)
+    const renderItem = ({ item }) => {
+        return (
+            // Go to specific room
+            <TouchableOpacity onPress={() => {
+                navigation.navigate("ThuTienHoaDon", {
+                    currBill: billList[item.id - 1],
+                    billList,
+                    setBillList,
+                    setGlobalBillList: route.params.setBillList,
+                })
+            }}>
+                <View style={[styles.room, styles.myBackground]}>
+                    {/* Room name */}
+                    <View>
+                        <Text style={styles.styleRoomName}>{item.roomName} - {item.monthYear}</Text>
+                    </View>
 
-
-
+                    {/* Room status */}
+                    <View>
+                        <View style={[styles.bodyTop]}>
+                            <Text styles={styles.textBody}>Tổng tiền</Text>
+                            <Text styles={styles.textBody}>{item.totalMoney}</Text>
+                        </View>
+                        <View style={[styles.bodyTop]}>
+                            <Text styles={styles.textBody}>Đã thu</Text>
+                            <Text styles={styles.textBody}>{item.paidMoney}</Text>
+                        </View>
+                        <View style={[styles.bodyTop]}>
+                            <Text styles={styles.textBody}>Còn lại</Text>
+                            <Text styles={styles.textBody}>{item.restMoney}</Text>
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        )
+    }
 
 
     return (
@@ -19,12 +53,12 @@ export default function App({ navigation, route }) {
 
                 <View style={styles.headerTop}>
                     {/* Back to menu button */}
-                    <TouchableOpacity onPress={() => { navigation.navigate("Menu") }}>
+                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <Icon name="arrow-left" size={35} />
                     </TouchableOpacity>
 
                     {/* Title */}
-                    <Text style={styles.stackTitle}>DANH SÁCH HÓA ĐƠN</Text>
+                    <Text style={styles.stackTitle}>THU TIỀN HÓA ĐƠN</Text>
 
                 </View>
             </View>
@@ -32,12 +66,12 @@ export default function App({ navigation, route }) {
 
             {/* Body */}
             <View style={styles.body}>
-
-
-
+                <FlatList
+                    data={billList}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id}>
+                </FlatList>
             </View>
-
-
         </View>
     );
 }
@@ -67,6 +101,18 @@ const styles = StyleSheet.create({
         height: '90%',
         width: '95%',
     },
+    bodyTop: {
+        flexDirection: 'col',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+    },
+
+
+    styleRoomName: {
+        fontWeight: 'bold',
+    },
 
     stackTitle: {
         marginLeft: 32,
@@ -82,6 +128,10 @@ const styles = StyleSheet.create({
     myBackground: {
         backgroundColor: '#dfdfdf',
         borderRadius: 10,
+    },
+    textBody: {
+        fontSize: 15,
+        textAlign: 'center'
     },
 
 });
