@@ -1,5 +1,6 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
+import { LogBox } from 'react-native';
 import ThuTienHoaDon from './ThuTienHoaDon.js'
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -12,6 +13,7 @@ export default function App({ navigation, route }) {
 
 
     const [currBill, setCurrBill] = useState(route.params.currBill)
+    
     console.log(currBill)
     const [isThuTienModal, setIsThuTienModal] = useState(false)
 
@@ -125,6 +127,7 @@ export default function App({ navigation, route }) {
                 }}>
                 <Text style={styles.textTitleWhite}>THU TIỀN HÓA ĐƠN</Text>
             </TouchableOpacity>
+
 
 
             {isThuTienModal && <ThuTienHoaDon
