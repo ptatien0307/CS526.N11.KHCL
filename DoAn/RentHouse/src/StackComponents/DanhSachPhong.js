@@ -100,9 +100,8 @@ export default function App({ navigation, route }) {
 
             {/* Add room button */}
             <TouchableOpacity style={styles.addButton} onPress={() => { handleAddRoom() }}>
-                <View>
-                    <Text style={styles.textTitleWhite}>+ THÊM PHÒNG</Text>
-                </View>
+                <Icon name="plus-circle" size={35} color='white' />
+
             </TouchableOpacity >
 
         </View>
@@ -153,6 +152,7 @@ const styles = StyleSheet.create({
         paddingVertical: 4,
         position: 'absolute',
         bottom: 8,
+        right: 8,
     },
 
 
