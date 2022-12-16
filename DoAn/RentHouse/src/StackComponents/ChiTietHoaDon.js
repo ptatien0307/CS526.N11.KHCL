@@ -12,10 +12,11 @@ export default function App({ navigation, route }) {
 
 
     const [currBill, setCurrBill] = useState(route.params.currBill)
-
+    console.log(currBill)
     const [isThuTienModal, setIsThuTienModal] = useState(false)
 
-    const currRoom = route.params.currRoom
+    const currRoom = route.params.roomList[currBill.roomID-1]
+    console.log(currRoom)
     const formatNumber = (q) => {
         return q.toLocaleString({
             style: 'currency',
