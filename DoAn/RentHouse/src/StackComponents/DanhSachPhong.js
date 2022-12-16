@@ -7,7 +7,6 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import { useState, useEffect } from "react";
-import { useForceUpdate } from "../utils/utils";
 
 
 const db = Sqlite.openDatabase("renthouse.db");
@@ -47,12 +46,7 @@ export default function App({ navigation }) {
 			// Go to specific room
 			<TouchableOpacity
 				onPress={() => {
-					navigation.navigate("ChiTietPhong", {
-						currRoom: roomList[item.id - 1],
-						roomList,
-						setRoomList,
-						setGlobalRoomList: route.params.setRoomList,
-					});
+					navigation.navigate("ChiTietPhong", {});
 				}}
 			>
 				<View style={[styles.room, styles.myBackground]}>

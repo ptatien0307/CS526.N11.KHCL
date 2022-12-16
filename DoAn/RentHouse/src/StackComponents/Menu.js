@@ -165,7 +165,7 @@ export default function App({ navigation }) {
 					{/* Ghi chu */}
 					<TouchableOpacity
 						style={[styles.feature, styles.myBackground]}
-						onPress={() => { navigation.navigate("GhiChu", { notes, setNotes }); }}>
+						onPress={() => { navigation.navigate("GhiChu"); }}>
 						<Text style={styles.textTitle}>GHI CHÚ</Text>
 					</TouchableOpacity>
 
