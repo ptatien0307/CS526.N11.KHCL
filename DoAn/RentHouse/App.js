@@ -22,7 +22,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>  {/*theme={MyTheme}*/}
+    <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Menu" component={Menu} options={{
           headerShown: false,

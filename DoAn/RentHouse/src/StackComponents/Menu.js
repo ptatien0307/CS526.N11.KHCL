@@ -122,7 +122,7 @@ export default function App({ navigation }) {
         { id: 3, roomName: 'Phòng 1', monthYear: '7/2022', dienCu: '1420', dienMoi: '1480', nuocCu: '90', nuocMoi: '100', total: '0', collected: '0', remained: '0', count: '0' },
     ]
 
-    
+
     const [notes, setNotes] = useState(NOTE)
     const [roomList, setRoomList] = useState(modifiedDATA)
     const [billList, setBillList] = useState(BILL)
@@ -166,7 +166,7 @@ export default function App({ navigation }) {
                     {/* Thu tien hoa don */}
                     <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
-                        onPress={() => { navigation.navigate("DanhSachHoaDon", {billList, setBillList}) }}>
+                        onPress={() => { navigation.navigate("DanhSachHoaDon", { billList, setBillList }) }}>
                         <Text style={styles.textTitle}>THU TIỀN HÓA ĐƠN</Text>
                     </TouchableOpacity>
 
