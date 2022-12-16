@@ -17,6 +17,7 @@ export default function App({ navigation, route }) {
                     currBill: billList[item.id - 1],
                     roomList,
                     setRoomList,
+                    setGlobalRoomList: route.params.setRoomList,
                     billList,
                     setBillList,
                 })
