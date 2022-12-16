@@ -120,7 +120,7 @@ export default function App(params) {
 
                         <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'white' }}>THU TIỀN</Text>
                     </TouchableOpacity>
-                </View >
+                </View>
             </Animated.View>
         </View>
     );

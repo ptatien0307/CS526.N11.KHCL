@@ -2,7 +2,6 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 
 
-
 export default function App({ navigation }) {
     const [WATER, setWATER] = useState('12000')
     const [ELECTRICITY, setELECTRICITY] = useState('3000')
@@ -55,6 +54,76 @@ export default function App({ navigation }) {
         {
             id: '3',
             roomName: 'Phòng 3',
+            roomStatus: null,
+            price: '800000',
+            contractDay: '',
+            deposit: '0',
+            members: [],
+            donGiaDien: ELECTRICITY,
+            donGiaNuoc: WATER,
+            billHistory: [],
+            lastestDien: null,
+            lastestNuoc: null,
+        },
+        {
+            id: '4',
+            roomName: 'Phòng 4',
+            roomStatus: null,
+            price: '800000',
+            contractDay: '',
+            deposit: '0',
+            members: [],
+            donGiaDien: ELECTRICITY,
+            donGiaNuoc: WATER,
+            billHistory: [],
+            lastestDien: null,
+            lastestNuoc: null,
+        },
+        {
+            id: '5',
+            roomName: 'Phòng 5',
+            roomStatus: null,
+            price: '800000',
+            contractDay: '',
+            deposit: '0',
+            members: [],
+            donGiaDien: ELECTRICITY,
+            donGiaNuoc: WATER,
+            billHistory: [],
+            lastestDien: null,
+            lastestNuoc: null,
+        },
+        {
+            id: '6',
+            roomName: 'Phòng 6',
+            roomStatus: null,
+            price: '800000',
+            contractDay: '',
+            deposit: '0',
+            members: [],
+            donGiaDien: ELECTRICITY,
+            donGiaNuoc: WATER,
+            billHistory: [],
+            lastestDien: null,
+            lastestNuoc: null,
+        },
+        {
+            id: '7',
+            roomName: 'Phòng 7',
+            roomStatus: null,
+            price: '800000',
+            contractDay: '',
+            deposit: '0',
+            members: [],
+            donGiaDien: ELECTRICITY,
+            donGiaNuoc: WATER,
+            billHistory: [],
+            lastestDien: null,
+            lastestNuoc: null,
+        },
+        {
+            id: '8',
+            roomName: 'Phòng 8',
             roomStatus: null,
             price: '800000',
             contractDay: '',
@@ -153,7 +222,7 @@ export default function App({ navigation }) {
                     {/* Lap hoa don */}
                     <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
-                        onPress={() => { navigation.navigate("LapHoaDon", {}) }}>
+                        onPress={() => { navigation.navigate("LapHoaDon", {roomList, ELECTRICITY, WATER}) }}>
                         <Text style={styles.textTitle}>LẬP HÓA ĐƠN</Text>
                     </TouchableOpacity >
 

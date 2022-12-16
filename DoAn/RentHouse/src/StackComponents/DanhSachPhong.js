@@ -143,11 +143,6 @@ const styles = StyleSheet.create({
         width: '100%',
         borderLeftWidth: 5,
     },
-
-
-
-
-
     styleRoomName: {
         fontWeight: 'bold',
     },
