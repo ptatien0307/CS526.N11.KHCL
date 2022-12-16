@@ -75,6 +75,8 @@ export function ModalAdd(params) {
 }
 
 export function ModalEdit(params) {
+
+    // BACK-END ___ EDIT NOTE
     const editNote = () => {
         // If edit content is empty, notify alert
         if (params.inputText === '')
@@ -95,6 +97,7 @@ export function ModalEdit(params) {
         }
     }
 
+    // BACK-END ___ EDIT ROOM INFORMATION (basic info)
     const editRoom = () => {
         // If edit content is empty, notify alert
         if (params.inputText === '')

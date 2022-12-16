@@ -46,6 +46,7 @@ export default function App({ navigation, route }) {
         setEditItemID(note.id)
     }
 
+    // BACK-END ___ ADD NOTE
     const handleAddNote = () => {
         setIsAddModalVisible(true)
         successDialog('Thêm ghi chú thành công.')

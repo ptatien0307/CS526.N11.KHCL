@@ -11,6 +11,7 @@ export default function App(params) {
 
     const [inputText, setInputText] = useState('')
 
+    // BACK-END ___ UPDATE BILL.REMAINED, BILL.COUNT (số lần thu tiền), BILL.COLLECTED
     const handleCollect = () => {
         if (inputText === '')
             alertEmptyDialog()
@@ -68,9 +69,8 @@ export default function App(params) {
     }
 
     const handleClose = async () => {
-        let temp = await slideOutAnimation()
-        if (temp)
-            params.setIsThuTienModal(false)
+        await slideOutAnimation()
+        params.setIsThuTienModal(false)
     }
 
     return (

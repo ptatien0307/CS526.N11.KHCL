@@ -36,6 +36,7 @@ export default function App({ navigation, route }) {
     const [mountEdit, setMountEdit] = useState(false)
     const [mounDelete, setMountDelete] = useState(false)
 
+    // BACK-END ___ DELETE ROOM INFORMATION 
     const deleteRoomInfomation = async () => {
         let isConfirm = await alertDeleteDialog('Xóa thông tin', 'Khi xóa phòng, mọi thông thông về khách, hóa đơn sẽ bị xóa vĩnh viễn. Các chỉ số điện nước hiện tại sẽ được giữ lại.')
         if (isConfirm) {
@@ -67,6 +68,8 @@ export default function App({ navigation, route }) {
 
         }
     }
+
+    // BACK-END ___ DELETE MEMBER 
     const handleDeleteMember = async (deleteMember) => {
         let isConfirm = await alertDeleteDialog('Xóa khách thuê', 'Bạn có chắc muốn xóa khách thuê này ?')
         if (isConfirm) {

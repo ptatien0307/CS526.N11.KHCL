@@ -33,6 +33,9 @@ export default function App({ navigation, route }) {
         )
     }
 
+
+
+    // BACK-END ___ ADD ROOM
     const handleAddRoom = () => {
         setRoomList([...roomList, {
             id: parseInt(roomList[roomList.length - 1].id) + 1,
