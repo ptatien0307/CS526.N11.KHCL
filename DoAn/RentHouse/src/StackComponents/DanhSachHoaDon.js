@@ -16,6 +16,7 @@ export default function App({ navigation, route }) {
                 navigation.navigate("ChiTietHoaDon", {
                     currBill: billList[item.id - 1],
                     roomList,
+                    setRoomList,
                     billList,
                     setBillList,
                 })
