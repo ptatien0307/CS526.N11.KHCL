@@ -166,7 +166,7 @@ export default function App({ navigation }) {
                     {/* Thu tien hoa don */}
                     <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
-                        onPress={() => { navigation.navigate("DanhSachHoaDon", {billList, setBillList, roomList}) }}>
+                        onPress={() => { navigation.navigate("DanhSachHoaDon", {billList, setBillList, roomList, setRoomList}) }}>
                         <Text style={styles.textTitle}>THU TIỀN HÓA ĐƠN</Text>
                     </TouchableOpacity>
 
