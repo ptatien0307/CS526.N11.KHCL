@@ -7,12 +7,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {
     const [billList, setBillList] = useState(route.params.billList)
+    const [roomList, setRoomList] = useState(route.params.roomList)
+
     const renderItem = ({ item }) => {
         return (
             // Go to specific room
             <TouchableOpacity onPress={() => {
                 navigation.navigate("ChiTietHoaDon", {
                     currBill: billList[item.id - 1],
+                    roomList,
                     billList,
                     setBillList,
                 })
