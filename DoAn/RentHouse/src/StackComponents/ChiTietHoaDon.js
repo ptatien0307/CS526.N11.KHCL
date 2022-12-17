@@ -17,7 +17,7 @@ export default function App({ navigation, route }) {
     console.log(currBill)
     const [isThuTienModal, setIsThuTienModal] = useState(false)
 
-    const currRoom = route.params.roomList[currBill.roomID-1]
+    const [currRoom, setCurrRoom] = useState(route.params.roomList[currBill.roomID-1])
     console.log(currRoom)
     const formatNumber = (q) => {
         return q.toLocaleString({
@@ -135,7 +135,7 @@ export default function App({ navigation, route }) {
                 setCurrBill={setCurrBill}
                 billHistory={currRoom.billHistory}
                 currRoom={currRoom}
-                setCurrRoom={route.params.setCurrRoom}
+                setCurrRoom={setCurrRoom}
                 setRoomList={route.params.setRoomList}
                 setGlobalRoomList={route.params.setGlobalRoomList}
                 roomList={route.params.roomList}
