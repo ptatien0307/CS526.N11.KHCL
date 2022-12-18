@@ -21,18 +21,7 @@ export default function App({ navigation }) {
 				"SELECT * FROM rooms",
 				[],
 				(_, { rows: { _array } }) => {
-					_array.forEach((room) => {
-						tx.executeSql(
-							"SELECT COUNT(*) FROM customers WHERE room_id = ?",
-							[room.id],
-							(_, { rows: { _array } }) => {
-								room.customer_count = _array[0]["COUNT(*)"];
-							},
-							(_, error) => {
-								console.log(error);
-							}
-						);
-					});
+					console.log(_array);
 					setRoomList(_array);
 				},
 			);

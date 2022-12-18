@@ -4,9 +4,11 @@ import { createCustomersTable, populateCustomersTable } from "./tables/customers
 import { createRoomsTable, populateRoomsTable } from "./tables/roomsTable";
 import { createBillsTable } from "./tables/billsTable";
 import { createServicePricesTable } from "./tables/servicePricesTable";
+import * as SQLite from "expo-sqlite";
 
+const db = SQLite.openDatabase("renthouse.db");
 
-const createTables = (db) => {
+const createTables = () => {
 	db.transaction((tx) => {
 		tx.executeSql(createCustomersTable);
 		tx.executeSql(createRoomsTable);
@@ -15,20 +17,20 @@ const createTables = (db) => {
 	});
 };
 
-const populateTables = (db) => {
+const populateTables = () => {
 	db.transaction((tx) => {
 		tx.executeSql(populateRoomsTable);
 		tx.executeSql(populateCustomersTable);
 	});
 };
 
-export const createDatabase = (db) => {
-	createTables(db);
-	populateTables(db);
+export const createDatabase = () => {
+	createTables();
+	populateTables();
 };
 
-export const deleteDatabase = (db) => {
-	db.transaction(tx => {
+export const deleteDatabase = () => {
+	db.transaction((tx) => {
 		tx.executeSql('DROP TABLE rooms');
 		tx.executeSql('DROP TABLE customers');
 		tx.executeSql('DROP TABLE bills');

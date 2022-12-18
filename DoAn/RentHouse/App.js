@@ -31,12 +31,18 @@ import ThietLapDichVu from './src/StackComponents/ThietLapDichVu.js';
 import HuongDan from './src/StackComponents/HuongDan.js';
 import LapHoaDon from './src/StackComponents/LapHoaDon.js';
 
+import { createDatabase, deleteDatabase } from './src/database/db.js';
+import { useEffect } from 'react';
 
 const Stack = createNativeStackNavigator();
 
-const db = openDatabase("renthouse.db");
 
 export default function App() {
+	useEffect(() => {
+		createDatabase();
+		// deleteDatabase();
+	}, []);
+
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
