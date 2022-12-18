@@ -27,14 +27,6 @@ export default function App({ navigation, route }) {
 	const [noiCapCCCD, setNoiCapCCCD] = useState(member.noiCapCCCD);
 	const [job, setJob] = useState(member.job);
 
-	const [memberName, setMemberName] = useState(member.memberName);
-	const [dateOfBirth, setDateOfBirth] = useState(member.dateOfBirth);
-	const [address, setAddress] = useState(member.address);
-	const [CCCD, setCCCD] = useState(member.CCCD);
-	const [ngayCapCCCD, setNgayCapCCCD] = useState(member.ngayCapCCCD);
-	const [noiCapCCCD, setNoiCapCCCD] = useState(member.noiCapCCCD);
-	const [job, setJob] = useState(member.job);
-
 
 	const [sex, setSex] = useState(member.sex);
 	const [male, setMale] = useState(parseInt(sex) ? true : false);

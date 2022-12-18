@@ -5,9 +5,9 @@ import {
 	TouchableOpacity,
 	FlatList,
 	ScrollView,
+	LogBox
 } from "react-native";
 import { useState, useEffect } from "react";
-import { LogBox } from "react-native";
 
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import IonIcon from "react-native-vector-icons/Ionicons";
@@ -42,17 +42,6 @@ export default function App({ navigation, route }) {
 	const [mountEdit, setMountEdit] = useState(false);
 	const [mounDelete, setMountDelete] = useState(false);
 
-	const [mountInfo, setMountInfo] = useState(true);
-	const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-	const [inputText, setInputText] = useState('');
-	const [editItemID, setEditItemID] = useState();
-	const [editItemContent, setEditItemContent] = useState();
-	const [chooseItemEdit, setChooseItemEdit] = useState();
-
-
-	const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
-	const [mountEdit, setMountEdit] = useState(false);
-	const [mounDelete, setMountDelete] = useState(false);
 
 	const deleteRoomInfomation = async () => {
 		let isConfirm = await alertDeleteDialog('Xóa thông tin', 'Khi xóa phòng, mọi thông thông về khách, hóa đơn sẽ bị xóa vĩnh viễn. Các chỉ số điện nước hiện tại sẽ được giữ lại.');

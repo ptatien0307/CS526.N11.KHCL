@@ -7,48 +7,48 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import { useState, useEffect } from "react";
+import { fetchRoomStatus, fetchRoomList } from "../database/actions/roomActions";
 
 
 const db = Sqlite.openDatabase("renthouse.db");
 
 export default function App({ navigation }) {
-	const [roomList, setRoomList] = useState(null);
+	const [roomList, setRoomList] = useState([]);
 
 	// Get room list from database
 	useEffect(() => {
-		db.transaction((tx) => {
-			tx.executeSql(
-				"SELECT * FROM rooms",
-				[],
-				(_, { rows: { _array } }) => {
-					console.log(_array);
-					setRoomList(_array);
-				},
-			);
-		});
-
+		async function loadRoomList() {
+			const rooms = await fetchRoomList().catch((error) => console.log(error));
+			setRoomList(rooms);
+		}
+		loadRoomList();
 	}, []);
 
-	const renderItem = ({ item }) => {
+
+	const renderItem = ({ room }) => {
+		async function loadStatus() {
+			return await fetchRoomStatus(room.id).catch((error) => console.log(error));
+		}
+
+		console.log('2' + room);
+		const status = loadStatus(room);
 
 		return (
 			// Go to specific room
 			<TouchableOpacity
-				onPress={() => {
-					navigation.navigate("ChiTietPhong", {});
-				}}
+				onPress={() => navigation.navigate("ChiTietPhong", {})}
 			>
 				<View style={[styles.room, styles.myBackground]}>
 					{/* Room name */}
 					<View>
 						<Text style={styles.styleRoomName}>
-							{item.name}
+							{room.name}
 						</Text>
 					</View>
 
 					{/* Room status */}
 					<View>
-						<Text>TÌNH TRẠNG: {item.status !== "Còn trống" ? item.customer_count : item.status}</Text>
+						<Text>TÌNH TRẠNG: {status}</Text>
 					</View>
 				</View>
 			</TouchableOpacity>
@@ -61,12 +61,13 @@ export default function App({ navigation }) {
 
 	return (
 		<View style={styles.container}>
+			{console.log(1 + 'a')}
 			{/* Body */}
 			<View style={styles.body}>
 				{/* View rooms */}
 				<FlatList
 					data={roomList}
-					renderItem={renderItem}
+					renderItem={({ item }) => renderItem(item)}
 					keyExtractor={(item) => item.id}
 				></FlatList>
 			</View>
@@ -84,7 +85,7 @@ export default function App({ navigation }) {
 			</TouchableOpacity>
 		</View>
 	);
-}
+};
 
 const styles = StyleSheet.create({
 	container: {
