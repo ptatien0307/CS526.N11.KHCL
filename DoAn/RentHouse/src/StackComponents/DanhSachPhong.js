@@ -1,4 +1,3 @@
-import * as Sqlite from "expo-sqlite";
 import {
 	StyleSheet,
 	View,
@@ -7,13 +6,12 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import { useState, useEffect } from "react";
-import { fetchRoomStatus, fetchRoomList } from "../database/actions/roomActions";
-
-
-const db = Sqlite.openDatabase("renthouse.db");
+import { fetchRoomList } from "../database/actions/roomActions";
+import RoomItem from "../components/RoomItem";
 
 export default function App({ navigation }) {
 	const [roomList, setRoomList] = useState([]);
+	const [selectedRoomId, setSelectedRoomId] = useState(null);
 
 	// Get room list from database
 	useEffect(() => {
@@ -21,37 +19,27 @@ export default function App({ navigation }) {
 			const rooms = await fetchRoomList().catch((error) => console.log(error));
 			setRoomList(rooms);
 		}
+
 		loadRoomList();
 	}, []);
 
+	console.log(roomList);
 
-	const renderItem = ({ room }) => {
-		async function loadStatus() {
-			return await fetchRoomStatus(room.id).catch((error) => console.log(error));
-		}
+	// The renderItem function provides an object to its function. This object does not contain a property named room, hence the code
+	// renderItem = {({ room }) => renderList(room)}
+	// does not work. The property is called item. Each item is one element in the provided data array. In this case it is called room.
+	// 3 - 4 days wasted on this shit.
 
-		console.log('2' + room);
-		const status = loadStatus(room);
-
+	const renderItem = ({ item }) => {
+		console.log(item.name);
 		return (
-			// Go to specific room
-			<TouchableOpacity
-				onPress={() => navigation.navigate("ChiTietPhong", {})}
-			>
-				<View style={[styles.room, styles.myBackground]}>
-					{/* Room name */}
-					<View>
-						<Text style={styles.styleRoomName}>
-							{room.name}
-						</Text>
-					</View>
-
-					{/* Room status */}
-					<View>
-						<Text>TÌNH TRẠNG: {status}</Text>
-					</View>
-				</View>
-			</TouchableOpacity>
+			< RoomItem
+				room={item}
+				onPress={() => {
+					setSelectedRoomId(item.id);
+					navigation.navigate("ChiTietPhong");
+				}}
+			/>
 		);
 	};
 
@@ -59,17 +47,19 @@ export default function App({ navigation }) {
 
 	};
 
+	if (!roomList)
+		return null;
+
 	return (
 		<View style={styles.container}>
-			{console.log(1 + 'a')}
 			{/* Body */}
 			<View style={styles.body}>
-				{/* View rooms */}
 				<FlatList
 					data={roomList}
-					renderItem={({ item }) => renderItem(item)}
+					renderItem={renderItem}
 					keyExtractor={(item) => item.id}
-				></FlatList>
+					extraData={selectedRoomId}
+				/>
 			</View>
 
 			{/* Add room button */}

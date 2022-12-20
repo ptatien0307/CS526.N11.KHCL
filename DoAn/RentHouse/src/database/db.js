@@ -10,17 +10,17 @@ const db = SQLite.openDatabase("renthouse.db");
 
 const createTables = () => {
 	db.transaction((tx) => {
-		tx.executeSql(createCustomersTable);
-		tx.executeSql(createRoomsTable);
-		tx.executeSql(createBillsTable);
-		tx.executeSql(createServicePricesTable);
+		tx.executeSql(createCustomersTable, [], () => console.log("Created customers table"), (_, error) => console.log(error));
+		tx.executeSql(createRoomsTable, [], () => console.log("Created rooms table"), (_, error) => console.log(error));
+		tx.executeSql(createBillsTable, [], () => console.log("Created bills table"), (_, error) => console.log(error));
+		tx.executeSql(createServicePricesTable, [], () => console.log("Created service prices table"), (_, error) => console.log(error));
 	});
 };
 
 const populateTables = () => {
 	db.transaction((tx) => {
-		tx.executeSql(populateRoomsTable);
-		tx.executeSql(populateCustomersTable);
+		tx.executeSql(populateRoomsTable, [], () => console.log("Populated rooms table"), (_, error) => console.log(error));
+		tx.executeSql(populateCustomersTable, [], () => console.log("Populated customers table"), (_, error) => console.log(error));
 	});
 };
 
@@ -31,9 +31,9 @@ export const createDatabase = () => {
 
 export const deleteDatabase = () => {
 	db.transaction((tx) => {
-		tx.executeSql('DROP TABLE rooms');
-		tx.executeSql('DROP TABLE customers');
-		tx.executeSql('DROP TABLE bills');
-		tx.executeSql('DROP TABLE service_prices');
+		tx.executeSql('DROP TABLE  IF EXISTS rooms', [], () => console.log("Deleted rooms table"), (_, error) => console.log(error));
+		tx.executeSql('DROP TABLE IF EXISTS customers', [], () => console.log("Deleted customers table"), (_, error) => console.log(error));
+		tx.executeSql('DROP TABLE IF EXISTS bills', [], () => console.log("Deleted bills table"), (_, error) => console.log(error));
+		tx.executeSql('DROP TABLE IF EXISTS service_prices', [], () => console.log("Deleted service prices table"), (_, error) => console.log(error));
 	});
 };

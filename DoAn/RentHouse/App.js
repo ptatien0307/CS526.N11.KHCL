@@ -24,48 +24,48 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
 	useEffect(() => {
+		deleteDatabase();
 		createDatabase();
-		// deleteDatabase();
 	}, []);
 
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
 				<Stack.Screen name="Menu" component={Menu} options={{
-					headerShown: false,
+					headerShown: true,
 				}} />
 				<Stack.Screen name="DanhSachPhong" component={DanhSachPhong} options={{
-					headerShown: false,
+					headerShown: true,
 				}} />
 				<Stack.Screen name="ChiTietPhong" component={ChiTietPhong} options={{
-					headerShown: false,
+					headerShown: true,
 				}} />
 				<Stack.Screen name="ChiTietNguoiO" component={ChiTietNguoiO} options={{
-					headerShown: false,
+					headerShown: true,
 				}} />
 				<Stack.Screen name="ThemNguoiO" component={ThemNguoiO} options={{
-					headerShown: false,
+					headerShown: true,
 				}} />
 				<Stack.Screen name="ChinhSuaCHiTietNguoiO" component={ChinhSuaCHiTietNguoiO} options={{
-					headerShown: false,
+					headerShown: true,
 				}} />
 				<Stack.Screen name="ChiTietHoaDon" component={ChiTietHoaDon} options={{
-					headerShown: false,
+					headerShown: true,
 				}} />
 				<Stack.Screen name="DanhSachHoaDon" component={DanhSachHoaDon} options={{
-					headerShown: false,
+					headerShown: true,
 				}} />
 				<Stack.Screen name="ThietLapDichVu" component={ThietLapDichVu} options={{
-					headerShown: false,
+					headerShown: true,
 				}} />
 				<Stack.Screen name="HuongDan" component={HuongDan} options={{
-					headerShown: false,
+					headerShown: true,
 				}} />
 				<Stack.Screen name="GhiChu" component={GhiChu} options={{
-					headerShown: false,
+					headerShown: true,
 				}} />
 				<Stack.Screen name="LapHoaDon" component={LapHoaDon} options={{
-					headerShown: false,
+					headerShown: true,
 				}} />
 			</Stack.Navigator>
 		</NavigationContainer>
