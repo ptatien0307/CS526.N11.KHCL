@@ -25,7 +25,7 @@ export default function App({ navigation, route }) {
                         <Text style={styles.styleRoomName}>{item.roomName}</Text>
                     </View>
 
-                    {/* Room status */}
+                    {/* Room status, chỉnh tình trạng là chưa lập hóa đơn */}
                     <View>
                         <Text>TÌNH TRẠNG: {item.roomStatus}</Text>
                     </View>
