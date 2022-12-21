@@ -39,6 +39,7 @@ export default function App() {
 				}} />
 				<Stack.Screen name="ChiTietPhong" component={ChiTietPhong} options={{
 					headerShown: true,
+					title: 'Đang tải phòng...'
 				}} />
 				<Stack.Screen name="ChiTietNguoiO" component={ChiTietNguoiO} options={{
 					headerShown: true,

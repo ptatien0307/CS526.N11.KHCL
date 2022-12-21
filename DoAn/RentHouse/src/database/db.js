@@ -4,6 +4,8 @@ import { createCustomersTable, populateCustomersTable } from "./tables/customers
 import { createRoomsTable, populateRoomsTable } from "./tables/roomsTable";
 import { createBillsTable } from "./tables/billsTable";
 import { createServicePricesTable } from "./tables/servicePricesTable";
+import { populateServicePricesTable } from "./tables/servicePricesTable";
+import { createNotesTable, populateNotesTable } from "./tables/notesTable";
 import * as SQLite from "expo-sqlite";
 
 const db = SQLite.openDatabase("renthouse.db");
@@ -14,6 +16,7 @@ const createTables = () => {
 		tx.executeSql(createRoomsTable, [], () => console.log("Created rooms table"), (_, error) => console.log(error));
 		tx.executeSql(createBillsTable, [], () => console.log("Created bills table"), (_, error) => console.log(error));
 		tx.executeSql(createServicePricesTable, [], () => console.log("Created service prices table"), (_, error) => console.log(error));
+		tx.executeSql(createNotesTable, [], () => console.log("Created notes table"), (_, error) => console.log(error));
 	});
 };
 
@@ -21,6 +24,8 @@ const populateTables = () => {
 	db.transaction((tx) => {
 		tx.executeSql(populateRoomsTable, [], () => console.log("Populated rooms table"), (_, error) => console.log(error));
 		tx.executeSql(populateCustomersTable, [], () => console.log("Populated customers table"), (_, error) => console.log(error));
+		tx.executeSql(populateServicePricesTable, [], () => console.log("Populated service prices table"), (_, error) => console.log(error));
+		tx.executeSql(populateNotesTable, [], () => console.log("Populated notes table"), (_, error) => console.log(error));
 	});
 };
 

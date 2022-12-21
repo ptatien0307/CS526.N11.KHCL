@@ -115,8 +115,7 @@ export default function App({ navigation }) {
 
     ];
 
-    const [notes, setNotes] = useState(NOTE);
-    const [roomList, setRoomList] = useState(modifiedDATA);
+    // const [notes, setNotes] = useState(NOTE);
 
 
     return (

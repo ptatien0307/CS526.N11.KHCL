@@ -1,0 +1,23 @@
+`use strict`;
+
+import { openDatabase } from "expo-sqlite";
+
+const db = openDatabase("renthouse.db");
+
+export const fetchNoteList = () => {
+    return new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+            tx.executeSql(
+                "SELECT id, content FROM notes",
+                [],
+                (_, { rows: { _array: result } }) => {
+                    console.log("Note list fetched successfully");
+                    resolve(result);
+                },
+                (_, error) => {
+                    reject(error);
+                }
+            );
+        });
+    });
+};

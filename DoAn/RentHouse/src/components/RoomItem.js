@@ -5,7 +5,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 function RoomItem({ room, onPress }) {
 
     return (
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={onPress.bind(this, room.id)}>
             <View style={[styles.room, styles.myBackground]}>
                 <View>
                     <Text style={styles.styleRoomName}>{room.name}</Text>

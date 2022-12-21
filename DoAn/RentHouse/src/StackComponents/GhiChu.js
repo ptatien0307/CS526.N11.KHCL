@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
 	StyleSheet,
 	View,
@@ -18,8 +18,40 @@ import {
 
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 
+let NOTE = [
+	{
+		id: 1,
+		noteContent: 'Do something 1'
+	},
+	{
+		id: 2,
+		noteContent: 'Do something 2'
+	},
+	{
+		id: 3,
+		noteContent: 'Do something 3'
+	},
+	{
+		id: 4,
+		noteContent: 'Do something 4'
+	},
+	{
+		id: 5,
+		noteContent: 'Do something 5'
+	},
+	{
+		id: 6,
+		noteContent: 'Do something 5'
+	},
+
+];
+
 export default function App({ navigation, route }) {
-	const [notes, setNotes] = useState(route.params.notes);
+	const [notes, setNotes] = useState(NOTE);
+
+	useEffect(() => {
+
+	});
 
 	const [mountEdit, setMountEdit] = useState(false);
 	const [mounDelete, setMountDelete] = useState(false);
@@ -42,7 +74,7 @@ export default function App({ navigation, route }) {
 				return res;
 			}, []);
 			setNotes(newNoteList); // set local notes
-			route.params.setNotes(newNoteList); // set global notes
+			// route.params.setNotes(newNoteList); // set global notes
 			deleteSuccessDialog();
 		}
 	};
@@ -191,7 +223,7 @@ export default function App({ navigation, route }) {
 				inputText={inputText}
 				alertEmptyDialog={alertEmptyDialog}
 				notes={notes}
-				setGlobalNotes={route.params.setNotes}
+				// setGlobalNotes={route.params.setNotes}
 				chooseItemEdit={1}
 			></ModalEdit>
 
@@ -204,7 +236,7 @@ export default function App({ navigation, route }) {
 				alertEmptyDialog={alertEmptyDialog}
 				notes={notes}
 				setLocalNotes={setNotes}
-				setGlobalNotes={route.params.setNotes}
+			// setGlobalNotes={route.params.setNotes}
 			></ModalAdd>
 		</View>
 	);
@@ -302,7 +334,6 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		bottom: 0,
 	},
-
 	myBorder: {
 		borderColor: "black",
 		borderRadius: 15,

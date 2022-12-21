@@ -6,11 +6,14 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { fetchRoomList, insertRoom } from "../database/actions/roomActions";
 import RoomItem from "../components/RoomItem";
 import { useForceUpdate } from "../helpers/utils";
 
-export default function App({ navigation }) {
+export default function App() {
+	const navigation = useNavigation();
+
 	const [roomList, setRoomList] = useState([]);
 	const [selectedRoomId, setSelectedRoomId] = useState(null);
 	const [forceUpdate, forceUpdateId] = useForceUpdate();
@@ -36,7 +39,9 @@ export default function App({ navigation }) {
 				room={item}
 				onPress={() => {
 					setSelectedRoomId(item.id);
-					navigation.navigate("ChiTietPhong");
+					navigation.navigate("ChiTietPhong", {
+						room_id: item.id
+					});
 				}}
 			/>
 		);
@@ -56,8 +61,6 @@ export default function App({ navigation }) {
 		);
 	};
 
-	if (!roomList)
-		return null;
 
 	return (
 		<View style={styles.container}>

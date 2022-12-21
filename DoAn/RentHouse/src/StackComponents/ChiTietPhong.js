@@ -20,12 +20,24 @@ import {
 	deleteSuccessDialog,
 } from "../helpers/dialog";
 
-export default function App({ navigation, route }) {
-	useEffect(() => {
-		LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-	}, []);
+import { fetchRoomDetails } from "../database/actions/roomActions";
 
-	const roomList = route.params.roomList;
+export default function App({ navigation, route }) {
+	const selectedRoomId = route.params.roomId;
+	const [roomDetails, setRoomDetails] = useState({});
+
+	useEffect(() => {
+		async function loadRoomData(selectedRoomId) {
+			const room = await fetchRoomDetails(selectedRoomId);
+			setRoomDetails(room);
+			navigation.setOptions({
+				title: room.name,
+			});
+		}
+
+		loadRoomData(selectedRoomId);
+	});
+
 	const [currRoom, setCurrRoom] = useState(route.params.currRoom);
 	let billRemained = currRoom.billHistory.reduce((res, curr) => {
 		return res + curr.remained;

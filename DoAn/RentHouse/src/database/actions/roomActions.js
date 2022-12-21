@@ -8,7 +8,7 @@ export const fetchRoomList = () => {
     return new Promise((resolve, reject) => {
         db.transaction((tx) => {
             tx.executeSql(
-                "SELECT * FROM rooms",
+                "SELECT id, name, status FROM rooms",
                 [],
                 (_, { rows: { _array: result } }) => {
                     console.log("Room list fetched successfully");
@@ -22,7 +22,7 @@ export const fetchRoomList = () => {
     });
 };
 
-export const fetchRoom = (room_id) => {
+export const fetchRoomDetails = (room_id) => {
     return new Promise((resolve, reject) => {
         db.transaction((tx) => {
             tx.executeSql(
