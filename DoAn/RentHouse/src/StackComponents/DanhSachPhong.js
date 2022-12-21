@@ -6,12 +6,14 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import { useState, useEffect } from "react";
-import { fetchRoomList } from "../database/actions/roomActions";
+import { fetchRoomList, insertRoom } from "../database/actions/roomActions";
 import RoomItem from "../components/RoomItem";
+import { useForceUpdate } from "../helpers/utils";
 
 export default function App({ navigation }) {
 	const [roomList, setRoomList] = useState([]);
 	const [selectedRoomId, setSelectedRoomId] = useState(null);
+	const [forceUpdate, forceUpdateId] = useForceUpdate();
 
 	// Get room list from database
 	useEffect(() => {
@@ -21,9 +23,7 @@ export default function App({ navigation }) {
 		}
 
 		loadRoomList();
-	}, []);
-
-	console.log(roomList);
+	}, [forceUpdateId]);
 
 	// The renderItem function provides an object to its function. This object does not contain a property named room, hence the code
 	// renderItem = {({ room }) => renderList(room)}
@@ -31,7 +31,6 @@ export default function App({ navigation }) {
 	// 3 - 4 days wasted on this shit.
 
 	const renderItem = ({ item }) => {
-		console.log(item.name);
 		return (
 			< RoomItem
 				room={item}
@@ -44,7 +43,17 @@ export default function App({ navigation }) {
 	};
 
 	const handleAddRoom = () => {
-
+		insertRoom(
+			{
+				name: `Phòng ${roomList.length + 1}`,
+				rental_fee: 950000,
+				using_internet: 1,
+				using_garbage: 1,
+				old_electricity_number: new Date().getTime() % 1000000,
+				old_water_number: new Date().getTime() % 2000000
+			},
+			forceUpdate
+		);
 	};
 
 	if (!roomList)
