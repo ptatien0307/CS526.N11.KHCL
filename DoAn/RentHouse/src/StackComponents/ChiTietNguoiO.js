@@ -44,18 +44,17 @@ export default function App({ navigation, route }) {
 
 
             {/* Body */}
-            <View style={[styles.body, styles.myBorder]}>
+            <View style={[styles.body]}>
                 <ScrollView
-                    style={{ width: '100%', height: '100%' }}
-                    contentContainerStyle={{ flex: 1, alignItems: 'center' }}>
+                    style={{ width: '100%' }}
+                    contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}>
                     {/* Name */}
                     <View style={[styles.item, styles.myBackground]}>
                         <View style={styles.titleContainer}>
                             <Text style={styles.title}>Họ tên:</Text>
-
                         </View>
                         <View>
-                            <Text>{member.memberName}</Text>
+                            <Text style={{ fontSize: 17 }}>{member.memberName}</Text>
                         </View>
                     </View>
 
@@ -67,7 +66,7 @@ export default function App({ navigation, route }) {
                         </View>
 
                         <View>
-                            <Text>{member.dateOfBirth}</Text>
+                            <Text style={{ fontSize: 17 }}>{member.dateOfBirth}</Text>
                         </View>
 
                     </View>
@@ -105,20 +104,20 @@ export default function App({ navigation, route }) {
 
                         </View>
                         <View>
-                            <Text>{member.address}</Text>
+                            <Text style={{ fontSize: 17 }}>{member.address}</Text>
                         </View>
                     </View>
 
                     {/* CCCD */}
-                    <View style={[styles.item, styles.myBackground]}>
+                    <View style={[styles.item, styles.myBackground, { height: 'auto' }]}>
 
-                        <View>
+                        <View style={{ marginBottom: 16 }}>
                             <View style={styles.titleContainer}>
                                 <Text style={styles.title}>CCCD:</Text>
 
                             </View>
                             <View>
-                                <Text>{member.CCCD}</Text>
+                                <Text style={{ fontSize: 17 }}>{member.CCCD}</Text>
                             </View>
                         </View>
 
@@ -130,7 +129,7 @@ export default function App({ navigation, route }) {
 
                                 </View>
                                 <View>
-                                    <Text>{member.ngayCapCCCD}</Text>
+                                    <Text style={{ fontSize: 17 }}>{member.ngayCapCCCD}</Text>
                                 </View>
 
                             </View>
@@ -141,7 +140,7 @@ export default function App({ navigation, route }) {
 
                                 </View>
                                 <View>
-                                    <Text>{member.noiCapCCCD}</Text>
+                                    <Text style={{ fontSize: 17 }}>{member.noiCapCCCD}</Text>
                                 </View>
 
                             </View>
@@ -156,7 +155,7 @@ export default function App({ navigation, route }) {
 
                             </View>
                             <View>
-                                <Text>{member.job}</Text>
+                                <Text style={{ fontSize: 17 }}>{member.job}</Text>
                             </View>
                         </View>
                     </View>
@@ -206,8 +205,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     item: {
-        width: '90%',
+        width: '100%',
         height: 'auto',
+        minHeight: 75,
         paddingHorizontal: 8,
         paddingTop: 8,
         marginBottom: 16,
@@ -223,8 +223,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderBottomWidth: 2,
-        height: '20%',
-        paddingBottom: 24,
         marginBottom: 8,
     },
 
@@ -233,6 +231,7 @@ const styles = StyleSheet.create({
 
     title: {
         fontWeight: 'bold',
+        fontSize: 15,
     },
     stackTitle: {
         fontSize: 20,

@@ -77,10 +77,10 @@ export default function App({ navigation, route }) {
 
 
             {/* Body */}
-            <View style={[styles.body, styles.myBorder]}>
+            <View style={[styles.body]}>
                 <ScrollView
-                    style={{ width: '100%', height: '100%' }}
-                    contentContainerStyle={{ flex: 1, alignItems: 'center' }}>
+                    style={{ width: '100%' }}
+                    contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}>
                     {/* Name */}
                     <View style={[styles.item, styles.myBackground]}>
                         <View style={styles.titleContainer}>
@@ -88,7 +88,7 @@ export default function App({ navigation, route }) {
                         </View>
                         <View>
                             <TextInput
-                                style={[styles.myBorder, { paddingLeft: 8 }]}
+                                style={[styles.myBorder, styles.input]}
                                 onChangeText={(text) => { setMemberName(text) }}
                                 defaultValue={memberName}
                                 editable={true}
@@ -104,7 +104,7 @@ export default function App({ navigation, route }) {
                         </View>
                         <View>
                             <TextInput
-                                style={[styles.myBorder, { paddingLeft: 8 }]}
+                                style={[styles.myBorder, styles.input]}
                                 onChangeText={(text) => { setDateOfBirth(text) }}
                                 defaultValue={dateOfBirth}
                                 editable={true}
@@ -154,7 +154,7 @@ export default function App({ navigation, route }) {
                         </View>
                         <View>
                             <TextInput
-                                style={[styles.myBorder, { paddingLeft: 8 }]}
+                                style={[styles.myBorder, styles.input]}
                                 onChangeText={(text) => { setAddress(text) }}
                                 defaultValue={address}
                                 editable={true}
@@ -166,13 +166,13 @@ export default function App({ navigation, route }) {
                     {/* CCCD */}
                     <View style={[styles.item, styles.myBackground]}>
 
-                        <View>
+                        <View style={{ marginBottom: 16 }}>
                             <View style={styles.titleContainer}>
                                 <Text style={styles.title}>CCCD:</Text>
                             </View>
                             <View>
                                 <TextInput
-                                    style={[styles.myBorder, { paddingLeft: 8 }]}
+                                    style={[styles.myBorder, styles.input]}
                                     onChangeText={(text) => { setCCCD(text) }}
                                     defaultValue={CCCD}
                                     editable={true}
@@ -189,7 +189,7 @@ export default function App({ navigation, route }) {
                                 </View>
                                 <View>
                                     <TextInput
-                                        style={[styles.myBorder, { paddingLeft: 8 }]}
+                                        style={[styles.myBorder, styles.input]}
                                         onChangeText={(text) => { setNgayCapCCCD(text) }}
                                         defaultValue={ngayCapCCCD}
                                         editable={true}
@@ -205,7 +205,7 @@ export default function App({ navigation, route }) {
                                 </View>
                                 <View>
                                     <TextInput
-                                        style={[styles.myBorder, { paddingLeft: 8 }]}
+                                        style={[styles.myBorder, styles.input]}
                                         onChangeText={(text) => { setNoiCapCCCD(text) }}
                                         defaultValue={noiCapCCCD}
                                         editable={true}
@@ -225,7 +225,7 @@ export default function App({ navigation, route }) {
                             </View>
                             <View>
                                 <TextInput
-                                    style={[styles.myBorder, { paddingLeft: 8 }]}
+                                    style={[styles.myBorder, styles.input]}
                                     onChangeText={(text) => { setJob(text) }}
                                     defaultValue={job}
                                     editable={true}
@@ -288,8 +288,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     item: {
-        width: '90%',
+        width: '100%',
         height: 'auto',
+        minHeight: 75,
         paddingHorizontal: 8,
         paddingTop: 8,
         marginBottom: 16,
@@ -305,9 +306,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderBottomWidth: 2,
-        height: '20%',
-        paddingBottom: 24,
         marginBottom: 8,
+    },
+    input: {
+        paddingLeft: 8,
+        fontSize: 18
     },
 
 
@@ -325,6 +328,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontWeight: 'bold',
+        fontSize: 15,
     },
     stackTitle: {
         fontSize: 20,
