@@ -1,22 +1,61 @@
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, Animated } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { useEffect, useState, useRef } from "react";
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-export default function App({ navigation, route }) {
-    const [electricityBillOld, setElectricityBillOld] = useState('123');
+export default function App({ navigation }) {
+
     const [electricityBillNew, setElectricityBillNew] = useState('');
-    const [waterBillOld, setWaterBillOld] = useState('456');
     const [waterBillNew, setWaterBillNew] = useState('');
     const [internetBill, setInternetBill] = useState('1');
     const [roomBillMonth, setRoomBillMonth] = useState('1');
     const [roomBillDay, setRoomBillDay] = useState('0');
     const [garbageBill, setGarbageBill] = useState('1');
+    const [discountBill, setDiscountBill] = useState('0');
+    const [additionBill, setAdditionBill] = useState('0');
 
     const RoomValue = 950000;
+    const electricityBillOld = 123;
+    const waterBillOld = 50;
     const ElectricityValue = 3000;
     const WaterValue = 3000;
     const InternetValue = 30000;
     const GarbageValue = 15000;
+
+    const calculateBill = () => {
+
+        // Check if input electricityBillNew and WaterBillNew are empty
+        if (electricityBillNew == '') {
+            return alert('Chưa nhập chỉ số điện mới'); 
+        }
+
+        if (waterBillNew == '') {
+            return alert('Chưa nhập chỉ số nước mới')
+        }
+
+        // Check if input electricityBillNew and WaterBillNew are less than old
+        if (electricityBillNew < electricityBillOld) {
+            return alert('Chỉ số điện mới phải lớn hơn chỉ số điện cũ');
+        }
+        if (waterBillNew < waterBillOld) {
+            return alert('Chỉ số nước mới phải lớn hơn chỉ số nước cũ');
+        }
+
+
+        let roomBill = RoomValue * roomBillMonth + RoomValue / 30 * roomBillDay;
+        let electricityBill = ElectricityValue * (electricityBillNew - electricityBillOld);
+        let waterBill = WaterValue * (waterBillNew - waterBillOld);
+
+        let internetBillTotal = InternetValue * internetBill;
+        let garbageBillTotal = GarbageValue * garbageBill;
+        let discountBillTotal = parseInt(discountBill);
+        let additionBillTotal = parseInt(additionBill);
+
+        let totalBill = roomBill + electricityBill + waterBill + internetBillTotal + garbageBillTotal - discountBillTotal + additionBillTotal;
+        
+        alert('Tổng tiền hóa đơn: ' + totalBill);
+        return navigation.goBack();
+    }
 
     return (
         <View style={styles.container}>
@@ -34,7 +73,7 @@ export default function App({ navigation, route }) {
             </View>
 
             {/* Body */}
-            <View style={styles.body}>
+            <ScrollView style={styles.body}>
 
                 {/* Room bill inputs */}
                 <View style={styles.billContainer}>
@@ -74,7 +113,6 @@ export default function App({ navigation, route }) {
                             <TextInput
                                 style={[styles.textInput]}
                                 keyboardType="number-pad"
-                                value={electricityBillNew}
                                 onChangeText={text => setElectricityBillNew(text)}
                             />
                         </View>
@@ -92,7 +130,6 @@ export default function App({ navigation, route }) {
                             <TextInput
                                 style={[styles.textInput]}
                                 keyboardType="number-pad"
-                                value={waterBillNew}
                                 onChangeText={text => setWaterBillNew(text)}
                             />
                         </View>
@@ -108,8 +145,8 @@ export default function App({ navigation, route }) {
                             <Text>Số người: </Text>
                             <TextInput
                                 style={[styles.textInput]}
-                                keyboardType="number-pad"
                                 value={internetBill}
+                                keyboardType="number-pad"
                                 onChangeText={text => setInternetBill(text)}
                             />
                         </View>
@@ -133,7 +170,55 @@ export default function App({ navigation, route }) {
                     </View>
                 </View>
 
-            </View>
+                {/* Discount bill inputs */}
+                <View style={styles.billContainer}>
+                    <Text style={[styles.billName, {fontWeight:'bold'}]}>Tiền giảm trừ</Text>
+                    <Text>Dùng vào dịp lễ, tết, covid, miễn giảm khi khách xài dịch vụ ít hơn đơn giá,...</Text>
+                    <View style={[styles.billValue, {justifyContent:'center'}]}>
+                        <View style={[styles.billValueInput, {width:'90%'}]}>
+                            <Text>Số tiền giảm: </Text>
+                            <TextInput
+                                style={[styles.textInput]}
+                                keyboardType="number-pad"
+                                placeholder="0"
+                                onChangeText={text => setDiscountBill(text)}
+                            />
+                            <Text>đ</Text>
+                        </View>
+                    </View>
+                </View>
+
+                {/* Addition bill inputs */}
+                <View style={styles.billContainer}>
+                    <Text style={[styles.billName, {fontWeight:'bold'}]}>Tiền cộng thêm</Text>
+                    <Text>Dùng vào dịp lễ, tết, covid, tăng thêm khi khách xài dịch vụ nhiều hơn đơn giá,...</Text>
+                    <View style={[styles.billValue, {justifyContent:'center'}]}>
+                        <View style={[styles.billValueInput, {width:'90%'}]}>
+                            <Text>Số tiền thêm: </Text>
+                            <TextInput
+                                style={[styles.textInput]}
+                                keyboardType="number-pad"
+                                placeholder="0"
+                                onChangeText={text => setAdditionBill(text)}
+                            />
+                            <Text>đ</Text>
+                        </View>
+                    </View>
+                </View>
+
+            </ScrollView>
+
+            {/* Calculate button */}
+            <TouchableOpacity
+                style={styles.calculateButton}
+                onPress={() => {
+                    calculateBill();
+                }}
+            >
+                <AntDesign name="addfile" size={24} /> 
+                <Text style={styles.calculateButtonText}>Lập hóa đơn</Text>
+            </TouchableOpacity>
+
         </View>
     );
 }
@@ -173,8 +258,6 @@ const styles = StyleSheet.create({
     },
 
     body: {
-        alignItems: 'right',
-        justifyContent: 'flex-start',
     },
 
     billContainer: {
@@ -190,11 +273,11 @@ const styles = StyleSheet.create({
     },
 
     billValueInput: {
-        padding:'10px', 
-        borderWidth:'1px', 
-        borderRadius:'10px',
-        marginTop:'10px',
-        marginBottom:'10px',
+        padding:10, 
+        borderWidth:1, 
+        borderRadius:10,
+        marginTop:10,
+        marginBottom:10,
         borderColor:'black',
         flexDirection:'row',
         justifyContent:'space-between',
@@ -205,5 +288,22 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         width: '60%'
     },
+
+    calculateButton: {
+        height: '8%',
+        width: '88%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 5,
+        justifyContent: 'center',
+        backgroundColor: '#dfdfdf',
+        borderRadius: 10,
+    },
     
+    calculateButtonText : {
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        paddingLeft: 10,
+    }
 })
