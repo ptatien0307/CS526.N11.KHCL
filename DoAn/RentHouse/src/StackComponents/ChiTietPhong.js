@@ -6,8 +6,8 @@ import { LogBox } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
-import { ModalEdit } from '../helpers/modal';
-import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog, deleteSuccessDialog } from '../helpers/dialog';
+import { ModalEdit } from '../Dialogs/modal.js';
+import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog, deleteSuccessDialog } from '../Dialogs/dialog.js';
 
 export default function App({ navigation, route }) {
     useEffect(() => {

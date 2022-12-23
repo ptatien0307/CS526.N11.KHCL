@@ -3,7 +3,7 @@ import Checkbox from 'expo-checkbox';
 import { useState } from 'react';
 
 
-import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog } from '../helpers/dialog';
+import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog } from '../Dialogs/dialog.js';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {

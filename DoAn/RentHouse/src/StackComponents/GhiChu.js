@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
 
-import { ModalAdd, ModalEdit } from '../helpers/modal';
-import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog, deleteSuccessDialog, successDialog } from '../helpers/dialog';
-
+import { ModalAdd, ModalEdit } from '../Dialogs/modal.js';
+import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog, deleteSuccessDialog, successDialog } from '../Dialogs/dialog.js';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {

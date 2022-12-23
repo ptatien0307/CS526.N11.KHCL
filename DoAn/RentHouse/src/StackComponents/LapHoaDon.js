@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
 
-import { ModalAdd, ModalEdit } from '../helpers/modal';
-import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog, deleteSuccessDialog, addSuccessDialog } from '../helpers/dialog';
+import { ModalAdd, ModalEdit } from '../Dialogs/modal.js';
+import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog, deleteSuccessDialog, addSuccessDialog } from '../Dialogs/dialog.js';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
@@ -13,27 +13,27 @@ export default function App({ navigation, route }) {
     let year = new Date().getFullYear();
     const renderItem = ({ item }) => (
 
-            // Ghi chi so dich vu modal
-            <TouchableOpacity onPress={() => {
-                navigation.navigate('GhiChiSoDichVu', 
+        // Ghi chi so dich vu modal
+        <TouchableOpacity onPress={() => {
+            navigation.navigate('GhiChiSoDichVu',
                 { room: item, roomList: roomList, setRoomList: setRoomList })
-            }}> 
-                <View style={[styles.room, styles.myBackground]}>
+        }}>
+            <View style={[styles.room, styles.myBackground]}>
 
-                    {/* Room name */}
-                    <View>
-                        <Text style={styles.styleRoomName}>{item.roomName}</Text>
-                    </View>
-
-                    {/* Room status */}
-                    <View>
-                        <Text>TÌNH TRẠNG: {item.roomStatus}</Text>
-                    </View>
-
+                {/* Room name */}
+                <View>
+                    <Text style={styles.styleRoomName}>{item.roomName}</Text>
                 </View>
-            </TouchableOpacity>
 
-        )
+                {/* Room status */}
+                <View>
+                    <Text>TÌNH TRẠNG: {item.roomStatus}</Text>
+                </View>
+
+            </View>
+        </TouchableOpacity>
+
+    )
 
     return (
         <View style={styles.container}>

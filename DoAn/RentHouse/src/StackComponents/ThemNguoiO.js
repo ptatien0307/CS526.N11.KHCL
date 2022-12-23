@@ -1,7 +1,7 @@
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, ScrollView } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { useState } from 'react';
-import { alertMissingDialog, successDialog } from '../helpers/dialog';
+import { alertMissingDialog, successDialog } from '../Dialogs/dialog.js';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {

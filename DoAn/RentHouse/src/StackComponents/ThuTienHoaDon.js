@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, Animated } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 
-import { alertEmptyDialog, successDialog, errorDialog } from '../helpers/dialog';
+import { alertEmptyDialog, successDialog, errorDialog } from '../Dialogs/dialog.js';;
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 
