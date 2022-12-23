@@ -15,8 +15,8 @@ import {
 	deleteSuccessDialog,
 	addSuccessDialog,
 } from "../helpers/dialog";
-
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import NoteItem from "../components/NoteItem";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 let NOTE = [
 	{
@@ -48,10 +48,8 @@ let NOTE = [
 
 export default function App({ navigation, route }) {
 	const [notes, setNotes] = useState(NOTE);
+	const [selectedId, setSelectedId] = useState(null);
 
-	useEffect(() => {
-
-	});
 
 	const [mountEdit, setMountEdit] = useState(false);
 	const [mounDelete, setMountDelete] = useState(false);
@@ -92,45 +90,10 @@ export default function App({ navigation, route }) {
 
 	const renderItem = ({ item }) => {
 		return (
-			<View style={[styles.note, styles.myBackground]}>
-				<View style={styles.noteContent}>
-					<Text>
-						{item.id}. {item.noteContent}
-					</Text>
-				</View>
-
-				<View style={styles.noteIcon}>
-					<TouchableOpacity
-						onPress={() => {
-							handleEditNote(item);
-						}}
-					>
-						<FontAwesomeIcon
-							name="pencil"
-							size={20}
-							style={[
-								styles.icon,
-								{ display: mountEdit ? "flex" : "none" },
-							]}
-						/>
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						onPress={() => {
-							handleDeleteNote(item);
-						}}
-					>
-						<FontAwesomeIcon
-							name="remove"
-							size={25}
-							style={[
-								styles.icon,
-								{ display: mounDelete ? "flex" : "none" },
-							]}
-						/>
-					</TouchableOpacity>
-				</View>
-			</View>
+			<NoteItem
+				note={item}
+				onPress={() => setSelectedId(item.id)}
+			/>
 		);
 	};
 
@@ -139,16 +102,8 @@ export default function App({ navigation, route }) {
 			{/* Header */}
 			<View style={styles.header}>
 				<View style={styles.headerTop}>
-					{/* Back to menu button */}
-					<TouchableOpacity
-						onPress={() => {
-							navigation.goBack();
-						}}
-					>
-						<FontAwesomeIcon name="arrow-left" size={35} />
-					</TouchableOpacity>
 
-					<Text style={styles.stackTitle}>GHI CHÚ</Text>
+
 
 					{/* Edit info button */}
 					<TouchableOpacity
@@ -156,7 +111,7 @@ export default function App({ navigation, route }) {
 							setIsSubMenuVisible(!isSubMenuVisible);
 						}}
 					>
-						<FontAwesomeIcon name="navicon" size={35} />
+						<Icon name="navicon" size={35} />
 					</TouchableOpacity>
 
 					{isSubMenuVisible && (

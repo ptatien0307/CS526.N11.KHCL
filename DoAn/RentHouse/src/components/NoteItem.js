@@ -4,11 +4,34 @@ import {
     View,
     Text,
     TouchableOpacity,
+    StyleSheet,
 } from "react-native";
+import { useState } from "react";
 
-function NoteItem({ note, onPress }) {
+import Icon from "react-native-vector-icons/FontAwesome";
+
+import { ModalAdd, ModalEdit } from "../helpers/modal";
+import { insertNote, updateNote, deleteNote } from "../database/actions/noteAction";
+
+function NoteItem({ note }) {
+    const [mountEdit, setMountEdit] = useState(false);
+    const [mounDelete, setMountDelete] = useState(false);
+
+    const handleEditNote = (note) => {
+        updateNote(note);
+    };
+
+    const handleDeleteNote = (note) => {
+
+    };
+
+
+
     return (
-        <View style={[styles.note, styles.myBackground]}>
+        <TouchableOpacity
+            style={[styles.note, styles.myBackground]}
+            onPress={() => handleEditNote(note)}
+        >
             <View style={styles.noteContent}>
                 <Text>
                     {note.id}. {note.noteContent}
@@ -18,35 +41,17 @@ function NoteItem({ note, onPress }) {
             <View style={styles.noteIcon}>
                 <TouchableOpacity
                     onPress={() => {
-                        handleEditNote(note);
-                    }}
-                >
-                    <FontAwesomeIcon
-                        name="pencil"
-                        size={20}
-                        style={[
-                            styles.icon,
-                            { display: mountEdit ? "flex" : "none" },
-                        ]}
-                    />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={() => {
                         handleDeleteNote(note);
                     }}
                 >
-                    <FontAwesomeIcon
+                    <Icon
                         name="remove"
                         size={25}
-                        style={[
-                            styles.icon,
-                            { display: mounDelete ? "flex" : "none" },
-                        ]}
+                        style={[styles.icon]}
                     />
                 </TouchableOpacity>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 
@@ -80,3 +85,4 @@ const styles = StyleSheet.create({
     },
 });
 
+export default NoteItem;
