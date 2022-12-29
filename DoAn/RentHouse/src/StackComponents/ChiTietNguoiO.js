@@ -6,12 +6,24 @@ import {
 	ScrollView,
 } from "react-native";
 import Checkbox from "expo-checkbox";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import { fetchCustomerDetails } from "../database/actions/customerAction";
+
 
 export default function App({ navigation, route }) {
 	const [member, setMember] = useState(route.params.member);
+
+	useEffect(() => {
+		const loadCustomerDetails = async () => {
+			const customerDetails = await fetchCustomerDetails(member.id);
+			setMember(customerDetails);
+
+			console.log(customerDetails);
+		};
+		loadCustomerDetails();
+	}, []);
 
 	return (
 		<View style={styles.container}>

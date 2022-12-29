@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
 	StyleSheet,
 	View,
@@ -18,7 +18,22 @@ import {
 
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 
+import { fetchServiceList } from "../database/actions/serviceAction";
+
 export default function App({ navigation, route }) {
+	const [serviceList, setServiceList] = useState([]);
+
+	useEffect(() => {
+		const loadServiceList = async () => {
+			const serviceList = await fetchServiceList();
+			setServiceList(serviceList);
+
+			console.log(serviceList);
+		}
+
+		loadServiceList();
+	}, []);
+
 	return (
 		<View style={styles.container}>
 			{/* Header */}

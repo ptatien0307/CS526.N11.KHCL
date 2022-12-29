@@ -132,7 +132,7 @@ export const deleteCustomer = (customer_id, forceUpdate) => {
     });
 };
 
-export const getCustomers = (customer_id) => {
+export const fetchCustomerDetails = (customer_id) => {
     return new Promise((resolve, reject) => {
         db.transaction(
             (tx) => {
@@ -148,9 +148,7 @@ export const getCustomers = (customer_id) => {
                         reject(error);
                     }
                 );
-            },
-            null,
-            null
+            }
         );
     });
 };

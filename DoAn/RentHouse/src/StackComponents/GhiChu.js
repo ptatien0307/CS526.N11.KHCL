@@ -46,9 +46,23 @@ let NOTE = [
 
 ];
 
+import { fetchNoteList } from "../database/actions/noteAction";
+
 export default function App({ navigation, route }) {
-	const [notes, setNotes] = useState(NOTE);
+	const [notes, setNotes] = useState({});
 	const [selectedId, setSelectedId] = useState(null);
+
+	useEffect(() => {
+		const loadNoteList = async () => {
+			const noteList = await fetchNoteList();
+			setNotes(noteList);
+
+			console.log(noteList);
+		};
+
+		loadNoteList();
+	}, []);
+
 
 
 	const [mountEdit, setMountEdit] = useState(false);
@@ -71,8 +85,7 @@ export default function App({ navigation, route }) {
 				if (currNote.id != deleteNote.id) res.push(currNote);
 				return res;
 			}, []);
-			setNotes(newNoteList); // set local notes
-			// route.params.setNotes(newNoteList); // set global notes
+
 			deleteSuccessDialog();
 		}
 	};
@@ -190,11 +203,14 @@ export default function App({ navigation, route }) {
 				inputText={inputText}
 				alertEmptyDialog={alertEmptyDialog}
 				notes={notes}
-				setLocalNotes={setNotes}
+			// setLocalNotes={setNotes}
 			// setGlobalNotes={route.params.setNotes}
 			></ModalAdd>
 		</View>
 	);
+	return (
+		null
+	)
 }
 
 const styles = StyleSheet.create({
