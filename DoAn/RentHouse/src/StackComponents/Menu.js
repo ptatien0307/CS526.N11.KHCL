@@ -213,7 +213,7 @@ export default function App({ navigation }) {
                     {/* Danh sach phong */}
                     <TouchableOpacity TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
-                        onPress={() => { navigation.navigate("DanhSachPhong", { roomList, setRoomList, ELECTRICITY, WATER }) }
+                        onPress={() => { navigation.navigate("RoomList", { roomList, setRoomList, ELECTRICITY, WATER }) }
                         }>
                         <Text style={styles.textTitle}>DANH SÁCH PHÒNG</Text>
 
@@ -222,7 +222,7 @@ export default function App({ navigation }) {
                     {/* Lap hoa don */}
                     <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
-                        onPress={() => { navigation.navigate("LapHoaDon", {roomList, ELECTRICITY, WATER}) }}>
+                        onPress={() => { navigation.navigate("CreateBill", { roomList, ELECTRICITY, WATER }) }}>
                         <Text style={styles.textTitle}>LẬP HÓA ĐƠN</Text>
                     </TouchableOpacity >
 
@@ -235,7 +235,7 @@ export default function App({ navigation }) {
                     {/* Thu tien hoa don */}
                     <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
-                        onPress={() => { navigation.navigate("DanhSachHoaDon", { billList, setBillList }) }}>
+                        onPress={() => { navigation.navigate("BillList", { billList, setBillList }) }}>
                         <Text style={styles.textTitle}>THU TIỀN HÓA ĐƠN</Text>
                     </TouchableOpacity>
 
@@ -243,7 +243,7 @@ export default function App({ navigation }) {
                     {/* Cai dat dich vu */}
                     <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
-                        onPress={() => { navigation.navigate("ThietLapDichVu", {}) }}>
+                        onPress={() => { navigation.navigate("Service", {}) }}>
                         <Text style={styles.textTitle}>CÀI ĐẶT DỊCH VỤ</Text>
                     </TouchableOpacity>
 
@@ -257,14 +257,14 @@ export default function App({ navigation }) {
                     {/* Ghi chu */}
                     <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
-                        onPress={() => { navigation.navigate("GhiChu", { notes, setNotes }) }}>
+                        onPress={() => { navigation.navigate("NoteList", { notes, setNotes }) }}>
                         <Text style={styles.textTitle}>GHI CHÚ</Text>
                     </TouchableOpacity>
 
                     {/* Huong dan */}
                     <TouchableOpacity
                         style={[styles.feature, styles.myBackground]}
-                        onPress={() => { navigation.navigate("HuongDan", {}) }}>
+                        onPress={() => { navigation.navigate("Guide", {}) }}>
                         <Text style={styles.textTitle}>HƯỚNG DẪN</Text>
                     </TouchableOpacity>
 

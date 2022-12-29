@@ -38,17 +38,7 @@ export default function App({ navigation, route }) {
     return (
         <View style={styles.container}>
 
-            {/* Header */}
-            <View style={styles.header}>
-                <View style={styles.headerTop}>
-                    {/* Back to menu button */}
-                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
-                        <FontAwesomeIcon name="arrow-left" size={35} />
-                    </TouchableOpacity>
 
-                    <Text style={styles.stackTitle}>LẬP HÓA ĐƠN</Text>
-                </View>
-            </View>
 
             {/* Body */}
             <View style={styles.body}>
@@ -72,23 +62,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         width: '100%',
     },
-    header: {
-        width: '100%',
-        height: '10%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#dfdfdf',
-        borderBottomWidth: 2,
-        paddingLeft: 8,
 
-    },
-    headerTop: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%',
-    },
     body: {
         width: '90%',
         minHeight: '50%',

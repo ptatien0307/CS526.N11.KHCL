@@ -104,7 +104,7 @@ export default function App({ navigation, route }) {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    navigation.navigate('ChiTietNguoiO',
+                    navigation.navigate('MemberDetail',
                         {
                             member: item,
                             currRoom,
@@ -148,7 +148,7 @@ export default function App({ navigation, route }) {
     const renderBills = ({ item }) => {
         return (
             <TouchableOpacity onPress={() => {
-                navigation.navigate("ChiTietHoaDon", {
+                navigation.navigate("BillDetail", {
                     currBill: item,
                     currRoom,
                     setCurrRoom,
@@ -325,7 +325,7 @@ export default function App({ navigation, route }) {
                         {isSubMenuVisible && <View style={styles.subMenuContainer}>
                             <TouchableOpacity style={[styles.subMenu, { borderBottomWidth: 2 }]}
                                 onPress={() => {
-                                    navigation.navigate('ThemNguoiO', {
+                                    navigation.navigate('AddMember', {
                                         setIsSubMenuVisible,
 
                                         currRoom,

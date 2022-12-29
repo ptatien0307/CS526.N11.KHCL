@@ -11,7 +11,7 @@ export default function App({ navigation, route }) {
         return (
             // Go to specific room
             <TouchableOpacity onPress={() => {
-                navigation.navigate("ChiTietPhong", {
+                navigation.navigate("RoomDetail", {
                     currRoom: roomList[item.id - 1],
                     roomList,
                     setRoomList,

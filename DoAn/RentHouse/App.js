@@ -5,18 +5,17 @@ import { app_styles } from './mystyles.js';
 
 
 import Menu from './src/StackComponents/Menu.js'
-import DanhSachPhong from './src/StackComponents/DanhSachPhong.js'
-import ChiTietPhong from './src/StackComponents/ChiTietPhong.js'
-import GhiChu from './src/StackComponents/GhiChu.js'
-import ChiTietHoaDon from './src/StackComponents/ChiTietHoaDon.js'
-import ChiTietNguoiO from './src/StackComponents/ChiTietNguoiO.js'
-import ThemNguoiO from './src/StackComponents/ThemNguoiO.js'
-import ChinhSuaCHiTietNguoiO from './src/StackComponents/ChinhSuaChiTietNguoiO.js'
-import DanhSachHoaDon from './src/StackComponents/DanhSachHoaDon.js'
-import ThietLapDichVu from './src/StackComponents/ThietLapDichVu.js'
-import HuongDan from './src/StackComponents/HuongDan.js'
-import LapHoaDon from './src/StackComponents/LapHoaDon.js'
-import GhiChiSoDichVu from './src/StackComponents/GhiChiSoDichVu.js'
+import RoomList from './src/StackComponents/RoomList.js'
+import RoomDetail from './src/StackComponents/RoomDetail.js'
+import NoteList from './src/StackComponents/NoteList.js'
+import BillDetail from './src/StackComponents/BillDetail.js'
+import MemberDetail from './src/StackComponents/MemberDetail.js'
+import AddMember from './src/StackComponents/AddMember.js'
+import EditMember from './src/StackComponents/EditMember.js'
+import BillList from './src/StackComponents/BillList.js'
+import Guide from './src/StackComponents/Guide.js'
+import CreateBill from './src/StackComponents/CreateBill.js'
+import Service from './src/StackComponents/Service.js'
 
 
 const Stack = createNativeStackNavigator();
@@ -28,28 +27,17 @@ export default function App() {
         <Stack.Screen name="Menu" component={Menu} options={{
           headerShown: false,
         }} />
-        <Stack.Screen name="DanhSachPhong" component={DanhSachPhong} />
-        <Stack.Screen name="ChiTietPhong" component={ChiTietPhong} />
-        <Stack.Screen name="ChiTietNguoiO" component={ChiTietNguoiO} />
-        <Stack.Screen name="ThemNguoiO" component={ThemNguoiO} />
-        <Stack.Screen name="ChinhSuaCHiTietNguoiO" component={ChinhSuaCHiTietNguoiO} />
-        <Stack.Screen name="ChiTietHoaDon" component={ChiTietHoaDon} />
-        <Stack.Screen name="DanhSachHoaDon" component={DanhSachHoaDon} options={{
-          headerShown: false,
-        }} />
-        <Stack.Screen name="ThietLapDichVu" component={ThietLapDichVu} options={{
-          headerShown: false,
-        }} />
-        <Stack.Screen name="HuongDan" component={HuongDan} options={{
-          headerShown: false,
-        }} />
-        <Stack.Screen name="GhiChu" component={GhiChu} />
-        <Stack.Screen name="LapHoaDon" component={LapHoaDon} options={{
-          headerShown: false,
-        }} />
-        <Stack.Screen name="GhiChiSoDichVu" component={GhiChiSoDichVu} options={{
-          headerShown: false,
-        }} />
+        <Stack.Screen name="RoomList" component={RoomList} />
+        <Stack.Screen name="RoomDetail" component={RoomDetail} />
+        <Stack.Screen name="MemberDetail" component={MemberDetail} />
+        <Stack.Screen name="AddMember" component={AddMember} />
+        <Stack.Screen name="EditMember" component={EditMember} />
+        <Stack.Screen name="BillDetail" component={BillDetail} />
+        <Stack.Screen name="BillList" component={BillList} />
+        <Stack.Screen name="Guide" component={Guide} />
+        <Stack.Screen name="NoteList" component={NoteList} />
+        <Stack.Screen name="CreateBill" component={CreateBill} />
+        <Stack.Screen name="Service" component={Service} />
       </Stack.Navigator>
     </NavigationContainer>
   );
