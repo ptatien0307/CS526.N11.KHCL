@@ -70,22 +70,6 @@ export default function App({ navigation, route }) {
     return (
         <View style={styles.container}>
 
-            {/* Header */}
-            <View style={[styles.header]}>
-
-                <View style={styles.headerTop}>
-                    {/* Back to menu button */}
-                    <TouchableOpacity onPress={() => { navigation.navigate("Menu") }}>
-                        <Icon name="arrow-left" size={35} />
-                    </TouchableOpacity>
-
-                    {/* Title */}
-                    <Text style={styles.stackTitle}>DANH SÁCH PHÒNG</Text>
-
-                </View>
-            </View>
-
-
             {/* Body */}
             <View style={styles.body}>
 
@@ -95,14 +79,13 @@ export default function App({ navigation, route }) {
                     renderItem={renderItem}
                     keyExtractor={item => item.id}>
                 </FlatList>
-
+                {/* Add room button */}
+                <TouchableOpacity style={styles.addButton} onPress={() => { handleAddRoom() }}>
+                    <Icon name="plus-circle" size={35} color='white' />
+                </TouchableOpacity >
             </View>
 
-            {/* Add room button */}
-            <TouchableOpacity style={styles.addButton} onPress={() => { handleAddRoom() }}>
-                <Icon name="plus-circle" size={35} color='white' />
 
-            </TouchableOpacity >
 
         </View>
     );
@@ -113,24 +96,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
     },
-    header: {
-        width: '100%',
-        height: '10%',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        backgroundColor: '#dfdfdf',
-        paddingLeft: 8,
-        borderBottomWidth: 2,
-    },
-    headerTop: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%',
-    },
+
     body: {
-        height: '90%',
+        height: '100%',
         width: '95%',
     },
     room: {

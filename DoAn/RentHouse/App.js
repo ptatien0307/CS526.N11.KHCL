@@ -28,24 +28,12 @@ export default function App() {
         <Stack.Screen name="Menu" component={Menu} options={{
           headerShown: false,
         }} />
-        <Stack.Screen name="DanhSachPhong" component={DanhSachPhong} options={{
-          headerShown: false,
-        }} />
-        <Stack.Screen name="ChiTietPhong" component={ChiTietPhong} options={{
-          headerShown: false,
-        }} />
-        <Stack.Screen name="ChiTietNguoiO" component={ChiTietNguoiO} options={{
-          headerShown: false,
-        }} />
-        <Stack.Screen name="ThemNguoiO" component={ThemNguoiO} options={{
-          headerShown: false,
-        }} />
-        <Stack.Screen name="ChinhSuaCHiTietNguoiO" component={ChinhSuaCHiTietNguoiO} options={{
-          headerShown: false,
-        }} />
-        <Stack.Screen name="ChiTietHoaDon" component={ChiTietHoaDon} options={{
-          headerShown: false,
-        }} />
+        <Stack.Screen name="DanhSachPhong" component={DanhSachPhong} />
+        <Stack.Screen name="ChiTietPhong" component={ChiTietPhong} />
+        <Stack.Screen name="ChiTietNguoiO" component={ChiTietNguoiO} />
+        <Stack.Screen name="ThemNguoiO" component={ThemNguoiO} />
+        <Stack.Screen name="ChinhSuaCHiTietNguoiO" component={ChinhSuaCHiTietNguoiO} />
+        <Stack.Screen name="ChiTietHoaDon" component={ChiTietHoaDon} />
         <Stack.Screen name="DanhSachHoaDon" component={DanhSachHoaDon} options={{
           headerShown: false,
         }} />
@@ -55,9 +43,7 @@ export default function App() {
         <Stack.Screen name="HuongDan" component={HuongDan} options={{
           headerShown: false,
         }} />
-        <Stack.Screen name="GhiChu" component={GhiChu} options={{
-          headerShown: false,
-        }} />
+        <Stack.Screen name="GhiChu" component={GhiChu} />
         <Stack.Screen name="LapHoaDon" component={LapHoaDon} options={{
           headerShown: false,
         }} />

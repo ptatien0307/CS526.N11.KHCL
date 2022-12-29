@@ -69,18 +69,7 @@ export default function App({ navigation, route }) {
     return (
         <View style={styles.container}>
 
-            {/* Header */}
-            <View style={[styles.header]}>
 
-                <View style={styles.headerTop}>
-                    {/* Back to button */}
-                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
-                        <FontAwesomeIcon name="arrow-left" size={35} />
-                    </TouchableOpacity>
-
-                    <Text style={styles.textTitleStyle}>THÔNG TIN KHÁCH THUÊ</Text>
-                </View>
-            </View>
 
 
             {/* Body */}
@@ -258,31 +247,13 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         width: '100%',
     },
-    header: {
-        width: '100%',
-        height: '10%',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        backgroundColor: '#dfdfdf',
-        paddingLeft: 8,
-        borderBottomWidth: 2,
-        position: 'absolute',
-        top: 0,
-        zIndex: 99,
-    },
-    headerTop: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%',
-    },
+
 
 
 
     body: {
-        height: '90%',
-        marginTop: 72,
+        height: '100%',
+        marginTop: 8,
         width: '90%',
         alignItems: 'center',
         justifyContent: 'space-around',

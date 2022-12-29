@@ -203,51 +203,31 @@ export default function App({ navigation, route }) {
 
             {/* Header */}
             <View style={[styles.header]}>
-
-                <View style={styles.headerTop}>
-                    {/* Back to DanhSachPhong button */}
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                        <TouchableOpacity onPress={() => { navigation.goBack() }}>
-                            <FontAwesomeIcon name="arrow-left" size={35} />
-                        </TouchableOpacity>
-                        <View style={{ justifyContent: 'center' }}>
-                            <Text style={styles.stackTitle}>CHI TIẾT PHÒNG</Text>
-                        </View>
-                    </View>
-
-                    <TouchableOpacity style={styles.deleteButton}
-                        onPress={() => { deleteRoomInfomation() }}>
-                        <Text style={styles.textTitleWhite}>XÓA</Text>
-                    </TouchableOpacity>
-                </View>
-
                 {/* Info and Bill button */}
-                <View style={styles.headerBot}>
-                    <TouchableOpacity style={[styles.headerBtn, { borderBottomWidth: mountInfo ? 4 : 0 }]}
-                        onPress={() => {
-                            if (!mountInfo)
-                                setMountInfo(!mountInfo)
-                            if (mountEdit)
-                                setMountEdit(!mountEdit)
-                        }}>
-                        <Text style={styles.textBold}>THÔNG TIN</Text>
-                    </TouchableOpacity>
+                <TouchableOpacity style={[styles.headerBtn, { borderBottomWidth: mountInfo ? 4 : 0 }]}
+                    onPress={() => {
+                        if (!mountInfo)
+                            setMountInfo(!mountInfo)
+                        if (mountEdit)
+                            setMountEdit(!mountEdit)
+                    }}>
+                    <Text style={styles.textBold}>THÔNG TIN</Text>
+                </TouchableOpacity>
 
-                    <TouchableOpacity style={[styles.headerBtn, { borderBottomWidth: !mountInfo ? 4 : 0 }]}
-                        onPress={() => {
-                            if (mountInfo)
-                                setMountInfo(!mountInfo)
-                            if (mountEdit)
-                                setMountEdit(!mountEdit)
-                        }}>
-                        <Text style={styles.textBold}>LỊCH SỬ HÓA ĐƠN</Text>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity style={[styles.headerBtn, { borderBottomWidth: !mountInfo ? 4 : 0 }]}
+                    onPress={() => {
+                        if (mountInfo)
+                            setMountInfo(!mountInfo)
+                        if (mountEdit)
+                            setMountEdit(!mountEdit)
+                    }}>
+                    <Text style={styles.textBold}>LỊCH SỬ HÓA ĐƠN</Text>
+                </TouchableOpacity>
             </View>
 
             {/* Body */}
             <ScrollView
-                style={{ width: '100%', marginTop: 100 }}
+                style={{ width: '100%', marginTop: 72 }}
                 contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}>
                 {/* View info */}
                 {mountInfo && <View style={styles.infoContainer}>
@@ -426,7 +406,10 @@ export default function App({ navigation, route }) {
                     </FlatList>
                 </View>}
 
-
+                <TouchableOpacity style={styles.deleteButton}
+                    onPress={() => { deleteRoomInfomation() }}>
+                    <Text style={styles.textTitleWhite}>XÓA</Text>
+                </TouchableOpacity>
             </ScrollView>
 
 
@@ -475,9 +458,10 @@ const styles = StyleSheet.create({
     },
     header: {
         width: '100%',
-        height: '15%',
+        height: '10%',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-around',
+        flexDirection: 'row',
         backgroundColor: '#dfdfdf',
         borderBottomWidth: 2,
         position: 'absolute',
@@ -490,21 +474,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    headerTop: {
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        borderBottomWidth: 2,
-        paddingHorizontal: 8,
-    },
-    headerBot: {
-        width: '100%',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        flexDirection: 'row',
-    },
+
 
     bodyHeader: {
         width: '100%',
@@ -621,7 +591,7 @@ const styles = StyleSheet.create({
     deleteButton: {
         backgroundColor: 'black',
         width: '15%',
-        height: '70%',
+        height: '5%',
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center'

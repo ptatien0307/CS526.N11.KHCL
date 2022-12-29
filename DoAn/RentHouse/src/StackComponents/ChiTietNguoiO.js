@@ -14,34 +14,6 @@ export default function App({ navigation, route }) {
     return (
         <View style={styles.container}>
 
-            {/* Header */}
-            <View style={[styles.header]}>
-
-                <View style={styles.headerTop}>
-                    {/* Back to button */}
-                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
-                        <FontAwesomeIcon name="arrow-left" size={35} />
-                    </TouchableOpacity>
-
-                    <Text style={styles.stackTitle}>THÔNG TIN KHÁCH THUÊ</Text>
-                    <TouchableOpacity onPress={() => {
-                        navigation.navigate('ChinhSuaCHiTietNguoiO',
-                            {
-                                member,
-                                setMember,
-                                currRoom: route.params.currRoom,
-                                setCurrRoom: route.params.setCurrRoom,
-                                memberList: route.params.memberList,
-                                roomList: route.params.roomList,
-                                setGlobalRoomList: route.params.setGlobalRoomList
-                            })
-
-                    }}>
-                        <FontAwesomeIcon name="edit" size={35} />
-                    </TouchableOpacity>
-                </View>
-            </View>
-
 
             {/* Body */}
             <View style={[styles.body]}>
@@ -162,7 +134,22 @@ export default function App({ navigation, route }) {
                 </ScrollView>
             </View>
 
+            <TouchableOpacity style={styles.addButton}
+                onPress={() => {
+                    navigation.navigate('ChinhSuaCHiTietNguoiO',
+                        {
+                            member,
+                            setMember,
+                            currRoom: route.params.currRoom,
+                            setCurrRoom: route.params.setCurrRoom,
+                            memberList: route.params.memberList,
+                            roomList: route.params.roomList,
+                            setGlobalRoomList: route.params.setGlobalRoomList
+                        })
 
+                }}>
+                <FontAwesomeIcon name="edit" size={35} style={{ color: 'white' }} />
+            </TouchableOpacity>
         </View >
 
     );
@@ -176,31 +163,14 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         width: '100%',
     },
-    header: {
-        width: '100%',
-        height: '10%',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        backgroundColor: '#dfdfdf',
-        borderBottomWidth: 2,
-        position: 'absolute',
-        top: 0,
-        zIndex: 10,
-    },
-    headerTop: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%',
-    },
+
 
 
 
     body: {
-        marginTop: 72,
+        marginTop: 8,
         width: '90%',
-        height: '90%',
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'space-around',
     },
@@ -225,7 +195,15 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         marginBottom: 8,
     },
-
+    addButton: {
+        backgroundColor: 'black',
+        borderRadius: 10,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        position: 'absolute',
+        bottom: 8,
+        right: 8,
+    },
 
 
 

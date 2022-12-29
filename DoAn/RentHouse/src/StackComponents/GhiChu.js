@@ -9,11 +9,6 @@ export default function App({ navigation, route }) {
 
     const [notes, setNotes] = useState(route.params.notes)
 
-    const [mountEdit, setMountEdit] = useState(false)
-    const [mounDelete, setMountDelete] = useState(false)
-    const [isSubMenuVisible, setIsSubMenuVisible] = useState(false)
-
-
 
 
     const [editItemID, setEditItemID] = useState()
@@ -53,22 +48,22 @@ export default function App({ navigation, route }) {
 
     const renderItem = ({ item }) => {
         return (
-            <View style={[styles.note, styles.myBackground]}>
+            <TouchableOpacity style={[styles.note, styles.myBackground]}>
                 <View style={styles.noteContent}>
                     <Text>{item.id}. {item.noteContent}</Text>
                 </View>
 
                 <View style={styles.noteIcon}>
-                    <TouchableOpacity onPress={() => { handleEditNote(item) }}>
+                    {/* <TouchableOpacity onPress={() => { handleEditNote(item) }}>
                         <FontAwesomeIcon name="pencil" size={20} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
 
                     <TouchableOpacity onPress={() => { handleDeleteNote(item) }}>
-                        <FontAwesomeIcon name="remove" size={25} style={[styles.icon, { display: mounDelete ? 'flex' : 'none' }]} />
+                        <FontAwesomeIcon name="remove" size={25} style={[styles.icon]} />
                     </TouchableOpacity>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -79,56 +74,7 @@ export default function App({ navigation, route }) {
     return (
         <View style={styles.container}>
 
-            {/* Header */}
-            <View style={styles.header}>
-                <View style={styles.headerTop}>
-                    {/* Back to menu button */}
-                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
-                        <FontAwesomeIcon name="arrow-left" size={35} />
-                    </TouchableOpacity>
 
-                    <Text style={styles.stackTitle}>GHI CHÚ</Text>
-
-
-                    {/* Edit info button */}
-                    <TouchableOpacity onPress={() => { setIsSubMenuVisible(!isSubMenuVisible) }}>
-                        <FontAwesomeIcon name="navicon" size={35} />
-                    </TouchableOpacity>
-
-                    {isSubMenuVisible && <View style={styles.subMenuContainer}>
-
-                        <TouchableOpacity
-                            style={[styles.subMenu, { borderBottomWidth: 2 }]}
-                            onPress={() => {
-                                handleAddNote()
-                                setIsSubMenuVisible(!isSubMenuVisible)
-                            }}>
-                            <Text>THÊM</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={[styles.subMenu, { borderBottomWidth: 2 }]}
-                            onPress={() => {
-                                setMountEdit(!mountEdit)
-                                setIsSubMenuVisible(!isSubMenuVisible)
-                                setMountDelete(false)
-                            }}>
-                            <Text>CHỈNH SỬA</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={styles.subMenu}
-                            onPress={() => {
-                                setMountDelete(!mounDelete)
-                                setIsSubMenuVisible(!isSubMenuVisible)
-                                setMountEdit(false)
-                            }}>
-                            <Text>XÓA</Text>
-                        </TouchableOpacity>
-                    </View>}
-
-                </View>
-            </View>
 
             {/* Body */}
             <View style={styles.body}>
@@ -172,7 +118,10 @@ export default function App({ navigation, route }) {
             </ModalAdd>
 
 
+            <TouchableOpacity style={styles.addButton} onPress={() => { handleAddRoom() }}>
+                <FontAwesomeIcon name="plus-circle" size={35} color='white' />
 
+            </TouchableOpacity >
         </View>
     );
 }
@@ -184,25 +133,11 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         width: '100%',
     },
-    header: {
-        width: '100%',
-        height: '10%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#dfdfdf',
-        borderBottomWidth: 2,
-    },
-    headerTop: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%',
-    },
+
     body: {
         width: '90%',
         minHeight: '50%',
-        maxHeight: '90%',
+        maxHeight: '100%',
         paddingLeft: 8,
         zIndex: -99
     },
@@ -282,5 +217,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#dfdfdf',
         borderRadius: 10,
     },
-
+    addButton: {
+        backgroundColor: 'black',
+        borderRadius: 10,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        position: 'absolute',
+        bottom: 8,
+        right: 8,
+    },
 });
