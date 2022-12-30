@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
 
-import { ModalAdd, ModalEdit } from '../Dialogs/modal.js';
-import { alertDeleteDialog, alertEmptyDialog, editSuccessDialog, deleteSuccessDialog, successDialog } from '../Dialogs/dialog.js';
+
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {
@@ -10,56 +9,23 @@ export default function App({ navigation, route }) {
     const [notes, setNotes] = useState(route.params.notes)
 
 
-
-    const [editItemID, setEditItemID] = useState()
-    const [inputText, setInputText] = useState('')
-
-
-
-    const [isEditModalVisible, setIsEditModalVisible] = useState(false)
-    const [isAddModalVisible, setIsAddModalVisible] = useState(false)
-
-
-    const handleDeleteNote = async (deleteNote) => {
-        let isConfirm = await alertDeleteDialog('Xóa ghi chú', 'Bạn có chắc muốn xóa ghi chú này ?')
-        if (isConfirm) {
-            const newNoteList = notes.reduce((res, currNote) => {
-                if (currNote.id != deleteNote.id)
-                    res.push(currNote)
-                return res
-            }, [])
-            setNotes(newNoteList) // set local notes
-            route.params.setNotes(newNoteList) // set global notes
-            deleteSuccessDialog()
-        }
-    }
-
-    const handleEditNote = (note) => {
-        setIsEditModalVisible(true)
-        setInputText(note.noteContent)
-        setEditItemID(note.id)
-    }
-
-    // BACK-END ___ ADD NOTE
-    const handleAddNote = () => {
-        setIsAddModalVisible(true)
-        successDialog('Thêm ghi chú thành công.')
-    }
-
     const renderItem = ({ item }) => {
         return (
-            <TouchableOpacity style={[styles.note, styles.myBackground]}>
+            <TouchableOpacity style={[styles.note, styles.myBackground]}
+                onPress={() => {
+                    navigation.navigate('EditModal', {
+                        editContent: item.noteContent,
+                        editID: item.id
+                    })
+                }}>
                 <View style={styles.noteContent}>
                     <Text>{item.id}. {item.noteContent}</Text>
                 </View>
 
                 <View style={styles.noteIcon}>
-                    {/* <TouchableOpacity onPress={() => { handleEditNote(item) }}>
-                        <FontAwesomeIcon name="pencil" size={20} style={[styles.icon, { display: mountEdit ? 'flex' : 'none' }]} />
-                    </TouchableOpacity> */}
-
-
-                    <TouchableOpacity onPress={() => { handleDeleteNote(item) }}>
+                    <TouchableOpacity onPress={() => {
+                        // Handle delete note
+                    }}>
                         <FontAwesomeIcon name="remove" size={25} style={[styles.icon]} />
                     </TouchableOpacity>
                 </View>
@@ -89,38 +55,9 @@ export default function App({ navigation, route }) {
 
 
 
-
-            {/* Modal for edit note */}
-            <ModalEdit
-                setIsEditModalVisible={setIsEditModalVisible}
-                isEditModalVisible={isEditModalVisible}
-                editSuccessDialog={editSuccessDialog}
-
-                editItemID={editItemID}
-                setInputText={setInputText}
-                inputText={inputText}
-                alertEmptyDialog={alertEmptyDialog}
-                notes={notes}
-                setGlobalNotes={route.params.setNotes}
-                chooseItemEdit={1}>
-            </ModalEdit>
-
-            {/* Modal for add note */}
-            <ModalAdd
-                setIsAddModalVisible={setIsAddModalVisible}
-                isAddModalVisible={isAddModalVisible}
-                setInputText={setInputText}
-                inputText={inputText}
-                alertEmptyDialog={alertEmptyDialog}
-                notes={notes}
-                setLocalNotes={setNotes}
-                setGlobalNotes={route.params.setNotes}>
-            </ModalAdd>
-
-
-            <TouchableOpacity style={styles.addButton} onPress={() => { handleAddRoom() }}>
+            <TouchableOpacity style={styles.addButton}
+                onPress={() => { navigation.navigate('AddModal') }}>
                 <FontAwesomeIcon name="plus-circle" size={35} color='white' />
-
             </TouchableOpacity >
         </View>
     );

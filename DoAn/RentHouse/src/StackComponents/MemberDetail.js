@@ -138,13 +138,7 @@ export default function App({ navigation, route }) {
                 onPress={() => {
                     navigation.navigate('ChinhSuaCHiTietNguoiO',
                         {
-                            member,
-                            setMember,
-                            currRoom: route.params.currRoom,
-                            setCurrRoom: route.params.setCurrRoom,
-                            memberList: route.params.memberList,
-                            roomList: route.params.roomList,
-                            setGlobalRoomList: route.params.setGlobalRoomList
+                            member
                         })
 
                 }}>

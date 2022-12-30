@@ -1,17 +1,13 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ThuTienHoaDon from './CollectMoney.js'
-import { LogBox } from 'react-native';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 
 export default function App({ navigation, route }) {
-    useEffect(() => {
-        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-    }, [])
 
 
-    const [currBill, setCurrBill] = useState(route.params.currBill)
+
+    const [currBill, setCurrBill] = useState(route.params.bill)
 
     const [isThuTienModal, setIsThuTienModal] = useState(false)
 
@@ -112,7 +108,7 @@ export default function App({ navigation, route }) {
                 <Text style={styles.textTitleWhite}>THU TIỀN HÓA ĐƠN</Text>
             </TouchableOpacity>
 
-
+            {/* Update current bill */}
             {isThuTienModal && <ThuTienHoaDon
                 currBill={currBill}
                 setCurrBill={setCurrBill}

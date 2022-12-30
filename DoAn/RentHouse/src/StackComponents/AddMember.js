@@ -1,18 +1,9 @@
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, ScrollView } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { useState } from 'react';
-import { alertMissingDialog, successDialog } from '../Dialogs/dialog.js';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {
-    const currRoom = route.params.currRoom
 
-    const memberList = route.params.currRoom.members
-    let lastMemberID = null
-    if (memberList.length !== 0)
-        lastMemberID = memberList[memberList.length - 1].id
-    else
-        lastMemberID = 1
 
     const [memberName, setMemberName] = useState('')
     const [dateOfBirth, setDateOfBirth] = useState('')
@@ -25,53 +16,9 @@ export default function App({ navigation, route }) {
     const [noiCapCCCD, setNoiCapCCCD] = useState('')
     const [job, setJob] = useState('')
 
-    // BACK-END ___ ADD MEMBER 
-    const handleAddMember = () => {
-        if (memberName === '' || dateOfBirth === '' || address === '' || CCCD === '' || ngayCapCCCD === '' || noiCapCCCD === '' || job === '')
-            alertMissingDialog()
-        else {
-            let gioiTinh = -1
-            if (male) gioiTinh = 1
-            else gioiTinh = 0
-
-            const newMember = {
-                id: lastMemberID + 1,
-                memberName: memberName,
-                dateOfBirth: dateOfBirth,
-                CCCD: CCCD,
-                ngayCapCCCD: ngayCapCCCD,
-                noiCapCCCD: noiCapCCCD,
-                job: job,
-                sex: gioiTinh,
-                address: address
-            }
-            const newMemberList = [...memberList, newMember]
-
-            route.params.setCurrRoom({ ...route.params.currRoom, members: newMemberList })
-            const newRoomList = (route.params.roomList).map(item => {
-                if (item.id === currRoom.id) {
-                    let newItem = { ...route.params.currRoom, members: newMemberList }
-                    newItem.roomStatus = newItem.members.length + ' người'
-                    return newItem
-                }
-                return item
-            })
-            route.params.setGlobalRoomList(newRoomList)
-            route.params.setRoomList(newRoomList)
-
-            route.params.setIsSubMenuVisible(false)
-            navigation.goBack()
-            successDialog('Thêm khách thuê thành công.')
-        }
-
-    }
 
     return (
         <View style={styles.container}>
-
-
-
-
             {/* Body */}
             <View style={[styles.body, styles.myBorder]}>
                 <ScrollView
@@ -224,7 +171,9 @@ export default function App({ navigation, route }) {
                     </View>
 
                     {/* Add room button */}
-                    <TouchableOpacity style={styles.addButton} onPress={() => { handleAddMember() }}>
+                    <TouchableOpacity style={styles.addButton} onPress={() => {
+                        // Handle add member
+                    }}>
                         <View>
                             <Text style={styles.textTitle}>+ THÊM KHÁCH THUÊ</Text>
                         </View>
