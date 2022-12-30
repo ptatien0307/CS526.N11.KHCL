@@ -1,15 +1,15 @@
 `use strict`;
 
-import { openDatabase } from "expo-sqlite";
+import { openDatabase } from 'expo-sqlite';
 
-const db = openDatabase("renthouse.db");
+const db = openDatabase('renthouse.db');
 
 export const insertCustomer = (customer, forceUpdate) => {
-    return new Promise((resolve, reject) => {
-        db.transaction(
-            (tx) => {
-                tx.executeSql(
-                    `INSERT INTO customers (
+	return new Promise((resolve, reject) => {
+		db.transaction(
+			(tx) => {
+				tx.executeSql(
+					`INSERT INTO customers (
                         name,
                         birthday,
                         gender,
@@ -35,40 +35,40 @@ export const insertCustomer = (customer, forceUpdate) => {
                         ?,
                         ?
                     );`,
-                    [
-                        customer.name,
-                        customer.birthday,
-                        customer.gender,
-                        customer.address,
-                        customer.citizen_id,
-                        customer.citizen_id_date,
-                        customer.citizen_id_place,
-                        customer.job,
-                        customer.phone,
-                        customer.temporary_residence,
-                        customer.room_id,
-                    ],
-                    (_, result) => {
-                        console.log("Customer inserted successfully");
-                        resolve(result);
-                    },
-                    (_, error) => {
-                        reject(error);
-                    }
-                );
-            },
-            null,
-            forceUpdate
-        );
-    });
+					[
+						customer.name,
+						customer.birthday,
+						customer.gender,
+						customer.address,
+						customer.citizen_id,
+						customer.citizen_id_date,
+						customer.citizen_id_place,
+						customer.job,
+						customer.phone,
+						customer.temporary_residence,
+						customer.room_id,
+					],
+					(_, result) => {
+						console.log('Customer inserted successfully');
+						resolve(result);
+					},
+					(_, error) => {
+						reject(error);
+					}
+				);
+			},
+			null,
+			forceUpdate
+		);
+	});
 };
 
 export const updateCustomer = (customer, forceUpdate) => {
-    return new Promise((resolve, reject) => {
-        db.transaction(
-            (tx) => {
-                tx.executeSql(
-                    `UPDATE customers
+	return new Promise((resolve, reject) => {
+		db.transaction(
+			(tx) => {
+				tx.executeSql(
+					`UPDATE customers
                         SET name = ?,
                             birthday = ?,
                             gender = ?,
@@ -81,74 +81,72 @@ export const updateCustomer = (customer, forceUpdate) => {
                             temporary_residence = ?,
                             room_id = ?
                         WHERE id = ?;`,
-                    [
-                        customer.name,
-                        customer.birthday,
-                        customer.gender,
-                        customer.address,
-                        customer.citizen_id,
-                        customer.citizen_id_date,
-                        customer.citizen_id_place,
-                        customer.job,
-                        customer.phone,
-                        customer.temporary_residence,
-                        customer.room_id,
-                        customer.id,
-                    ],
-                    (_, result) => {
-                        console.log("Customer updated successfully");
-                        resolve(result);
-                    },
-                    (_, error) => {
-                        reject(error);
-                    }
-                );
-            },
-            null,
-            forceUpdate
-        );
-    });
+					[
+						customer.name,
+						customer.birthday,
+						customer.gender,
+						customer.address,
+						customer.citizen_id,
+						customer.citizen_id_date,
+						customer.citizen_id_place,
+						customer.job,
+						customer.phone,
+						customer.temporary_residence,
+						customer.room_id,
+						customer.id,
+					],
+					(_, result) => {
+						console.log('Customer updated successfully');
+						resolve(result);
+					},
+					(_, error) => {
+						reject(error);
+					}
+				);
+			},
+			null,
+			forceUpdate
+		);
+	});
 };
 
 export const deleteCustomer = (customer_id, forceUpdate) => {
-    return new Promise((resolve, reject) => {
-        db.transaction(
-            (tx) => {
-                tx.executeSql(
-                    `DELETE FROM customers WHERE id = ?;`,
-                    [customer_id],
-                    (_, result) => {
-                        console.log("Customer deleted successfully");
-                        resolve(result);
-                    },
-                    (_, error) => {
-                        reject(error);
-                    }
-                );
-            },
-            null,
-            forceUpdate
-        );
-    });
+	return new Promise((resolve, reject) => {
+		db.transaction(
+			(tx) => {
+				tx.executeSql(
+					`DELETE FROM customers WHERE id = ?;`,
+					[customer_id],
+					(_, result) => {
+						console.log('Customer deleted successfully');
+						resolve(result);
+					},
+					(_, error) => {
+						reject(error);
+					}
+				);
+			},
+			null,
+			forceUpdate
+		);
+	});
 };
 
 export const fetchCustomerDetails = (customer_id) => {
-    return new Promise((resolve, reject) => {
-        db.transaction(
-            (tx) => {
-                tx.executeSql(
-                    `SELECT * FROM customers;
+	return new Promise((resolve, reject) => {
+		db.transaction((tx) => {
+			tx.executeSql(
+				`SELECT * FROM customers;
                     WHERE id = ?;`,
-                    [customer_id],
-                    (_, { rows: { _array: result } }) => {
-                        console.log("Customer updated successfully");
-                        resolve(result);
-                    },
-                    (_, error) => {
-                        reject(error);
-                    }
-                );
-            }
-        );
-    });
+				[customer_id],
+				(_, { rows: { _array: result } }) => {
+					console.log('Customer updated successfully');
+					resolve(result);
+				},
+				(_, error) => {
+					reject(error);
+				}
+			);
+		});
+	});
 };
