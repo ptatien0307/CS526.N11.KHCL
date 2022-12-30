@@ -1,6 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { useEffect } from 'react';
 import { app_styles } from './mystyles.js';
 
 import Menu from './src/StackComponents/Menu.js';
@@ -21,9 +22,15 @@ import EditModal from './src/Modals/EditModal.js';
 
 const Stack = createNativeStackNavigator();
 
-import { createDatabase, deleteDatabse } from './src/database/db.js';
+import { createDatabase, deleteDatabase } from './src/database/db.js';
 
 export default function App() {
+	// Initialize database
+	useEffect(() => {
+		deleteDatabase();
+		createDatabase();
+	}, []);
+
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>

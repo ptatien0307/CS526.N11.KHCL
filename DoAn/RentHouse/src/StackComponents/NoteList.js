@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
 	StyleSheet,
 	View,
@@ -9,30 +9,48 @@ import {
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
+import { fetchNoteList, deleteNote } from '../database/actions/noteAction';
+import { useForceUpdate } from '../utils/utils';
+
 export default function App({ navigation, route }) {
-	const [notes, setNotes] = useState(route.params.notes);
+	const [noteList, setNoteList] = useState([]);
+	const [selectedNoteId, setSelectedNoteId] = useState(null);
+	const [forceUpdate, forceUpdateId] = useForceUpdate();
+
+	// Get note list from database
+	useEffect(() => {
+		const loadNoteList = async () => {
+			const notes = await fetchNoteList().catch((err) =>
+				console.log(err)
+			);
+			setNoteList(notes);
+		};
+
+		loadNoteList();
+	}, [forceUpdateId]);
+
 
 	const renderItem = ({ item }) => {
 		return (
 			<TouchableOpacity
 				style={[styles.note, styles.myBackground]}
-				onPress={() => {
-					navigation.navigate('EditModal', {
-						editContent: item.noteContent,
-						editID: item.id,
-					});
-				}}
+			// onPress={() => {
+			// 	navigation.navigate('EditModal', {
+			// 		editContent: item.noteContent,
+			// 		editID: item.id,
+			// 	});
+			// }}
 			>
 				<View style={styles.noteContent}>
 					<Text>
-						{item.id}. {item.noteContent}
+						{item.id}. {item.content}
 					</Text>
 				</View>
 
 				<View style={styles.noteIcon}>
 					<TouchableOpacity
 						onPress={() => {
-							// Handle delete note
+							deleteNote(item.id, forceUpdate);
 						}}
 					>
 						<FontAwesomeIcon
@@ -52,7 +70,7 @@ export default function App({ navigation, route }) {
 			<View style={styles.body}>
 				{/* View notes */}
 				<FlatList
-					data={notes}
+					data={noteList}
 					renderItem={renderItem}
 					keyExtractor={(item) => item.id}
 				></FlatList>
@@ -60,9 +78,9 @@ export default function App({ navigation, route }) {
 
 			<TouchableOpacity
 				style={styles.addButton}
-				onPress={() => {
-					navigation.navigate('AddModal');
-				}}
+			// onPress={() => {
+			// 	navigation.navigate('AddModal');
+			// }}
 			>
 				<FontAwesomeIcon name="plus-circle" size={35} color="white" />
 			</TouchableOpacity>

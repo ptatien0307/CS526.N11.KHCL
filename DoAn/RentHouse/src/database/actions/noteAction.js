@@ -22,56 +22,68 @@ export const fetchNoteList = () => {
 	});
 };
 
-export const insertNote = (content) => {
+export const insertNote = (content, forceUpdate) => {
 	return new Promise((resolve, reject) => {
-		db.transaction((tx) => {
-			tx.executeSql(
-				'INSERT INTO notes (content) VALUES (?)',
-				[content],
-				(_, result) => {
-					console.log('Note inserted successfully');
-					resolve(result);
-				},
-				(_, error) => {
-					reject(error);
-				}
-			);
-		});
+		db.transaction(
+			(tx) => {
+				tx.executeSql(
+					'INSERT INTO notes (content) VALUES (?)',
+					[content],
+					(_, result) => {
+						console.log('Note inserted successfully');
+						resolve(result);
+					},
+					(_, error) => {
+						reject(error);
+					}
+				);
+			},
+			null,
+			forceUpdate
+		);
 	});
 };
 
-export const updateNote = ({ id, content }) => {
+export const updateNote = ({ id, content }, forceUpdate) => {
 	return new Promise((resolve, reject) => {
-		db.transaction((tx) => {
-			tx.executeSql(
-				'UPDATE notes SET content = ? WHERE id = ?',
-				[content, id],
-				(_, result) => {
-					console.log('Note updated successfully');
-					resolve(result);
-				},
-				(_, error) => {
-					reject(error);
-				}
-			);
-		});
+		db.transaction(
+			(tx) => {
+				tx.executeSql(
+					'UPDATE notes SET content = ? WHERE id = ?',
+					[content, id],
+					(_, result) => {
+						console.log('Note updated successfully');
+						resolve(result);
+					},
+					(_, error) => {
+						reject(error);
+					}
+				);
+			},
+			null,
+			forceUpdate
+		);
 	});
 };
 
-export const deleteNote = (id) => {
+export const deleteNote = (id, forceUpdate) => {
 	return new Promise((resolve, reject) => {
-		db.transaction((tx) => {
-			tx.executeSql(
-				'DELETE FROM notes WHERE id = ?',
-				[id],
-				(_, result) => {
-					console.log('Note deleted successfully');
-					resolve(result);
-				},
-				(_, error) => {
-					reject(error);
-				}
-			);
-		});
+		db.transaction(
+			(tx) => {
+				tx.executeSql(
+					'DELETE FROM notes WHERE id = ?',
+					[id],
+					(_, result) => {
+						console.log('Note deleted successfully');
+						resolve(result);
+					},
+					(_, error) => {
+						reject(error);
+					}
+				);
+			},
+			null,
+			forceUpdate
+		);
 	});
 };

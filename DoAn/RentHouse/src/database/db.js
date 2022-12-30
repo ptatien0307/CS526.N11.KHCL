@@ -9,9 +9,9 @@ import { createBillsTable } from './tables/billsTable';
 import { createServicePricesTable } from './tables/servicePricesTable';
 import { populateServicePricesTable } from './tables/servicePricesTable';
 import { createNotesTable, populateNotesTable } from './tables/notesTable';
-import * as SQLite from 'expo-sqlite';
+import { openDatabase } from 'expo-sqlite';
 
-const db = SQLite.openDatabase('renthouse.db');
+const db = openDatabase('renthouse.db');
 
 const createTables = () => {
 	db.transaction((tx) => {

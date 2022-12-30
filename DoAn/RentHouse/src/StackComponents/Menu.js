@@ -358,8 +358,8 @@ export default function App({ navigation }) {
 		},
 	];
 
-	const [notes, setNotes] = useState(NOTE);
-	const [roomList, setRoomList] = useState(modifiedDATA);
+	// const [notes, setNotes] = useState(NOTE);
+	// const [roomList, setRoomList] = useState(modifiedDATA);
 	const [billList, setBillList] = useState(BILL);
 
 	return (
@@ -378,12 +378,7 @@ export default function App({ navigation }) {
 						TouchableOpacity
 						style={[styles.feature, styles.myBackground]}
 						onPress={() => {
-							navigation.navigate('RoomList', {
-								roomList,
-								setRoomList,
-								ELECTRICITY,
-								WATER,
-							});
+							navigation.navigate('RoomList', {});
 						}}
 					>
 						<Text style={styles.textTitle}>DANH SÁCH PHÒNG</Text>
@@ -436,10 +431,7 @@ export default function App({ navigation }) {
 					<TouchableOpacity
 						style={[styles.feature, styles.myBackground]}
 						onPress={() => {
-							navigation.navigate('NoteList', {
-								notes,
-								setNotes,
-							});
+							navigation.navigate('NoteList', {});
 						}}
 					>
 						<Text style={styles.textTitle}>GHI CHÚ</Text>
