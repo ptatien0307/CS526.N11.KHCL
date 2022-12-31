@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-
 export default function App({ navigation, route }) {
     const [roomList, setRoomList] = useState(route.params.roomList)
     const renderItem = ({ item }) => {
