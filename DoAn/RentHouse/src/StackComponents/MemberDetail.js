@@ -6,12 +6,26 @@ import {
 	ScrollView,
 } from 'react-native';
 import Checkbox from 'expo-checkbox';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { fetchCustomerDetails } from '../database/actions/customerAction';
 
 export default function App({ navigation, route }) {
-	const [member, setMember] = useState(route.params.member);
+	const memberID = route.params.memberID;
+	const [member, setMember] = useState({});
+
+	useEffect(() => {
+		const loadCustomerDetails = async () => {
+			const customerDetails = await fetchCustomerDetails(memberID)
+				.catch((error) => console.log(error));
+
+			setMember(customerDetails);
+
+		};
+
+		loadCustomerDetails();
+	}, []);
 
 	return (
 		<View style={styles.container}>
@@ -31,7 +45,7 @@ export default function App({ navigation, route }) {
 						</View>
 						<View>
 							<Text style={{ fontSize: 17 }}>
-								{member.memberName}
+								{member.name}
 							</Text>
 						</View>
 					</View>
@@ -44,7 +58,7 @@ export default function App({ navigation, route }) {
 
 						<View>
 							<Text style={{ fontSize: 17 }}>
-								{member.dateOfBirth}
+								{member.birthday}
 							</Text>
 						</View>
 					</View>
@@ -67,7 +81,7 @@ export default function App({ navigation, route }) {
 								}}
 							>
 								<View>
-									<Checkbox value={parseInt(member.sex)} />
+									<Checkbox value={!Boolean(member.gender)} />
 								</View>
 								<View style={{ marginLeft: 8 }}>
 									<Text>Nam</Text>
@@ -75,7 +89,7 @@ export default function App({ navigation, route }) {
 							</View>
 							<View style={{ flexDirection: 'row' }}>
 								<View>
-									<Checkbox value={!parseInt(member.sex)} />
+									<Checkbox value={Boolean(member.gender)} />
 								</View>
 								<View style={{ marginLeft: 8 }}>
 									<Text>Nữ</Text>
@@ -112,7 +126,7 @@ export default function App({ navigation, route }) {
 							</View>
 							<View>
 								<Text style={{ fontSize: 17 }}>
-									{member.CCCD}
+									{member.citizen_id}
 								</Text>
 							</View>
 						</View>
@@ -125,7 +139,7 @@ export default function App({ navigation, route }) {
 								</View>
 								<View>
 									<Text style={{ fontSize: 17 }}>
-										{member.ngayCapCCCD}
+										{member.citizen_id_date}
 									</Text>
 								</View>
 							</View>
@@ -136,7 +150,7 @@ export default function App({ navigation, route }) {
 								</View>
 								<View>
 									<Text style={{ fontSize: 17 }}>
-										{member.noiCapCCCD}
+										{member.citizen_id_place}
 									</Text>
 								</View>
 							</View>
@@ -162,8 +176,8 @@ export default function App({ navigation, route }) {
 			<TouchableOpacity
 				style={styles.addButton}
 				onPress={() => {
-					navigation.navigate('ChinhSuaCHiTietNguoiO', {
-						member,
+					navigation.navigate('EditMember', {
+						memberID: member.id,
 					});
 				}}
 			>

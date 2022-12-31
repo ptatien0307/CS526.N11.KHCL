@@ -7,7 +7,7 @@ import {
 	ScrollView,
 } from 'react-native';
 import Checkbox from 'expo-checkbox';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import {
 	alertDeleteDialog,
@@ -15,66 +15,95 @@ import {
 	editSuccessDialog,
 } from '../Dialogs/dialog.js';
 
+import { fetchCustomerDetails } from '../database/actions/customerAction';
+
 export default function App({ navigation, route }) {
-	const [member, setMember] = useState(route.params.member);
+	const memberID = route.params.memberID;
+	const [member, setMember] = useState({});
 
-	const [memberName, setMemberName] = useState(member.memberName);
-	const [dateOfBirth, setDateOfBirth] = useState(member.dateOfBirth);
-	const [address, setAddress] = useState(member.address);
-	const [CCCD, setCCCD] = useState(member.CCCD);
-	const [ngayCapCCCD, setNgayCapCCCD] = useState(member.ngayCapCCCD);
-	const [noiCapCCCD, setNoiCapCCCD] = useState(member.noiCapCCCD);
-	const [job, setJob] = useState(member.job);
+	const [memberName, setMemberName] = useState(null);
+	const [dateOfBirth, setDateOfBirth] = useState(null);
+	const [address, setAddress] = useState(null);
+	const [CCCD, setCCCD] = useState(null);
+	const [ngayCapCCCD, setNgayCapCCCD] = useState(null);
+	const [noiCapCCCD, setNoiCapCCCD] = useState(null);
+	const [job, setJob] = useState(null);
 
-	const [sex, setSex] = useState(member.sex);
-	const [male, setMale] = useState(parseInt(sex) ? true : false);
-	const [female, setFemale] = useState(parseInt(!sex) ? true : false);
+	const [sex, setSex] = useState(null);
+	const [male, setMale] = useState(null);
+	const [female, setFemale] = useState(null);
+
+	useEffect(() => {
+		const loadCustomerDetails = async () => {
+			const customerDetails = await fetchCustomerDetails(memberID)
+				.catch((error) => console.log(error));
+
+			setMember(customerDetails);
+
+			setMemberName(customerDetails.name);
+			setDateOfBirth(customerDetails.birthday);
+			setAddress(customerDetails.address);
+			setCCCD(customerDetails.citizen_id);
+			setNgayCapCCCD(customerDetails.citizen_id_date);
+			setNoiCapCCCD(customerDetails.citizen_id_place);
+			setJob(customerDetails.job);
+			setSex(customerDetails.gender);
+
+			setMale(Boolean(customerDetails.gender));
+			setFemale(Boolean(!customerDetails.gender));
+		};
+
+		loadCustomerDetails();
+	}, []);
+
+
 
 	// BACK-END ___ EDIT MEMBER INFORMATION
-	const handleSave = () => {
-		if (
-			memberName === '' ||
-			dateOfBirth === '' ||
-			address === '' ||
-			CCCD === '' ||
-			ngayCapCCCD === '' ||
-			noiCapCCCD === '' ||
-			job === ''
-		)
-			alertEmptyDialog();
-		else {
-			const newMember = {
-				id: member.id,
-				memberName: memberName,
-				dateOfBirth: dateOfBirth,
-				CCCD: CCCD,
-				ngayCapCCCD: ngayCapCCCD,
-				noiCapCCCD: noiCapCCCD,
-				job: job,
-				sex: sex,
-				address: address,
-			};
-			const newMemberList = route.params.memberList.map((item) => {
-				if (item.id === member.id) return newMember;
-				return item;
-			});
-			route.params.setMember(newMember);
-			route.params.setCurrRoom({
-				...route.params.currRoom,
-				members: newMemberList,
-			});
+	// const handleSave = () => {
+	// 	if (
+	// 		memberName === '' ||
+	// 		dateOfBirth === '' ||
+	// 		address === '' ||
+	// 		CCCD === '' ||
+	// 		ngayCapCCCD === '' ||
+	// 		noiCapCCCD === '' ||
+	// 		job === ''
+	// 	)
+	// 		alertEmptyDialog();
+	// 	else {
+	// 		const newMember = {
+	// 			id: member.id,
+	// 			memberName: memberName,
+	// 			dateOfBirth: dateOfBirth,
+	// 			CCCD: CCCD,
+	// 			ngayCapCCCD: ngayCapCCCD,
+	// 			noiCapCCCD: noiCapCCCD,
+	// 			job: job,
+	// 			sex: sex,
+	// 			address: address,
+	// 		};
+	// 		const newMemberList = route.params.memberList.map((item) => {
+	// 			if (item.id === member.id) return newMember;
+	// 			return item;
+	// 		});
+	// 		route.params.setMember(newMember);
+	// 		route.params.setCurrRoom({
+	// 			...route.params.currRoom,
+	// 			members: newMemberList,
+	// 		});
 
-			const newRoomList = route.params.roomList.map((item) => {
-				if (item.id === route.params.currRoom.id) {
-					return { ...route.params.currRoom, members: newMemberList };
-				}
-				return item;
-			});
-			route.params.setGlobalRoomList(newRoomList);
-			navigation.goBack();
-			editSuccessDialog();
-		}
-	};
+	// 		const newRoomList = route.params.roomList.map((item) => {
+	// 			if (item.id === route.params.currRoom.id) {
+	// 				return { ...route.params.currRoom, members: newMemberList };
+	// 			}
+	// 			return item;
+	// 		});
+	// 		route.params.setGlobalRoomList(newRoomList);
+	// 		navigation.goBack();
+	// 		editSuccessDialog();
+	// 	}
+	// };
+
 	return (
 		<View style={styles.container}>
 			{/* Body */}

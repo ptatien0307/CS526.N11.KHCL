@@ -136,12 +136,12 @@ export const fetchCustomerDetails = (customer_id) => {
 	return new Promise((resolve, reject) => {
 		db.transaction((tx) => {
 			tx.executeSql(
-				`SELECT * FROM customers;
-                    WHERE id = ?;`,
+				`SELECT * FROM customers
+				WHERE id = ?;`,
 				[customer_id],
 				(_, { rows: { _array: result } }) => {
-					console.log('Customer updated successfully');
-					resolve(result);
+					console.log('Customer details fetched successfully');
+					resolve(result[0]);
 				},
 				(_, error) => {
 					reject(error);
