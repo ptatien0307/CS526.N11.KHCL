@@ -1,91 +1,89 @@
-import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
+import {
+    StyleSheet,
+    View,
+    Text,
+    FlatList,
+    TouchableOpacity,
+} from 'react-native';
+import { useState, useEffect } from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
+
 export default function App({ navigation, route }) {
-    const [roomList, setRoomList] = useState(route.params.roomList)
+    const [roomList, setRoomList] = useState([]);
+    const [selectedRoomId, setSelectedRoomId] = useState(null);
+    const [forceUpdate, forceUpdateId] = useForceUpdate();
+
+    // Get room list from database
+    useEffect(() => {
+        const loadRoomList = async () => {
+            const rooms = await fetchRoomList().catch((err) =>
+                console.log(err)
+            );
+            setRoomList(rooms);
+        };
+
+        loadRoomList();
+    }, [forceUpdateId]);
+
     const renderItem = ({ item }) => {
         return (
-            // Go to specific room
-            <TouchableOpacity onPress={() => {
-                navigation.navigate("RoomDetail", {
-                    currRoom: roomList[item.id - 1],
-                    roomList,
-                    setRoomList,
-                    setGlobalRoomList: route.params.setRoomList,
-                })
-            }}>
+            // Go to room's details
+            <TouchableOpacity
+                onPress={() => {
+                    setSelectedRoomId(item.id);
+                    navigation.navigate('RoomDetail', {
+                        selected_room_id: item.id,
+                    });
+                }}>
                 <View style={[styles.room, styles.myBackground]}>
-                    {/* Room name */}
                     <View>
-                        <Text style={styles.styleRoomName}>{item.roomName}</Text>
+                        <Text style={styles.styleRoomName}>{item.name}</Text>
                     </View>
 
-                    {/* Room status */}
                     <View>
-                        <Text>TÌNH TRẠNG: {item.roomStatus}</Text>
+                        <Text>TÌNH TRẠNG: {item.status}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
-        )
-    }
+        );
+    };
 
-
-
-    // BACK-END ___ ADD ROOM
     const handleAddRoom = () => {
-        setRoomList([...roomList, {
-            id: parseInt(roomList[roomList.length - 1].id) + 1,
-            roomName: 'Phong ' + (parseInt(roomList[roomList.length - 1].id) + 1),
-            roomStatus: 'trong',
-            price: 800000,
-            contractDay: '0',
-            deposit: 0,
-            members: [],
-            donGiaDien: route.params.ELECTRICITY,
-            donGiaNuoc: route.params.WATER,
-        }])
-
-        route.params.setRoomList([...roomList, {
-            id: parseInt(roomList[roomList.length - 1].id) + 1,
-            roomName: 'Phong ' + (parseInt(roomList[roomList.length - 1].id) + 1),
-            roomStatus: 'trong',
-            price: 800000,
-            contractDay: '0',
-            deposit: 0,
-            members: [],
-            donGiaDien: route.params.ELECTRICITY,
-            donGiaNuoc: route.params.WATER,
-        }])
-    }
-
-
-
-
-
+        insertRoom(
+            {
+                name: `Phòng ${roomList.length + 1}`,
+                rental_fee: 950000,
+                using_internet: 1,
+                using_garbage: 1,
+                old_electricity_number: new Date().getTime() % 1000000,
+                old_water_number: new Date().getTime() % 2000000,
+            },
+            forceUpdate
+        );
+    };
 
     return (
         <View style={styles.container}>
-
             {/* Body */}
             <View style={styles.body}>
-
-                {/* View rooms */}
                 <FlatList
                     data={roomList}
                     renderItem={renderItem}
-                    keyExtractor={item => item.id}>
-                </FlatList>
-                {/* Add room button */}
-                <TouchableOpacity style={styles.addButton} onPress={() => { handleAddRoom() }}>
-                    <Icon name="plus-circle" size={35} color='white' />
-                </TouchableOpacity >
+                    keyExtractor={(item) => item.id}
+                    extraData={selectedRoomId}
+                />
+
+                <TouchableOpacity
+                    style={styles.addButton}
+                    onPress={() => {
+                        handleAddRoom();
+                    }}>
+                    <Icon name="plus-circle" size={35} color="white" />
+                </TouchableOpacity>
             </View>
-
-
-
         </View>
     );
 }
@@ -122,22 +120,20 @@ const styles = StyleSheet.create({
         right: 8,
     },
 
-
     stackTitle: {
         marginLeft: 32,
         fontSize: 20,
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     textTitleWhite: {
         fontSize: 20,
         fontWeight: 'bold',
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     myBackground: {
         backgroundColor: '#dfdfdf',
         borderRadius: 10,
     },
-
 });
