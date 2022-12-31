@@ -123,3 +123,39 @@ export const deleteRoom = (room_id, forceUpdate) => {
 		);
 	});
 };
+
+export const fetchRoomMemberList = (room_id) => {
+	return new Promise((resolve, reject) => {
+		db.transaction((tx) => {
+			tx.executeSql(
+				`SELECT id, name FROM customers WHERE room_id = ?`,
+				[room_id],
+				(_, { rows: { _array: result } }) => {
+					console.log('Room member list fetched successfully');
+					resolve(result);
+				},
+				(_, error) => {
+					reject(error);
+				}
+			);
+		});
+	});
+};
+
+export const fetchRoomBillList = (room_id) => {
+	return new Promise((resolve, reject) => {
+		db.transaction((tx) => {
+			tx.executeSql(
+				`SELECT id, created_at, total, remained from bills WHERE room_id = ?`,
+				[room_id],
+				(_, { rows: { _array: result } }) => {
+					console.log('Room bill list fetched successfully');
+					resolve(result);
+				},
+				(_, error) => {
+					reject(error);
+				}
+			);
+		});
+	});
+};

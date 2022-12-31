@@ -18,6 +18,7 @@ export const createBillsTable = `
         total                       INTEGER NOT NULL,
         status                      TEXT    NOT NULL DEFAULT ('Chưa thanh toán'),
         paid_time                   INTEGER NOT NULL DEFAULT (0),
+        remained                    INTEGER NOT NULL,
         FOREIGN KEY (
             room_id
         )

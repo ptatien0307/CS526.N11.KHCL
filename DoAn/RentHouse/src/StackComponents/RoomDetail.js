@@ -6,15 +6,51 @@ import {
 	FlatList,
 	ScrollView,
 } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
+import { fetchRoomDetails, fetchRoomMemberList, fetchRoomBillList } from '../database/actions/roomActions';
+
+
 export default function App({ navigation, route }) {
-	const roomList = route.params.roomList;
-	const [currRoom, setCurrRoom] = useState(route.params.currRoom);
-	let billRemained = currRoom.billHistory.reduce((res, curr) => {
+	const selected_room_id = route.params.selected_room_id;
+	const [memberList, setMemberList] = useState([]);
+	const [billList, setBillList] = useState([]);
+	const [room, setRoom] = useState({});
+
+	useEffect(() => {
+		const loadRoomDetails = async () => {
+			const roomDetails = await fetchRoomDetails(selected_room_id)
+				.catch((err) => console.log(err));
+			setRoom(roomDetails);
+
+			console.log(roomDetails);
+		};
+
+		const loadMemberList = async () => {
+			const memberList = await fetchRoomMemberList(selected_room_id)
+				.catch((err) => console.log(err));
+			setMemberList(memberList);
+
+			console.log(memberList);
+		};
+
+		const loadBillList = async () => {
+			const billList = await fetchRoomBillList(selected_room_id)
+				.catch((err) => console.log(err));
+			setBillList(billList);
+
+			console.log(billList);
+		};
+
+		loadRoomDetails();
+		loadMemberList();
+		loadBillList();
+	}, []);
+
+	let totalRemained = billList.reduce((res, curr) => {
 		return res + curr.remained;
 	}, 0);
 
@@ -25,9 +61,7 @@ export default function App({ navigation, route }) {
 			<TouchableOpacity
 				onPress={() => {
 					navigation.navigate('MemberDetail', {
-						member: item,
 						memberID: item.id,
-						roomID: currRoom.id,
 					});
 				}}
 			>
@@ -40,7 +74,7 @@ export default function App({ navigation, route }) {
 					/>
 
 					{/* Member name */}
-					<Text>{item.memberName}</Text>
+					<Text>{item.name}</Text>
 
 					{/* Delete member icon */}
 					<TouchableOpacity
@@ -65,17 +99,14 @@ export default function App({ navigation, route }) {
 			<TouchableOpacity
 				onPress={() => {
 					navigation.navigate('BillDetail', {
-						bill: item,
 						billID: item.id,
-						roomID: currRoom.id,
-						currRoom,
 					});
 				}}
 			>
 				<View style={[styles.billInfo, styles.myBackground]}>
 					{/* Bill month year */}
 					<View style={styles.billDay}>
-						<Text style={styles.textTitle}> {item.monthYear}</Text>
+						<Text style={styles.textTitle}> {item.created_at}</Text>
 					</View>
 
 					{/* Bill money: total, collected, remained */}
@@ -101,7 +132,7 @@ export default function App({ navigation, route }) {
 							<View>
 								<Text>Đã thu:</Text>
 								<Text style={styles.textBold}>
-									{item.collected}đ
+									{item.total - item.remained}đ
 								</Text>
 							</View>
 						</View>
@@ -110,7 +141,7 @@ export default function App({ navigation, route }) {
 						<View style={[styles.myBorder, styles.money]}>
 							<Text>Còn lại: </Text>
 							<Text style={styles.textBold}>
-								{item.total - item.collected}đ
+								{item.remained}đ
 							</Text>
 						</View>
 					</View>
@@ -174,13 +205,13 @@ export default function App({ navigation, route }) {
 									<TouchableOpacity
 										onPress={() => {
 											navigation.navigate('EditModal', {
-												editContent: currRoom.roomName,
+												editContent: room.name,
 											});
 										}}
 									>
 										<Text>Tên phòng:</Text>
 										<Text style={styles.textBold}>
-											{currRoom.roomName}
+											{room.name}
 										</Text>
 									</TouchableOpacity>
 								</View>
@@ -196,13 +227,13 @@ export default function App({ navigation, route }) {
 										onPress={() => {
 											navigation.navigate('EditModal', {
 												editContent:
-													currRoom.contractDay,
+													room.move_in_date,
 											});
 										}}
 									>
 										<Text>Ngày đến:</Text>
 										<Text style={styles.textBold}>
-											{currRoom.contractDay}
+											{room.move_in_date}
 										</Text>
 									</TouchableOpacity>
 								</View>
@@ -219,13 +250,13 @@ export default function App({ navigation, route }) {
 									<TouchableOpacity
 										onPress={() => {
 											navigation.navigate('EditModal', {
-												editContent: currRoom.price,
+												editContent: room.rental_fee,
 											});
 										}}
 									>
 										<Text>Giá thuê:</Text>
 										<Text style={styles.textBold}>
-											{currRoom.price}
+											{room.rental_fee}
 										</Text>
 									</TouchableOpacity>
 								</View>
@@ -240,13 +271,13 @@ export default function App({ navigation, route }) {
 									<TouchableOpacity
 										onPress={() => {
 											navigation.navigate('EditModal', {
-												editContent: currRoom.deposit,
+												editContent: room.deposit,
 											});
 										}}
 									>
 										<Text>Tiền cọc:</Text>
 										<Text style={styles.textBold}>
-											{currRoom.deposit}
+											{room.deposit ? room.deposit : 'Không có'}
 										</Text>
 									</TouchableOpacity>
 								</View>
@@ -267,7 +298,7 @@ export default function App({ navigation, route }) {
 									onPress={() => {
 										// Navigate to AddMember screen
 										navigation.navigate('AddMember', {
-											roomID: currRoom.id,
+											roomID: room.id,
 										});
 									}}
 								>
@@ -281,7 +312,7 @@ export default function App({ navigation, route }) {
 							{/* View members  */}
 							<View style={[styles.memberContainer]}>
 								<FlatList
-									data={currRoom.members}
+									data={memberList}
 									renderItem={renderMembers}
 									keyExtractor={(item) => item.id}
 								></FlatList>
@@ -317,7 +348,7 @@ export default function App({ navigation, route }) {
 											style={{ marginRight: 20 }}
 										/>
 										<Text>
-											{currRoom.donGiaNuoc} đ/khối
+											{room.donGiaNuoc} đ/khối
 										</Text>
 									</View>
 									<View
@@ -326,7 +357,7 @@ export default function App({ navigation, route }) {
 											styles.myBorder,
 										]}
 									>
-										<Text>{currRoom.lastestNuoc}</Text>
+										<Text>{room.old_water_number}</Text>
 									</View>
 								</View>
 
@@ -350,7 +381,7 @@ export default function App({ navigation, route }) {
 												marginRight: 26,
 											}}
 										/>
-										<Text>{currRoom.donGiaDien} đ/kwh</Text>
+										<Text>{room.donGiaDien} đ/kwh</Text>
 									</View>
 									<View
 										style={[
@@ -358,7 +389,7 @@ export default function App({ navigation, route }) {
 											styles.myBorder,
 										]}
 									>
-										<Text>{currRoom.lastestDien}</Text>
+										<Text>{room.old_electricity_number}</Text>
 									</View>
 								</View>
 							</View>
@@ -385,13 +416,13 @@ export default function App({ navigation, route }) {
 										fontWeight: 'bold',
 									}}
 								>
-									{billRemained}
+									{totalRemained}
 								</Text>
 							</View>
 						</View>
 
 						<FlatList
-							data={currRoom.billHistory}
+							data={billList}
 							renderItem={renderBills}
 							keyExtractor={(item) => item.id}
 						></FlatList>
