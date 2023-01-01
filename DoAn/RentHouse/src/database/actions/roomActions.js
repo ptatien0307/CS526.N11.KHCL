@@ -22,6 +22,25 @@ export const fetchRoomList = () => {
 	});
 };
 
+export const fetchRoomListNotUse = (status) => {
+	return new Promise((resolve, reject) => {
+		db.transaction((tx) => {
+			tx.executeSql(
+				'SELECT id, name, status FROM rooms WHERE status != ?',
+				[status],
+				(_, { rows: { _array: result } }) => {
+					console.log('Room list fetched by not in use successfully');
+					resolve(result);
+				},
+				(_, error) => {
+					reject(error);
+				}
+			);
+		});
+	});
+};
+
+
 export const fetchRoomDetails = (room_id) => {
 	return new Promise((resolve, reject) => {
 		db.transaction((tx) => {

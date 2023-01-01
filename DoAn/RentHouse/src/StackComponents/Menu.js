@@ -388,11 +388,7 @@ export default function App({ navigation }) {
 					<TouchableOpacity
 						style={[styles.feature, styles.myBackground]}
 						onPress={() => {
-							navigation.navigate('CreateBill', {
-								roomList,
-								ELECTRICITY,
-								WATER,
-							});
+							navigation.navigate('CreateBill', {});
 						}}
 					>
 						<Text style={styles.textTitle}>LẬP HÓA ĐƠN</Text>
