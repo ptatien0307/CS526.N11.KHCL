@@ -45,7 +45,7 @@ export default function App({ navigation, route }) {
 		<TouchableOpacity
 			onPress={() => {
 				setSelectedRoomId(item.id);
-				navigation.navigate('WriteService', {
+				navigation.navigate('CreateBillDetail', {
 					selected_room_id: item.id,
 				});
 			}}

@@ -16,7 +16,7 @@ import BillList from './src/StackComponents/BillList.js';
 import Guide from './src/StackComponents/Guide.js';
 import CreateBill from './src/StackComponents/CreateBill.js';
 import Service from './src/StackComponents/Service.js';
-import WriteService from './src/StackComponents/WriteService.js';
+import CreateBillDetail from './src/StackComponents/CreateBillDetail.js';
 
 import AddModal from './src/Modals/AddModal.js';
 import EditModal from './src/Modals/EditModal.js';
@@ -52,7 +52,7 @@ export default function App() {
 				<Stack.Screen name="Guide" component={Guide} />
 				<Stack.Screen name="NoteList" component={NoteList} />
 				<Stack.Screen name="CreateBill" component={CreateBill} />
-				<Stack.Screen name="WriteService" component={WriteService} />
+				<Stack.Screen name="CreateBillDetail" component={CreateBillDetail} />
 				<Stack.Screen name="Service" component={Service} />
 
 				<Stack.Screen name="AddModal" component={AddModal} />
