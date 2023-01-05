@@ -6,6 +6,7 @@ import {
 	FlatList,
 	TouchableOpacity,
 } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 import {
 	alertDeleteDialog,
@@ -15,29 +16,32 @@ import {
 	addSuccessDialog,
 } from '../Dialogs/dialog.js';
 
-import { fetchRoomList, fetchRoomListNotUse, insertRoom } from '../database/actions/roomActions';
+import { fetchRoomList, fetchRoomListInUse, insertRoom } from '../database/actions/roomActions';
 import { useForceUpdate } from '../utils/utils';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {
+	const isFocused = useIsFocused();
+
 	const [roomList, setRoomList] = useState([]);
 	const [selectedRoomId, setSelectedRoomId] = useState(null);
 	const [forceUpdate, forceUpdateId] = useForceUpdate();
+
 	let month = new Date().getMonth() + 1;
 	let year = new Date().getFullYear();
 
 	// Get room list from database
 	useEffect(() => {
 		const loadRoomList = async () => {
-			const rooms = await fetchRoomListNotUse('Cò trống').catch((err) =>
+			const rooms = await fetchRoomListInUse().catch((err) =>
 				console.log(err)
 			);
 			setRoomList(rooms);
 		};
 
 		loadRoomList();
-	}, []);
+	}, [isFocused]);
 
 
 	const renderItem = ({ item }) => (
@@ -51,12 +55,10 @@ export default function App({ navigation, route }) {
 			}}
 		>
 			<View style={[styles.room, styles.myBackground]}>
-				{/* Room name */}
 				<View>
 					<Text style={styles.styleRoomName}>{item.name}</Text>
 				</View>
 
-				{/* Room status */}
 				<View>
 					<Text>TÌNH TRẠNG: {item.status}</Text>
 				</View>
@@ -132,16 +134,16 @@ const styles = StyleSheet.create({
 		borderLeftWidth: 5,
 	},
 
-	containerdate : {
-        width: '95%',
-        height: '10%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#dfdfdf',
-        borderRadius: 10,
-        padding: 8,
-        margin: 8,
-    },
+	containerdate: {
+		width: '95%',
+		height: '10%',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#dfdfdf',
+		borderRadius: 10,
+		padding: 8,
+		margin: 8,
+	},
 
 	date: {
 		fontSize: 20,

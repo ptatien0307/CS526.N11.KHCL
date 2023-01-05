@@ -9,7 +9,7 @@ import Checkbox from 'expo-checkbox';
 import { useEffect, useState } from 'react';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { fetchCustomerDetails } from '../database/actions/customerAction';
+import { fetchCustomerDetails } from '../database/actions/customerActions';
 
 export default function App({ navigation, route }) {
 	const memberID = route.params.memberID;

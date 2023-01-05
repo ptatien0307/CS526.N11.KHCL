@@ -9,7 +9,7 @@ import {
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-import { fetchNoteList, deleteNote } from '../database/actions/noteAction';
+import { fetchNoteList, deleteNote } from '../database/actions/noteActions';
 import { useForceUpdate } from '../utils/utils';
 
 export default function App({ navigation, route }) {

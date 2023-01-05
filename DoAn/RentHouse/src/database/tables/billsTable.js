@@ -5,6 +5,8 @@ export const createBillsTable = `
         id                          INTEGER PRIMARY KEY,
         room_id                     INTEGER NOT NULL,
         created_at                  TEXT    NOT NULL,
+        number_of_months            INTEGER NOT NULL,
+        number_of_days              INTEGER NOT NULL,
         room_price                  INTEGER NOT NULL,
         present_electricity_number  INTEGER NOT NULL,
         previous_electricity_number INTEGER NOT NULL,
