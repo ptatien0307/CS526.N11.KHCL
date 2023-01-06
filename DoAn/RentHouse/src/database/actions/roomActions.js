@@ -68,18 +68,14 @@ export const insertRoom = (room, forceUpdate) => {
 					INSERT INTO rooms (
 						name,
 						rental_fee,
-						using_internet,
-						using_garbage,
 						old_electricity_number,
 						old_water_number
                   	)
-                    VALUES(?, ?, ?, ?, ?, ?)
+                    VALUES(?, ?, ?, ?)
 					`,
 					[
 						room.name,
 						room.rental_fee,
-						room.using_internet,
-						room.using_garbage,
 						room.old_electricity_number,
 						room.old_water_number,
 					],

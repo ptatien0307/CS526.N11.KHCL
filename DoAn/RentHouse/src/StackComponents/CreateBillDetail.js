@@ -8,6 +8,7 @@ import FontAwesomeIcon5 from 'react-native-vector-icons/FontAwesome5';
 import { fetchRoomDetails, updateRoom } from '../database/actions/roomActions';
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { insertBill } from '../database/actions/billActions';
+import { getCurrentDateString } from '../utils/utils';
 
 
 export default function App({ navigation, route }) {
@@ -96,7 +97,7 @@ export default function App({ navigation, route }) {
 
         insertBill({
             room_id: selected_room_id,
-            created_at: new Date().toLocaleString(),
+            created_at: getCurrentDateString(),
             number_of_months: numberOfMonths,
             number_of_days: numberOfDays,
             rental_fee: rentalFee,
@@ -111,10 +112,10 @@ export default function App({ navigation, route }) {
             credit: creditTotal,
             total: totalBill,
             remained: totalBill
-        })
+        });
 
         updateRoom({
-        })
+        });
 
         alert('Tổng tiền hóa đơn: ' + totalBill);
         return navigation.goBack();

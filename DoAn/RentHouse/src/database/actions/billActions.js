@@ -8,7 +8,14 @@ export const fetchBillList = () => {
     return new Promise((resolve, reject) => {
         db.transaction((tx) => {
             tx.executeSql(
-                'SELECT * FROM bills',
+                `
+                SELECT  bills.*,
+                        rooms.name  
+                FROM 
+                    bills
+                    INNER JOIN
+                    rooms ON rooms.id = bills.room_id    
+                `,
                 [],
                 (_, { rows: { _array } }) => {
                     console.log('Bill list fetched successfully');
@@ -51,6 +58,7 @@ export const fetchBillListByRoom = (room_id) => {
         });
     });
 };
+
 
 export const insertBill = (bill, forceUpdate) => {
     return new Promise((resolve, reject) => {

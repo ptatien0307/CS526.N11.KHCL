@@ -1,11 +1,28 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ThuTienHoaDon from './CollectMoney.js';
+import { fetchBillDetails } from '../database/actions/billActions.js';
 
 export default function App({ navigation, route }) {
-	const [currBill, setCurrBill] = useState(route.params.bill);
+	const selected_bill_id = route.params.bill_id;
 
+	const [billDetails, setBillDetails] = useState({});
 	const [isThuTienModal, setIsThuTienModal] = useState(false);
+
+	useEffect(() => {
+		const loadBillDetails = async () => {
+			const bill = await fetchBillDetails(selected_bill_id)
+				.catch((error) => console.log(error));
+
+			setBillDetails(bill);
+
+			console.log(bill);
+		};
+
+		loadBillDetails();
+	}, []);
+
+
 
 	const currRoom = route.params.currRoom;
 	const formatNumber = (q) => {
@@ -52,16 +69,14 @@ export default function App({ navigation, route }) {
 						<View>
 							<Text>Tiền điện</Text>
 							<Text>{`Số cũ: ${currBill.dienCu}, số mới: ${currBill.dienMoi}`}</Text>
-							<Text style={styles.textBold}>{`${
-								currBill.dienMoi - currBill.dienCu
-							} KWh x ${currRoom.donGiaDien}đ`}</Text>
+							<Text style={styles.textBold}>{`${currBill.dienMoi - currBill.dienCu
+								} KWh x ${currRoom.donGiaDien}đ`}</Text>
 						</View>
 						<View>
 							<Text>Thành tiền</Text>
-							<Text style={styles.textBoldRight}>{`${
-								(currBill.dienMoi - currBill.dienCu) *
+							<Text style={styles.textBoldRight}>{`${(currBill.dienMoi - currBill.dienCu) *
 								currRoom.donGiaDien
-							}đ`}</Text>
+								}đ`}</Text>
 						</View>
 					</View>
 
@@ -70,16 +85,14 @@ export default function App({ navigation, route }) {
 						<View>
 							<Text>Tiền nước</Text>
 							<Text>{`Số cũ: ${currBill.nuocCu}, số mới: ${currBill.nuocMoi}`}</Text>
-							<Text style={styles.textBold}>{`${
-								currBill.nuocMoi - currBill.nuocCu
-							} KWh x ${currRoom.donGiaNuoc}đ`}</Text>
+							<Text style={styles.textBold}>{`${currBill.nuocMoi - currBill.nuocCu
+								} KWh x ${currRoom.donGiaNuoc}đ`}</Text>
 						</View>
 						<View>
 							<Text>Thành tiền</Text>
-							<Text style={styles.textBoldRight}>{`${
-								(currBill.nuocMoi - currBill.nuocCu) *
+							<Text style={styles.textBoldRight}>{`${(currBill.nuocMoi - currBill.nuocCu) *
 								currRoom.donGiaNuoc
-							}đ`}</Text>
+								}đ`}</Text>
 						</View>
 					</View>
 
