@@ -20,9 +20,9 @@ export default function App({ navigation, route }) {
 	// Get note list from database
 	useEffect(() => {
 		const loadNoteList = async () => {
-			const notes = await fetchNoteList().catch((err) =>
-				console.log(err)
-			);
+			const notes = await fetchNoteList()
+				.catch((error) => console.log(error));
+
 			setNoteList(notes);
 		};
 

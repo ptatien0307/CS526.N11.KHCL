@@ -34,9 +34,8 @@ export default function App({ navigation, route }) {
 	// Get room list from database
 	useEffect(() => {
 		const loadRoomList = async () => {
-			const rooms = await fetchRoomListInUse().catch((err) =>
-				console.log(err)
-			);
+			const rooms = await fetchRoomListInUse()
+				.catch((error) => console.log(error));
 			setRoomList(rooms);
 		};
 

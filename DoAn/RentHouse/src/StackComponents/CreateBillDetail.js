@@ -5,19 +5,20 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FontAwesomeIcon5 from 'react-native-vector-icons/FontAwesome5';
 
-import { fetchRoomDetails } from '../database/actions/roomActions';
+import { fetchRoomDetails, updateRoom } from '../database/actions/roomActions';
 import { fetchServiceDetails } from '../database/actions/serviceActions';
-
+import { insertBill } from '../database/actions/billActions';
 
 
 export default function App({ navigation, route }) {
+    const selected_room_id = route.params.selected_room_id;
     // from database
-    // room attributes
-    const [roomRentalFee, setRoomRentalFee] = useState(null);
+    //          room attributes
+    const [rentalFee, setRoomRentalFee] = useState(null);
     const [oldElectricityNumber, setOldElectricityNumber] = useState(null);
     const [oldWaterNumber, setOldWaterNumber] = useState(null);
 
-    // service prices
+    //          service prices
     const [electricityPrice, setElectricityPrice] = useState(null);
     const [waterPrice, setWaterPrice] = useState(null);
     const [garbagePrice, setGarbagePrice] = useState(null);
@@ -37,14 +38,12 @@ export default function App({ navigation, route }) {
 
     useEffect(() => {
         const loadRoomDetails = async () => {
-            const roomDetails = await fetchRoomDetails(route.params.selected_room_id)
+            const roomDetails = await fetchRoomDetails(selected_room_id)
                 .catch((error) => console.log(error));
 
             setRoomRentalFee(roomDetails['rental_fee']);
             setOldElectricityNumber(roomDetails['old_electricity_number']);
             setOldWaterNumber(roomDetails['old_water_number']);
-
-            console.log(roomDetails);
         };
 
         const loadServicePrices = async (service_name, setServicePrice) => {
@@ -52,8 +51,6 @@ export default function App({ navigation, route }) {
                 .catch((error) => console.log(error));
 
             setServicePrice(String(servicePrices['price']));
-
-            console.log(servicePrices['price']);
         };
 
         loadRoomDetails();
@@ -84,16 +81,40 @@ export default function App({ navigation, route }) {
         }
 
 
-        let roomBill = roomRentalFee * numberOfMonths + roomRentalFee / 30 * numberOfDays;
-        let electricityBill = electricityPrice * (newElectricityNumber - oldElectricityNumber);
-        let waterBill = waterPrice * (newWaterNumber - oldWaterNumber);
+        const roomBill = rentalFee * numberOfMonths + rentalFee / 30 * numberOfDays;
+        const electricityBill = electricityPrice * (newElectricityNumber - oldElectricityNumber);
+        const waterBill = waterPrice * (newWaterNumber - oldWaterNumber);
 
-        let internetPriceTotal = parseInt(internetPrice);
-        let garbagePriceTotal = parseInt(garbagePrice);
-        let creditTotal = parseInt(credit);
-        let othersFeeTotal = parseInt(othersFee);
+        const internetPriceTotal = parseInt(internetPrice);
+        const garbagePriceTotal = parseInt(garbagePrice);
+        const creditTotal = parseInt(credit);
+        const othersFeeTotal = parseInt(othersFee);
 
-        let totalBill = roomBill + electricityBill + waterBill + internetPriceTotal + garbagePriceTotal - creditTotal + othersFeeTotal;
+        const billAmount = roomBill + electricityBill + waterBill + internetPriceTotal + garbagePriceTotal;
+
+        const totalBill = billAmount - creditTotal + othersFeeTotal;
+
+        insertBill({
+            room_id: selected_room_id,
+            created_at: new Date().toLocaleString(),
+            number_of_months: numberOfMonths,
+            number_of_days: numberOfDays,
+            rental_fee: rentalFee,
+            new_electricity_number: newElectricityNumber,
+            old_electricity_number: oldElectricityNumber,
+            new_water_number: newWaterNumber,
+            old_water_number: oldWaterNumber,
+            garbage_fee: garbagePrice,
+            internet_fee: internetPrice,
+            bill_amount: billAmount,
+            others_fee: othersFeeTotal,
+            credit: creditTotal,
+            total: totalBill,
+            remained: totalBill
+        })
+
+        updateRoom({
+        })
 
         alert('Tổng tiền hóa đơn: ' + totalBill);
         return navigation.goBack();
@@ -112,7 +133,7 @@ export default function App({ navigation, route }) {
                         <FontAwesomeIcon5 name="door-closed" size={30} style={{ padding: 8 }} />
                         <View>
                             <Text style={[styles.billName, { fontWeight: 'bold' }]}>Tiền phòng</Text>
-                            <Text>{roomRentalFee} đồng/tháng</Text>
+                            <Text>{rentalFee} đồng/tháng</Text>
                         </View>
                     </View>
 

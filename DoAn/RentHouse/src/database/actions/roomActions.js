@@ -98,7 +98,7 @@ export const insertRoom = (room, forceUpdate) => {
 	});
 };
 
-export const updateRoom = (room, forceUpdate) => {
+export const updateRoom = (room, forceUpdate = null) => {
 	return new Promise((resolve, reject) => {
 		db.transaction(
 			(tx) => {
@@ -106,16 +106,12 @@ export const updateRoom = (room, forceUpdate) => {
 					`UPDATE rooms
 					SET name = ?,
 						rental_fee = ?,
-						using_internet = ?,
-						using_garbage = ?,
 						old_electricity_number = ?,
 						old_water_number = ?
 					WHERE id = ?;`,
 					[
 						room.name,
 						room.rental_fee,
-						room.using_internet,
-						room.using_garbage,
 						room.old_electricity_number,
 						room.old_water_number,
 						room.id,

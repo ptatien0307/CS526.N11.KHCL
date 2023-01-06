@@ -90,7 +90,8 @@ export default function App(params) {
 	};
 
 	const handleClose = async () => {
-		await slideOutAnimation();
+		await slideOutAnimation()
+			.catch((error) => console.log(error));
 		params.setIsThuTienModal(false);
 	};
 

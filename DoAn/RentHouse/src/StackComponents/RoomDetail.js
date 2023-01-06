@@ -23,7 +23,7 @@ export default function App({ navigation, route }) {
 	useEffect(() => {
 		const loadRoomDetails = async () => {
 			const roomDetails = await fetchRoomDetails(selected_room_id)
-				.catch((err) => console.log(err));
+				.catch((error) => console.log(error));
 			setRoom(roomDetails);
 
 			console.log(roomDetails);
@@ -31,7 +31,7 @@ export default function App({ navigation, route }) {
 
 		const loadMemberList = async () => {
 			const memberList = await fetchRoomMemberList(selected_room_id)
-				.catch((err) => console.log(err));
+				.catch((error) => console.log(error));
 			setMemberList(memberList);
 
 			console.log(memberList);
@@ -39,7 +39,7 @@ export default function App({ navigation, route }) {
 
 		const loadBillList = async () => {
 			const billList = await fetchRoomBillList(selected_room_id)
-				.catch((err) => console.log(err));
+				.catch((error) => console.log(error));
 			setBillList(billList);
 
 			console.log(billList);
