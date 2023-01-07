@@ -14,56 +14,38 @@ import {
 	errorDialog,
 } from '../Dialogs/dialog.js';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { updateBill } from '../database/actions/billActions.js';
 
-export default function App(params) {
+
+export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 	const inAnimetedValue = useRef(new Animated.Value(470)).current;
 	const outAnimetedValue = useRef(new Animated.Value(0)).current;
 
 	const [inputText, setInputText] = useState('');
 
-	// BACK-END ___ UPDATE BILL.REMAINED, BILL.COUNT (số lần thu tiền), BILL.COLLECTED
-	const handleCollect = () => {
-		if (inputText === '') alertEmptyDialog();
-		else if (parseInt(inputText) > params.currBill.remained) {
-			errorDialog(
-				'Vui lòng nhập số tiền nhỏ hơn số tiền mà phòng còn thiếu.'
-			);
-		} else {
-			let collected =
-				parseInt(params.currBill.collected) + parseInt(inputText);
-			let remained = params.currBill.total - collected;
-			let count = parseInt(params.currBill.count) + 1;
-			params.setCurrBill({
-				...params.currBill,
-				collected: collected,
-				remained: remained,
-				count: count,
-			});
-			const newBillHistory = params.billHistory.map((item) => {
-				if (item.id === params.currBill.id) {
-					item.collected = collected;
-					item.remained = remained;
-					item.count = count;
-					return item;
-				}
-				return item;
-			});
-			params.setCurrRoom({
-				...params.currRoom,
-				billHistory: newBillHistory,
-			});
-			const newRoomList = params.roomList.map((item) => {
-				if (item.id === params.currRoom.id) {
-					return { ...params.currRoom, billHistory: newBillHistory };
-				}
-				return item;
-			});
 
-			params.setGlobalRoomList(newRoomList);
-			params.setRoomList(newRoomList);
+	const handleCollect = () => {
+		if (inputText === '') {
+			alertEmptyDialog();
+		}
+		else if (parseInt(inputText) > billDetails.remained) {
+			errorDialog('Vui lòng nhập số tiền nhỏ hơn số tiền mà phòng còn thiếu.');
+		}
+		else {
+			const remained = billDetails.remained - parseInt(inputText);
+			const count = ++billDetails.paid_time;
+
+			const updatedBill = async () => {
+				await updateBill({ ...billDetails, remained: remained, paid_time: count }, forceUpdate)
+					.catch((error) => console.log(error));
+			};
+
+			updatedBill();
+
 			successDialog(
-				`Đã thu thành công ${inputText}đ. ${params.currRoom.roomName} còn nợ ${remained}đ`
+				`Đã thu thành công ${inputText}đ. ${billDetails.room_name} còn nợ ${remained}đ`
 			);
+
 			setInputText('');
 			handleClose();
 		}
@@ -90,9 +72,8 @@ export default function App(params) {
 	};
 
 	const handleClose = async () => {
-		await slideOutAnimation()
-			.catch((error) => console.log(error));
-		params.setIsThuTienModal(false);
+		await slideOutAnimation().catch((error) => console.log(error));
+		setIsThuTienModal(false);
 	};
 
 	return (
@@ -106,8 +87,7 @@ export default function App(params) {
 							{ translateY: inAnimetedValue },
 						],
 					},
-				]}
-			>
+				]}>
 				{/* Header */}
 				<View style={[styles.header]}>
 					<View style={styles.headerTop}>
@@ -116,8 +96,7 @@ export default function App(params) {
 						<TouchableOpacity
 							onPress={() => {
 								handleClose();
-							}}
-						>
+							}}>
 							<FontAwesomeIcon name="times-circle" size={40} />
 						</TouchableOpacity>
 					</View>
@@ -137,13 +116,12 @@ export default function App(params) {
 							setInputText(text);
 						}}
 						placeholder={'Nhập số tiền ...'}
-						defaultValue={''}
-					></TextInput>
+						defaultValue={''}></TextInput>
 
 					<View style={[styles.thieu, styles.myBackground]}>
 						<Text style={{ fontSize: 20 }}>Khách còn thiếu:</Text>
 						<Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-							{params.currBill.remained}đ
+							{billDetails.remained}đ
 						</Text>
 					</View>
 
@@ -151,8 +129,7 @@ export default function App(params) {
 						style={styles.button}
 						onPress={() => {
 							handleCollect();
-						}}
-					>
+						}}>
 						<FontAwesomeIcon
 							name="dollar"
 							size={25}
@@ -164,8 +141,7 @@ export default function App(params) {
 								fontSize: 25,
 								fontWeight: 'bold',
 								color: 'white',
-							}}
-						>
+							}}>
 							THU TIỀN
 						</Text>
 					</TouchableOpacity>

@@ -19,9 +19,11 @@ export default function App({ navigation, route }) {
 				.catch((error) => console.log(error));
 
 			setBillList(bills);
+			console.log(bills[0]);
 		};
 
 		loadBillList();
+
 	}, []);
 
 	const renderItem = ({ item }) => {
@@ -29,7 +31,7 @@ export default function App({ navigation, route }) {
 			// Go to specific room
 			<TouchableOpacity
 				onPress={() => {
-					navigation.navigate('ChiTietHoaDon', {
+					navigation.navigate('BillDetail', {
 						selected_bill_id: item.id
 					});
 				}}
@@ -38,7 +40,7 @@ export default function App({ navigation, route }) {
 					{/* Room name */}
 					<View>
 						<Text style={styles.styleRoomName}>
-							{item.name} - {item.created_at.split(', ')[1].slice(3)}
+							{item.room_name} - {item.created_at}
 						</Text>
 					</View>
 

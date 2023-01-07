@@ -10,7 +10,7 @@ export const fetchBillList = () => {
             tx.executeSql(
                 `
                 SELECT  bills.*,
-                        rooms.name  
+                        rooms.name as room_name
                 FROM 
                     bills
                     INNER JOIN
@@ -31,7 +31,15 @@ export const fetchBillDetails = (bill_id) => {
     return new Promise((resolve, reject) => {
         db.transaction((tx) => {
             tx.executeSql(
-                'SELECT * FROM bills WHERE id = ?',
+                `
+                SELECT  bills.*,
+                        rooms.name  as room_name
+                FROM 
+                    bills
+                    INNER JOIN
+                    rooms ON rooms.id = bills.room_id
+                WHERE bills.id = ?
+                `,
                 [bill_id],
                 (_, { rows: { _array } }) => {
                     console.log('Bill fetched successfully');
@@ -73,8 +81,10 @@ export const insertBill = (bill, forceUpdate) => {
                         number_of_days,
                         new_electricity_number,
                         old_electricity_number,
+                        electricity_fee,
                         new_water_number,
                         old_water_number,
+                        water_fee,
                         garbage_fee,
                         internet_fee,
                         bill_amount,
@@ -83,7 +93,7 @@ export const insertBill = (bill, forceUpdate) => {
                         total,
                         remained
                     )
-                    Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
                     [
                         bill.room_id,
                         bill.created_at,
@@ -92,8 +102,10 @@ export const insertBill = (bill, forceUpdate) => {
                         bill.rental_fee,
                         bill.new_electricity_number,
                         bill.old_electricity_number,
+                        bill.electricity_fee,
                         bill.new_water_number,
                         bill.old_water_number,
+                        bill.water_fee,
                         bill.garbage_fee,
                         bill.internet_fee,
                         bill.bill_amount,
@@ -122,11 +134,13 @@ export const updateBill = (bill, forceUpdate) => {
                     `UPDATE bills SET
                         room_id = ?,
                         created_at = ?,
-                        room_price = ?,
-                        present_electricity_number = ?,
-                        previous_electricity_number = ?,
-                        present_water_number = ?,
-                        previous_water_number = ?,
+                        rental_fee = ?,
+                        new_electricity_number = ?,
+                        old_electricity_number = ?,
+                        electricity_fee = ?,
+                        new_water_number = ?,
+                        old_water_number = ?,
+                        water_fee = ?,
                         garbage_fee = ?,
                         internet_fee = ?,
                         bill_amount = ?,
@@ -140,11 +154,13 @@ export const updateBill = (bill, forceUpdate) => {
                     [
                         bill.room_id,
                         bill.created_at,
-                        bill.room_price,
-                        bill.present_electricity_number,
-                        bill.previous_electricity_number,
-                        bill.present_water_number,
-                        bill.previous_water_number,
+                        bill.rental_fee,
+                        bill.new_electricity_number,
+                        bill.old_electricity_number,
+                        bill.electricity_fee,
+                        bill.new_water_number,
+                        bill.old_water_number,
+                        bill.water_fee,
                         bill.garbage_fee,
                         bill.internet_fee,
                         bill.bill_amount,

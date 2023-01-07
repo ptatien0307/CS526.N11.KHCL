@@ -2,50 +2,6 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 
 export default function App({ navigation }) {
-	let BILL = [
-		{
-			id: 1,
-			roomName: 'Phòng 1',
-			monthYear: '5/2022',
-			dienCu: '1420',
-			dienMoi: '1480',
-			nuocCu: '90',
-			nuocMoi: '100',
-			total: '1000000',
-			collected: '505000',
-			remained: '495000',
-			count: '1',
-		},
-		{
-			id: 2,
-			roomName: 'Phòng 1',
-			monthYear: '6/2022',
-			dienCu: '1420',
-			dienMoi: '1480',
-			nuocCu: '90',
-			nuocMoi: '100',
-			total: '0',
-			collected: '0',
-			remained: '0',
-			count: '0',
-		},
-		{
-			id: 3,
-			roomName: 'Phòng 1',
-			monthYear: '7/2022',
-			dienCu: '1420',
-			dienMoi: '1480',
-			nuocCu: '90',
-			nuocMoi: '100',
-			total: '0',
-			collected: '0',
-			remained: '0',
-			count: '0',
-		},
-	];
-
-	const [billList, setBillList] = useState(BILL);
-
 	return (
 		<View style={styles.container}>
 			{/* Header */}
@@ -85,10 +41,7 @@ export default function App({ navigation }) {
 					<TouchableOpacity
 						style={[styles.feature, styles.myBackground]}
 						onPress={() => {
-							navigation.navigate('BillList', {
-								billList,
-								setBillList,
-							});
+							navigation.navigate('BillList');
 						}}
 					>
 						<Text style={styles.textTitle}>THU TIỀN HÓA ĐƠN</Text>
