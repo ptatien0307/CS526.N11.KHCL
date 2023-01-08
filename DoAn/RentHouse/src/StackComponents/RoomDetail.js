@@ -198,8 +198,20 @@ export default function App({ navigation, route }) {
 						<View style={[styles.basicInfo, styles.myBorder]}>
 							<View style={styles.bodyHeader}>
 								<Text>Thông tin cơ bản</Text>
+								<TouchableOpacity 
+									onPress={()=>{
+										navigation.navigate('EditBasicInfo', {
+											roomID: room.id
+										})
+									}}
+								>
+									<FontAwesomeIcon
+										name="edit"
+										size={20}
+									/>
+								</TouchableOpacity>
 							</View>
-
+							
 							<View style={styles.infoRow}>
 								{/* Room name */}
 								<View
@@ -208,63 +220,44 @@ export default function App({ navigation, route }) {
 										styles.myBackground,
 									]}
 								>
-									<TouchableOpacity
-										onPress={() => {
-											navigation.navigate('EditModal', {
-												editContent: room.name,
-											});
-										}}
-									>
+									<View>
 										<Text>Tên phòng:</Text>
 										<Text style={styles.textBold}>
 											{room.name}
 										</Text>
-									</TouchableOpacity>
+									</View>
 								</View>
 
-								{/* Contract day */}
+								{/* Move in day */}
 								<View
 									style={[
 										styles.rowItem,
 										styles.myBackground,
 									]}
 								>
-									<TouchableOpacity
-										onPress={() => {
-											navigation.navigate('EditModal', {
-												editContent:
-													room.move_in_date,
-											});
-										}}
-									>
+									<View>
 										<Text>Ngày đến:</Text>
 										<Text style={styles.textBold}>
 											{room.move_in_date}
 										</Text>
-									</TouchableOpacity>
+									</View>
 								</View>
 							</View>
 
 							<View style={styles.infoRow}>
-								{/* Price */}
+								{/* Rental fee */}
 								<View
 									style={[
 										styles.rowItem,
 										styles.myBackground,
 									]}
 								>
-									<TouchableOpacity
-										onPress={() => {
-											navigation.navigate('EditModal', {
-												editContent: room.rental_fee,
-											});
-										}}
-									>
+									<View>
 										<Text>Giá thuê:</Text>
 										<Text style={styles.textBold}>
 											{room.rental_fee}
 										</Text>
-									</TouchableOpacity>
+									</View>
 								</View>
 
 								{/* Deposit */}
@@ -274,18 +267,12 @@ export default function App({ navigation, route }) {
 										styles.myBackground,
 									]}
 								>
-									<TouchableOpacity
-										onPress={() => {
-											navigation.navigate('EditModal', {
-												editContent: room.deposit,
-											});
-										}}
-									>
+									<View>
 										<Text>Tiền cọc:</Text>
 										<Text style={styles.textBold}>
 											{room.deposit ? room.deposit : 'Không có'}
 										</Text>
-									</TouchableOpacity>
+									</View>
 								</View>
 							</View>
 						</View>
@@ -481,6 +468,7 @@ const styles = StyleSheet.create({
 		paddingBottom: 2,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
+		marginBottom: 4,
 	},
 	infoContainer: {
 		width: '100%',
@@ -499,7 +487,6 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		width: '100%',
 		flex: 1,
-
 		justifyContent: 'space-between',
 		alignItems: 'center',
 	},

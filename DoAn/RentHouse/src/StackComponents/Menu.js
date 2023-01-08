@@ -18,7 +18,7 @@ export default function App({ navigation }) {
 						TouchableOpacity
 						style={[styles.feature, styles.myBackground]}
 						onPress={() => {
-							navigation.navigate('EditBasicInfo');
+							navigation.navigate('RoomList');
 						}}
 					>
 						<Text style={styles.textTitle}>DANH SÁCH PHÒNG</Text>
