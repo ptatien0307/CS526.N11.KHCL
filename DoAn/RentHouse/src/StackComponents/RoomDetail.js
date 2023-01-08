@@ -5,6 +5,7 @@ import {
 	TouchableOpacity,
 	FlatList,
 	ScrollView,
+	SafeAreaView,
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
@@ -303,13 +304,14 @@ export default function App({ navigation, route }) {
 							</View>
 
 							{/* View members  */}
-							<View style={[styles.memberContainer]}>
+							<SafeAreaView style={[styles.memberContainer]}>
 								<FlatList
+									nestedScrollEnabled={true}
 									data={memberList}
 									renderItem={renderMembers}
 									keyExtractor={(item) => item.id}
 								></FlatList>
-							</View>
+							</SafeAreaView>
 						</View>
 
 						{/* Water and electricity */}
@@ -509,9 +511,9 @@ const styles = StyleSheet.create({
 	},
 	memberContainer: {
 		width: '100%',
-		height: 'auto',
-		minHeight: 50,
-	},
+		height: '85%',
+		flex: 1
+	},	
 	member: {
 		width: '100%',
 		justifyContent: 'flex-start',
