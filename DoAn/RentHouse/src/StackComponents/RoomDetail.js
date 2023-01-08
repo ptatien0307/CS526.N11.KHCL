@@ -7,18 +7,26 @@ import {
 	ScrollView,
 } from 'react-native';
 import { useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import { fetchRoomDetails, fetchRoomMemberList, fetchRoomBillList } from '../database/actions/roomActions';
+import { deleteCustomer } from '../database/actions/customerActions';
+import { useForceUpdate } from '../utils/utils';
 
 
 export default function App({ navigation, route }) {
 	const selected_room_id = route.params.selected_room_id;
+
+	const isFocused = useIsFocused();
+	const [forceUpdate, forceUpdateId] = useForceUpdate();
+
 	const [memberList, setMemberList] = useState([]);
 	const [billList, setBillList] = useState([]);
 	const [room, setRoom] = useState({});
+	const [mountInfo, setMountInfo] = useState(true);
 
 	useEffect(() => {
 		const loadRoomDetails = async () => {
@@ -31,6 +39,7 @@ export default function App({ navigation, route }) {
 			const memberList = await fetchRoomMemberList(selected_room_id)
 				.catch((error) => console.log(error));
 			setMemberList(memberList);
+			console.log(memberList);
 		};
 
 		const loadBillList = async () => {
@@ -42,13 +51,16 @@ export default function App({ navigation, route }) {
 		loadRoomDetails();
 		loadMemberList();
 		loadBillList();
-	}, []);
+	}, [isFocused, forceUpdateId]);
 
-	let totalRemained = billList.reduce((res, curr) => {
+	const totalRemained = billList.reduce((res, curr) => {
 		return res + curr.remained;
 	}, 0);
 
-	const [mountInfo, setMountInfo] = useState(true);
+	const handleDeleteMember = async (memberID) => {
+		await deleteCustomer(memberID, forceUpdate)
+			.catch((error) => console.log(error));
+	};
 
 	const renderMembers = ({ item }) => {
 		return (
@@ -74,7 +86,7 @@ export default function App({ navigation, route }) {
 					<TouchableOpacity
 						style={styles.deleteIcon}
 						onPress={() => {
-							// Handle delete member
+							handleDeleteMember(item.id);
 						}}
 					>
 						<FontAwesomeIcon

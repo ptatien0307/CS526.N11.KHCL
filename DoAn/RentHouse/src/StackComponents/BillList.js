@@ -19,7 +19,6 @@ export default function App({ navigation, route }) {
 				.catch((error) => console.log(error));
 
 			setBillList(bills);
-			console.log(bills[0]);
 		};
 
 		loadBillList();

@@ -16,8 +16,7 @@ import {
 	addSuccessDialog,
 } from '../Dialogs/dialog.js';
 
-import { fetchRoomList, fetchRoomListInUse, insertRoom } from '../database/actions/roomActions';
-import { useForceUpdate } from '../utils/utils';
+import { fetchRoomListInUse } from '../database/actions/roomActions';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
@@ -26,7 +25,6 @@ export default function App({ navigation, route }) {
 
 	const [roomList, setRoomList] = useState([]);
 	const [selectedRoomId, setSelectedRoomId] = useState(null);
-	const [forceUpdate, forceUpdateId] = useForceUpdate();
 
 	let month = new Date().getMonth() + 1;
 	let year = new Date().getFullYear();

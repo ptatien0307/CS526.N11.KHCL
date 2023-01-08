@@ -4,7 +4,7 @@ import { openDatabase } from 'expo-sqlite';
 
 const db = openDatabase('renthouse.db');
 
-export const insertCustomer = (customer, forceUpdate) => {
+export const insertCustomer = (customer, forceUpdate = null) => {
 	return new Promise((resolve, reject) => {
 		db.transaction(
 			(tx) => {
@@ -51,7 +51,7 @@ export const insertCustomer = (customer, forceUpdate) => {
 	});
 };
 
-export const updateCustomer = (customer, forceUpdate) => {
+export const updateCustomer = (customer, forceUpdate = null) => {
 	return new Promise((resolve, reject) => {
 		db.transaction(
 			(tx) => {
@@ -98,7 +98,7 @@ export const updateCustomer = (customer, forceUpdate) => {
 	});
 };
 
-export const deleteCustomer = (customer_id, forceUpdate) => {
+export const deleteCustomer = (customer_id, forceUpdate = null) => {
 	return new Promise((resolve, reject) => {
 		db.transaction(
 			(tx) => {

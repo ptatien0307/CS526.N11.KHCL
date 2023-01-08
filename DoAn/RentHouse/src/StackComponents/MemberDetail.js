@@ -5,6 +5,7 @@ import {
 	TouchableOpacity,
 	ScrollView,
 } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 import Checkbox from 'expo-checkbox';
 import { useEffect, useState } from 'react';
 
@@ -13,6 +14,8 @@ import { fetchCustomerDetails } from '../database/actions/customerActions';
 
 export default function App({ navigation, route }) {
 	const memberID = route.params.memberID;
+
+	const isFocused = useIsFocused();
 	const [member, setMember] = useState({});
 
 	useEffect(() => {
@@ -22,10 +25,11 @@ export default function App({ navigation, route }) {
 
 			setMember(customerDetails);
 
+			console.log(customerDetails);
 		};
 
 		loadCustomerDetails();
-	}, []);
+	}, [isFocused]);
 
 	return (
 		<View style={styles.container}>
@@ -81,7 +85,7 @@ export default function App({ navigation, route }) {
 								}}
 							>
 								<View>
-									<Checkbox value={!Boolean(member.gender)} />
+									<Checkbox value={Boolean(member.gender)} />
 								</View>
 								<View style={{ marginLeft: 8 }}>
 									<Text>Nam</Text>
@@ -89,7 +93,7 @@ export default function App({ navigation, route }) {
 							</View>
 							<View style={{ flexDirection: 'row' }}>
 								<View>
-									<Checkbox value={Boolean(member.gender)} />
+									<Checkbox value={!Boolean(member.gender)} />
 								</View>
 								<View style={{ marginLeft: 8 }}>
 									<Text>Nữ</Text>
