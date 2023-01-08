@@ -25,7 +25,7 @@ export default function App({ navigation, route }) {
     const [garbagePrice, setGarbagePrice] = useState(null);
 
     // from input
-    const [internetPrice, setInternetPrice] = useState('1');
+    const [internetPrice, setInternetPrice] = useState('0');
 
     const [newElectricityNumber, setNewElectricityNumber] = useState('');
     const [newWaterNumber, setNewWaterNumber] = useState('');
@@ -62,8 +62,36 @@ export default function App({ navigation, route }) {
 
     }, []);
 
+
     const calculateBill = () => {
 
+        // Check if newElectricityNumber and WaterBillNew have space
+        if (newElectricityNumber.includes(' ')) {
+            return alert('Chỉ số điện mới không được có khoảng trắng');
+        }
+
+        if (newWaterNumber.includes(' ')) {
+            return alert('Chỉ số nước mới không được có khoảng trắng');
+        }
+
+        // Check if input newElectricityNumber and WaterBillNew have comma
+        if (newElectricityNumber.includes(',')) {
+            return alert('Chỉ số điện mới không được có dấu phẩy');
+        }
+
+        if (newWaterNumber.includes(',')) {
+            return alert('Chỉ số nước mới không được có dấu phẩy');
+        }
+
+        // Check if input newElectricityNumber and WaterBillNew have - sign
+        if (newElectricityNumber.includes('-')) {
+            return alert('Chỉ số điện mới không được có dấu trừ');
+        }
+
+        if (newWaterNumber.includes('-')) {
+            return alert('Chỉ số nước mới không được có dấu trừ');
+        }
+        
         // Check if input newElectricityNumber and WaterBillNew are empty
         if (newElectricityNumber == '') {
             return alert('Chưa nhập chỉ số điện mới');
@@ -131,9 +159,9 @@ export default function App({ navigation, route }) {
                 <View style={styles.billContainer}>
 
                     <View style={[{ flexDirection: 'row' }]}>
-                        <FontAwesomeIcon5 name="door-closed" size={30} style={{ padding: 8 }} />
+                        <FontAwesomeIcon5 name="door-closed" size={30} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                         <View>
-                            <Text style={[styles.billName, { fontWeight: 'bold' }]}>Tiền phòng</Text>
+                            <Text style={[styles.billName]}>Tiền phòng</Text>
                             <Text>{rentalFee} đồng/tháng</Text>
                         </View>
                     </View>
@@ -165,15 +193,15 @@ export default function App({ navigation, route }) {
                 <View style={styles.billContainer}>
 
                     <View style={[{ flexDirection: 'row' }]}>
-                        <FontAwesomeIcon name="bolt" size={30} style={{ padding: 8 }} />
+                        <FontAwesomeIcon name="bolt" size={30} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                         <View>
-                            <Text style={[styles.billName, { fontWeight: 'bold' }]}>Tiền điện</Text>
+                            <Text style={[styles.billName]}>Tiền điện</Text>
                             <Text>{electricityPrice} đồng/KWh</Text>
                         </View>
                     </View>
 
                     <View style={styles.billValue}>
-                        <Text style={[styles.billValueInput, { width: '40%' }]}>Số cũ: {oldElectricityNumber}</Text>
+                        <Text style={[styles.billValueInput, { width: '40%', paddingVertical: 8.5 }]}>Số cũ: {oldElectricityNumber}</Text>
                         <View style={[styles.billValueInput, { width: '55%' }]}>
                             <Text>Số mới: </Text>
                             <TextInput
@@ -188,15 +216,15 @@ export default function App({ navigation, route }) {
                 {/* Water bill inputs */}
                 <View style={styles.billContainer}>
                     <View style={[{ flexDirection: 'row' }]}>
-                        <IonIcon name="water" size={25} style={{ padding: 8 }} />
+                        <IonIcon name="water" size={30} style={{ paddingHorizontal: 8, paddingVertical: 2 }} />
                         <View>
-                            <Text style={[styles.billName, { fontWeight: 'bold' }]}>Tiền nước</Text>
-                            <Text>{waterPrice} đồng/1 Khối</Text>
+                            <Text style={[styles.billName]}>Tiền nước</Text>
+                            <Text>{waterPrice} đồng/Khối</Text>
                         </View>
                     </View>
                     <View style={styles.billValue}>
 
-                        <Text style={[styles.billValueInput, { width: '40%' }]}>Số cũ: {oldWaterNumber}</Text>
+                        <Text style={[styles.billValueInput, { width: '40%', paddingVertical: 8.5 }]}>Số cũ: {oldWaterNumber}</Text>
                         <View style={[styles.billValueInput, { width: '55%' }]}>
                             <Text>Số mới: </Text>
                             <TextInput
@@ -212,9 +240,9 @@ export default function App({ navigation, route }) {
                 <View style={styles.billContainer}>
 
                     <View style={[{ flexDirection: 'row' }]}>
-                        <IonIcon name="wifi" size={25} style={{ padding: 8 }} />
+                        <IonIcon name="wifi" size={25} style={{ paddingHorizontal: 8, paddingVertical: 1 }} />
                         <View>
-                            <Text style={[styles.billName, { fontWeight: 'bold' }]}>Tiền mạng</Text>
+                            <Text style={[styles.billName, {justifyContent:'center'}]}>Tiền mạng</Text>
                         </View>
                     </View>
 
@@ -223,21 +251,22 @@ export default function App({ navigation, route }) {
                             <Text>Thành tiền: </Text>
                             <TextInput
                                 style={[styles.textInput]}
-                                value={internetPrice}
+                                placeholder="0"
                                 keyboardType="number-pad"
                                 onChangeText={text => setInternetPrice(text)}
                             />
+                            <Text>đ</Text>
                         </View>
                     </View>
                 </View>
 
                 {/* Garbage bill inputs */}
-                <View style={styles.billContainer}>
+                <View style={[styles.billContainer, {paddingBottom:10}]}>
 
                     <View style={[{ flexDirection: 'row' }]}>
-                        <IonIcon name="trash" size={25} style={{ padding: 8 }} />
+                        <IonIcon name="trash" size={25} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                         <View>
-                            <Text style={[styles.billName, { fontWeight: 'bold' }]}>Tiền rác</Text>
+                            <Text style={[styles.billName]}>Tiền rác</Text>
                             <Text>{garbagePrice} đồng/1 tháng</Text>
                         </View>
                     </View>
@@ -245,7 +274,7 @@ export default function App({ navigation, route }) {
 
                 {/* Discount bill inputs */}
                 <View style={styles.billContainer}>
-                    <Text style={[styles.billName, { fontWeight: 'bold' }]}>Tiền giảm trừ</Text>
+                    <Text style={[styles.billName]}>Tiền giảm trừ</Text>
                     <Text>Dùng vào dịp lễ, tết, covid, miễn giảm khi khách xài dịch vụ ít hơn đơn giá,...</Text>
                     <View style={[styles.billValue, { justifyContent: 'center' }]}>
                         <View style={[styles.billValueInput, { width: '90%' }]}>
@@ -263,7 +292,7 @@ export default function App({ navigation, route }) {
 
                 {/* Addition bill inputs */}
                 <View style={styles.billContainer}>
-                    <Text style={[styles.billName, { fontWeight: 'bold' }]}>Tiền cộng thêm</Text>
+                    <Text style={[styles.billName]}>Tiền cộng thêm</Text>
                     <Text>Dùng vào dịp lễ, tết, covid, tăng thêm khi khách xài dịch vụ nhiều hơn đơn giá,...</Text>
                     <View style={[styles.billValue, { justifyContent: 'center' }]}>
                         <View style={[styles.billValueInput, { width: '90%' }]}>
@@ -345,12 +374,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
+    billName: {
+        fontSize:16,
+        fontWeight: 'bold',
+    },
+
     billValueInput: {
-        padding: 10,
+        padding: 8,
         borderWidth: 1,
         borderRadius: 10,
-        marginTop: 10,
-        marginBottom: 10,
+        marginVertical: 8,
         borderColor: 'black',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -359,7 +392,8 @@ const styles = StyleSheet.create({
     textInput: {
         borderColor: 'gray',
         borderWidth: 1,
-        width: '60%'
+        width: '60%',
+        maxHeight: '70%'
     },
 
     calculateButton: {
