@@ -17,14 +17,14 @@ export default function App({ navigation, route }) {
     const [selectedRoomId, setSelectedRoomId] = useState(null);
     const [forceUpdate, forceUpdateId] = useForceUpdate();
 
-	// Get room list from database
-	useEffect(() => {
-		const loadRoomList = async () => {
-			const rooms = await fetchRoomList().catch((err) =>
-				console.log(err)
-			);
-			setRoomList(rooms);
-		};
+    // Get room list from database
+    useEffect(() => {
+        const loadRoomList = async () => {
+            const rooms = await fetchRoomList().catch((err) =>
+                console.log(err)
+            );
+            setRoomList(rooms);
+        };
 
         loadRoomList();
     }, [forceUpdateId]);
@@ -52,19 +52,19 @@ export default function App({ navigation, route }) {
         );
     };
 
-	const handleAddRoom = () => {
-		insertRoom(
-			{
-				name: `Phòng ${roomList.length + 1}`,
-				rental_fee: 950000,
-				using_internet: 1,
-				using_garbage: 1,
-				old_electricity_number: new Date().getTime() % 1000000,
-				old_water_number: new Date().getTime() % 2000000,
-			},
-			forceUpdate
-		);
-	};
+    const handleAddRoom = () => {
+        insertRoom(
+            {
+                name: `Phòng ${roomList.length + 1}`,
+                rental_fee: 950000,
+                using_internet: 1,
+                using_garbage: 1,
+                old_electricity_number: new Date().getTime() % 1000000,
+                old_water_number: new Date().getTime() % 2000000,
+            },
+            forceUpdate
+        );
+    };
 
     return (
         <View style={styles.container}>

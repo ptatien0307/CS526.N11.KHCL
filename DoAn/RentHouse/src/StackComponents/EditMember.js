@@ -15,42 +15,37 @@ import {
 	editSuccessDialog,
 } from '../Dialogs/dialog.js';
 
-import { fetchCustomerDetails } from '../database/actions/customerActions';
+import { fetchCustomerDetails, updateCustomer } from '../database/actions/customerActions';
 
 export default function App({ navigation, route }) {
 	const memberID = route.params.memberID;
-	const [member, setMember] = useState({});
 
-	const [memberName, setMemberName] = useState(null);
+	const [memberDetails, setMemberDetails] = useState({});
+
+	const [customerName, setCustomerName] = useState(null);
 	const [dateOfBirth, setDateOfBirth] = useState(null);
 	const [address, setAddress] = useState(null);
-	const [CCCD, setCCCD] = useState(null);
-	const [ngayCapCCCD, setNgayCapCCCD] = useState(null);
-	const [noiCapCCCD, setNoiCapCCCD] = useState(null);
+	const [citizenID, setCitizenID] = useState(null);
+	const [citizenIDDate, setCitizenIDDate] = useState(null);
+	const [citizenIDPlace, setCitizenIDPlace] = useState(null);
 	const [job, setJob] = useState(null);
 
-	const [sex, setSex] = useState(null);
-	const [male, setMale] = useState(null);
-	const [female, setFemale] = useState(null);
+	const [gender, setGender] = useState(null);
 
 	useEffect(() => {
 		const loadCustomerDetails = async () => {
 			const customerDetails = await fetchCustomerDetails(memberID)
 				.catch((error) => console.log(error));
 
-			setMember(customerDetails);
-
-			setMemberName(customerDetails.name);
+			setMemberDetails(customerDetails);
+			setCustomerName(customerDetails.name);
 			setDateOfBirth(customerDetails.birthday);
 			setAddress(customerDetails.address);
-			setCCCD(customerDetails.citizen_id);
-			setNgayCapCCCD(customerDetails.citizen_id_date);
-			setNoiCapCCCD(customerDetails.citizen_id_place);
+			setCitizenID(customerDetails.citizen_id);
+			setCitizenIDDate(customerDetails.citizen_id_date);
+			setCitizenIDPlace(customerDetails.citizen_id_place);
 			setJob(customerDetails.job);
-			setSex(customerDetails.gender);
-
-			setMale(Boolean(customerDetails.gender));
-			setFemale(Boolean(!customerDetails.gender));
+			setGender(Boolean(customerDetails.gender));
 		};
 
 		loadCustomerDetails();
@@ -59,50 +54,43 @@ export default function App({ navigation, route }) {
 
 
 	// BACK-END ___ EDIT MEMBER INFORMATION
-	// const handleSave = () => {
-	// 	if (
-	// 		memberName === '' ||
-	// 		dateOfBirth === '' ||
-	// 		address === '' ||
-	// 		CCCD === '' ||
-	// 		ngayCapCCCD === '' ||
-	// 		noiCapCCCD === '' ||
-	// 		job === ''
-	// 	)
-	// 		alertEmptyDialog();
-	// 	else {
-	// 		const newMember = {
-	// 			id: member.id,
-	// 			memberName: memberName,
-	// 			dateOfBirth: dateOfBirth,
-	// 			CCCD: CCCD,
-	// 			ngayCapCCCD: ngayCapCCCD,
-	// 			noiCapCCCD: noiCapCCCD,
-	// 			job: job,
-	// 			sex: sex,
-	// 			address: address,
-	// 		};
-	// 		const newMemberList = route.params.memberList.map((item) => {
-	// 			if (item.id === member.id) return newMember;
-	// 			return item;
-	// 		});
-	// 		route.params.setMember(newMember);
-	// 		route.params.setCurrRoom({
-	// 			...route.params.currRoom,
-	// 			members: newMemberList,
-	// 		});
+	const handleSave = () => {
+		console.log(customerName, dateOfBirth, address, citizenID, citizenIDDate, citizenIDPlace, job);
 
-	// 		const newRoomList = route.params.roomList.map((item) => {
-	// 			if (item.id === route.params.currRoom.id) {
-	// 				return { ...route.params.currRoom, members: newMemberList };
-	// 			}
-	// 			return item;
-	// 		});
-	// 		route.params.setGlobalRoomList(newRoomList);
-	// 		navigation.goBack();
-	// 		editSuccessDialog();
-	// 	}
-	// };
+		if (customerName === '' ||
+			dateOfBirth === '' ||
+			address === '' ||
+			citizenID === '' ||
+			citizenIDDate === '' ||
+			citizenIDPlace === '' ||
+			job === ''
+		)
+			alertEmptyDialog();
+		else {
+			const updatedMember = async () => {
+				await updateCustomer({
+					...memberDetails,
+					name: customerName,
+					birthday: dateOfBirth,
+					gender: gender,
+					address: address,
+					citizen_id: citizenID,
+					citizen_id_date: citizenIDDate,
+					citizen_id_place: citizenIDPlace,
+					job: job,
+					// phone: ,
+					// temporary_residence: ,
+				})
+					.catch((error) => console.log(error));
+			};
+
+			updatedMember();
+
+			navigation.goBack();
+			editSuccessDialog();
+		}
+
+	};
 
 	return (
 		<View style={styles.container}>
@@ -124,9 +112,9 @@ export default function App({ navigation, route }) {
 							<TextInput
 								style={[styles.myBorder, styles.input]}
 								onChangeText={(text) => {
-									setMemberName(text);
+									setCustomerName(text);
 								}}
-								defaultValue={memberName}
+								defaultValue={customerName}
 								editable={true}
 								multiline={false}
 								maxLength={256}
@@ -172,12 +160,8 @@ export default function App({ navigation, route }) {
 							>
 								<View>
 									<Checkbox
-										value={male}
-										onValueChange={() => {
-											setFemale(false);
-											setMale(true);
-											setSex(1);
-										}}
+										value={gender}
+										onValueChange={setGender}
 									/>
 								</View>
 								<View style={{ marginLeft: 8 }}>
@@ -187,12 +171,8 @@ export default function App({ navigation, route }) {
 							<View style={{ flexDirection: 'row' }}>
 								<View>
 									<Checkbox
-										value={female}
-										onValueChange={() => {
-											setMale(false);
-											setFemale(true);
-											setSex(0);
-										}}
+										value={!gender}
+										onValueChange={setGender}
 									/>
 								</View>
 								<View style={{ marginLeft: 8 }}>
@@ -233,9 +213,9 @@ export default function App({ navigation, route }) {
 								<TextInput
 									style={[styles.myBorder, styles.input]}
 									onChangeText={(text) => {
-										setCCCD(text);
+										setCitizenID(text);
 									}}
-									defaultValue={CCCD}
+									defaultValue={citizenID}
 									editable={true}
 									multiline={false}
 									maxLength={256}
@@ -253,9 +233,9 @@ export default function App({ navigation, route }) {
 									<TextInput
 										style={[styles.myBorder, styles.input]}
 										onChangeText={(text) => {
-											setNgayCapCCCD(text);
+											setCitizenIDDate(text);
 										}}
-										defaultValue={ngayCapCCCD}
+										defaultValue={citizenIDDate}
 										editable={true}
 										multiline={false}
 										maxLength={256}
@@ -271,9 +251,9 @@ export default function App({ navigation, route }) {
 									<TextInput
 										style={[styles.myBorder, styles.input]}
 										onChangeText={(text) => {
-											setNoiCapCCCD(text);
+											setCitizenIDPlace(text);
 										}}
-										defaultValue={noiCapCCCD}
+										defaultValue={citizenIDPlace}
 										editable={true}
 										multiline={false}
 										maxLength={256}
@@ -307,9 +287,7 @@ export default function App({ navigation, route }) {
 					{/* Add room button */}
 					<TouchableOpacity
 						style={styles.addButton}
-						onPress={() => {
-							handleSave();
-						}}
+						onPress={handleSave}
 					>
 						<View>
 							<Text style={styles.textTitle}>LƯU CHỈNH SỬA</Text>

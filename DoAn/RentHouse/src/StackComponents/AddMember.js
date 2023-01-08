@@ -9,16 +9,45 @@ import {
 import Checkbox from 'expo-checkbox';
 import { useState } from 'react';
 
+import { insertCustomer } from '../database/actions/customerActions';
+
 export default function App({ navigation, route }) {
-	const [memberName, setMemberName] = useState('');
+	const roomID = route.params.roomID;
+
+	const [customerName, setCustomerName] = useState('');
 	const [dateOfBirth, setDateOfBirth] = useState('');
 	const [male, setMale] = useState(false);
 	const [female, setFemale] = useState(false);
 	const [address, setAddress] = useState('');
-	const [CCCD, setCCCD] = useState('');
-	const [ngayCapCCCD, setNgayCapCCCD] = useState('');
-	const [noiCapCCCD, setNoiCapCCCD] = useState('');
+	const [citizenID, setCitizenID] = useState('');
+	const [citizenIDDate, setCitizenIDDate] = useState('');
+	const [citizenIDPlace, setCitizenIDPlace] = useState('');
 	const [job, setJob] = useState('');
+
+	const handleAddCustomer = () => {
+		const insertedCustomer = async () => {
+			await insertCustomer(
+				{
+					name: customerName,
+					birthday: dateOfBirth,
+					gender: male ? male : female,
+					address: address,
+					citizen_id: citizenID,
+					citizen_id_date: citizenIDDate,
+					citizen_id_place: citizenIDPlace,
+					job: job,
+					// phone: ,
+					// temporary_residence: ,
+					room_id: roomID,
+				}
+			)
+				.catch((error) => console.log(error));
+		};
+
+		insertedCustomer();
+
+		navigation.goBack();
+	};
 
 	return (
 		<View style={styles.container}>
@@ -40,7 +69,7 @@ export default function App({ navigation, route }) {
 							<TextInput
 								style={[styles.myBorder, { paddingLeft: 8 }]}
 								onChangeText={(text) => {
-									setMemberName(text);
+									setCustomerName(text);
 								}}
 								placeholder="Nhập ..."
 								editable={true}
@@ -144,7 +173,7 @@ export default function App({ navigation, route }) {
 										{ paddingLeft: 8 },
 									]}
 									onChangeText={(text) => {
-										setCCCD(text);
+										setCitizenID(text);
 									}}
 									placeholder="Nhập ..."
 									editable={true}
@@ -167,7 +196,7 @@ export default function App({ navigation, route }) {
 											{ paddingLeft: 8 },
 										]}
 										onChangeText={(text) => {
-											setNgayCapCCCD(text);
+											setCitizenIDDate(text);
 										}}
 										placeholder="Nhập ..."
 										editable={true}
@@ -188,7 +217,7 @@ export default function App({ navigation, route }) {
 											{ paddingLeft: 8 },
 										]}
 										onChangeText={(text) => {
-											setNoiCapCCCD(text);
+											setCitizenIDPlace(text);
 										}}
 										placeholder="Nhập ..."
 										editable={true}
@@ -227,9 +256,7 @@ export default function App({ navigation, route }) {
 					{/* Add member button */}
 					<TouchableOpacity
 						style={styles.addButton}
-						onPress={() => {
-							// Handle add member
-						}}
+						onPress={handleAddCustomer}
 					>
 						<View>
 							<Text style={styles.textTitle}>
