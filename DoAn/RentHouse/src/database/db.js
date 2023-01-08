@@ -5,7 +5,7 @@ import {
 	populateCustomersTable,
 } from './tables/customersTable';
 import { createRoomsTable, populateRoomsTable } from './tables/roomsTable';
-import { createBillsTable } from './tables/billsTable';
+import { createBillsTable, populateBillsTable } from './tables/billsTable';
 import { createServicePricesTable } from './tables/servicePricesTable';
 import { populateServicePricesTable } from './tables/servicePricesTable';
 import { createNotesTable, populateNotesTable } from './tables/notesTable';
@@ -72,6 +72,12 @@ const populateTables = () => {
 			populateNotesTable,
 			[],
 			() => console.log('Populated notes table'),
+			(_, error) => console.log(error)
+		);
+		tx.executeSql(
+			populateBillsTable,
+			[],
+			() => console.log('Populated bills table'),
 			(_, error) => console.log(error)
 		);
 	});

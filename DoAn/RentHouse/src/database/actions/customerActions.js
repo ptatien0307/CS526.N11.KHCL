@@ -22,19 +22,7 @@ export const insertCustomer = (customer, forceUpdate) => {
                         temporary_residence,
                         room_id
                     )
-                    VALUES (
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?,
-                        ?
-                    );`,
+                    VALUES (?,?,?,?,?,?,?,?,?,?,?);`,
 					[
 						customer.name,
 						customer.birthday,

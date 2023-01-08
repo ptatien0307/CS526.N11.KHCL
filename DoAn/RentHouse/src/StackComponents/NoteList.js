@@ -9,7 +9,7 @@ import {
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-import { fetchNoteList, deleteNote } from '../database/actions/noteAction';
+import { fetchNoteList, deleteNote } from '../database/actions/noteActions';
 import { useForceUpdate } from '../utils/utils';
 
 export default function App({ navigation, route }) {
@@ -20,9 +20,9 @@ export default function App({ navigation, route }) {
 	// Get note list from database
 	useEffect(() => {
 		const loadNoteList = async () => {
-			const notes = await fetchNoteList().catch((err) =>
-				console.log(err)
-			);
+			const notes = await fetchNoteList()
+				.catch((error) => console.log(error));
+
 			setNoteList(notes);
 		};
 

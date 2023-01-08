@@ -2,366 +2,6 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 
 export default function App({ navigation }) {
-	const [WATER, setWATER] = useState('12000');
-	const [ELECTRICITY, setELECTRICITY] = useState('3000');
-
-	let DATA = [
-		{
-			id: '1',
-			roomName: 'Phòng 1',
-			roomStatus: null,
-			price: '800000',
-			contractDay: '23/11/2022',
-			deposit: '400000',
-			members: [
-				{
-					id: 1,
-					memberName: 'Pham Tran Anh Tien1',
-					dateOfBirth: '03/07/2002',
-					CCCD: '123456789',
-					ngayCapCCCD: '01/01/2021',
-					noiCapCCCD: 'Vĩnh Long',
-					job: 'Sinh viên',
-					sex: 1,
-					address:
-						'ấp Phước Hòa, xã Hòa Phú, huyện Long Hồ, tỉnh Vĩnh Long',
-				},
-				{
-					id: 2,
-					memberName: 'Pham Tran Anh Tien2',
-					dateOfBirth: '03/07/2002',
-					CCCD: '123456789',
-					ngayCapCCCD: '01/01/2021',
-					noiCapCCCD: 'Vĩnh Long',
-					job: 'Sinh viên',
-					sex: 1,
-					address:
-						'ấp Phước Hòa, xã Hòa Phú, huyện Long Hồ, tỉnh Vĩnh Long',
-				},
-				{
-					id: 3,
-					memberName: 'Pham Tran Anh Tien3',
-					dateOfBirth: '03/07/2002',
-					CCCD: '123456789',
-					ngayCapCCCD: '01/01/2021',
-					noiCapCCCD: 'Vĩnh Long',
-					job: 'Sinh viên',
-					sex: 1,
-					address:
-						'ấp Phước Hòa, xã Hòa Phú, huyện Long Hồ, tỉnh Vĩnh Long',
-				},
-				{
-					id: 4,
-					memberName: 'Pham Tran Anh Tien4',
-					dateOfBirth: '03/07/2002',
-					CCCD: '123456789',
-					ngayCapCCCD: '01/01/2021',
-					noiCapCCCD: 'Vĩnh Long',
-					job: 'Sinh viên',
-					sex: 1,
-					address:
-						'ấp Phước Hòa, xã Hòa Phú, huyện Long Hồ, tỉnh Vĩnh Long',
-				},
-			],
-			donGiaDien: ELECTRICITY,
-			donGiaNuoc: WATER,
-			billHistory: [
-				{
-					id: 1,
-					monthYear: '5/2022',
-					dienCu: '1420',
-					dienMoi: '1480',
-					nuocCu: '90',
-					nuocMoi: '100',
-					total: '0',
-					collected: '595000',
-					remained: '0',
-					count: '1',
-				},
-				{
-					id: 2,
-					monthYear: '6/2022',
-					dienCu: '1420',
-					dienMoi: '1480',
-					nuocCu: '90',
-					nuocMoi: '100',
-					total: '0',
-					collected: '595000',
-					remained: '0',
-					count: '1',
-				},
-				{
-					id: 3,
-					monthYear: '7/2022',
-					dienCu: '1420',
-					dienMoi: '1520',
-					nuocCu: '90',
-					nuocMoi: '120',
-					total: '0',
-					collected: '595000',
-					remained: '0',
-					count: '1',
-				},
-			],
-			lastestDien: null,
-			lastestNuoc: null,
-		},
-		{
-			id: '2',
-			roomName: 'Phòng 2',
-			roomStatus: null,
-			price: '800000',
-			contractDay: '12/12/2022',
-			deposit: '0',
-			members: [
-				{
-					id: 1,
-					memberName: 'Pham Tran Anh Tien',
-					dateOfBirth: '03/07/2002',
-					CCCD: '123456789',
-					ngayCapCCCD: '01/01/2021',
-					noiCapCCCD: 'Vĩnh Long',
-					job: 'Sinh viên',
-					sex: 1,
-					address:
-						'ấp Phước Hòa, xã Hòa Phú, huyện Long Hồ, tỉnh Vĩnh Long',
-				},
-				{
-					id: 2,
-					memberName: 'Pham Tran Anh Tien',
-					dateOfBirth: '03/07/2002',
-					CCCD: '123456789',
-					ngayCapCCCD: '01/01/2021',
-					noiCapCCCD: 'Vĩnh Long',
-					job: 'Sinh viên',
-					sex: 1,
-					address:
-						'ấp Phước Hòa, xã Hòa Phú, huyện Long Hồ, tỉnh Vĩnh Long',
-				},
-			],
-			donGiaDien: ELECTRICITY,
-			donGiaNuoc: WATER,
-			billHistory: [
-				{
-					id: 1,
-					monthYear: '5/2022',
-					dienCu: '1420',
-					dienMoi: '1480',
-					nuocCu: '90',
-					nuocMoi: '100',
-					total: '0',
-					collected: '595000',
-					remained: '0',
-					count: '1',
-				},
-				{
-					id: 2,
-					monthYear: '6/2022',
-					dienCu: '1420',
-					dienMoi: '1480',
-					nuocCu: '90',
-					nuocMoi: '100',
-					total: '0',
-					collected: '0',
-					remained: '0',
-					count: '0',
-				},
-				{
-					id: 3,
-					monthYear: '7/2022',
-					dienCu: '1420',
-					dienMoi: '1480',
-					nuocCu: '90',
-					nuocMoi: '100',
-					total: '0',
-					collected: '0',
-					remained: '0',
-					count: '0',
-				},
-			],
-			lastestDien: null,
-			lastestNuoc: null,
-		},
-		{
-			id: '3',
-			roomName: 'Phòng 3',
-			roomStatus: null,
-			price: '800000',
-			contractDay: '',
-			deposit: '0',
-			members: [],
-			donGiaDien: ELECTRICITY,
-			donGiaNuoc: WATER,
-			billHistory: [],
-			lastestDien: null,
-			lastestNuoc: null,
-		},
-		{
-			id: '4',
-			roomName: 'Phòng 4',
-			roomStatus: null,
-			price: '800000',
-			contractDay: '',
-			deposit: '0',
-			members: [],
-			donGiaDien: ELECTRICITY,
-			donGiaNuoc: WATER,
-			billHistory: [],
-			lastestDien: null,
-			lastestNuoc: null,
-		},
-		{
-			id: '5',
-			roomName: 'Phòng 5',
-			roomStatus: null,
-			price: '800000',
-			contractDay: '',
-			deposit: '0',
-			members: [],
-			donGiaDien: ELECTRICITY,
-			donGiaNuoc: WATER,
-			billHistory: [],
-			lastestDien: null,
-			lastestNuoc: null,
-		},
-		{
-			id: '6',
-			roomName: 'Phòng 6',
-			roomStatus: null,
-			price: '800000',
-			contractDay: '',
-			deposit: '0',
-			members: [],
-			donGiaDien: ELECTRICITY,
-			donGiaNuoc: WATER,
-			billHistory: [],
-			lastestDien: null,
-			lastestNuoc: null,
-		},
-		{
-			id: '7',
-			roomName: 'Phòng 7',
-			roomStatus: null,
-			price: '800000',
-			contractDay: '',
-			deposit: '0',
-			members: [],
-			donGiaDien: ELECTRICITY,
-			donGiaNuoc: WATER,
-			billHistory: [],
-			lastestDien: null,
-			lastestNuoc: null,
-		},
-		{
-			id: '8',
-			roomName: 'Phòng 8',
-			roomStatus: null,
-			price: '800000',
-			contractDay: '',
-			deposit: '0',
-			members: [],
-			donGiaDien: ELECTRICITY,
-			donGiaNuoc: WATER,
-			billHistory: [],
-			lastestDien: null,
-			lastestNuoc: null,
-		},
-	];
-
-	let modifiedDATA = DATA.map((item) => {
-		if (item.members.length === 0) item.roomStatus = 'Trống';
-		else item.roomStatus = item.members.length + ' người';
-
-		if (item.billHistory.length !== 0) {
-			item.lastestDien =
-				item.billHistory[item.billHistory.length - 1].dienMoi;
-			item.lastestNuoc =
-				item.billHistory[item.billHistory.length - 1].nuocMoi;
-		}
-
-		item.billHistory.forEach((billItem) => {
-			let totalE = (billItem.dienMoi - billItem.dienCu) * ELECTRICITY;
-			let totalW = (billItem.nuocMoi - billItem.nuocCu) * WATER;
-
-			billItem.total =
-				parseInt(totalE) + parseInt(totalW) + parseInt(item.price);
-			billItem.remained = billItem.total - billItem.collected;
-		});
-		return item;
-	});
-
-	let NOTE = [
-		{
-			id: 1,
-			noteContent: 'Do something 1',
-		},
-		{
-			id: 2,
-			noteContent: 'Do something 2',
-		},
-		{
-			id: 3,
-			noteContent: 'Do something 3',
-		},
-		{
-			id: 4,
-			noteContent: 'Do something 4',
-		},
-		{
-			id: 5,
-			noteContent: 'Do something 5',
-		},
-		{
-			id: 6,
-			noteContent: 'Do something 5',
-		},
-	];
-	let BILL = [
-		{
-			id: 1,
-			roomName: 'Phòng 1',
-			monthYear: '5/2022',
-			dienCu: '1420',
-			dienMoi: '1480',
-			nuocCu: '90',
-			nuocMoi: '100',
-			total: '1000000',
-			collected: '505000',
-			remained: '495000',
-			count: '1',
-		},
-		{
-			id: 2,
-			roomName: 'Phòng 1',
-			monthYear: '6/2022',
-			dienCu: '1420',
-			dienMoi: '1480',
-			nuocCu: '90',
-			nuocMoi: '100',
-			total: '0',
-			collected: '0',
-			remained: '0',
-			count: '0',
-		},
-		{
-			id: 3,
-			roomName: 'Phòng 1',
-			monthYear: '7/2022',
-			dienCu: '1420',
-			dienMoi: '1480',
-			nuocCu: '90',
-			nuocMoi: '100',
-			total: '0',
-			collected: '0',
-			remained: '0',
-			count: '0',
-		},
-	];
-
-	// const [notes, setNotes] = useState(NOTE);
-	// const [roomList, setRoomList] = useState(modifiedDATA);
-	const [billList, setBillList] = useState(BILL);
-
 	return (
 		<View style={styles.container}>
 			{/* Header */}
@@ -378,7 +18,7 @@ export default function App({ navigation }) {
 						TouchableOpacity
 						style={[styles.feature, styles.myBackground]}
 						onPress={() => {
-							navigation.navigate('RoomList', {});
+							navigation.navigate('RoomList');
 						}}
 					>
 						<Text style={styles.textTitle}>DANH SÁCH PHÒNG</Text>
@@ -388,11 +28,7 @@ export default function App({ navigation }) {
 					<TouchableOpacity
 						style={[styles.feature, styles.myBackground]}
 						onPress={() => {
-							navigation.navigate('CreateBill', {
-								roomList,
-								ELECTRICITY,
-								WATER,
-							});
+							navigation.navigate('CreateBill');
 						}}
 					>
 						<Text style={styles.textTitle}>LẬP HÓA ĐƠN</Text>
@@ -405,10 +41,7 @@ export default function App({ navigation }) {
 					<TouchableOpacity
 						style={[styles.feature, styles.myBackground]}
 						onPress={() => {
-							navigation.navigate('BillList', {
-								billList,
-								setBillList,
-							});
+							navigation.navigate('BillList');
 						}}
 					>
 						<Text style={styles.textTitle}>THU TIỀN HÓA ĐƠN</Text>
@@ -418,7 +51,7 @@ export default function App({ navigation }) {
 					<TouchableOpacity
 						style={[styles.feature, styles.myBackground]}
 						onPress={() => {
-							navigation.navigate('Service', {});
+							navigation.navigate('Service');
 						}}
 					>
 						<Text style={styles.textTitle}>CÀI ĐẶT DỊCH VỤ</Text>
@@ -431,7 +64,7 @@ export default function App({ navigation }) {
 					<TouchableOpacity
 						style={[styles.feature, styles.myBackground]}
 						onPress={() => {
-							navigation.navigate('NoteList', {});
+							navigation.navigate('NoteList');
 						}}
 					>
 						<Text style={styles.textTitle}>GHI CHÚ</Text>
@@ -441,7 +74,7 @@ export default function App({ navigation }) {
 					<TouchableOpacity
 						style={[styles.feature, styles.myBackground]}
 						onPress={() => {
-							navigation.navigate('Guide', {});
+							navigation.navigate('Guide');
 						}}
 					>
 						<Text style={styles.textTitle}>HƯỚNG DẪN</Text>

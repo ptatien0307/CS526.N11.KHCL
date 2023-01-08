@@ -15,7 +15,7 @@ import {
 	editSuccessDialog,
 } from '../Dialogs/dialog.js';
 
-import { fetchCustomerDetails } from '../database/actions/customerAction';
+import { fetchCustomerDetails } from '../database/actions/customerActions';
 
 export default function App({ navigation, route }) {
 	const memberID = route.params.memberID;

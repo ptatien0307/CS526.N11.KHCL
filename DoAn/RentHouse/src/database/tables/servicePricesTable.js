@@ -12,9 +12,8 @@ export const createServicePricesTable = `
 export const populateServicePricesTable = `
     INSERT OR REPLACE INTO service_prices (id, name, price, unit)
     VALUES 
-        (1, 'Internet', 100000, 'VND/tháng'),
-        (2, 'Rác', 50000, 'VND/tháng'),
-        (3, 'Điện', 2000, 'VND/kWh'),
-        (4, 'Nước', 10000, 'VND/m3'),
-        (5, 'Phòng', 950000, 'VND/Phòng');
+        (1, 'Rác', 50000, 'VND/tháng'),
+        (2, 'Điện', 2000, 'VND/kWh'),
+        (3, 'Nước', 10000, 'VND/m3'),
+        (4, 'Phòng', 950000, 'VND/Phòng');
 `;

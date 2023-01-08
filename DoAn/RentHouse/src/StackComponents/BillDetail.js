@@ -1,19 +1,29 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ThuTienHoaDon from './CollectMoney.js';
+import { fetchBillDetails } from '../database/actions/billActions.js';
+import { useForceUpdate } from '../utils/utils.js';
 
 export default function App({ navigation, route }) {
-	const [currBill, setCurrBill] = useState(route.params.bill);
+	const selected_bill_id = route.params.selected_bill_id;
 
+	const [billDetails, setBillDetails] = useState({});
 	const [isThuTienModal, setIsThuTienModal] = useState(false);
+	const [forceUpdate, forceUpdateId] = useForceUpdate();
 
-	const currRoom = route.params.currRoom;
-	const formatNumber = (q) => {
-		return q.toLocaleString({
-			style: 'currency',
-			currency: 'VND',
-		});
-	};
+	useEffect(() => {
+		const loadBillDetails = async () => {
+			const bill = await fetchBillDetails(selected_bill_id)
+				.catch((error) => console.log(error));
+
+			setBillDetails(bill);
+
+			console.log(bill);
+		};
+
+		loadBillDetails();
+	}, [forceUpdateId]);
+
 
 	return (
 		<View style={styles.container}>
@@ -24,10 +34,10 @@ export default function App({ navigation, route }) {
 					{/* Name and day */}
 					<View>
 						<Text style={styles.textTitle}>
-							{currRoom.roomName}
+							{billDetails.room_name}
 						</Text>
 						<Text style={styles.textTitle}>
-							{currBill.monthYear}
+							{billDetails.created_at}
 						</Text>
 					</View>
 
@@ -36,13 +46,13 @@ export default function App({ navigation, route }) {
 						<View>
 							<Text>Tiền phòng</Text>
 							<Text style={styles.textBold}>
-								30 ngày, giá: {currRoom.price}đ
+								30 ngày, giá: {billDetails.rental_fee}đ
 							</Text>
 						</View>
 						<View>
 							<Text>Thành tiền</Text>
 							<Text style={styles.textBoldRight}>
-								{currRoom.price}đ
+								{billDetails.rental_fee}đ
 							</Text>
 						</View>
 					</View>
@@ -51,17 +61,18 @@ export default function App({ navigation, route }) {
 					<View style={[styles.detailItem, styles.myBackground]}>
 						<View>
 							<Text>Tiền điện</Text>
-							<Text>{`Số cũ: ${currBill.dienCu}, số mới: ${currBill.dienMoi}`}</Text>
-							<Text style={styles.textBold}>{`${
-								currBill.dienMoi - currBill.dienCu
-							} KWh x ${currRoom.donGiaDien}đ`}</Text>
+							<Text>
+								{`Số cũ: ${billDetails.old_electricity_number}, số mới: ${billDetails.new_electricity_number}`}
+							</Text>
+							<Text style={styles.textBold}>
+								{`${billDetails.new_electricity_number - billDetails.old_electricity_number} KWh x ${billDetails.electricity_fee}đ`}
+							</Text>
 						</View>
 						<View>
 							<Text>Thành tiền</Text>
-							<Text style={styles.textBoldRight}>{`${
-								(currBill.dienMoi - currBill.dienCu) *
-								currRoom.donGiaDien
-							}đ`}</Text>
+							<Text style={styles.textBoldRight}>
+								{`${(billDetails.new_electricity_number - billDetails.old_electricity_number) * billDetails.electricity_fee}đ`}
+							</Text>
 						</View>
 					</View>
 
@@ -69,17 +80,44 @@ export default function App({ navigation, route }) {
 					<View style={[styles.detailItem, styles.myBackground]}>
 						<View>
 							<Text>Tiền nước</Text>
-							<Text>{`Số cũ: ${currBill.nuocCu}, số mới: ${currBill.nuocMoi}`}</Text>
-							<Text style={styles.textBold}>{`${
-								currBill.nuocMoi - currBill.nuocCu
-							} KWh x ${currRoom.donGiaNuoc}đ`}</Text>
+							<Text>
+								{`Số cũ: ${billDetails.old_water_number}, số mới: ${billDetails.new_water_number}`}
+							</Text>
+							<Text style={styles.textBold}>
+								{`${billDetails.new_water_number - billDetails.old_water_number} VND/m3 x ${billDetails.water_fee}đ`}
+							</Text>
 						</View>
 						<View>
 							<Text>Thành tiền</Text>
-							<Text style={styles.textBoldRight}>{`${
-								(currBill.nuocMoi - currBill.nuocCu) *
-								currRoom.donGiaNuoc
-							}đ`}</Text>
+							<Text style={styles.textBoldRight}>
+								{`${(billDetails.new_water_number - billDetails.old_water_number) * billDetails.water_fee}đ`}
+							</Text>
+						</View>
+					</View>
+
+					{/* Credit */}
+					<View style={[styles.detailItem, styles.myBackground]}>
+						<View>
+							<Text>Giảm trừ</Text>
+						</View>
+						<View>
+							<Text>Thành tiền</Text>
+							<Text style={styles.textBoldRight}>
+								{`${billDetails.credit}đ`}
+							</Text>
+						</View>
+					</View>
+
+					{/* Others fee */}
+					<View style={[styles.detailItem, styles.myBackground]}>
+						<View>
+							<Text>Thu thêm</Text>
+						</View>
+						<View>
+							<Text>Thành tiền</Text>
+							<Text style={styles.textBoldRight}>
+								{`${billDetails.others_fee}đ`}
+							</Text>
 						</View>
 					</View>
 
@@ -87,7 +125,7 @@ export default function App({ navigation, route }) {
 					<View style={[styles.detailItemRight, styles.myBackground]}>
 						<Text>Tổng cộng kỳ này</Text>
 						<Text style={styles.textBoldRight}>
-							{currBill.total}đ
+							{billDetails.total}đ
 						</Text>
 					</View>
 				</View>
@@ -102,20 +140,20 @@ export default function App({ navigation, route }) {
 					>
 						<Text>Khách đã trả</Text>
 						<Text style={styles.textBoldRight}>
-							{currBill.collected}đ
+							{billDetails.total - billDetails.remained}đ
 						</Text>
 					</View>
 					<View style={[styles.detailItem, styles.myBackground]}>
 						<View>
 							<Text>Số lần thu</Text>
 							<Text style={styles.textBold}>
-								{currBill.count} lần
+								{billDetails.paid_time} lần
 							</Text>
 						</View>
 						<View>
 							<Text>Tổng phải thu</Text>
 							<Text style={styles.textBoldRight}>
-								{currBill.total - currBill.collected}đ
+								{billDetails.remained}đ
 							</Text>
 						</View>
 					</View>
@@ -134,14 +172,8 @@ export default function App({ navigation, route }) {
 			{/* Update current bill */}
 			{isThuTienModal && (
 				<ThuTienHoaDon
-					currBill={currBill}
-					setCurrBill={setCurrBill}
-					billHistory={currRoom.billHistory}
-					currRoom={currRoom}
-					setCurrRoom={route.params.setCurrRoom}
-					setRoomList={route.params.setRoomList}
-					setGlobalRoomList={route.params.setGlobalRoomList}
-					roomList={route.params.roomList}
+					billDetails={billDetails}
+					forceUpdate={forceUpdate}
 					setIsThuTienModal={setIsThuTienModal}
 				></ThuTienHoaDon>
 			)}

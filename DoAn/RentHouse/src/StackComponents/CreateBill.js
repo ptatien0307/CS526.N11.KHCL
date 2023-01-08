@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
 	StyleSheet,
 	View,
@@ -6,6 +6,7 @@ import {
 	FlatList,
 	TouchableOpacity,
 } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 import {
 	alertDeleteDialog,
@@ -15,35 +16,50 @@ import {
 	addSuccessDialog,
 } from '../Dialogs/dialog.js';
 
+import { fetchRoomList, fetchRoomListInUse, insertRoom } from '../database/actions/roomActions';
+import { useForceUpdate } from '../utils/utils';
+
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {
-	const [isLapHoaDonModal, setIsLapHoaDonModal] = useState(false);
-	const [roomList, setRoomList] = useState(
-		route.params.roomList.filter((room) => room.members.length > 0)
-	);
+	const isFocused = useIsFocused();
+
+	const [roomList, setRoomList] = useState([]);
+	const [selectedRoomId, setSelectedRoomId] = useState(null);
+	const [forceUpdate, forceUpdateId] = useForceUpdate();
+
 	let month = new Date().getMonth() + 1;
 	let year = new Date().getFullYear();
+
+	// Get room list from database
+	useEffect(() => {
+		const loadRoomList = async () => {
+			const rooms = await fetchRoomListInUse()
+				.catch((error) => console.log(error));
+			setRoomList(rooms);
+		};
+
+		loadRoomList();
+	}, [isFocused]);
+
+
 	const renderItem = ({ item }) => (
 		// Ghi chi so dich vu modal
 		<TouchableOpacity
 			onPress={() => {
-				navigation.navigate('GhiChiSoDichVu', {
-					room: item,
-					roomList: roomList,
-					setRoomList: setRoomList,
+				setSelectedRoomId(item.id);
+				navigation.navigate('CreateBillDetail', {
+					selected_room_id: item.id,
 				});
 			}}
 		>
 			<View style={[styles.room, styles.myBackground]}>
-				{/* Room name */}
 				<View>
-					<Text style={styles.styleRoomName}>{item.roomName}</Text>
+					<Text style={styles.styleRoomName}>{item.name}</Text>
 				</View>
 
-				{/* Room status */}
 				<View>
-					<Text>TÌNH TRẠNG: {item.roomStatus}</Text>
+					<Text>TÌNH TRẠNG: {item.status}</Text>
 				</View>
 			</View>
 		</TouchableOpacity>
@@ -51,17 +67,21 @@ export default function App({ navigation, route }) {
 
 	return (
 		<View style={styles.container}>
+
+			{/* Day */}
+			<View style={styles.containerdate}>
+				<Text style={[styles.date]}> Tháng {month} / {year}</Text>
+			</View>
+
 			{/* Body */}
 			<View style={styles.body}>
-				<Text style={[styles.date]}>
-					{' '}
-					Thang {month} {year}
-				</Text>
+
 
 				<FlatList
 					data={roomList}
 					renderItem={renderItem}
 					keyExtractor={(item) => item.id}
+					extraData={selectedRoomId}
 				/>
 			</View>
 		</View>
@@ -111,6 +131,17 @@ const styles = StyleSheet.create({
 		marginBottom: 8,
 		width: '100%',
 		borderLeftWidth: 5,
+	},
+
+	containerdate: {
+		width: '95%',
+		height: '10%',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#dfdfdf',
+		borderRadius: 10,
+		padding: 8,
+		margin: 8,
 	},
 
 	date: {

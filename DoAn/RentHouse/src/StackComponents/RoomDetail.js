@@ -23,26 +23,20 @@ export default function App({ navigation, route }) {
 	useEffect(() => {
 		const loadRoomDetails = async () => {
 			const roomDetails = await fetchRoomDetails(selected_room_id)
-				.catch((err) => console.log(err));
+				.catch((error) => console.log(error));
 			setRoom(roomDetails);
-
-			console.log(roomDetails);
 		};
 
 		const loadMemberList = async () => {
 			const memberList = await fetchRoomMemberList(selected_room_id)
-				.catch((err) => console.log(err));
+				.catch((error) => console.log(error));
 			setMemberList(memberList);
-
-			console.log(memberList);
 		};
 
 		const loadBillList = async () => {
 			const billList = await fetchRoomBillList(selected_room_id)
-				.catch((err) => console.log(err));
+				.catch((error) => console.log(error));
 			setBillList(billList);
-
-			console.log(billList);
 		};
 
 		loadRoomDetails();
@@ -99,7 +93,7 @@ export default function App({ navigation, route }) {
 			<TouchableOpacity
 				onPress={() => {
 					navigation.navigate('BillDetail', {
-						billID: item.id,
+						selected_bill_id: item.id,
 					});
 				}}
 			>

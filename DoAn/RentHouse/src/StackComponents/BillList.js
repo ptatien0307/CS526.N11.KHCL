@@ -5,21 +5,34 @@ import {
 	FlatList,
 	TouchableOpacity,
 } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { fetchBillList } from '../database/actions/billActions';
 
 export default function App({ navigation, route }) {
-	const [billList, setBillList] = useState(route.params.billList);
+	const [billList, setBillList] = useState([]);
+
+	useEffect(() => {
+		const loadBillList = async () => {
+			const bills = await fetchBillList()
+				.catch((error) => console.log(error));
+
+			setBillList(bills);
+			console.log(bills[0]);
+		};
+
+		loadBillList();
+
+	}, []);
+
 	const renderItem = ({ item }) => {
 		return (
 			// Go to specific room
 			<TouchableOpacity
 				onPress={() => {
-					navigation.navigate('ChiTietHoaDon', {
-						currBill: billList[item.id - 1],
-						billList,
-						setBillList,
+					navigation.navigate('BillDetail', {
+						selected_bill_id: item.id
 					});
 				}}
 			>
@@ -27,7 +40,7 @@ export default function App({ navigation, route }) {
 					{/* Room name */}
 					<View>
 						<Text style={styles.styleRoomName}>
-							{item.roomName} - {item.monthYear}
+							{item.room_name} - {item.created_at}
 						</Text>
 					</View>
 
@@ -40,7 +53,7 @@ export default function App({ navigation, route }) {
 						<View>
 							<Text style={styles.textBody}>Đã thu</Text>
 							<Text style={styles.textBody}>
-								{item.collected}
+								{item.total - item.remained}
 							</Text>
 						</View>
 						<View>
@@ -55,24 +68,6 @@ export default function App({ navigation, route }) {
 
 	return (
 		<View style={styles.container}>
-			{/* Header */}
-			<View style={[styles.header]}>
-				<View style={styles.headerTop}>
-					{/* Back to menu button */}
-					<TouchableOpacity
-						onPress={() => {
-							navigation.goBack();
-						}}
-					>
-						<Icon name="arrow-left" size={35} />
-					</TouchableOpacity>
-
-					{/* Title */}
-					<Text style={styles.stackTitle}>THU TIỀN HÓA ĐƠN</Text>
-				</View>
-			</View>
-
-			{/* Body */}
 			<View style={styles.body}>
 				<FlatList
 					data={billList}
