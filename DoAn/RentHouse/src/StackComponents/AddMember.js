@@ -24,10 +24,13 @@ export default function App({ navigation, route }) {
 	return (
 		<View style={styles.container}>
 			{/* Body */}
-			<View style={[styles.body, styles.myBorder]}>
+			<View style={[styles.body]}>
 				<ScrollView
-					style={{ width: '100%', height: '100%' }}
-					contentContainerStyle={{ flex: 1, alignItems: 'center' }}
+					style={{ width: '100%' }}
+					contentContainerStyle={{
+						flexGrow: 1,
+						alignItems: 'center',
+					}}
 				>
 					{/* Name */}
 					<View style={[styles.item, styles.myBackground]}>
@@ -131,7 +134,7 @@ export default function App({ navigation, route }) {
 
 					{/* CCCD */}
 					<View style={[styles.item, styles.myBackground]}>
-						<View>
+						<View style={{ marginBottom: 16 }}>
 							<View style={styles.titleContainer}>
 								<Text style={styles.title}>CCCD:</Text>
 							</View>
@@ -222,7 +225,7 @@ export default function App({ navigation, route }) {
 						</View>
 					</View>
 
-					{/* Add room button */}
+					{/* Add member button */}
 					<TouchableOpacity
 						style={styles.addButton}
 						onPress={() => {
@@ -257,10 +260,10 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-around',
 	},
 	item: {
-		width: '90%',
+		width: '100%',
 		height: 'auto',
 		paddingHorizontal: 8,
-		paddingTop: 8,
+		paddingVertical: 8,
 		marginBottom: 16,
 	},
 	row: {
@@ -272,8 +275,7 @@ const styles = StyleSheet.create({
 	},
 	titleContainer: {
 		borderBottomWidth: 2,
-		height: '20%',
-		paddingBottom: 24,
+		paddingBottom: 8,
 		marginBottom: 8,
 	},
 
@@ -282,7 +284,8 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		paddingHorizontal: 8,
 		paddingVertical: 4,
-		marginTop: 16,
+		marginTop: 8,
+		marginBottom: 16
 	},
 	textTitle: {
 		fontSize: 20,

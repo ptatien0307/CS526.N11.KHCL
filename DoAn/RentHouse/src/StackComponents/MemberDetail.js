@@ -225,6 +225,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		borderBottomWidth: 2,
+		paddingBottom: 8,
 		marginBottom: 8,
 	},
 	addButton: {

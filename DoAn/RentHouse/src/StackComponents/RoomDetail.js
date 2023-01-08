@@ -549,34 +549,17 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 
-	subMenuContainer: {
-		borderWidth: 2,
-		borderRadius: 10,
-		backgroundColor: 'white',
-		width: '50%',
-		height: '30%',
-		position: 'absolute',
-		top: 30,
-		right: 8,
-		backgroundColor: '#dfdfdf',
-	},
-	subMenu: {
-		width: '100%',
-		height: '51%',
-		justifyContent: 'center',
-	},
-
 	deleteIcon: {
 		position: 'absolute',
 		right: 8,
 	},
 	deleteButton: {
 		backgroundColor: 'black',
-		width: '15%',
+		width: '90%',
 		height: '5%',
 		borderRadius: 10,
-		justifyContent: 'center',
-		alignItems: 'center',
+		marginBottom: 12,
+		justifyContent: 'center'
 	},
 
 	billContainer: {
