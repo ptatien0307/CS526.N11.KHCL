@@ -426,7 +426,7 @@ export default function App({ navigation, route }) {
 				<TouchableOpacity
 					style={styles.deleteButton}
 					onPress={() => {
-						//Handle reset room information
+						// Handle reset room information
 					}}
 				>
 					<Text style={styles.textTitleWhite}>

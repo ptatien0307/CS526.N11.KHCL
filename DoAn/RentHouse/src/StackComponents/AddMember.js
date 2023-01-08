@@ -14,7 +14,6 @@ export default function App({ navigation, route }) {
 	const [dateOfBirth, setDateOfBirth] = useState('');
 	const [male, setMale] = useState(false);
 	const [female, setFemale] = useState(false);
-
 	const [address, setAddress] = useState('');
 	const [CCCD, setCCCD] = useState('');
 	const [ngayCapCCCD, setNgayCapCCCD] = useState('');
