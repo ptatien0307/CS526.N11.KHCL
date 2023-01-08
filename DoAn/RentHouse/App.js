@@ -17,6 +17,8 @@ import Guide from './src/StackComponents/Guide.js';
 import CreateBill from './src/StackComponents/CreateBill.js';
 import Service from './src/StackComponents/Service.js';
 import CreateBillDetail from './src/StackComponents/CreateBillDetail.js';
+import EditBasicInfo from './src/StackComponents/EditBasicInfo.js'
+
 
 import AddModal from './src/Modals/AddModal.js';
 import EditModal from './src/Modals/EditModal.js';
@@ -44,6 +46,7 @@ export default function App() {
 				/>
 				<Stack.Screen name="RoomList" component={RoomList} />
 				<Stack.Screen name="RoomDetail" component={RoomDetail} />
+				<Stack.Screen name="EditBasicInfo" component={EditBasicInfo} />
 				<Stack.Screen name="MemberDetail" component={MemberDetail} />
 				<Stack.Screen name="AddMember" component={AddMember} />
 				<Stack.Screen name="EditMember" component={EditMember} />
