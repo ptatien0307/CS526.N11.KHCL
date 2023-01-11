@@ -390,6 +390,7 @@ const styles = StyleSheet.create({
     },
 
     textInput: {
+        paddingLeft: 4,
         borderColor: 'gray',
         borderWidth: 1,
         width: '60%',

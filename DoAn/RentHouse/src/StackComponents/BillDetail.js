@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useEffect, useState } from 'react';
 import ThuTienHoaDon from './CollectMoney.js';
 import { fetchBillDetails } from '../database/actions/billActions.js';
@@ -27,169 +27,165 @@ export default function App({ navigation, route }) {
 
 	return (
 		<View style={styles.container}>
-			{/* Body */}
-			<View style={styles.body}>
+			<ScrollView
+				style={{ width: '100%'}}
+				contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}
+			>
 				{/* Bill detail */}
-				<View style={[styles.billDetail, styles.myBorder]}>
-					{/* Name and day */}
+			<View style={[styles.billDetail, styles.myBorder]}>
+
+				{/* Name and day */}
+				<View>
+					<Text style={styles.textTitle}>
+						{billDetails.room_name}
+					</Text>
+					<Text style={styles.textTitle}>
+						{billDetails.created_at}
+					</Text>
+				</View>
+
+				{/* Price */}
+				<View style={[styles.detailItem, styles.myBackground]}>
 					<View>
-						<Text style={styles.textTitle}>
-							{billDetails.room_name}
-						</Text>
-						<Text style={styles.textTitle}>
-							{billDetails.created_at}
+						<Text>Tiền phòng</Text>
+						<Text style={styles.textBold}>
+							30 ngày, giá: {billDetails.rental_fee}đ
 						</Text>
 					</View>
-
-					{/* Price */}
-					<View style={[styles.detailItem, styles.myBackground]}>
-						<View>
-							<Text>Tiền phòng</Text>
-							<Text style={styles.textBold}>
-								30 ngày, giá: {billDetails.rental_fee}đ
-							</Text>
-						</View>
-						<View>
-							<Text>Thành tiền</Text>
-							<Text style={styles.textBoldRight}>
-								{billDetails.rental_fee}đ
-							</Text>
-						</View>
-					</View>
-
-					{/* Electricity */}
-					<View style={[styles.detailItem, styles.myBackground]}>
-						<View>
-							<Text>Tiền điện</Text>
-							<Text>
-								{`Số cũ: ${billDetails.old_electricity_number}, số mới: ${billDetails.new_electricity_number}`}
-							</Text>
-							<Text style={styles.textBold}>
-								{`${billDetails.new_electricity_number - billDetails.old_electricity_number} KWh x ${billDetails.electricity_fee}đ`}
-							</Text>
-						</View>
-						<View>
-							<Text>Thành tiền</Text>
-							<Text style={styles.textBoldRight}>
-								{`${(billDetails.new_electricity_number - billDetails.old_electricity_number) * billDetails.electricity_fee}đ`}
-							</Text>
-						</View>
-					</View>
-
-					{/* Water */}
-					<View style={[styles.detailItem, styles.myBackground]}>
-						<View>
-							<Text>Tiền nước</Text>
-							<Text>
-								{`Số cũ: ${billDetails.old_water_number}, số mới: ${billDetails.new_water_number}`}
-							</Text>
-							<Text style={styles.textBold}>
-								{`${billDetails.new_water_number - billDetails.old_water_number} VND/m3 x ${billDetails.water_fee}đ`}
-							</Text>
-						</View>
-						<View>
-							<Text>Thành tiền</Text>
-							<Text style={styles.textBoldRight}>
-								{`${(billDetails.new_water_number - billDetails.old_water_number) * billDetails.water_fee}đ`}
-							</Text>
-						</View>
-					</View>
-
-					{/* Credit */}
-					<View style={[styles.detailItem, styles.myBackground]}>
-						<View>
-							<Text>Giảm trừ</Text>
-						</View>
-						<View>
-							<Text>Thành tiền</Text>
-							<Text style={styles.textBoldRight}>
-								{`${billDetails.credit}đ`}
-							</Text>
-						</View>
-					</View>
-
-					{/* Others fee */}
-					<View style={[styles.detailItem, styles.myBackground]}>
-						<View>
-							<Text>Thu thêm</Text>
-						</View>
-						<View>
-							<Text>Thành tiền</Text>
-							<Text style={styles.textBoldRight}>
-								{`${billDetails.others_fee}đ`}
-							</Text>
-						</View>
-					</View>
-
-					{/* Total */}
-					<View style={[styles.detailItemRight, styles.myBackground]}>
-						<Text>Tổng cộng kỳ này</Text>
+					<View>
+						<Text>Thành tiền</Text>
 						<Text style={styles.textBoldRight}>
-							{billDetails.total}đ
+							{billDetails.rental_fee}đ
 						</Text>
 					</View>
+				</View>
+
+				{/* Electricity */}
+				<View style={[styles.detailItem, styles.myBackground]}>
+					<View>
+						<Text>Tiền điện</Text>
+						<Text>
+							{`Số cũ: ${billDetails.old_electricity_number}, số mới: ${billDetails.new_electricity_number}`}
+						</Text>
+						<Text style={styles.textBold}>
+							{`${billDetails.new_electricity_number - billDetails.old_electricity_number} KWh x ${billDetails.electricity_fee}đ`}
+						</Text>
+					</View>
+					<View>
+						<Text>Thành tiền</Text>
+						<Text style={styles.textBoldRight}>
+							{`${(billDetails.new_electricity_number - billDetails.old_electricity_number) * billDetails.electricity_fee}đ`}
+						</Text>
+					</View>
+				</View>
+
+				{/* Water */}
+				<View style={[styles.detailItem, styles.myBackground]}>
+					<View>
+						<Text>Tiền nước</Text>
+						<Text>
+							{`Số cũ: ${billDetails.old_water_number}, số mới: ${billDetails.new_water_number}`}
+						</Text>
+						<Text style={styles.textBold}>
+							{`${billDetails.new_water_number - billDetails.old_water_number} VND/m3 x ${billDetails.water_fee}đ`}
+						</Text>
+					</View>
+					<View>
+						<Text>Thành tiền</Text>
+						<Text style={styles.textBoldRight}>
+							{`${(billDetails.new_water_number - billDetails.old_water_number) * billDetails.water_fee}đ`}
+						</Text>
+					</View>
+				</View>
+
+				{/* Credit */}
+				<View style={[styles.detailItem, styles.myBackground]}>
+					<View>
+						<Text>Giảm trừ</Text>
+					</View>
+					<View>
+						<Text>Thành tiền</Text>
+						<Text style={styles.textBoldRight}>
+							{`${billDetails.credit}đ`}
+						</Text>
+					</View>
+				</View>
+
+				{/* Others fee */}
+				<View style={[styles.detailItem, styles.myBackground]}>
+					<View>
+						<Text>Thu thêm</Text>
+					</View>
+					<View>
+						<Text>Thành tiền</Text>
+						<Text style={styles.textBoldRight}>
+							{`${billDetails.others_fee}đ`}
+						</Text>
+					</View>
+				</View>
+
+				{/* Total */}
+				<View style={[styles.detailItemRight, styles.myBackground]}>
+					<Text>Tổng cộng kỳ này</Text>
+					<Text style={styles.textBoldRight}>
+						{billDetails.total}đ
+					</Text>
+				</View>
 				</View>
 
 				{/* Sum */}
 				<View style={[styles.sum, styles.myBorder]}>
-					<View
-						style={[
-							styles.detailItemRight,
-							{ borderBottomWidth: 2 },
-						]}
-					>
-						<Text>Khách đã trả</Text>
-						<Text style={styles.textBoldRight}>
-							{billDetails.total - billDetails.remained}đ
+				<View
+					style={[
+						styles.detailItemRight,
+						{ borderBottomWidth: 2 },
+					]}
+				>
+					<Text>Khách đã trả</Text>
+					<Text style={styles.textBoldRight}>
+						{billDetails.total - billDetails.remained}đ
+					</Text>
+				</View>
+				<View style={[styles.detailItem, styles.myBackground]}>
+					<View>
+						<Text>Số lần thu</Text>
+						<Text style={styles.textBold}>
+							{billDetails.paid_time} lần
 						</Text>
 					</View>
-					<View style={[styles.detailItem, styles.myBackground]}>
-						<View>
-							<Text>Số lần thu</Text>
-							<Text style={styles.textBold}>
-								{billDetails.paid_time} lần
-							</Text>
-						</View>
-						<View>
-							<Text>Tổng phải thu</Text>
-							<Text style={styles.textBoldRight}>
-								{billDetails.remained}đ
-							</Text>
-						</View>
+					<View>
+						<Text>Tổng phải thu</Text>
+						<Text style={styles.textBoldRight}>
+							{billDetails.remained}đ
+						</Text>
 					</View>
 				</View>
-			</View>
-
-			<TouchableOpacity
-				style={styles.collectButton}
-				onPress={() => {
-					setIsThuTienModal(true);
-				}}
-			>
+				</View>
+				
+				<TouchableOpacity
+					style={styles.collectButton}
+					onPress={() => {
+						setIsThuTienModal(true);
+					}}
+				>
 				<Text style={styles.textTitleWhite}>THU TIỀN HÓA ĐƠN</Text>
-			</TouchableOpacity>
+				</TouchableOpacity>
 
-			{/* Update current bill */}
-			{isThuTienModal && (
+				{/* Update current bill */}
+				{isThuTienModal && (
 				<ThuTienHoaDon
-					billDetails={billDetails}
-					forceUpdate={forceUpdate}
-					setIsThuTienModal={setIsThuTienModal}
-				></ThuTienHoaDon>
+				billDetails={billDetails}
+				forceUpdate={forceUpdate}
+				setIsThuTienModal={setIsThuTienModal}
+			></ThuTienHoaDon>
 			)}
+			</ScrollView>
 		</View>
 	);
 }
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'flex-start',
-	},
-
-	body: {
-		width: '100%',
-		height: '80%',
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 	},
@@ -231,7 +227,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignContent: 'center',
 		backgroundColor: 'black',
-		marginTop: 64,
+		marginTop: 8,
+		marginBottom: 16
 	},
 
 	stackTitle: {

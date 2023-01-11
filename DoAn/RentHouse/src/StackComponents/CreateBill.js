@@ -73,8 +73,6 @@ export default function App({ navigation, route }) {
 
 			{/* Body */}
 			<View style={styles.body}>
-
-
 				<FlatList
 					data={roomList}
 					renderItem={renderItem}
@@ -95,10 +93,10 @@ const styles = StyleSheet.create({
 	},
 
 	body: {
-		width: '90%',
+		width: '100%',
 		minHeight: '50%',
 		maxHeight: '90%',
-		paddingLeft: 8,
+		padding: 8,
 	},
 
 	stackTitle: {
