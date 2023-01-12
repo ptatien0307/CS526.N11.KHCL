@@ -5,7 +5,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FontAwesomeIcon5 from 'react-native-vector-icons/FontAwesome5';
 
-import { fetchRoomDetails, updateRoom } from '../database/actions/roomActions';
+import { fetchRoomDetails, updateRoomWaterElectricityNumber } from '../database/actions/roomActions';
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { insertBill } from '../database/actions/billActions';
 import { getCurrentDateString } from '../utils/utils';
@@ -144,8 +144,11 @@ export default function App({ navigation, route }) {
             remained: totalBill
         });
 
-        updateRoom({
-        });
+        updateRoomWaterElectricityNumber(
+            selected_room_id,
+            newElectricityNumber,
+            newWaterNumber
+        );
 
         alert('Tổng tiền hóa đơn: ' + totalBill);
         return navigation.goBack();
@@ -379,7 +382,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 
-    billValueInpust: {
+    billValueInput: {
         padding: 8,
         borderWidth: 1,
         borderRadius: 10,

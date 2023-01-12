@@ -57,8 +57,6 @@ export default function App({ navigation, route }) {
             {
                 name: `Phòng ${roomList.length + 1}`,
                 rental_fee: 950000,
-                using_internet: 1,
-                using_garbage: 1,
                 old_electricity_number: new Date().getTime() % 1000000,
                 old_water_number: new Date().getTime() % 2000000,
             },

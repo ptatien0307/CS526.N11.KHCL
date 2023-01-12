@@ -16,6 +16,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import { fetchRoomDetails, fetchRoomMemberList, fetchRoomBillList } from '../database/actions/roomActions';
 import { deleteCustomer } from '../database/actions/customerActions';
 import { useForceUpdate } from '../utils/utils';
+import { fetchServiceDetails } from '../database/actions/serviceActions';
 
 
 export default function App({ navigation, route }) {
@@ -27,6 +28,9 @@ export default function App({ navigation, route }) {
 	const [memberList, setMemberList] = useState([]);
 	const [billList, setBillList] = useState([]);
 	const [room, setRoom] = useState({});
+	const [waterFee, setWaterFee] = useState('');
+	const [electricityFee, setElectricityFee] = useState('');
+
 	const [mountInfo, setMountInfo] = useState(true);
 
 	useEffect(() => {
@@ -49,9 +53,19 @@ export default function App({ navigation, route }) {
 			setBillList(billList);
 		};
 
+		const loadService = async (service, setService) => {
+			const fee = await fetchServiceDetails(service)
+				.catch((error) => console.log(error));
+
+			setService(fee.price);
+		};
+
 		loadRoomDetails();
 		loadMemberList();
+		loadService('Điện', setElectricityFee);
+		loadService('Nước', setWaterFee);
 		loadBillList();
+
 	}, [isFocused, forceUpdateId]);
 
 	const totalRemained = billList.reduce((res, curr) => {
@@ -199,8 +213,8 @@ export default function App({ navigation, route }) {
 						<View style={[styles.basicInfo, styles.myBorder]}>
 							<View style={styles.bodyHeader}>
 								<Text>Thông tin cơ bản</Text>
-								<TouchableOpacity 
-									onPress={()=>{
+								<TouchableOpacity
+									onPress={() => {
 										navigation.navigate('EditBasicInfo', {
 											roomID: room.id
 										})
@@ -212,7 +226,7 @@ export default function App({ navigation, route }) {
 									/>
 								</TouchableOpacity>
 							</View>
-							
+
 							<View style={styles.infoRow}>
 								{/* Room name */}
 								<View
@@ -343,7 +357,7 @@ export default function App({ navigation, route }) {
 											style={{ marginRight: 20 }}
 										/>
 										<Text>
-											{room.donGiaNuoc} đ/khối
+											{waterFee} đ/khối
 										</Text>
 									</View>
 									<View
@@ -376,7 +390,7 @@ export default function App({ navigation, route }) {
 												marginRight: 26,
 											}}
 										/>
-										<Text>{room.donGiaDien} đ/kwh</Text>
+										<Text>{electricityFee} đ/kwh</Text>
 									</View>
 									<View
 										style={[
@@ -513,7 +527,7 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: '85%',
 		flex: 1
-	},	
+	},
 	member: {
 		width: '100%',
 		justifyContent: 'flex-start',

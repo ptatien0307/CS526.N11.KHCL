@@ -127,6 +127,35 @@ export const updateRoom = (room, forceUpdate = null) => {
 	});
 };
 
+export const updateRoomWaterElectricityNumber = (room_id, water_number, electricity_number, forceUpdate = null) => {
+	return new Promise((resolve, reject) => {
+		db.transaction(
+			(tx) => {
+				tx.executeSql(
+					`UPDATE rooms
+					SET old_water_number = ?,
+						old_electricity_number = ?
+					WHERE id = ?;`,
+					[
+						water_number,
+						electricity_number,
+						room_id,
+					],
+					(_, result) => {
+						console.log('Room updated successfully');
+						resolve(result);
+					},
+					(_, error) => {
+						reject(error);
+					}
+				);
+			},
+			null,
+			forceUpdate
+		);
+	});
+}
+
 export const deleteRoom = (room_id, forceUpdate) => {
 	return new Promise((resolve, reject) => {
 		db.transaction(
