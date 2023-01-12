@@ -91,7 +91,7 @@ export default function App({ navigation, route }) {
         if (newWaterNumber.includes('-')) {
             return alert('Chỉ số nước mới không được có dấu trừ');
         }
-        
+
         // Check if input newElectricityNumber and WaterBillNew are empty
         if (newElectricityNumber == '') {
             return alert('Chưa nhập chỉ số điện mới');
@@ -131,8 +131,10 @@ export default function App({ navigation, route }) {
             rental_fee: rentalFee,
             new_electricity_number: newElectricityNumber,
             old_electricity_number: oldElectricityNumber,
+            electricity_fee: electricityPrice,
             new_water_number: newWaterNumber,
             old_water_number: oldWaterNumber,
+            water_fee: waterPrice,
             garbage_fee: garbagePrice,
             internet_fee: internetPrice,
             bill_amount: billAmount,
@@ -242,7 +244,7 @@ export default function App({ navigation, route }) {
                     <View style={[{ flexDirection: 'row' }]}>
                         <IonIcon name="wifi" size={25} style={{ paddingHorizontal: 8, paddingVertical: 1 }} />
                         <View>
-                            <Text style={[styles.billName, {justifyContent:'center'}]}>Tiền mạng</Text>
+                            <Text style={[styles.billName, { justifyContent: 'center' }]}>Tiền mạng</Text>
                         </View>
                     </View>
 
@@ -261,7 +263,7 @@ export default function App({ navigation, route }) {
                 </View>
 
                 {/* Garbage bill inputs */}
-                <View style={[styles.billContainer, {paddingBottom:10}]}>
+                <View style={[styles.billContainer, { paddingBottom: 10 }]}>
 
                     <View style={[{ flexDirection: 'row' }]}>
                         <IonIcon name="trash" size={25} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
@@ -313,9 +315,7 @@ export default function App({ navigation, route }) {
             {/* Calculate button */}
             <TouchableOpacity
                 style={styles.calculateButton}
-                onPress={() => {
-                    calculateBill();
-                }}
+                onPress={calculateBill}
             >
                 <AntDesign name="addfile" size={24} />
                 <Text style={styles.calculateButtonText}>Lập hóa đơn</Text>
@@ -375,11 +375,11 @@ const styles = StyleSheet.create({
     },
 
     billName: {
-        fontSize:16,
+        fontSize: 16,
         fontWeight: 'bold',
     },
 
-    billValueInput: {
+    billValueInpust: {
         padding: 8,
         borderWidth: 1,
         borderRadius: 10,
