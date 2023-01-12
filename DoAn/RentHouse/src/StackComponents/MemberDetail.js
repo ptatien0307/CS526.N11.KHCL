@@ -20,8 +20,9 @@ export default function App({ navigation, route }) {
 
 	useEffect(() => {
 		const loadCustomerDetails = async () => {
-			const customerDetails = await fetchCustomerDetails(memberID)
-				.catch((error) => console.log(error));
+			const customerDetails = await fetchCustomerDetails(memberID).catch(
+				(error) => console.log(error)
+			);
 
 			setMember(customerDetails);
 
@@ -40,17 +41,24 @@ export default function App({ navigation, route }) {
 					contentContainerStyle={{
 						flexGrow: 1,
 						alignItems: 'center',
-					}}
-				>
+					}}>
 					{/* Name */}
 					<View style={[styles.item, styles.myBackground]}>
 						<View style={styles.titleContainer}>
 							<Text style={styles.title}>Họ tên:</Text>
 						</View>
 						<View>
-							<Text style={{ fontSize: 17 }}>
-								{member.name}
-							</Text>
+							<Text style={{ fontSize: 20 }}>{member.name}</Text>
+						</View>
+					</View>
+
+					{/* Phone number */}
+					<View style={[styles.item, styles.myBackground]}>
+						<View style={styles.titleContainer}>
+							<Text style={styles.title}>Số điện thoại:</Text>
+						</View>
+						<View>
+							<Text style={{ fontSize: 20 }}>{member.phone}</Text>
 						</View>
 					</View>
 
@@ -61,9 +69,7 @@ export default function App({ navigation, route }) {
 						</View>
 
 						<View>
-							<Text style={{ fontSize: 17 }}>
-								{member.birthday}
-							</Text>
+							<Text style={{ fontSize: 20 }}>{member.birthday}</Text>
 						</View>
 					</View>
 
@@ -72,18 +78,12 @@ export default function App({ navigation, route }) {
 						<View style={styles.titleContainer}>
 							<Text style={styles.title}>Giới tính:</Text>
 						</View>
-						<View
-							style={[
-								styles.row,
-								{ justifyContent: 'flex-start' },
-							]}
-						>
+						<View style={[styles.row, { justifyContent: 'flex-start' }]}>
 							<View
 								style={{
 									flexDirection: 'row',
 									marginRight: 104,
-								}}
-							>
+								}}>
 								<View>
 									<Checkbox value={Boolean(member.gender)} />
 								</View>
@@ -105,33 +105,35 @@ export default function App({ navigation, route }) {
 					{/* Address */}
 					<View style={[styles.item, styles.myBackground]}>
 						<View style={styles.titleContainer}>
-							<Text style={styles.title}>
-								Địa chỉ thường trú:
-							</Text>
+							<Text style={styles.title}>Địa chỉ thường trú:</Text>
 						</View>
 						<View>
-							<Text style={{ fontSize: 17 }}>
-								{member.address}
+							<Text style={{ fontSize: 20 }}>{member.address}</Text>
+						</View>
+					</View>
+
+					{/* Temporary Address */}
+					<View style={[styles.item, styles.myBackground]}>
+						<View style={styles.titleContainer}>
+							<Text style={styles.title}>Đăng ký tạm trú:</Text>
+						</View>
+						<View>
+							<Text style={{ fontSize: 20 }}>
+								{member.temporary_residence
+									? 'Đã đăng ký tạm trú'
+									: 'Chưa đăng ký tạm trú'}
 							</Text>
 						</View>
 					</View>
 
 					{/* CCCD */}
-					<View
-						style={[
-							styles.item,
-							styles.myBackground,
-							{ height: 'auto' },
-						]}
-					>
+					<View style={[styles.item, styles.myBackground, { height: 'auto' }]}>
 						<View style={{ marginBottom: 16 }}>
 							<View style={styles.titleContainer}>
 								<Text style={styles.title}>CCCD:</Text>
 							</View>
 							<View>
-								<Text style={{ fontSize: 17 }}>
-									{member.citizen_id}
-								</Text>
+								<Text style={{ fontSize: 20 }}>{member.citizen_id}</Text>
 							</View>
 						</View>
 
@@ -142,9 +144,7 @@ export default function App({ navigation, route }) {
 									<Text style={styles.title}>Ngày cấp</Text>
 								</View>
 								<View>
-									<Text style={{ fontSize: 17 }}>
-										{member.citizen_id_date}
-									</Text>
+									<Text style={{ fontSize: 20 }}>{member.citizen_id_date}</Text>
 								</View>
 							</View>
 							{/* Place */}
@@ -153,7 +153,7 @@ export default function App({ navigation, route }) {
 									<Text style={styles.title}>Nơi cấp</Text>
 								</View>
 								<View>
-									<Text style={{ fontSize: 17 }}>
+									<Text style={{ fontSize: 20 }}>
 										{member.citizen_id_place}
 									</Text>
 								</View>
@@ -168,9 +168,7 @@ export default function App({ navigation, route }) {
 								<Text style={styles.title}>Nghề nghiệp:</Text>
 							</View>
 							<View>
-								<Text style={{ fontSize: 17 }}>
-									{member.job}
-								</Text>
+								<Text style={{ fontSize: 20 }}>{member.job}</Text>
 							</View>
 						</View>
 					</View>
@@ -183,13 +181,8 @@ export default function App({ navigation, route }) {
 					navigation.navigate('EditMember', {
 						memberID: member.id,
 					});
-				}}
-			>
-				<FontAwesomeIcon
-					name="edit"
-					size={35}
-					style={{ color: 'white' }}
-				/>
+				}}>
+				<FontAwesomeIcon name="edit" size={35} style={{ color: 'white' }} />
 			</TouchableOpacity>
 		</View>
 	);
@@ -215,7 +208,7 @@ const styles = StyleSheet.create({
 		height: 'auto',
 		minHeight: 75,
 		paddingHorizontal: 8,
-		paddingTop: 8,
+		paddingVertical: 8,
 		marginBottom: 16,
 	},
 	row: {
@@ -244,7 +237,7 @@ const styles = StyleSheet.create({
 
 	title: {
 		fontWeight: 'bold',
-		fontSize: 15,
+		fontSize: 20,
 	},
 	stackTitle: {
 		fontSize: 20,

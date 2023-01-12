@@ -16,32 +16,30 @@ export default function App({ navigation, route }) {
 
 	const [customerName, setCustomerName] = useState('');
 	const [dateOfBirth, setDateOfBirth] = useState('');
-	const [male, setMale] = useState(false);
-	const [female, setFemale] = useState(false);
+	const [gender, setGender] = useState(null);
 	const [address, setAddress] = useState('');
 	const [citizenID, setCitizenID] = useState('');
 	const [citizenIDDate, setCitizenIDDate] = useState('');
 	const [citizenIDPlace, setCitizenIDPlace] = useState('');
 	const [job, setJob] = useState('');
+	const [phoneNumber, setPhoneNumber] = useState('');
+	const [temporaryResidence, setTemporaryResidence] = useState(null);
 
 	const handleAddCustomer = () => {
 		const insertedCustomer = async () => {
-			await insertCustomer(
-				{
-					name: customerName,
-					birthday: dateOfBirth,
-					gender: male ? male : female,
-					address: address,
-					citizen_id: citizenID,
-					citizen_id_date: citizenIDDate,
-					citizen_id_place: citizenIDPlace,
-					job: job,
-					// phone: ,
-					// temporary_residence: ,
-					room_id: roomID,
-				}
-			)
-				.catch((error) => console.log(error));
+			await insertCustomer({
+				name: customerName,
+				birthday: dateOfBirth,
+				gender: gender,
+				address: address,
+				citizen_id: citizenID,
+				citizen_id_date: citizenIDDate,
+				citizen_id_place: citizenIDPlace,
+				job: job,
+				phone: phoneNumber,
+				temporary_residence: temporaryResidence,
+				room_id: roomID,
+			}).catch((error) => console.log(error));
 		};
 
 		insertedCustomer();
@@ -58,8 +56,7 @@ export default function App({ navigation, route }) {
 					contentContainerStyle={{
 						flexGrow: 1,
 						alignItems: 'center',
-					}}
-				>
+					}}>
 					{/* Name */}
 					<View style={[styles.item, styles.myBackground]}>
 						<View style={styles.titleContainer}>
@@ -67,15 +64,38 @@ export default function App({ navigation, route }) {
 						</View>
 						<View>
 							<TextInput
-								style={[styles.myBorder, { paddingLeft: 8 }]}
+								style={[
+									styles.myBorder,
+									{ paddingLeft: 8, fontSize: 20, height: 50 },
+								]}
 								onChangeText={(text) => {
 									setCustomerName(text);
 								}}
 								placeholder="Nhập ..."
 								editable={true}
-								multiline={false}
-								maxLength={256}
-							></TextInput>
+								multiline={true}
+								maxLength={256}></TextInput>
+						</View>
+					</View>
+
+					{/* Phone number */}
+					<View style={[styles.item, styles.myBackground]}>
+						<View style={styles.titleContainer}>
+							<Text style={styles.title}>Số điện thoại:</Text>
+						</View>
+						<View>
+							<TextInput
+								style={[
+									styles.myBorder,
+									{ paddingLeft: 8, fontSize: 20, height: 50 },
+								]}
+								onChangeText={(text) => {
+									setPhoneNumber(text);
+								}}
+								placeholder="Nhập ..."
+								editable={true}
+								multiline={true}
+								maxLength={256}></TextInput>
 						</View>
 					</View>
 
@@ -86,15 +106,17 @@ export default function App({ navigation, route }) {
 						</View>
 						<View>
 							<TextInput
-								style={[styles.myBorder, { paddingLeft: 8 }]}
+								style={[
+									styles.myBorder,
+									{ paddingLeft: 8, fontSize: 20, height: 50 },
+								]}
 								onChangeText={(text) => {
 									setDateOfBirth(text);
 								}}
 								placeholder="Nhập ..."
 								editable={true}
-								multiline={false}
-								maxLength={256}
-							></TextInput>
+								multiline={true}
+								maxLength={256}></TextInput>
 						</View>
 					</View>
 
@@ -103,22 +125,18 @@ export default function App({ navigation, route }) {
 						<View style={styles.titleContainer}>
 							<Text style={styles.title}>Giới tính:</Text>
 						</View>
-						<View
-							style={[
-								styles.row,
-								{ justifyContent: 'flex-start' },
-							]}
-						>
+						<View style={[styles.row, { justifyContent: 'flex-start' }]}>
 							<View
 								style={{
 									flexDirection: 'row',
 									marginRight: 104,
-								}}
-							>
+								}}>
 								<View>
 									<Checkbox
-										value={male}
-										onValueChange={setMale}
+										value={gender}
+										onValueChange={() => {
+											setGender(true);
+										}}
 									/>
 								</View>
 								<View style={{ marginLeft: 8 }}>
@@ -128,8 +146,10 @@ export default function App({ navigation, route }) {
 							<View style={{ flexDirection: 'row' }}>
 								<View>
 									<Checkbox
-										value={female}
-										onValueChange={setFemale}
+										value={!gender}
+										onValueChange={() => {
+											setGender(false);
+										}}
 									/>
 								</View>
 								<View style={{ marginLeft: 8 }}>
@@ -142,21 +162,60 @@ export default function App({ navigation, route }) {
 					{/* Address */}
 					<View style={[styles.item, styles.myBackground]}>
 						<View style={styles.titleContainer}>
-							<Text style={styles.title}>
-								Địa chỉ thường trú:
-							</Text>
+							<Text style={styles.title}>Địa chỉ thường trú:</Text>
 						</View>
 						<View>
 							<TextInput
-								style={[styles.myBorder, { paddingLeft: 8 }]}
+								style={[
+									styles.myBorder,
+									{ paddingLeft: 8, fontSize: 20, height: 50 },
+								]}
 								onChangeText={(text) => {
 									setAddress(text);
 								}}
 								placeholder="Nhập ..."
 								editable={true}
-								multiline={false}
-								maxLength={256}
-							></TextInput>
+								multiline={true}
+								maxLength={256}></TextInput>
+						</View>
+					</View>
+
+					{/* Temporary Address */}
+					<View style={[styles.item, styles.myBackground]}>
+						<View style={styles.titleContainer}>
+							<Text style={styles.title}>Đăng ký tạm trú:</Text>
+						</View>
+						<View style={[styles.row, { justifyContent: 'flex-start' }]}>
+							<View
+								style={{
+									flexDirection: 'row',
+									marginRight: 104,
+								}}>
+								<View>
+									<Checkbox
+										value={temporaryResidence}
+										onValueChange={() => {
+											setTemporaryResidence(true);
+										}}
+									/>
+								</View>
+								<View style={{ marginLeft: 8 }}>
+									<Text>Đã đăng ký</Text>
+								</View>
+							</View>
+							<View style={{ flexDirection: 'row' }}>
+								<View>
+									<Checkbox
+										value={!temporaryResidence}
+										onValueChange={() => {
+											setTemporaryResidence(false);
+										}}
+									/>
+								</View>
+								<View style={{ marginLeft: 8 }}>
+									<Text>Chưa đăng ký</Text>
+								</View>
+							</View>
 						</View>
 					</View>
 
@@ -170,16 +229,15 @@ export default function App({ navigation, route }) {
 								<TextInput
 									style={[
 										styles.myBorder,
-										{ paddingLeft: 8 },
+										{ paddingLeft: 8, fontSize: 20, height: 50 },
 									]}
 									onChangeText={(text) => {
 										setCitizenID(text);
 									}}
 									placeholder="Nhập ..."
 									editable={true}
-									multiline={false}
-									maxLength={256}
-								></TextInput>
+									multiline={true}
+									maxLength={256}></TextInput>
 							</View>
 						</View>
 
@@ -193,16 +251,15 @@ export default function App({ navigation, route }) {
 									<TextInput
 										style={[
 											styles.myBorder,
-											{ paddingLeft: 8 },
+											{ paddingLeft: 8, fontSize: 20, height: 50 },
 										]}
 										onChangeText={(text) => {
 											setCitizenIDDate(text);
 										}}
 										placeholder="Nhập ..."
 										editable={true}
-										multiline={false}
-										maxLength={256}
-									></TextInput>
+										multiline={true}
+										maxLength={256}></TextInput>
 								</View>
 							</View>
 							{/* Place */}
@@ -214,16 +271,15 @@ export default function App({ navigation, route }) {
 									<TextInput
 										style={[
 											styles.myBorder,
-											{ paddingLeft: 8 },
+											{ paddingLeft: 8, fontSize: 20, height: 50 },
 										]}
 										onChangeText={(text) => {
 											setCitizenIDPlace(text);
 										}}
 										placeholder="Nhập ..."
 										editable={true}
-										multiline={false}
-										maxLength={256}
-									></TextInput>
+										multiline={true}
+										maxLength={256}></TextInput>
 								</View>
 							</View>
 						</View>
@@ -239,16 +295,15 @@ export default function App({ navigation, route }) {
 								<TextInput
 									style={[
 										styles.myBorder,
-										{ paddingLeft: 8 },
+										{ paddingLeft: 8, fontSize: 20, height: 50 },
 									]}
 									onChangeText={(text) => {
 										setJob(text);
 									}}
 									placeholder="Nhập ..."
 									editable={true}
-									multiline={false}
-									maxLength={256}
-								></TextInput>
+									multiline={true}
+									maxLength={256}></TextInput>
 							</View>
 						</View>
 					</View>
@@ -256,12 +311,9 @@ export default function App({ navigation, route }) {
 					{/* Add member button */}
 					<TouchableOpacity
 						style={styles.addButton}
-						onPress={handleAddCustomer}
-					>
+						onPress={handleAddCustomer}>
 						<View>
-							<Text style={styles.textTitle}>
-								+ THÊM KHÁCH THUÊ
-							</Text>
+							<Text style={styles.textTitle}>+ THÊM KHÁCH THUÊ</Text>
 						</View>
 					</TouchableOpacity>
 				</ScrollView>
@@ -311,7 +363,9 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 8,
 		paddingVertical: 4,
 		marginTop: 8,
-		marginBottom: 16
+		marginBottom: 16,
+		width: '100%',
+		alignItems: 'center',
 	},
 	textTitle: {
 		fontSize: 20,
@@ -320,6 +374,7 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontWeight: 'bold',
+		fontSize: 20,
 	},
 	textTitleStyle: {
 		marginLeft: 32,
