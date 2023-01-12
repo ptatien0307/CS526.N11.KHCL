@@ -16,14 +16,14 @@ export default function App({ navigation, route }) {
 
 	const [customerName, setCustomerName] = useState('');
 	const [dateOfBirth, setDateOfBirth] = useState('');
-	const [gender, setGender] = useState(null);
+	const [gender, setGender] = useState(false);
 	const [address, setAddress] = useState('');
 	const [citizenID, setCitizenID] = useState('');
 	const [citizenIDDate, setCitizenIDDate] = useState('');
 	const [citizenIDPlace, setCitizenIDPlace] = useState('');
 	const [job, setJob] = useState('');
 	const [phoneNumber, setPhoneNumber] = useState('');
-	const [temporaryResidence, setTemporaryResidence] = useState(null);
+	const [temporaryResidence, setTemporaryResidence] = useState(false);
 
 	const handleAddCustomer = () => {
 		const insertedCustomer = async () => {

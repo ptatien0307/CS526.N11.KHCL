@@ -9,20 +9,19 @@ import { useEffect, useState } from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { fetchBillList } from '../database/actions/billActions';
+import { formatCurrency } from 'react-native-format-currency';
 
 export default function App({ navigation, route }) {
 	const [billList, setBillList] = useState([]);
 
 	useEffect(() => {
 		const loadBillList = async () => {
-			const bills = await fetchBillList()
-				.catch((error) => console.log(error));
+			const bills = await fetchBillList().catch((error) => console.log(error));
 
 			setBillList(bills);
 		};
 
 		loadBillList();
-
 	}, []);
 
 	const renderItem = ({ item }) => {
@@ -31,10 +30,9 @@ export default function App({ navigation, route }) {
 			<TouchableOpacity
 				onPress={() => {
 					navigation.navigate('BillDetail', {
-						selected_bill_id: item.id
+						selected_bill_id: item.id,
 					});
-				}}
-			>
+				}}>
 				<View style={[styles.room, styles.myBackground]}>
 					{/* Room name */}
 					<View>
@@ -51,9 +49,7 @@ export default function App({ navigation, route }) {
 						</View>
 						<View>
 							<Text style={styles.textBody}>Đã thu</Text>
-							<Text style={styles.textBody}>
-								{item.total - item.remained}
-							</Text>
+							<Text style={styles.textBody}>{item.total - item.remained}</Text>
 						</View>
 						<View>
 							<Text style={styles.textBody}>Còn lại</Text>
@@ -71,8 +67,7 @@ export default function App({ navigation, route }) {
 				<FlatList
 					data={billList}
 					renderItem={renderItem}
-					keyExtractor={(item) => item.id}
-				></FlatList>
+					keyExtractor={(item) => item.id}></FlatList>
 			</View>
 		</View>
 	);

@@ -12,6 +12,7 @@ import { LogBox } from 'react-native';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { formatCurrency } from 'react-native-format-currency';
 
 import {
 	fetchRoomDetails,
@@ -139,7 +140,14 @@ export default function App({ navigation, route }) {
 							{/* Total */}
 							<View style={[styles.myBorder, styles.money]}>
 								<Text>Tổng tiền:</Text>
-								<Text style={styles.textBold}>{item.total}đ</Text>
+								<Text style={styles.textBold}>
+									{
+										formatCurrency({
+											amount: String(item.total),
+											code: 'VND',
+										})[0]
+									}
+								</Text>
 							</View>
 
 							{/* Collected */}
@@ -156,7 +164,12 @@ export default function App({ navigation, route }) {
 								<View>
 									<Text>Đã thu:</Text>
 									<Text style={styles.textBold}>
-										{item.total - item.remained}đ
+										{
+											formatCurrency({
+												amount: String(item.total - item.remained),
+												code: 'VND',
+											})[0]
+										}
 									</Text>
 								</View>
 							</View>
@@ -164,7 +177,14 @@ export default function App({ navigation, route }) {
 							{/* Remained */}
 							<View style={[styles.myBorder, styles.money]}>
 								<Text>Còn lại: </Text>
-								<Text style={styles.textBold}>{item.remained}đ</Text>
+								<Text style={styles.textBold}>
+									{
+										formatCurrency({
+											amount: String(item.remained),
+											code: 'VND',
+										})[0]
+									}
+								</Text>
 							</View>
 						</View>
 					</View>
@@ -253,7 +273,14 @@ export default function App({ navigation, route }) {
 								<View style={[styles.rowItem, styles.myBackground]}>
 									<View>
 										<Text>Giá thuê:</Text>
-										<Text style={styles.textBold}>{room.rental_fee}</Text>
+										<Text style={styles.textBold}>
+											{
+												formatCurrency({
+													amount: String(room.rental_fee),
+													code: 'VND',
+												})[0]
+											}
+										</Text>
 									</View>
 								</View>
 
@@ -323,7 +350,15 @@ export default function App({ navigation, route }) {
 											size={20}
 											style={{ marginRight: 20 }}
 										/>
-										<Text>{waterFee} đ/khối</Text>
+										<Text>
+											{
+												formatCurrency({
+													amount: String(waterFee),
+													code: 'VND',
+												})[0]
+											}
+											/khối
+										</Text>
 									</View>
 									<View style={[styles.lastestUnit, styles.myBorder]}>
 										<Text>{room.old_water_number}</Text>
@@ -345,7 +380,15 @@ export default function App({ navigation, route }) {
 												marginRight: 26,
 											}}
 										/>
-										<Text>{electricityFee} đ/kwh</Text>
+										<Text>
+											{
+												formatCurrency({
+													amount: String(electricityFee),
+													code: 'VND',
+												})[0]
+											}
+											/khối
+										</Text>
 									</View>
 									<View style={[styles.lastestUnit, styles.myBorder]}>
 										<Text>{room.old_electricity_number}</Text>
@@ -421,11 +464,15 @@ export default function App({ navigation, route }) {
 										color: 'white',
 										fontWeight: 'bold',
 									}}>
-									{totalRemained}
+									{
+										formatCurrency({
+											amount: String(totalRemained),
+											code: 'VND',
+										})[0]
+									}
 								</Text>
 							</View>
 						</View>
-
 						<FlatList
 							nestedScrollEnabled={true}
 							data={billList}
@@ -574,6 +621,7 @@ const styles = StyleSheet.create({
 		padding: 8,
 	},
 	billInfoContainer: {
+		flex: 1,
 		marginBottom: 32,
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -616,12 +664,6 @@ const styles = StyleSheet.create({
 		padding: 8,
 	},
 
-	stackTitle: {
-		marginLeft: 32,
-		fontSize: 20,
-		fontWeight: 'bold',
-		textAlign: 'center',
-	},
 	textTitle: {
 		fontSize: 20,
 		fontWeight: 'bold',
