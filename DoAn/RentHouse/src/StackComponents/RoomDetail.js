@@ -100,18 +100,20 @@ export default function App({ navigation, route }) {
 					<Text>{item.name}</Text>
 
 					{/* Delete member icon */}
-					<TouchableOpacity
-						style={styles.deleteIcon}
-						onPress={() => {
-							handleDeleteMember(item.id);
-						}}
-					>
-						<FontAwesomeIcon
-							name="remove"
-							size={25}
-							style={[styles.icon]}
-						/>
-					</TouchableOpacity>
+					<View style={[styles.deleteIcon]}>
+						<TouchableOpacity
+							onPress={() => {
+								handleDeleteMember(item.id);
+							}}
+						>
+							<FontAwesomeIcon
+								name="remove"
+								size={25}
+								style={{color: 'white'}}
+							/>
+						</TouchableOpacity>
+					</View>
+					
 				</View>
 			</TouchableOpacity>
 		);
@@ -126,50 +128,72 @@ export default function App({ navigation, route }) {
 					});
 				}}
 			>
-				<View style={[styles.billInfo, styles.myBackground]}>
-					{/* Bill month year */}
-					<View style={styles.billDay}>
-						<Text style={styles.textTitle}> {item.created_at}</Text>
-					</View>
-
-					{/* Bill money: total, collected, remained */}
-					<View style={styles.billMoney}>
-						{/* Total */}
-						<View style={[styles.myBorder, styles.money]}>
-							<Text>Tổng tiền:</Text>
-							<Text style={styles.textBold}>{item.total}đ</Text>
+				<View style={[styles.myBackground, styles.billInfoContainer]}>
+					<View style={styles.billInfo}>
+						{/* Bill month year */}
+						<View style={styles.billDay}>
+							<Text style={styles.textTitle}> {item.created_at}</Text>
 						</View>
 
-						{/* Collected */}
-						<View
-							style={[
-								styles.myBorder,
-								styles.money,
-								{
-									flexDirection: 'row',
-									justifyContent: 'space-between',
-									alignItems: 'center',
-								},
-							]}
-						>
-							<View>
-								<Text>Đã thu:</Text>
+						{/* Bill money: total, collected, remained */}
+						<View style={styles.billMoney}>
+							{/* Total */}
+							<View style={[styles.myBorder, styles.money]}>
+								<Text>Tổng tiền:</Text>
+								<Text style={styles.textBold}>{item.total}đ</Text>
+							</View>
+
+							{/* Collected */}
+							<View
+								style={[
+									styles.myBorder,
+									styles.money,
+									{
+										flexDirection: 'row',
+										justifyContent: 'space-between',
+										alignItems: 'center',
+									},
+								]}
+							>
+								<View>
+									<Text>Đã thu:</Text>
+									<Text style={styles.textBold}>
+										{item.total - item.remained}đ
+									</Text>
+								</View>
+							</View>
+
+							{/* Remained */}
+							<View style={[styles.myBorder, styles.money]}>
+								<Text>Còn lại: </Text>
 								<Text style={styles.textBold}>
-									{item.total - item.remained}đ
+									{item.remained}đ
 								</Text>
 							</View>
 						</View>
+					</View>
 
-						{/* Remained */}
-						<View style={[styles.myBorder, styles.money]}>
-							<Text>Còn lại: </Text>
-							<Text style={styles.textBold}>
-								{item.remained}đ
-							</Text>
-						</View>
+					<View style={[styles.deleteIcon]}>
+						<TouchableOpacity
+							onPress={() => {
+								// Handle delete selected bill
+							}}
+						>
+							<FontAwesomeIcon
+								name="remove"
+								size={25}
+								style={{color: 'white'}}
+							/>
+						</TouchableOpacity>
 					</View>
 				</View>
+
 			</TouchableOpacity>
+
+
+				
+				
+			
 		);
 	};
 
@@ -213,7 +237,10 @@ export default function App({ navigation, route }) {
 					<View style={styles.infoContainer}>
 						{/* View room details */}
 						<View style={[styles.basicInfo, styles.myBorder]}>
-							<View style={styles.bodyHeader}>
+							<View style={[
+									styles.bodyHeader,
+									{ height: 35, marginBottom: 16 },
+								]}>
 								<Text>Thông tin cơ bản</Text>
 								<TouchableOpacity
 									onPress={() => {
@@ -224,7 +251,7 @@ export default function App({ navigation, route }) {
 								>
 									<FontAwesomeIcon
 										name="edit"
-										size={20}
+										size={25}
 									/>
 								</TouchableOpacity>
 							</View>
@@ -299,7 +326,7 @@ export default function App({ navigation, route }) {
 							<View
 								style={[
 									styles.bodyHeader,
-									{ height: '10%', marginBottom: 16 },
+									{ height: 35, marginBottom: 16 },
 								]}
 							>
 								<Text>Thông tin người ở</Text>
@@ -314,7 +341,7 @@ export default function App({ navigation, route }) {
 								>
 									<FontAwesomeIcon
 										name="plus-circle"
-										size={20}
+										size={30}
 									/>
 								</TouchableOpacity>
 							</View>
@@ -330,17 +357,30 @@ export default function App({ navigation, route }) {
 							</View>
 						</View>
 
-						{/* Water and electricity */}
+						{/*View service */}
 						<View style={[styles.serviceInfo, styles.myBorder]}>
 							<View
 								style={[
 									styles.bodyHeader,
-									{ height: '20%', marginBottom: 16 },
+									{ height: 35, marginBottom: 16 },
 								]}
 							>
 								<Text>Thông tin dịch vụ</Text>
+								<TouchableOpacity
+									onPress={() => {
+										navigation.navigate('EditService', {
+											roomID: room.id
+										})
+									}}
+								>
+									<FontAwesomeIcon
+										name="edit"
+										size={25}
+									/>
+								</TouchableOpacity>
 							</View>
 							<View style={[styles.serviceContainer]}>
+								{/* Water */}
 								<View
 									style={[
 										styles.service,
@@ -372,6 +412,7 @@ export default function App({ navigation, route }) {
 									</View>
 								</View>
 
+								{/* Electricity */}
 								<View
 									style={[
 										styles.service,
@@ -403,9 +444,67 @@ export default function App({ navigation, route }) {
 										<Text>{room.old_electricity_number}</Text>
 									</View>
 								</View>
+
+								{/* Wifi */}
+								<View
+									style={[
+										styles.service,
+										styles.myBackground,
+									]}
+								>
+									<View
+										style={{
+											flexDirection: 'row',
+											alignItems: 'center',
+										}}
+									>
+										<IonIcon name="wifi" size={20}  style={{
+												marginRight: 20,
+											}}/>
+										
+										<Text>Tiền wifi</Text>
+									</View>
+									
+									
+								</View>
+
+								{/* Tiền rác */}
+								<View
+									style={[
+										styles.service,
+										styles.myBackground,
+									]}
+								>
+									<View
+										style={{
+											flexDirection: 'row',
+											alignItems: 'center',
+										}}
+									>
+										<IonIcon name="trash" size={20}  style={{
+												marginRight: 20,
+											}}/>
+										
+										<Text>Tiền rác</Text>
+									</View>
+
+								</View>
 							</View>
 						</View>
+
+						{/* Reset room information button */}
+						<TouchableOpacity
+							style={styles.deleteButton}
+							onPress={() => {
+								// Handle reset room information
+							}}
+						>
+							<Text style={styles.textTitleWhite}>
+								XÓA THÔNG TIN PHÒNG
+							</Text>
+						</TouchableOpacity>
 					</View>
+					
 				)}
 
 				{/* View Bill */}
@@ -433,6 +532,7 @@ export default function App({ navigation, route }) {
 						</View>
 
 						<FlatList
+							nestedScrollEnabled={true}
 							data={billList}
 							renderItem={renderBills}
 							keyExtractor={(item) => item.id}
@@ -440,16 +540,7 @@ export default function App({ navigation, route }) {
 					</View>
 				)}
 
-				<TouchableOpacity
-					style={styles.deleteButton}
-					onPress={() => {
-						// Handle reset room information
-					}}
-				>
-					<Text style={styles.textTitleWhite}>
-						XÓA THÔNG TIN PHÒNG
-					</Text>
-				</TouchableOpacity>
+
 			</ScrollView>
 		</View>
 	);
@@ -495,7 +586,7 @@ const styles = StyleSheet.create({
 	},
 	basicInfo: {
 		width: '90%',
-		height: 150,
+		height: 200,
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		padding: 8,
@@ -542,7 +633,7 @@ const styles = StyleSheet.create({
 
 	serviceInfo: {
 		width: '90%',
-		height: 150,
+		height: 250,
 		justifyContent: 'flex-start',
 		alignItems: 'center',
 		padding: 8,
@@ -550,13 +641,12 @@ const styles = StyleSheet.create({
 	},
 	serviceContainer: {
 		width: '100%',
-		height: '60%',
+		height: '80%',
 		justifyContent: 'space-around',
 	},
 	service: {
 		flexDirection: 'row',
-		marginVertical: 4,
-		height: '45%',
+		height: '20%',
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		paddingHorizontal: 16,
@@ -568,7 +658,14 @@ const styles = StyleSheet.create({
 
 	deleteIcon: {
 		position: 'absolute',
-		right: 8,
+		right: 0,
+		backgroundColor: 'black', 
+		height: '100%', 
+		width: 30,
+		justifyContent: 'center', 
+		alignItems: 'center',
+		borderTopRightRadius: 10, 
+		borderBottomRightRadius: 10
 	},
 	deleteButton: {
 		backgroundColor: 'black',
@@ -580,17 +677,21 @@ const styles = StyleSheet.create({
 	},
 
 	billContainer: {
-		height: '100%',
-		width: '90%',
+		width: '100%',
+		flex: 1,
 		padding: 8,
 	},
+	billInfoContainer: {
+		marginBottom: 32,
+		flexDirection: 'row',
+		alignItems: 'center'
+	},
 	billInfo: {
-		flex: 1,
+		height: 100,
+		flexDirection: 'column',
 		justifyContent: 'space-around',
 		alignItems: 'flex-start',
-		paddingVertical: 8,
-		marginBottom: 8,
-		width: '100%',
+		width: '90%',
 	},
 	billDay: {
 		width: '100%',
@@ -615,7 +716,7 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		backgroundColor: '#3c3f3e',
 		width: '100%',
-		height: '10%',
+		height: 80,
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignItems: 'center',

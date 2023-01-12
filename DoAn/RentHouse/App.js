@@ -18,7 +18,7 @@ import CreateBill from './src/StackComponents/CreateBill.js';
 import Service from './src/StackComponents/Service.js';
 import CreateBillDetail from './src/StackComponents/CreateBillDetail.js';
 import EditBasicInfo from './src/StackComponents/EditBasicInfo.js'
-
+import EditService from './src/StackComponents/EditService.js'
 
 import AddModal from './src/Modals/AddModal.js';
 import EditModal from './src/Modals/EditModal.js';
@@ -45,20 +45,29 @@ export default function App() {
 					}}
 				/>
 				<Stack.Screen name="RoomList" component={RoomList} />
+
 				<Stack.Screen name="RoomDetail" component={RoomDetail} />
 				<Stack.Screen name="EditBasicInfo" component={EditBasicInfo} />
+				<Stack.Screen name="EditService" component={EditService} />
+
 				<Stack.Screen name="MemberDetail" component={MemberDetail} />
 				<Stack.Screen name="AddMember" component={AddMember} />
 				<Stack.Screen name="EditMember" component={EditMember} />
-				<Stack.Screen name="BillDetail" component={BillDetail} />
+
 				<Stack.Screen name="BillList" component={BillList} />
-				<Stack.Screen name="Guide" component={Guide} />
-				<Stack.Screen name="NoteList" component={NoteList} />
+				<Stack.Screen name="BillDetail" component={BillDetail} />
+
 				<Stack.Screen name="CreateBill" component={CreateBill} />
 				<Stack.Screen name="CreateBillDetail" component={CreateBillDetail} />
+
+				<Stack.Screen name="Guide" component={Guide} />
+
+				<Stack.Screen name="NoteList" component={NoteList} />
+
 				<Stack.Screen name="Service" component={Service} />
 
 				<Stack.Screen name="AddModal" component={AddModal} />
+				
 				<Stack.Screen name="EditModal" component={EditModal} />
 			</Stack.Navigator>
 		</NavigationContainer>

@@ -42,17 +42,17 @@ export default function App({ navigation, route }) {
 						alignItems: 'center',
 					}}
 				>
-					{/* Room Name */}
+					{/* Water */}
 					<View style={[styles.item, styles.myBackground]}>
 						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Tên phòng:</Text>
+							<Text style={styles.title}>Số nước:</Text>
 						</View>
 						<View>
 							<TextInput
 								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
 								onChangeText={() => {}}
 								placeholder="Nhập ..."
-								defaultValue={room.name}
+								defaultValue={String(room.old_water_number)}
 								editable={true}
 								multiline={false}
 								maxLength={256}
@@ -62,10 +62,10 @@ export default function App({ navigation, route }) {
 					</View>
 
 
-					{/* Move in date */}
+					{/* Electricity */}
 					<View style={[styles.item, styles.myBackground]}>
 						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Ngày chuyển đến:</Text>
+							<Text style={styles.title}>Số điện:</Text>
 						</View>
 						<View>
 							<TextInput
@@ -73,7 +73,7 @@ export default function App({ navigation, route }) {
 								onChangeText={() => {
 								}}
 								placeholder="Nhập ..."
-								defaultValue={room.move_in_date}
+								defaultValue={String(room.old_electricity_number)}
 								editable={true}
 								multiline={false}
 								maxLength={256}
@@ -83,46 +83,7 @@ export default function App({ navigation, route }) {
 						</View>
 					</View>
 
-					{/* Rental fee */}
-					<View style={[styles.item, styles.myBackground]}>
-						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Giá thuê phòng:</Text>
-						</View>
-						<View>
-							<TextInput
-								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
-								onChangeText={() => {
-								}}
-								placeholder="Nhập ..."
-								defaultValue={String(room.rental_fee)}
-								editable={true}
-								multiline={false}
-								maxLength={256}
-							>
-							</TextInput>
-						</View>
-					</View>
 
-					{/* Deposit */}
-					<View style={[styles.item, styles.myBackground]}>
-						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Tiền cọc:</Text>
-						</View>
-						<View>
-							<TextInput
-								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
-								onChangeText={() => {
-								}}
-								placeholder="Nhập ..."
-								defaultValue={room.deposit ? String(room.deposit) : 'Không có'}
-								editable={true}
-								multiline={false}
-								maxLength={256}
-							>
-
-							</TextInput>
-						</View>
-					</View>
 
 					<TouchableOpacity
 					style={styles.saveButton}
