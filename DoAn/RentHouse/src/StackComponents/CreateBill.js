@@ -33,14 +33,14 @@ export default function App({ navigation, route }) {
 	// Get room list from database
 	useEffect(() => {
 		const loadRoomList = async () => {
-			const rooms = await fetchRoomListInUse()
-				.catch((error) => console.log(error));
+			const rooms = await fetchRoomListInUse().catch((error) =>
+				console.log(error)
+			);
 			setRoomList(rooms);
 		};
 
 		loadRoomList();
 	}, [isFocused]);
-
 
 	const renderItem = ({ item }) => (
 		// Ghi chi so dich vu modal
@@ -50,8 +50,7 @@ export default function App({ navigation, route }) {
 				navigation.navigate('CreateBillDetail', {
 					selected_room_id: item.id,
 				});
-			}}
-		>
+			}}>
 			<View style={[styles.room, styles.myBackground]}>
 				<View>
 					<Text style={styles.styleRoomName}>{item.name}</Text>
@@ -66,10 +65,12 @@ export default function App({ navigation, route }) {
 
 	return (
 		<View style={styles.container}>
-
 			{/* Day */}
 			<View style={styles.containerdate}>
-				<Text style={[styles.date]}> Tháng {month} / {year}</Text>
+				<Text style={[styles.date]}>
+					{' '}
+					Tháng {month} / {year}
+				</Text>
 			</View>
 
 			{/* Body */}
