@@ -17,11 +17,10 @@ import Guide from './src/StackComponents/Guide.js';
 import CreateBill from './src/StackComponents/CreateBill.js';
 import Service from './src/StackComponents/Service.js';
 import CreateBillDetail from './src/StackComponents/CreateBillDetail.js';
-import EditBasicInfo from './src/StackComponents/EditBasicInfo.js'
-import EditService from './src/StackComponents/EditService.js'
+import EditBasicInfo from './src/StackComponents/EditBasicInfo.js';
+import EditService from './src/StackComponents/EditService.js';
 
-import AddModal from './src/Modals/AddModal.js';
-import EditModal from './src/Modals/EditModal.js';
+import EditNote from './src/StackComponents/EditNote.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -66,9 +65,7 @@ export default function App() {
 
 				<Stack.Screen name="Service" component={Service} />
 
-				<Stack.Screen name="AddModal" component={AddModal} />
-				
-				<Stack.Screen name="EditModal" component={EditModal} />
+				<Stack.Screen name="EditNote" component={EditNote} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

@@ -5,11 +5,17 @@ import {
 	Text,
 	FlatList,
 	TouchableOpacity,
+	TextInput,
 } from 'react-native';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-import { fetchNoteList, deleteNote } from '../database/actions/noteActions';
+import {
+	fetchNoteList,
+	deleteNote,
+	insertNote,
+} from '../database/actions/noteActions';
+
 import { useForceUpdate } from '../utils/utils';
 
 export default function App({ navigation, route }) {
@@ -20,8 +26,7 @@ export default function App({ navigation, route }) {
 	// Get note list from database
 	useEffect(() => {
 		const loadNoteList = async () => {
-			const notes = await fetchNoteList()
-				.catch((error) => console.log(error));
+			const notes = await fetchNoteList().catch((error) => console.log(error));
 
 			setNoteList(notes);
 		};
@@ -29,20 +34,18 @@ export default function App({ navigation, route }) {
 		loadNoteList();
 	}, [forceUpdateId]);
 
-
 	const renderItem = ({ item }) => {
 		return (
 			<TouchableOpacity
 				style={[styles.note, styles.myBackground]}
-			// onPress={() => {
-			// 	navigation.navigate('EditModal', {
-			// 		editContent: item.noteContent,
-			// 		editID: item.id,
-			// 	});
-			// }}
-			>
+				onPress={() => {
+					navigation.navigate('EditNote', {
+						noteContent: item.content,
+						noteID: item.id,
+					});
+				}}>
 				<View style={styles.noteContent}>
-					<Text>
+					<Text style={{ fontSize: 20 }}>
 						{item.id}. {item.content}
 					</Text>
 				</View>
@@ -51,12 +54,11 @@ export default function App({ navigation, route }) {
 					<TouchableOpacity
 						onPress={() => {
 							deleteNote(item.id, forceUpdate);
-						}}
-					>
+						}}>
 						<FontAwesomeIcon
 							name="remove"
 							size={25}
-							style={[styles.icon]}
+							style={{ marginHorizontal: 4 }}
 						/>
 					</TouchableOpacity>
 				</View>
@@ -68,22 +70,25 @@ export default function App({ navigation, route }) {
 		<View style={styles.container}>
 			{/* Body */}
 			<View style={styles.body}>
+				<View style={[styles.textInputContainer, styles.myBorder]}>
+					<TextInput
+						style={styles.textInputContent}
+						placeholder="Nhập nội dung ghi chú ..."></TextInput>
+
+					<TouchableOpacity
+						onPress={() => {
+							// handle add note
+						}}>
+						<FontAwesomeIcon name="plus-circle" size={30} />
+					</TouchableOpacity>
+				</View>
+
 				{/* View notes */}
 				<FlatList
 					data={noteList}
 					renderItem={renderItem}
-					keyExtractor={(item) => item.id}
-				></FlatList>
+					keyExtractor={(item) => item.id}></FlatList>
 			</View>
-
-			<TouchableOpacity
-				style={styles.addButton}
-			// onPress={() => {
-			// 	navigation.navigate('AddModal');
-			// }}
-			>
-				<FontAwesomeIcon name="plus-circle" size={35} color="white" />
-			</TouchableOpacity>
 		</View>
 	);
 }
@@ -97,12 +102,24 @@ const styles = StyleSheet.create({
 	},
 
 	body: {
-		width: '90%',
+		width: '100%',
 		minHeight: '50%',
 		maxHeight: '100%',
-		paddingLeft: 8,
-		zIndex: -99,
+		paddingHorizontal: 8,
 	},
+
+	textInputContainer: {
+		flexDirection: 'row',
+		marginVertical: 16,
+		paddingHorizontal: 8,
+		height: 50,
+		justifyContent: 'space-between',
+		alignItems: 'center',
+	},
+	textInputContent: {
+		fontSize: 20,
+	},
+
 	note: {
 		flexDirection: 'row',
 		paddingHorizontal: 8,
@@ -113,7 +130,7 @@ const styles = StyleSheet.create({
 		marginBottom: 16,
 	},
 	noteContent: {
-		height: 50,
+		minHeight: 50,
 		width: '100%',
 		justifyContent: 'center',
 		alignItems: 'flex-start',
@@ -122,49 +139,6 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		right: 0,
 		flexDirection: 'row',
-	},
-	icon: {
-		marginHorizontal: 4,
-	},
-
-	subMenuContainer: {
-		borderWidth: 2,
-		borderRadius: 10,
-		backgroundColor: 'white',
-		width: '50%',
-		height: '200%',
-		position: 'absolute',
-		top: 70,
-		right: 40,
-		backgroundColor: '#dfdfdf',
-		justifyContent: 'center',
-	},
-	subMenu: {
-		width: '100%',
-		height: '33%',
-		justifyContent: 'center',
-	},
-
-	stackTitle: {
-		fontSize: 20,
-		fontWeight: 'bold',
-		textAlign: 'center',
-	},
-	textBold: {
-		fontWeight: 'bold',
-	},
-	textBoldRight: {
-		fontWeight: 'bold',
-		textAlign: 'right',
-	},
-	btnContainer: {
-		width: '100%',
-		height: '7%',
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: 'rgba(223,223,223,0.8)',
-		position: 'absolute',
-		bottom: 0,
 	},
 
 	myBorder: {
@@ -175,14 +149,5 @@ const styles = StyleSheet.create({
 	myBackground: {
 		backgroundColor: '#dfdfdf',
 		borderRadius: 10,
-	},
-	addButton: {
-		backgroundColor: 'black',
-		borderRadius: 10,
-		paddingHorizontal: 8,
-		paddingVertical: 4,
-		position: 'absolute',
-		bottom: 8,
-		right: 8,
 	},
 });
