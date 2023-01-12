@@ -5,10 +5,10 @@ import {
 	TouchableOpacity,
 	FlatList,
 	ScrollView,
-	SafeAreaView,
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
+import { LogBox } from 'react-native';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -65,6 +65,8 @@ export default function App({ navigation, route }) {
 		loadService('Điện', setElectricityFee);
 		loadService('Nước', setWaterFee);
 		loadBillList();
+
+		LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
 
 	}, [isFocused, forceUpdateId]);
 
@@ -318,14 +320,14 @@ export default function App({ navigation, route }) {
 							</View>
 
 							{/* View members  */}
-							<SafeAreaView style={[styles.memberContainer]}>
+							<View style={[styles.memberContainer]}>
 								<FlatList
 									nestedScrollEnabled={true}
 									data={memberList}
 									renderItem={renderMembers}
 									keyExtractor={(item) => item.id}
 								></FlatList>
-							</SafeAreaView>
+							</View>
 						</View>
 
 						{/* Water and electricity */}

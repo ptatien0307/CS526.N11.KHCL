@@ -5,6 +5,7 @@ import {
 	Text,
 	FlatList,
 	TouchableOpacity,
+	SafeAreaView,
 } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 
