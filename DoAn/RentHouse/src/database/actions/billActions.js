@@ -76,9 +76,9 @@ export const insertBill = (bill, forceUpdate) => {
                     `INSERT INTO bills (
                         room_id,
                         created_at,
-                        rental_fee,
                         number_of_months,
                         number_of_days,
+                        rental_fee,
                         new_electricity_number,
                         old_electricity_number,
                         electricity_fee,

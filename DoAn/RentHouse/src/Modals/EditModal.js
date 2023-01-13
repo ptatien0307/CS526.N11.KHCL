@@ -5,11 +5,36 @@ import {
 	TouchableHighlight,
 	TextInput,
 } from 'react-native';
-import { alertEmptyDialog } from '../Dialogs/dialog.js';
-import { useState } from 'react';
+import { alertEmptyDialog, editSuccessDialog } from '../Dialogs/dialog.js';
+import { useState, useEffect } from 'react';
+import { updateNote, fetchNoteContent } from '../database/actions/noteActions.js';
 
 export default function EditModal({ navigation, route }) {
+	const selected_note_id = route.params.selected_note_id
 	const [inputText, setInputText] = useState('');
+
+	useEffect(() => {
+		const loadNote = async () => {
+			const note = await fetchNoteContent(selected_note_id)
+				.catch((error) => console.log(error));
+			setInputText(note.content);
+		};
+
+		loadNote();
+	}, [])
+
+	const handleSave = async () => {
+		if (inputText === '')
+			alertEmptyDialog();
+		else {
+			await updateNote({
+				id: selected_note_id,
+				content: inputText
+			})
+			editSuccessDialog();
+			navigation.goBack()
+		}
+	}
 
 	return (
 		<View style={styles.container}>
@@ -27,7 +52,7 @@ export default function EditModal({ navigation, route }) {
 						onChangeText={(text) => {
 							setInputText(text);
 						}}
-						defaultValue={route.params.editContent}
+						defaultValue={inputText}
 						editable={true}
 						multiline={false}
 						maxLength={256}
@@ -36,12 +61,7 @@ export default function EditModal({ navigation, route }) {
 					{/* Save button */}
 					<TouchableHighlight
 						style={styles.saveButton}
-						onPress={() => {
-							if (inputText === '') alertEmptyDialog();
-							else {
-								// Handle edit note or room
-							}
-						}}
+						onPress={handleSave}
 					>
 						<Text style={{ fontSize: 20 }}>SAVE</Text>
 					</TouchableHighlight>

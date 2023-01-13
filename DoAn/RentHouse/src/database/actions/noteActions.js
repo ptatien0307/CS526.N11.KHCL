@@ -22,6 +22,24 @@ export const fetchNoteList = () => {
 	});
 };
 
+export const fetchNoteContent = (note_id) => {
+	return new Promise((resolve, reject) => {
+		db.transaction((tx) => {
+			tx.executeSql(
+				'SELECT content FROM notes WHERE id = ?',
+				[note_id],
+				(_, { rows: { _array: result } }) => {
+					console.log('Note content fetched successfully');
+					resolve(result[0]);
+				},
+				(_, error) => {
+					reject(error);
+				}
+			);
+		});
+	});
+}; ``
+
 export const insertNote = (content, forceUpdate) => {
 	return new Promise((resolve, reject) => {
 		db.transaction(

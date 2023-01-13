@@ -6,6 +6,7 @@ import {
 	FlatList,
 	TouchableOpacity,
 } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
@@ -13,6 +14,7 @@ import { fetchNoteList, deleteNote } from '../database/actions/noteActions';
 import { useForceUpdate } from '../utils/utils';
 
 export default function App({ navigation, route }) {
+	const isFocused = useIsFocused()
 	const [noteList, setNoteList] = useState([]);
 	const [selectedNoteId, setSelectedNoteId] = useState(null);
 	const [forceUpdate, forceUpdateId] = useForceUpdate();
@@ -27,19 +29,18 @@ export default function App({ navigation, route }) {
 		};
 
 		loadNoteList();
-	}, [forceUpdateId]);
+	}, [isFocused, forceUpdateId]);
 
 
 	const renderItem = ({ item }) => {
 		return (
 			<TouchableOpacity
 				style={[styles.note, styles.myBackground]}
-			// onPress={() => {
-			// 	navigation.navigate('EditModal', {
-			// 		editContent: item.noteContent,
-			// 		editID: item.id,
-			// 	});
-			// }}
+				onPress={() => {
+					navigation.navigate('EditModal', {
+						selected_note_id: item.id
+					});
+				}}
 			>
 				<View style={styles.noteContent}>
 					<Text>
