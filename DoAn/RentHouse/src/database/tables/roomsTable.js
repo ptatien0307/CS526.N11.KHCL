@@ -7,7 +7,7 @@ export const createRoomsTable = `
         settlement_date        INTEGER,
         rental_fee             INTEGER NOT NULL,
         deposit                INTEGER,
-        move_in_date           INTEGER,
+        move_in_date           TEXT,
         old_electricity_number INTEGER NOT NULL,
         old_water_number       INTEGER NOT NULL,
         status                 TEXT    NOT NULL DEFAULT ('Còn trống') 

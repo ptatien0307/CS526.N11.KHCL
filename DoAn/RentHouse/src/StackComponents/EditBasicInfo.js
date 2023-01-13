@@ -8,26 +8,40 @@ import {
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import { fetchRoomDetails } from '../database/actions/roomActions';
+import { fetchRoomDetails, updateRoom } from '../database/actions/roomActions';
 import { useForceUpdate } from '../utils/utils';
 
 
 export default function App({ navigation, route }) {
-	const roomID = route.params.roomID;
+	const selected_room_id = route.params.selected_room_id;
 	const [room, setRoom] = useState({});
 
 
 	const isFocused = useIsFocused();
 	const [forceUpdate, forceUpdateId] = useForceUpdate();
 
+	const handleSaveRoomEditedInfo = async () => {
+		const temp = {
+			...room,
+			rental_fee: parseInt(room.rental_fee),
+			deposit: parseInt(room.deposit),
+			old_electricity_number: parseInt(room.old_electricity_number),
+			old_water_number: parseInt(room.old_water_number),
+		}
+
+		await updateRoom(temp, forceUpdate)
+			.catch((error) => console.log(error));
+
+		navigation.goBack();
+	}
 
 	useEffect(() => {
 		const loadRoomDetails = async () => {
-			const roomDetails = await fetchRoomDetails(roomID)
+			const roomDetails = await fetchRoomDetails(selected_room_id)
 				.catch((error) => console.log(error));
 			setRoom(roomDetails);
 		};
-		
+
 		loadRoomDetails();
 	}, [isFocused, forceUpdateId]);
 
@@ -50,7 +64,12 @@ export default function App({ navigation, route }) {
 						<View>
 							<TextInput
 								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
-								onChangeText={() => {}}
+								onChangeText={(e) => {
+									setRoom({
+										...room,
+										name: e
+									})
+								}}
 								placeholder="Nhập ..."
 								defaultValue={room.name}
 								editable={true}
@@ -70,7 +89,11 @@ export default function App({ navigation, route }) {
 						<View>
 							<TextInput
 								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
-								onChangeText={() => {
+								onChangeText={(e) => {
+									setRoom({
+										...room,
+										move_in_date: e
+									})
 								}}
 								placeholder="Nhập ..."
 								defaultValue={room.move_in_date}
@@ -91,13 +114,18 @@ export default function App({ navigation, route }) {
 						<View>
 							<TextInput
 								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
-								onChangeText={() => {
+								onChangeText={(e) => {
+									setRoom({
+										...room,
+										rental_fee: e
+									})
 								}}
 								placeholder="Nhập ..."
 								defaultValue={String(room.rental_fee)}
 								editable={true}
 								multiline={false}
 								maxLength={256}
+								keyboardType={'number-pad'}
 							>
 							</TextInput>
 						</View>
@@ -111,13 +139,18 @@ export default function App({ navigation, route }) {
 						<View>
 							<TextInput
 								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
-								onChangeText={() => {
+								onChangeText={(e) => {
+									setRoom({
+										...room,
+										deposit: e
+									})
 								}}
 								placeholder="Nhập ..."
 								defaultValue={room.deposit ? String(room.deposit) : 'Không có'}
-								editable={true}
+								editable={Boolean(room.deposit)}
 								multiline={false}
 								maxLength={256}
+								keyboardType={'number-pad'}
 							>
 
 							</TextInput>
@@ -125,10 +158,8 @@ export default function App({ navigation, route }) {
 					</View>
 
 					<TouchableOpacity
-					style={styles.saveButton}
-						onPress={() => {
-							// Handle save edit
-						}}
+						style={styles.saveButton}
+						onPress={handleSaveRoomEditedInfo}
 					>
 						<Text style={styles.textTitleWhite}>
 							LƯU THÔNG TIN CHỈNH SỬA
@@ -173,7 +204,7 @@ const styles = StyleSheet.create({
 		paddingBottom: 8,
 		marginBottom: 8,
 	},
-	
+
 	saveButton: {
 		backgroundColor: 'black',
 		width: '100%',

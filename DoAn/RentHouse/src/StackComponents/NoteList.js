@@ -7,6 +7,7 @@ import {
 	TouchableOpacity,
 	TextInput,
 } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
@@ -19,6 +20,7 @@ import {
 import { useForceUpdate } from '../utils/utils';
 
 export default function App({ navigation, route }) {
+	const isFocused = useIsFocused()
 	const [noteList, setNoteList] = useState([]);
 	const [selectedNoteId, setSelectedNoteId] = useState(null);
 	const [forceUpdate, forceUpdateId] = useForceUpdate();
@@ -32,18 +34,19 @@ export default function App({ navigation, route }) {
 		};
 
 		loadNoteList();
-	}, [forceUpdateId]);
+	}, [isFocused, forceUpdateId]);
+
 
 	const renderItem = ({ item }) => {
 		return (
 			<TouchableOpacity
 				style={[styles.note, styles.myBackground]}
 				onPress={() => {
-					navigation.navigate('EditNote', {
-						noteContent: item.content,
-						noteID: item.id,
+					navigation.navigate('EditModal', {
+						selected_note_id: item.id
 					});
-				}}>
+				}}
+			>
 				<View style={styles.noteContent}>
 					<Text style={{ fontSize: 20 }}>
 						{item.id}. {item.content}

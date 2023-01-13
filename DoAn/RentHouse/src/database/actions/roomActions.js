@@ -101,13 +101,17 @@ export const updateRoom = (room, forceUpdate = null) => {
 				tx.executeSql(
 					`UPDATE rooms
 					SET name = ?,
+						settlement_date = ?,
 						rental_fee = ?,
+						move_in_date = ?,
 						old_electricity_number = ?,
 						old_water_number = ?
 					WHERE id = ?;`,
 					[
 						room.name,
+						room.settlement_date,
 						room.rental_fee,
+						room.move_in_date,
 						room.old_electricity_number,
 						room.old_water_number,
 						room.id,

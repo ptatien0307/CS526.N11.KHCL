@@ -50,7 +50,6 @@ export default function App({ navigation, route }) {
 				(error) => console.log(error)
 			);
 			setMemberList(memberList);
-			console.log(memberList);
 		};
 
 		const loadBillList = async () => {
@@ -91,6 +90,8 @@ export default function App({ navigation, route }) {
 		return (
 			<TouchableOpacity
 				onPress={() => {
+					console.log('---------');
+
 					navigation.navigate('MemberDetail', {
 						memberID: item.id,
 					});
@@ -124,6 +125,8 @@ export default function App({ navigation, route }) {
 		return (
 			<TouchableOpacity
 				onPress={() => {
+					console.log('---------');
+
 					navigation.navigate('BillDetail', {
 						selected_bill_id: item.id,
 					});
@@ -242,11 +245,17 @@ export default function App({ navigation, route }) {
 								<Text>Thông tin cơ bản</Text>
 								<TouchableOpacity
 									onPress={() => {
+										console.log('---------');
+
 										navigation.navigate('EditBasicInfo', {
-											roomID: room.id,
-										});
-									}}>
-									<FontAwesomeIcon name="edit" size={25} />
+											selected_room_id: room.id
+										})
+									}}
+								>
+									<FontAwesomeIcon
+										name="edit"
+										size={20}
+									/>
 								</TouchableOpacity>
 							</View>
 
@@ -304,6 +313,8 @@ export default function App({ navigation, route }) {
 
 								<TouchableOpacity
 									onPress={() => {
+										console.log('---------');
+
 										// Navigate to AddMember screen
 										navigation.navigate('AddMember', {
 											roomID: room.id,
