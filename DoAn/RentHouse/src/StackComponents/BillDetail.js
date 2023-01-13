@@ -37,20 +37,7 @@ export default function App({ navigation, route }) {
 				style={{ width: '100%' }}
 				contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}
 			>
-				style={{ width: '100%' }}
-				contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}>
 				{/* Bill detail */}
-				<View style={[styles.billDetail, styles.myBorder]}>
-
-					{/* Name and day */}
-					<View>
-						<Text style={styles.textTitle}>
-							{billDetails.room_name}
-						</Text>
-						<Text style={styles.textTitle}>
-							{billDetails.created_at}
-						</Text>
-					</View>
 					<View style={[styles.billDetail, styles.myBorder]}>
 						{/* Name and day */}
 						<View>
