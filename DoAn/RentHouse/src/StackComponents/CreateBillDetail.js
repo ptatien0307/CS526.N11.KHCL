@@ -67,34 +67,11 @@ export default function App({ navigation, route }) {
 
         // Check if newElectricityNumber and WaterBillNew have non-digit characters
         if (/\D/.test(newElectricityNumber)) {
-            return Alert.alert('Lỗi','Chỉ số điện mới không được có ký tự đặc biệt');
+            return Alert.alert('Lỗi','Chỉ số điện mới chỉ được chứa số');
         }
         
-        // Check if newElectricityNumber and WaterBillNew have space
-        if (newElectricityNumber.includes(' ')) {
-            return Alert.alert('Lỗi','Chỉ số điện mới không được có khoảng trắng');
-        }
-
-        if (newWaterNumber.includes(' ')) {
-            return Alert.alert('Lỗi', 'Chỉ số nước mới không được có khoảng trắng');
-        }
-
-        // Check if input newElectricityNumber and WaterBillNew have comma
-        if (newElectricityNumber.includes(',')) {
-            return Alert.alert('Lỗi', 'Chỉ số điện mới không được có dấu phẩy');
-        }
-
-        if (newWaterNumber.includes(',')) {
-            return Alert.alert('Lỗi', 'Chỉ số nước mới không được có dấu phẩy');
-        }
-
-        // Check if input newElectricityNumber and WaterBillNew have - sign
-        if (newElectricityNumber.includes('-')) {
-            return Alert.alert('Lỗi','Chỉ số điện mới không được có dấu trừ');
-        }
-
-        if (newWaterNumber.includes('-')) {
-            return Alert.alert('Lỗi','Chỉ số nước mới không được có dấu trừ');
+        if (/\D/.test(newWaterNumber)) {
+            return Alert.alert('Lỗi','Chỉ số nước mới chỉ được chứa số');
         }
 
         // Check if input newElectricityNumber and WaterBillNew are empty
