@@ -4,12 +4,16 @@ import {
 	Text,
 	TouchableOpacity,
 	TextInput,
+	ScrollView,
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 import { formatVNCurrency } from '../utils/utils';
-import { fetchServiceDetails, updateServicePrice } from '../database/actions/serviceActions';
+import {
+	fetchServiceDetails,
+	updateServicePrice,
+} from '../database/actions/serviceActions';
 import { editSuccessDialog } from '../Dialogs/dialog';
 
 export default function App({ navigation, route }) {
@@ -22,28 +26,30 @@ export default function App({ navigation, route }) {
 
 	useEffect(() => {
 		const loadService = async (service_name, setService) => {
-			const service = await fetchServiceDetails(service_name)
-				.catch((error) => console.log(error));
+			const service = await fetchServiceDetails(service_name).catch((error) =>
+				console.log(error)
+			);
 
 			setService(formatVNCurrency(service.price, 2));
 		};
 
-		loadService("Nước", setWater);
-		loadService("Điện", setElectricity);
-		loadService("Rác", setGarbage);
-		loadService("Phòng", setRentallFee);
+		loadService('Nước', setWater);
+		loadService('Điện', setElectricity);
+		loadService('Rác', setGarbage);
+		loadService('Phòng', setRentallFee);
 	}, []);
 
 	const handleSave = () => {
 		const updateService = async (service_name, service_price) => {
-			await updateServicePrice(service_name, service_price)
-				.catch((error) => console.log(error));
+			await updateServicePrice(service_name, service_price).catch((error) =>
+				console.log(error)
+			);
 		};
 
-		updateService("Nước", Number(water.replace(/\W+/g, '')));
-		updateService("Điện", Number(electricity.replace(/\W+/g, '')));
-		updateService("Rác", Number(garbage.replace(/\W+/g, '')));
-		updateService("Phòng", Number(rentallFee.replace(/\W+/g, '')));
+		updateService('Nước', Number(water.replace(/\W+/g, '')));
+		updateService('Điện', Number(electricity.replace(/\W+/g, '')));
+		updateService('Rác', Number(garbage.replace(/\W+/g, '')));
+		updateService('Phòng', Number(rentallFee.replace(/\W+/g, '')));
 
 		editSuccessDialog();
 		navigation.goBack();
@@ -51,9 +57,14 @@ export default function App({ navigation, route }) {
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.container}>
-				{/* Body */}
-				<View style={[styles.body]}>
+			{/* Body */}
+			<View style={[styles.body]}>
+				<ScrollView
+					style={{ width: '100%' }}
+					contentContainerStyle={{
+						flexGrow: 1,
+						alignItems: 'center',
+					}}>
 					{/* Garbage */}
 					<View style={[styles.item, styles.myBackground]}>
 						<View style={styles.titleContainer}>
@@ -63,7 +74,7 @@ export default function App({ navigation, route }) {
 							<TextInput
 								style={[
 									styles.myBorder,
-									{ fontSize: 17, paddingLeft: 8, height: 40 },
+									{ fontSize: 20, paddingLeft: 8, height: 40 },
 								]}
 								onChangeText={(text) => {
 									setGarbage(formatVNCurrency(text.replace(/\W+/g, ''), 2));
@@ -86,7 +97,7 @@ export default function App({ navigation, route }) {
 							<TextInput
 								style={[
 									styles.myBorder,
-									{ fontSize: 17, paddingLeft: 8, height: 40 },
+									{ fontSize: 20, paddingLeft: 8, height: 40 },
 								]}
 								onChangeText={(text) => {
 									setElectricity(formatVNCurrency(text.replace(/\W+/g, ''), 2));
@@ -109,7 +120,7 @@ export default function App({ navigation, route }) {
 							<TextInput
 								style={[
 									styles.myBorder,
-									{ fontSize: 17, paddingLeft: 8, height: 40 },
+									{ fontSize: 20, paddingLeft: 8, height: 40 },
 								]}
 								onChangeText={(text) => {
 									setWater(formatVNCurrency(text.replace(/\W+/g, ''), 2));
@@ -132,7 +143,7 @@ export default function App({ navigation, route }) {
 							<TextInput
 								style={[
 									styles.myBorder,
-									{ fontSize: 17, paddingLeft: 8, height: 40 },
+									{ fontSize: 20, paddingLeft: 8, height: 40 },
 								]}
 								onChangeText={(text) => {
 									setRentallFee(formatVNCurrency(text.replace(/\W+/g, ''), 2));
@@ -147,14 +158,12 @@ export default function App({ navigation, route }) {
 					</View>
 
 					{/* Save edit  */}
-					<TouchableOpacity
-						style={styles.saveButton}
-						onPress={handleSave}>
+					<TouchableOpacity style={styles.saveButton} onPress={handleSave}>
 						<View>
 							<Text style={styles.textTitleWhite}>LƯU CHỈNH SỬA</Text>
 						</View>
 					</TouchableOpacity>
-				</View>
+				</ScrollView>
 			</View>
 		</View>
 	);
@@ -173,6 +182,7 @@ const styles = StyleSheet.create({
 		height: '100%',
 		alignItems: 'center',
 		justifyContent: 'space-evenly',
+		paddingTop: 16,
 	},
 	item: {
 		width: '100%',
@@ -180,6 +190,7 @@ const styles = StyleSheet.create({
 		minHeight: 100,
 		paddingHorizontal: 8,
 		paddingTop: 8,
+		marginBottom: 32,
 	},
 	saveButton: {
 		backgroundColor: 'black',

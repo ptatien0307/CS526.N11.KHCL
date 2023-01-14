@@ -12,14 +12,14 @@ export default function App({ navigation, route }) {
 
 	useEffect(() => {
 		const loadServiceList = async () => {
-			const services = await fetchServiceList()
-				.catch((error) => console.log(error));
+			const services = await fetchServiceList().catch((error) =>
+				console.log(error)
+			);
 
 			setServiceList(services);
 		};
 		loadServiceList();
 	}, [isFocused]);
-
 
 	return (
 		<View style={styles.container}>
@@ -32,7 +32,9 @@ export default function App({ navigation, route }) {
 								<Text style={styles.title}>{service.name}</Text>
 							</View>
 							<View>
-								<Text>Giá: {formatVNCurrency(service.price, 2)} {service.unit}</Text>
+								<Text style={{ fontSize: 20 }}>
+									Giá: {formatVNCurrency(service.price, 2)} {service.unit}
+								</Text>
 							</View>
 						</View>
 					))}
@@ -46,7 +48,7 @@ export default function App({ navigation, route }) {
 					</TouchableOpacity>
 				</View>
 			</View>
-		</View >
+		</View>
 	);
 }
 
@@ -61,8 +63,8 @@ const styles = StyleSheet.create({
 	body: {
 		width: '90%',
 		height: '100%',
-		alignItems: 'center',
-		justifyContent: 'space-evenly',
+		justifyContent: 'flex-start',
+		paddingTop: 16,
 	},
 	item: {
 		width: '100%',
@@ -70,6 +72,7 @@ const styles = StyleSheet.create({
 		minHeight: 100,
 		paddingHorizontal: 8,
 		paddingTop: 8,
+		marginBottom: 32,
 	},
 	editButton: {
 		backgroundColor: 'black',
@@ -96,7 +99,7 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontWeight: 'bold',
-		fontSize: 20,
+		fontSize: 25,
 	},
 
 	myBackground: {
