@@ -7,20 +7,26 @@ import { app_styles } from './mystyles.js';
 import Menu from './src/StackComponents/Menu.js';
 import RoomList from './src/StackComponents/RoomList.js';
 import RoomDetail from './src/StackComponents/RoomDetail.js';
+import EditBasicInfo from './src/StackComponents/EditBasicInfo.js';
+import EditRoomService from './src/StackComponents/EditRoomService.js';
+
 import NoteList from './src/StackComponents/NoteList.js';
+import EditNote from './src/StackComponents/EditNote.js';
+
 import BillDetail from './src/StackComponents/BillDetail.js';
+
 import MemberDetail from './src/StackComponents/MemberDetail.js';
 import AddMember from './src/StackComponents/AddMember.js';
 import EditMember from './src/StackComponents/EditMember.js';
-import BillList from './src/StackComponents/BillList.js';
-import Guide from './src/StackComponents/Guide.js';
-import CreateBill from './src/StackComponents/CreateBill.js';
-import Service from './src/StackComponents/Service.js';
-import CreateBillDetail from './src/StackComponents/CreateBillDetail.js';
-import EditBasicInfo from './src/StackComponents/EditBasicInfo.js';
-import EditService from './src/StackComponents/EditService.js';
 
-import EditNote from './src/StackComponents/EditNote.js';
+import BillList from './src/StackComponents/BillList.js';
+import CreateBill from './src/StackComponents/CreateBill.js';
+import CreateBillDetail from './src/StackComponents/CreateBillDetail.js';
+
+import Guide from './src/StackComponents/Guide.js';
+
+import Service from './src/StackComponents/Service.js';
+import EditService from './src/StackComponents/EditService.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,7 +53,7 @@ export default function App() {
 
 				<Stack.Screen name="RoomDetail" component={RoomDetail} />
 				<Stack.Screen name="EditBasicInfo" component={EditBasicInfo} />
-				<Stack.Screen name="EditService" component={EditService} />
+				<Stack.Screen name="EditRoomService" component={EditRoomService} />
 
 				<Stack.Screen name="MemberDetail" component={MemberDetail} />
 				<Stack.Screen name="AddMember" component={AddMember} />
@@ -64,6 +70,7 @@ export default function App() {
 				<Stack.Screen name="NoteList" component={NoteList} />
 
 				<Stack.Screen name="Service" component={Service} />
+				<Stack.Screen name="EditService" component={EditService} />
 
 				<Stack.Screen name="EditNote" component={EditNote} />
 			</Stack.Navigator>

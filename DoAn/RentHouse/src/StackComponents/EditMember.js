@@ -344,8 +344,8 @@ export default function App({ navigation, route }) {
 						</View>
 					</View>
 
-					{/* Add room button */}
-					<TouchableOpacity style={styles.addButton} onPress={handleSave}>
+					{/* Save edit  */}
+					<TouchableOpacity style={styles.saveButton} onPress={handleSave}>
 						<View>
 							<Text style={styles.textTitle}>LƯU CHỈNH SỬA</Text>
 						</View>
@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 	},
 
-	addButton: {
+	saveButton: {
 		backgroundColor: 'black',
 		borderRadius: 10,
 		paddingHorizontal: 8,

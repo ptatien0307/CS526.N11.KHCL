@@ -2,102 +2,136 @@ import {
 	StyleSheet,
 	View,
 	Text,
+	TouchableOpacity,
 	TextInput,
-	ScrollView,
-	TouchableOpacity
 } from 'react-native';
 import { useEffect, useState } from 'react';
-import { useIsFocused } from '@react-navigation/native';
-import { fetchRoomDetails } from '../database/actions/roomActions';
-import { useForceUpdate } from '../utils/utils';
-
+import { fetchServiceList } from '../database/actions/serviceActions';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {
-	const roomID = route.params.roomID;
-	const [room, setRoom] = useState({});
+	const [serviceList, setServiceList] = useState([]);
 
-
-	const isFocused = useIsFocused();
-	const [forceUpdate, forceUpdateId] = useForceUpdate();
-
+	const [water, setWater] = useState();
+	const [electricity, setElectricity] = useState();
+	const [garbage, setGarbage] = useState();
+	const [rentallFee, setRentallFee] = useState();
 
 	useEffect(() => {
-		const loadRoomDetails = async () => {
-			const roomDetails = await fetchRoomDetails(roomID)
-				.catch((error) => console.log(error));
-			setRoom(roomDetails);
-		};
-		
-		loadRoomDetails();
-	}, [isFocused, forceUpdateId]);
+		const loadServiceList = async () => {
+			const services = await fetchServiceList().catch((error) =>
+				console.log(error)
+			);
 
+			setServiceList(services);
+		};
+		loadServiceList();
+	});
 	return (
 		<View style={styles.container}>
-			{/* Body */}
-			<View style={[styles.body]}>
-				<ScrollView
-					style={{ width: '100%' }}
-					contentContainerStyle={{
-						flexGrow: 1,
-						alignItems: 'center',
-					}}
-				>
+			<View style={styles.container}>
+				{/* Body */}
+				<View style={[styles.body]}>
 					{/* Water */}
 					<View style={[styles.item, styles.myBackground]}>
 						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Số nước:</Text>
+							<Text style={styles.title}>Nước:</Text>
 						</View>
 						<View>
 							<TextInput
-								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
-								onChangeText={() => {}}
+								style={[
+									styles.myBorder,
+									{ fontSize: 17, paddingLeft: 8, height: 40 },
+								]}
+								onChangeText={(text) => {
+									setWater();
+								}}
 								placeholder="Nhập ..."
-								defaultValue={String(room.old_water_number)}
+								defaultValue={'Default'}
 								editable={true}
 								multiline={false}
-								maxLength={256}
-							>
-							</TextInput>
+								maxLength={256}></TextInput>
 						</View>
 					</View>
-
 
 					{/* Electricity */}
 					<View style={[styles.item, styles.myBackground]}>
 						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Số điện:</Text>
+							<Text style={styles.title}>Điện:</Text>
 						</View>
 						<View>
 							<TextInput
-								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
-								onChangeText={() => {
+								style={[
+									styles.myBorder,
+									{ fontSize: 17, paddingLeft: 8, height: 40 },
+								]}
+								onChangeText={(text) => {
+									setElectricity();
 								}}
 								placeholder="Nhập ..."
-								defaultValue={String(room.old_electricity_number)}
+								defaultValue={'Default'}
 								editable={true}
 								multiline={false}
-								maxLength={256}
-							>
-
-							</TextInput>
+								maxLength={256}></TextInput>
 						</View>
 					</View>
 
+					{/* Garbage */}
+					<View style={[styles.item, styles.myBackground]}>
+						<View style={styles.titleContainer}>
+							<Text style={styles.title}>Rác:</Text>
+						</View>
+						<View>
+							<TextInput
+								style={[
+									styles.myBorder,
+									{ fontSize: 17, paddingLeft: 8, height: 40 },
+								]}
+								onChangeText={(text) => {
+									setGarbage();
+								}}
+								placeholder="Nhập ..."
+								defaultValue={'Default'}
+								editable={true}
+								multiline={false}
+								maxLength={256}></TextInput>
+						</View>
+					</View>
 
+					{/* Rental fee */}
+					<View style={[styles.item, styles.myBackground]}>
+						<View style={styles.titleContainer}>
+							<Text style={styles.title}>Tiền phòng:</Text>
+						</View>
+						<View>
+							<TextInput
+								style={[
+									styles.myBorder,
+									{ fontSize: 17, paddingLeft: 8, height: 40 },
+								]}
+								onChangeText={(text) => {
+									setRentallFee();
+								}}
+								placeholder="Nhập ..."
+								defaultValue={'Default'}
+								editable={true}
+								multiline={false}
+								maxLength={256}></TextInput>
+						</View>
+					</View>
 
+					{/* Save edit  */}
 					<TouchableOpacity
-					style={styles.saveButton}
+						style={styles.saveButton}
 						onPress={() => {
-							// Handle save edit
-						}}
-					>
-						<Text style={styles.textTitleWhite}>
-							LƯU THÔNG TIN CHỈNH SỬA
-						</Text>
+							//Handle save
+						}}>
+						<View>
+							<Text style={styles.textTitleWhite}>LƯU CHỈNH SỬA</Text>
+						</View>
 					</TouchableOpacity>
-				</ScrollView>
+				</View>
 			</View>
-
 		</View>
 	);
 }
@@ -111,11 +145,10 @@ const styles = StyleSheet.create({
 	},
 
 	body: {
-		marginTop: 8,
 		width: '90%',
 		height: '100%',
 		alignItems: 'center',
-		justifyContent: 'space-around',
+		justifyContent: 'space-evenly',
 	},
 	item: {
 		width: '100%',
@@ -123,10 +156,15 @@ const styles = StyleSheet.create({
 		minHeight: 100,
 		paddingHorizontal: 8,
 		paddingTop: 8,
-		marginBottom: 16,
 	},
-
-
+	saveButton: {
+		backgroundColor: 'black',
+		borderRadius: 10,
+		paddingHorizontal: 8,
+		paddingVertical: 4,
+		marginBottom: 16,
+		width: '100%',
+	},
 	titleContainer: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
@@ -134,15 +172,7 @@ const styles = StyleSheet.create({
 		paddingBottom: 8,
 		marginBottom: 8,
 	},
-	
-	saveButton: {
-		backgroundColor: 'black',
-		width: '100%',
-		height: '7%',
-		borderRadius: 10,
-		marginBottom: 12,
-		justifyContent: 'center'
-	},
+
 	textTitleWhite: {
 		fontSize: 20,
 		fontWeight: 'bold',
@@ -153,11 +183,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		fontSize: 20,
 	},
-	stackTitle: {
-		fontSize: 20,
-		fontWeight: 'bold',
-		textAlign: 'center',
-	},
+
 	myBackground: {
 		backgroundColor: '#dfdfdf',
 		borderRadius: 10,

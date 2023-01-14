@@ -248,14 +248,10 @@ export default function App({ navigation, route }) {
 										console.log('---------');
 
 										navigation.navigate('EditBasicInfo', {
-											selected_room_id: room.id
-										})
-									}}
-								>
-									<FontAwesomeIcon
-										name="edit"
-										size={20}
-									/>
+											selected_room_id: room.id,
+										});
+									}}>
+									<FontAwesomeIcon name="edit" size={20} />
 								</TouchableOpacity>
 							</View>
 
@@ -341,7 +337,7 @@ export default function App({ navigation, route }) {
 								<Text>Thông tin dịch vụ</Text>
 								<TouchableOpacity
 									onPress={() => {
-										navigation.navigate('EditService', {
+										navigation.navigate('EditRoomService', {
 											roomID: room.id,
 										});
 									}}>
