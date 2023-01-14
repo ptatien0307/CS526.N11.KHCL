@@ -1,57 +1,41 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useEffect, useState } from 'react';
-import { fetchServiceList } from '../database/actions/serviceActions';
+import { useIsFocused } from '@react-navigation/native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+
+import { fetchServiceList } from '../database/actions/serviceActions';
+import { formatVNCurrency } from '../utils/utils';
 
 export default function App({ navigation, route }) {
 	const [serviceList, setServiceList] = useState([]);
+	const isFocused = useIsFocused();
+
 	useEffect(() => {
 		const loadServiceList = async () => {
-			const services = await fetchServiceList().catch((error) =>
-				console.log(error)
-			);
-			console.log(services);
+			const services = await fetchServiceList()
+				.catch((error) => console.log(error));
 
 			setServiceList(services);
 		};
 		loadServiceList();
-	});
+	}, [isFocused]);
+
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.container}>
 				{/* Body */}
 				<View style={[styles.body]}>
-					{/* Water */}
-					<View style={[styles.item, styles.myBackground]}>
-						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Nước:</Text>
+					{serviceList.map((service) => (
+						<View style={[styles.item, styles.myBackground]} key={service.id}>
+							<View style={styles.titleContainer}>
+								<Text style={styles.title}>{service.name}</Text>
+							</View>
+							<View>
+								<Text>Giá: {formatVNCurrency(service.price, 2)} {service.unit}</Text>
+							</View>
 						</View>
-						<View></View>
-					</View>
-
-					{/* Electricity */}
-					<View style={[styles.item, styles.myBackground]}>
-						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Điện:</Text>
-						</View>
-						<View></View>
-					</View>
-
-					{/* Rental fee */}
-					<View style={[styles.item, styles.myBackground]}>
-						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Rác:</Text>
-						</View>
-						<View></View>
-					</View>
-
-					{/* Rental fee */}
-					<View style={[styles.item, styles.myBackground]}>
-						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Tiền phòng:</Text>
-						</View>
-						<View></View>
-					</View>
+					))}
 
 					<TouchableOpacity
 						style={styles.editButton}
@@ -62,7 +46,7 @@ export default function App({ navigation, route }) {
 					</TouchableOpacity>
 				</View>
 			</View>
-		</View>
+		</View >
 	);
 }
 

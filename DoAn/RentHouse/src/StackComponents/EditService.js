@@ -6,8 +6,11 @@ import {
 	TextInput,
 } from 'react-native';
 import { useEffect, useState } from 'react';
-import { fetchServiceList } from '../database/actions/serviceActions';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+
+import { formatVNCurrency } from '../utils/utils';
+import { fetchServiceDetails, updateServicePrice } from '../database/actions/serviceActions';
+import { editSuccessDialog } from '../Dialogs/dialog';
 
 export default function App({ navigation, route }) {
 	const [serviceList, setServiceList] = useState([]);
@@ -18,24 +21,43 @@ export default function App({ navigation, route }) {
 	const [rentallFee, setRentallFee] = useState();
 
 	useEffect(() => {
-		const loadServiceList = async () => {
-			const services = await fetchServiceList().catch((error) =>
-				console.log(error)
-			);
+		const loadService = async (service_name, setService) => {
+			const service = await fetchServiceDetails(service_name)
+				.catch((error) => console.log(error));
 
-			setServiceList(services);
+			setService(formatVNCurrency(service.price, 2));
 		};
-		loadServiceList();
-	});
+
+		loadService("Nước", setWater);
+		loadService("Điện", setElectricity);
+		loadService("Rác", setGarbage);
+		loadService("Phòng", setRentallFee);
+	}, []);
+
+	const handleSave = () => {
+		const updateService = async (service_name, service_price) => {
+			await updateServicePrice(service_name, service_price)
+				.catch((error) => console.log(error));
+		};
+
+		updateService("Nước", Number(water.replace(/\W+/g, '')));
+		updateService("Điện", Number(electricity.replace(/\W+/g, '')));
+		updateService("Rác", Number(garbage.replace(/\W+/g, '')));
+		updateService("Phòng", Number(rentallFee.replace(/\W+/g, '')));
+
+		editSuccessDialog();
+		navigation.goBack();
+	};
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.container}>
 				{/* Body */}
 				<View style={[styles.body]}>
-					{/* Water */}
+					{/* Garbage */}
 					<View style={[styles.item, styles.myBackground]}>
 						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Nước:</Text>
+							<Text style={styles.title}>Rác:</Text>
 						</View>
 						<View>
 							<TextInput
@@ -44,13 +66,14 @@ export default function App({ navigation, route }) {
 									{ fontSize: 17, paddingLeft: 8, height: 40 },
 								]}
 								onChangeText={(text) => {
-									setWater();
+									setGarbage(formatVNCurrency(text.replace(/\W+/g, ''), 2));
 								}}
 								placeholder="Nhập ..."
-								defaultValue={'Default'}
+								defaultValue={garbage}
 								editable={true}
 								multiline={false}
-								maxLength={256}></TextInput>
+								maxLength={256}
+							/>
 						</View>
 					</View>
 
@@ -66,20 +89,21 @@ export default function App({ navigation, route }) {
 									{ fontSize: 17, paddingLeft: 8, height: 40 },
 								]}
 								onChangeText={(text) => {
-									setElectricity();
+									setElectricity(formatVNCurrency(text.replace(/\W+/g, ''), 2));
 								}}
 								placeholder="Nhập ..."
-								defaultValue={'Default'}
+								defaultValue={electricity}
 								editable={true}
 								multiline={false}
-								maxLength={256}></TextInput>
+								maxLength={256}
+							/>
 						</View>
 					</View>
 
-					{/* Garbage */}
+					{/* Water */}
 					<View style={[styles.item, styles.myBackground]}>
 						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Rác:</Text>
+							<Text style={styles.title}>Nước:</Text>
 						</View>
 						<View>
 							<TextInput
@@ -88,13 +112,14 @@ export default function App({ navigation, route }) {
 									{ fontSize: 17, paddingLeft: 8, height: 40 },
 								]}
 								onChangeText={(text) => {
-									setGarbage();
+									setWater(formatVNCurrency(text.replace(/\W+/g, ''), 2));
 								}}
 								placeholder="Nhập ..."
-								defaultValue={'Default'}
+								defaultValue={water}
 								editable={true}
 								multiline={false}
-								maxLength={256}></TextInput>
+								maxLength={256}
+							/>
 						</View>
 					</View>
 
@@ -110,22 +135,21 @@ export default function App({ navigation, route }) {
 									{ fontSize: 17, paddingLeft: 8, height: 40 },
 								]}
 								onChangeText={(text) => {
-									setRentallFee();
+									setRentallFee(formatVNCurrency(text.replace(/\W+/g, ''), 2));
 								}}
 								placeholder="Nhập ..."
-								defaultValue={'Default'}
+								defaultValue={rentallFee}
 								editable={true}
 								multiline={false}
-								maxLength={256}></TextInput>
+								maxLength={256}
+							/>
 						</View>
 					</View>
 
 					{/* Save edit  */}
 					<TouchableOpacity
 						style={styles.saveButton}
-						onPress={() => {
-							//Handle save
-						}}>
+						onPress={handleSave}>
 						<View>
 							<Text style={styles.textTitleWhite}>LƯU CHỈNH SỬA</Text>
 						</View>

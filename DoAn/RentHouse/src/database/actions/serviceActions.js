@@ -22,12 +22,12 @@ export const fetchServiceList = () => {
     });
 };
 
-export const updateServicePrice = (service_id, service_price) => {
+export const updateServicePrice = (service_name, service_price) => {
     return new Promise((resolve, reject) => {
         db.transaction((tx) => {
             tx.executeSql(
-                'UPDATE service_prices SET price = ? WHERE id = ?',
-                [service_price, service_id],
+                'UPDATE service_prices SET price = ? WHERE name = ?',
+                [service_price, service_name],
                 (_, result) => {
                     console.log('Service updated successfully');
                     resolve(result);

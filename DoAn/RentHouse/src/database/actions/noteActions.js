@@ -40,7 +40,7 @@ export const fetchNoteContent = (note_id) => {
 	});
 }; ``
 
-export const insertNote = (content, forceUpdate) => {
+export const insertNote = (content, forceUpdate = null) => {
 	return new Promise((resolve, reject) => {
 		db.transaction(
 			(tx) => {
@@ -62,7 +62,7 @@ export const insertNote = (content, forceUpdate) => {
 	});
 };
 
-export const updateNote = ({ id, content }, forceUpdate) => {
+export const updateNote = ({ id, content }, forceUpdate = null) => {
 	return new Promise((resolve, reject) => {
 		db.transaction(
 			(tx) => {

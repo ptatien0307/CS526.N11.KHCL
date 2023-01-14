@@ -6,14 +6,43 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 import { useEffect, useState } from 'react';
-import { useIsFocused } from '@react-navigation/native';
-import { fetchNoteList } from '../database/actions/noteActions';
-
-import { useForceUpdate } from '../utils/utils';
+import { fetchNoteContent, updateNote } from '../database/actions/noteActions';
+import { alertMissingDialog, editSuccessDialog } from '../Dialogs/dialog';
 
 export default function EditModal({ navigation, route }) {
-	const noteID = route.params.noteID;
-	const [noteContent, setNoteContent] = useState(route.params.noteContent);
+	const selected_note_id = route.params.selected_note_id;
+
+	const [noteContent, setNoteContent] = useState('');
+
+	useEffect(() => {
+		const loadNote = async () => {
+			const note = await fetchNoteContent(selected_note_id)
+				.catch((error) => console.log(error));
+			setNoteContent(note.content);
+			console.log(note.content);
+		};
+
+		loadNote();
+	}, [])
+
+	const handleSave = () => {
+		if (noteContent.length === 0) {
+			alertMissingDialog();
+		}
+		else {
+			const updatedNote = async () => {
+				await updateNote({
+					id: selected_note_id,
+					content: noteContent
+				})
+					.catch((error) => console.log(error));
+			}
+
+			updatedNote();
+			editSuccessDialog();
+			navigation.goBack();
+		}
+	};
 
 	return (
 		<View style={styles.container}>
@@ -32,12 +61,9 @@ export default function EditModal({ navigation, route }) {
 			{/* Save button */}
 			<TouchableOpacity
 				style={styles.saveButton}
-				onPress={() => {
-					if (noteContent === '') return alert('Chưa nhập nội dung ghi chú');
-					else {
-						// Handle edit note
-					}
-				}}>
+				onPress={handleSave}
+				defaultValue={noteContent}
+			>
 				<Text style={{ fontSize: 20, color: 'white', fontWeight: 'bold' }}>
 					LƯU CHỈNH SỬA
 				</Text>

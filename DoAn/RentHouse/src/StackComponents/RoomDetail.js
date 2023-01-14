@@ -12,7 +12,6 @@ import { LogBox } from 'react-native';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import { formatCurrency } from 'react-native-format-currency';
 
 import {
 	fetchRoomDetails,
@@ -20,7 +19,7 @@ import {
 	fetchRoomBillList,
 } from '../database/actions/roomActions';
 import { deleteCustomer } from '../database/actions/customerActions';
-import { useForceUpdate } from '../utils/utils';
+import { useForceUpdate, formatVNCurrency } from '../utils/utils';
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 
 export default function App({ navigation, route }) {
@@ -34,6 +33,7 @@ export default function App({ navigation, route }) {
 	const [room, setRoom] = useState({});
 	const [waterFee, setWaterFee] = useState('');
 	const [electricityFee, setElectricityFee] = useState('');
+	const [garbageFee, setGarbageFee] = useState('');
 
 	const [mountInfo, setMountInfo] = useState(true);
 
@@ -71,6 +71,7 @@ export default function App({ navigation, route }) {
 		loadMemberList();
 		loadService('Điện', setElectricityFee);
 		loadService('Nước', setWaterFee);
+		loadService('Rác', setGarbageFee);
 		loadBillList();
 
 		LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
@@ -90,8 +91,6 @@ export default function App({ navigation, route }) {
 		return (
 			<TouchableOpacity
 				onPress={() => {
-					console.log('---------');
-
 					navigation.navigate('MemberDetail', {
 						memberID: item.id,
 					});
@@ -125,8 +124,6 @@ export default function App({ navigation, route }) {
 		return (
 			<TouchableOpacity
 				onPress={() => {
-					console.log('---------');
-
 					navigation.navigate('BillDetail', {
 						selected_bill_id: item.id,
 					});
@@ -144,12 +141,7 @@ export default function App({ navigation, route }) {
 							<View style={[styles.myBorder, styles.money]}>
 								<Text>Tổng tiền:</Text>
 								<Text style={styles.textBold}>
-									{
-										formatCurrency({
-											amount: String(item.total),
-											code: 'VND',
-										})[0]
-									}
+									{formatVNCurrency(item.total)}
 								</Text>
 							</View>
 
@@ -167,12 +159,7 @@ export default function App({ navigation, route }) {
 								<View>
 									<Text>Đã thu:</Text>
 									<Text style={styles.textBold}>
-										{
-											formatCurrency({
-												amount: String(item.total - item.remained),
-												code: 'VND',
-											})[0]
-										}
+										{formatVNCurrency(item.total - item.remained)}
 									</Text>
 								</View>
 							</View>
@@ -181,12 +168,7 @@ export default function App({ navigation, route }) {
 							<View style={[styles.myBorder, styles.money]}>
 								<Text>Còn lại: </Text>
 								<Text style={styles.textBold}>
-									{
-										formatCurrency({
-											amount: String(item.remained),
-											code: 'VND',
-										})[0]
-									}
+									{formatVNCurrency(item.remained)}
 								</Text>
 							</View>
 						</View>
@@ -279,12 +261,7 @@ export default function App({ navigation, route }) {
 									<View>
 										<Text>Giá thuê:</Text>
 										<Text style={styles.textBold}>
-											{
-												formatCurrency({
-													amount: String(room.rental_fee),
-													code: 'VND',
-												})[0]
-											}
+											{formatVNCurrency(room.rental_fee)}
 										</Text>
 									</View>
 								</View>
@@ -309,9 +286,6 @@ export default function App({ navigation, route }) {
 
 								<TouchableOpacity
 									onPress={() => {
-										console.log('---------');
-
-										// Navigate to AddMember screen
 										navigation.navigate('AddMember', {
 											roomID: room.id,
 										});
@@ -326,7 +300,8 @@ export default function App({ navigation, route }) {
 									nestedScrollEnabled={true}
 									data={memberList}
 									renderItem={renderMembers}
-									keyExtractor={(item) => item.id}></FlatList>
+									keyExtractor={(item) => item.id}
+								/>
 							</View>
 						</View>
 
@@ -358,13 +333,7 @@ export default function App({ navigation, route }) {
 											style={{ marginRight: 20 }}
 										/>
 										<Text>
-											{
-												formatCurrency({
-													amount: String(waterFee),
-													code: 'VND',
-												})[0]
-											}
-											/khối
+											{formatVNCurrency(waterFee)}/khối
 										</Text>
 									</View>
 									<View style={[styles.lastestUnit, styles.myBorder]}>
@@ -388,13 +357,7 @@ export default function App({ navigation, route }) {
 											}}
 										/>
 										<Text>
-											{
-												formatCurrency({
-													amount: String(electricityFee),
-													code: 'VND',
-												})[0]
-											}
-											/khối
+											{formatVNCurrency(electricityFee)}/Kwh
 										</Text>
 									</View>
 									<View style={[styles.lastestUnit, styles.myBorder]}>
@@ -436,7 +399,7 @@ export default function App({ navigation, route }) {
 											}}
 										/>
 
-										<Text>Tiền rác</Text>
+										<Text> {formatVNCurrency(garbageFee)}/tháng</Text>
 									</View>
 								</View>
 							</View>
@@ -471,12 +434,7 @@ export default function App({ navigation, route }) {
 										color: 'white',
 										fontWeight: 'bold',
 									}}>
-									{
-										formatCurrency({
-											amount: String(totalRemained),
-											code: 'VND',
-										})[0]
-									}
+									{formatVNCurrency(totalRemained)}
 								</Text>
 							</View>
 						</View>

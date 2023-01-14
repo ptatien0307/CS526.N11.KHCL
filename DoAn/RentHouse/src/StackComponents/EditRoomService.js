@@ -7,29 +7,38 @@ import {
 	TouchableOpacity
 } from 'react-native';
 import { useEffect, useState } from 'react';
-import { useIsFocused } from '@react-navigation/native';
 import { fetchRoomDetails } from '../database/actions/roomActions';
-import { useForceUpdate } from '../utils/utils';
+import { updateRoomWaterElectricityNumber } from '../database/actions/roomActions';
 
 
 export default function App({ navigation, route }) {
 	const roomID = route.params.roomID;
-	const [room, setRoom] = useState({});
-
-
-	const isFocused = useIsFocused();
-	const [forceUpdate, forceUpdateId] = useForceUpdate();
+	const [old_electricity_number, setOldElectricityNumber] = useState('');
+	const [old_water_number, setOldWaterNumber] = useState('');
 
 
 	useEffect(() => {
 		const loadRoomDetails = async () => {
 			const roomDetails = await fetchRoomDetails(roomID)
 				.catch((error) => console.log(error));
-			setRoom(roomDetails);
+
+			setOldElectricityNumber(roomDetails.old_electricity_number.toString());
+			setOldWaterNumber(roomDetails.old_water_number.toString());
 		};
-		
+
 		loadRoomDetails();
-	}, [isFocused, forceUpdateId]);
+	}, []);
+
+	const handleSave = async () => {
+		await updateRoomWaterElectricityNumber(
+			roomID,
+			parseInt(old_water_number),
+			parseInt(old_electricity_number)
+		)
+			.catch((error) => console.log(error));
+
+		navigation.goBack();
+	};
 
 	return (
 		<View style={styles.container}>
@@ -50,9 +59,11 @@ export default function App({ navigation, route }) {
 						<View>
 							<TextInput
 								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
-								onChangeText={() => {}}
+								onChangeText={(text) => {
+									setOldWaterNumber(text);
+								}}
 								placeholder="Nhập ..."
-								defaultValue={String(room.old_water_number)}
+								defaultValue={old_water_number}
 								editable={true}
 								multiline={false}
 								maxLength={256}
@@ -70,10 +81,11 @@ export default function App({ navigation, route }) {
 						<View>
 							<TextInput
 								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
-								onChangeText={() => {
+								onChangeText={(text) => {
+									setOldElectricityNumber(text);
 								}}
 								placeholder="Nhập ..."
-								defaultValue={String(room.old_electricity_number)}
+								defaultValue={old_electricity_number}
 								editable={true}
 								multiline={false}
 								maxLength={256}
@@ -86,10 +98,8 @@ export default function App({ navigation, route }) {
 
 
 					<TouchableOpacity
-					style={styles.saveButton}
-						onPress={() => {
-							// Handle save edit
-						}}
+						style={styles.saveButton}
+						onPress={handleSave}
 					>
 						<Text style={styles.textTitleWhite}>
 							LƯU THÔNG TIN CHỈNH SỬA
@@ -134,7 +144,7 @@ const styles = StyleSheet.create({
 		paddingBottom: 8,
 		marginBottom: 8,
 	},
-	
+
 	saveButton: {
 		backgroundColor: 'black',
 		width: '100%',
