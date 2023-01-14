@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import { useEffect, useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -65,48 +65,53 @@ export default function App({ navigation, route }) {
 
     const calculateBill = () => {
 
+        // Check if newElectricityNumber and WaterBillNew have non-digit characters
+        if (/\D/.test(newElectricityNumber)) {
+            return Alert.alert('Lỗi','Chỉ số điện mới không được có ký tự đặc biệt');
+        }
+        
         // Check if newElectricityNumber and WaterBillNew have space
         if (newElectricityNumber.includes(' ')) {
-            return alert('Chỉ số điện mới không được có khoảng trắng');
+            return Alert.alert('Lỗi','Chỉ số điện mới không được có khoảng trắng');
         }
 
         if (newWaterNumber.includes(' ')) {
-            return alert('Chỉ số nước mới không được có khoảng trắng');
+            return Alert.alert('Lỗi', 'Chỉ số nước mới không được có khoảng trắng');
         }
 
         // Check if input newElectricityNumber and WaterBillNew have comma
         if (newElectricityNumber.includes(',')) {
-            return alert('Chỉ số điện mới không được có dấu phẩy');
+            return Alert.alert('Lỗi', 'Chỉ số điện mới không được có dấu phẩy');
         }
 
         if (newWaterNumber.includes(',')) {
-            return alert('Chỉ số nước mới không được có dấu phẩy');
+            return Alert.alert('Lỗi', 'Chỉ số nước mới không được có dấu phẩy');
         }
 
         // Check if input newElectricityNumber and WaterBillNew have - sign
         if (newElectricityNumber.includes('-')) {
-            return alert('Chỉ số điện mới không được có dấu trừ');
+            return Alert.alert('Lỗi','Chỉ số điện mới không được có dấu trừ');
         }
 
         if (newWaterNumber.includes('-')) {
-            return alert('Chỉ số nước mới không được có dấu trừ');
+            return Alert.alert('Lỗi','Chỉ số nước mới không được có dấu trừ');
         }
 
         // Check if input newElectricityNumber and WaterBillNew are empty
         if (newElectricityNumber == '') {
-            return alert('Chưa nhập chỉ số điện mới');
+            return Alert.alert('Lỗi', 'Chưa nhập chỉ số điện mới');
         }
 
         if (newWaterNumber == '') {
-            return alert('Chưa nhập chỉ số nước mới');
+            return Alert.alert('Lỗi', 'Chưa nhập chỉ số nước mới');
         }
 
         // Check if input newElectricityNumber and WaterBillNew are less than old
         if (newElectricityNumber < oldElectricityNumber) {
-            return alert('Chỉ số điện mới phải lớn hơn chỉ số điện cũ');
+            return Alert.alert('Lỗi','Chỉ số điện mới phải lớn hơn chỉ số điện cũ');
         }
         if (newWaterNumber < oldWaterNumber) {
-            return alert('Chỉ số nước mới phải lớn hơn chỉ số nước cũ');
+            return Alert.alert('Lỗi','Chỉ số nước mới phải lớn hơn chỉ số nước cũ');
         }
 
 
@@ -150,7 +155,7 @@ export default function App({ navigation, route }) {
             newWaterNumber
         );
 
-        alert('Tổng tiền hóa đơn: ' + totalBill);
+        Alert.alert('Lập hóa đơn thành công', 'Tổng tiền hóa đơn: ' + totalBill);
         return navigation.goBack();
     };
 

@@ -6,6 +6,7 @@ import { app_styles } from './mystyles.js';
 
 import Menu from './src/StackComponents/Menu.js';
 import RoomList from './src/StackComponents/RoomList.js';
+import AddNewRoom from './src/StackComponents/AddNewRoom.js';
 import RoomDetail from './src/StackComponents/RoomDetail.js';
 import EditBasicInfo from './src/StackComponents/EditBasicInfo.js';
 import EditRoomService from './src/StackComponents/EditRoomService.js';
@@ -50,6 +51,7 @@ export default function App() {
 					}}
 				/>
 				<Stack.Screen name="RoomList" component={RoomList} />
+				<Stack.Screen name="AddNewRoom" component={AddNewRoom} />
 
 				<Stack.Screen name="RoomDetail" component={RoomDetail} />
 				<Stack.Screen name="EditBasicInfo" component={EditBasicInfo} />
