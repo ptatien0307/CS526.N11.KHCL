@@ -78,7 +78,7 @@ export default function App({ navigation, route }) {
                 <TouchableOpacity
                     style={styles.addButton}
                     onPress={() => {
-                        handleAddRoom();
+                        navigation.navigate('AddNewRoom');
                     }}>
                     <Icon name="plus-circle" size={35} color="white" />
                 </TouchableOpacity>
