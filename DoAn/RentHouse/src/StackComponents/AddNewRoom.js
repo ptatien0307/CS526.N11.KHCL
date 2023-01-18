@@ -4,6 +4,7 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
 import { useEffect, useState } from 'react';
 
@@ -42,6 +43,53 @@ export default function App({ navigation, route }) {
     }, []);
 
     const handleAddRoom = () => {
+
+        // Check if room name is empty
+        if (roomName === '') {
+            return Alert.alert('Lỗi', 'Tên phòng không được để trống');
+        }
+
+        // Check if price is empty
+        if (price === '') {
+            return Alert.alert('Lỗi','Giá thuê không được để trống');
+        }
+
+        // Check if electricityCurrent is empty
+        if (electricityCurrent === '') {
+            return Alert.alert('Lỗi','Chỉ số điện hiện tại không được để trống');
+        }
+
+        // Check if waterServiceCurrent is empty
+        if (waterServiceCurrent === '') {
+            return Alert.alert('Lỗi','Chỉ số nước hiện tại không được để trống');
+        }
+        
+        // Check if room name is existed
+        const roomList = fetchRoomList();
+        for (let i = 0; i < roomList.length; i++) {
+            if (roomList[i]['name'] === roomName) {
+                return Alert.alert('Lỗi', 'Tên phòng đã tồn tại');
+            }
+        }
+
+        // check if price have non-digit character
+        if (/\D/.test(price)) {
+            return Alert.alert('Lỗi','Giá phòng chỉ được chứa số');
+        }
+
+        // check if electricityCurrent have non-digit character
+        if (/\D/.test(electricityCurrent)) {
+            return Alert.alert('Lỗi','Chỉ số điện mới chỉ được chứa số');
+        }
+
+        // check if waterServiceCurrent have non-digit character
+        if (/\D/.test(waterServiceCurrent)) {
+            return Alert.alert('Lỗi','Chỉ số nước mới chỉ được chứa số');
+        }
+
+
+
+
         insertRoom(
             {
                 name: 'Phòng ' + roomName,
@@ -50,7 +98,11 @@ export default function App({ navigation, route }) {
                 old_water_number: waterServiceCurrent,
             },
         );
+        
+        Alert.alert('Thành công','Thêm phòng thành công');
+        return navigation.goBack();
     };
+
 
     return (
         <View style={styles.container}>
@@ -58,7 +110,7 @@ export default function App({ navigation, route }) {
                 <Text style={styles.text}>Tên phòng</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Nhập tên phòng. Ví dụ: 1,2,..."
+                    placeholder="Nhập tên phòng. Ví dụ: 1,A1,..."
                     onChangeText={(text) => {
                         setRoomName(text);
                     }}
@@ -132,7 +184,6 @@ export default function App({ navigation, route }) {
 
             <TouchableOpacity style={styles.button} onPress={() => {
                 handleAddRoom();
-                navigation.goBack();
             }}>
                 <Text style={styles.text}>Thêm phòng</Text>
             </TouchableOpacity>
