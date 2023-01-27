@@ -2,9 +2,10 @@
 
 export const createNotesTable = `
     CREATE TABLE IF NOT EXISTS notes (
-    id      INTEGER PRIMARY KEY,
-    content TEXT    NOT NULL
-)`;
+        id      INTEGER PRIMARY KEY,
+        content TEXT    NOT NULL
+    );
+`;
 
 export const populateNotesTable = `
     INSERT OR REPLACE INTO notes (id, content)

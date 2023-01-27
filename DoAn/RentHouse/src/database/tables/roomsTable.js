@@ -9,7 +9,7 @@ export const createRoomsTable = `
         deposit                INTEGER,
         move_in_date           TEXT,
         old_electricity_number INTEGER NOT NULL,
-        old_water_number       INTEGER NOT NULL,
+        old_water_number       INTEGER NOT NULL
     );
 `;
 

@@ -44,23 +44,22 @@ export const fetchRoomListForCreateBill = () => {
 		db.transaction((tx) => {
 			tx.executeSql(
 				`
-				SELECT id,
-						name,
-				CASE 
-							WHEN soluong > 0 
-								THEN soluong || ' người' 
-								ELSE 'Còn trống' 
-						END AS status
-				FROM(
-					SELECT count(customers.id) AS soluong,
-					rooms.id,
-					rooms.name
-							FROM rooms
-								LEFT JOIN
-								customers ON rooms.id = customers.room_id
-							GROUP BY rooms.id
-				) AS result
-				WHERE status != "Còn trống";
+				SELECT a.id,
+						a.name,
+						count(bills.id) AS bills_count
+				FROM (
+						SELECT count(customers.id) AS members_count,
+								rooms.id,
+								rooms.name
+						FROM rooms
+							LEFT JOIN customers ON rooms.id = customers.room_id
+						GROUP BY rooms.id
+						HAVING members_count > 0
+					)
+					AS a
+						LEFT JOIN bills ON a.id = bills.room_id AND 
+										strftime('%m-%Y', bills.created_at, 'localtime') = strftime('%m-%Y', 'now', 'localtime')
+				GROUP BY a.id;s
 				`,
 				[],
 				(_, { rows: { _array: result } }) => {
@@ -193,7 +192,7 @@ export const updateRoomWaterElectricityNumber = (room_id, water_number, electric
 			forceUpdate
 		);
 	});
-}
+};
 
 export const deleteRoom = (room_id, forceUpdate) => {
 	return new Promise((resolve, reject) => {

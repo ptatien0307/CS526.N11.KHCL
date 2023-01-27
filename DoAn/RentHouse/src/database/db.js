@@ -91,27 +91,33 @@ export const createDatabase = () => {
 export const deleteDatabase = () => {
 	db.transaction((tx) => {
 		tx.executeSql(
-			'DROP TABLE  IF EXISTS rooms',
+			'DROP TABLE IF EXISTS rooms;',
 			[],
 			() => console.log('Deleted rooms table'),
 			(_, error) => console.log(error)
 		);
 		tx.executeSql(
-			'DROP TABLE IF EXISTS customers',
+			'DROP TABLE IF EXISTS customers;',
 			[],
 			() => console.log('Deleted customers table'),
 			(_, error) => console.log(error)
 		);
 		tx.executeSql(
-			'DROP TABLE IF EXISTS bills',
+			'DROP TABLE IF EXISTS bills;',
 			[],
 			() => console.log('Deleted bills table'),
 			(_, error) => console.log(error)
 		);
 		tx.executeSql(
-			'DROP TABLE IF EXISTS service_prices',
+			'DROP TABLE IF EXISTS service_prices;',
 			[],
 			() => console.log('Deleted service prices table'),
+			(_, error) => console.log(error)
+		);
+		tx.executeSql(
+			'DROP TABLE IF EXISTS notes;',
+			[],
+			() => console.log('Deleted notes table'),
 			(_, error) => console.log(error)
 		);
 	});

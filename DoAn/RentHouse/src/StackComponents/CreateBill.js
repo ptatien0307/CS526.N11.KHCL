@@ -57,10 +57,15 @@ export default function App({ navigation, route }) {
 				</View>
 
 				<View>
-					<Text>TÌNH TRẠNG: {item.status}</Text>
+					<Text>
+						TÌNH TRẠNG:
+						<Text style={{ color: item.bills_count > 0 ? 'green' : 'red' }}>
+							{item.bills_count > 0 ? ` Đã lập ${item.bills_count} hóa đơn` : ' Chưa lập hóa đơn'}
+						</Text>
+					</Text>
 				</View>
 			</View>
-		</TouchableOpacity>
+		</TouchableOpacity >
 	);
 
 	return (
