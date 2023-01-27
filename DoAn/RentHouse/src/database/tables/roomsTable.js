@@ -10,7 +10,6 @@ export const createRoomsTable = `
         move_in_date           TEXT,
         old_electricity_number INTEGER NOT NULL,
         old_water_number       INTEGER NOT NULL,
-        status                 TEXT    NOT NULL DEFAULT ('Còn trống') 
     );
 `;
 

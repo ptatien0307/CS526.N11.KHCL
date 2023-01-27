@@ -17,7 +17,7 @@ import {
 	addSuccessDialog,
 } from '../Dialogs/dialog.js';
 
-import { fetchRoomListInUse } from '../database/actions/roomActions';
+import { fetchRoomListForCreateBill } from '../database/actions/roomActions';
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
@@ -33,7 +33,7 @@ export default function App({ navigation, route }) {
 	// Get room list from database
 	useEffect(() => {
 		const loadRoomList = async () => {
-			const rooms = await fetchRoomListInUse().catch((error) =>
+			const rooms = await fetchRoomListForCreateBill().catch((error) =>
 				console.log(error)
 			);
 			setRoomList(rooms);

@@ -8,7 +8,24 @@ export const fetchRoomList = () => {
 	return new Promise((resolve, reject) => {
 		db.transaction((tx) => {
 			tx.executeSql(
-				'SELECT id, name, status FROM rooms',
+				`
+				SELECT id,
+						name,
+						CASE 
+							WHEN soluong > 0 
+								THEN soluong || ' người' 
+								ELSE 'Còn trống' 
+						END AS status
+				FROM (
+						SELECT count(customers.id) AS soluong,
+								rooms.id,
+								rooms.name
+							FROM rooms
+								LEFT JOIN
+								customers ON rooms.id = customers.room_id
+							GROUP BY rooms.id
+					) AS result;
+				`,
 				[],
 				(_, { rows: { _array: result } }) => {
 					console.log('Room list fetched successfully');
@@ -22,11 +39,29 @@ export const fetchRoomList = () => {
 	});
 };
 
-export const fetchRoomListInUse = () => {
+export const fetchRoomListForCreateBill = () => {
 	return new Promise((resolve, reject) => {
 		db.transaction((tx) => {
 			tx.executeSql(
-				'SELECT id, name, status FROM rooms WHERE status != "Cò trống"',
+				`
+				SELECT id,
+						name,
+				CASE 
+							WHEN soluong > 0 
+								THEN soluong || ' người' 
+								ELSE 'Còn trống' 
+						END AS status
+				FROM(
+					SELECT count(customers.id) AS soluong,
+					rooms.id,
+					rooms.name
+							FROM rooms
+								LEFT JOIN
+								customers ON rooms.id = customers.room_id
+							GROUP BY rooms.id
+				) AS result
+				WHERE status != "Còn trống";
+				`,
 				[],
 				(_, { rows: { _array: result } }) => {
 					console.log('In-use-room list fetched successfully');
