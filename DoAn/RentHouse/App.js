@@ -31,11 +31,12 @@ import EditService from './src/StackComponents/EditService.js';
 
 const Stack = createNativeStackNavigator();
 
-import { createDatabase, deleteDatabase } from './src/database/db.js';
+import { createDatabase, deleteDatabase, enableAutoVacuum } from './src/database/db.js';
 
 export default function App() {
 	// Initialize database
 	useEffect(() => {
+		enableAutoVacuum();
 		deleteDatabase();
 		createDatabase();
 	}, []);

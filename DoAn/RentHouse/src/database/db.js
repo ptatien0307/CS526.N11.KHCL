@@ -88,7 +88,18 @@ export const createDatabase = () => {
 	populateTables();
 };
 
+// db.exec([{ sql: 'VACUUM;', args: [] }], false, () => console.log('Vacuumed'));
+export const enableAutoVacuum = () => {
+	db.exec(
+		[{ sql: 'PRAGMA auto_vacuum = 1;', args: [] }],
+		false,
+		() => console.log('Enabled auto vacuum')
+	);
+};
+
+
 export const deleteDatabase = () => {
+
 	db.transaction((tx) => {
 		tx.executeSql(
 			'DROP TABLE IF EXISTS rooms;',
