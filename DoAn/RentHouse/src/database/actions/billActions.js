@@ -184,7 +184,7 @@ export const updateBill = (bill, forceUpdate) => {
     });
 };
 
-export const deleteBill = (bill_id, forceUpdate) => {
+export const deleteBill = (bill_id, forceUpdate = null) => {
     return new Promise((resolve, reject) => {
         db.transaction(
             (tx) => {

@@ -19,14 +19,16 @@ import {
 	fetchRoomBillList,
 } from '../database/actions/roomActions';
 import { deleteCustomer } from '../database/actions/customerActions';
-import { useForceUpdate, formatVNCurrency } from '../utils/utils';
 import { fetchServiceDetails } from '../database/actions/serviceActions';
+import { deleteBill } from '../database/actions/billActions';
+import { useForceUpdate, formatVNCurrency } from '../utils/utils';
 
 export default function App({ navigation, route }) {
 	const selected_room_id = route.params.selected_room_id;
 
 	const isFocused = useIsFocused();
-	const [forceUpdate, forceUpdateId] = useForceUpdate();
+	const [forceUpdateRoomInfo, forceUpdateRoomInfoId] = useForceUpdate();
+	const [forceUpdateBillInfo, forceUpdateBillInfoId] = useForceUpdate();
 
 	const [memberList, setMemberList] = useState([]);
 	const [billList, setBillList] = useState([]);
@@ -39,52 +41,60 @@ export default function App({ navigation, route }) {
 
 	useEffect(() => {
 		const loadRoomDetails = async () => {
-			const roomDetails = await fetchRoomDetails(selected_room_id).catch(
-				(error) => console.log(error)
-			);
+			const roomDetails = await fetchRoomDetails(selected_room_id)
+				.catch((error) => console.log(error));
 			setRoom(roomDetails);
 		};
 
-		const loadMemberList = async () => {
-			const memberList = await fetchRoomMemberList(selected_room_id).catch(
-				(error) => console.log(error)
-			);
-			setMemberList(memberList);
-		};
 
-		const loadBillList = async () => {
-			const billList = await fetchRoomBillList(selected_room_id).catch(
-				(error) => console.log(error)
-			);
-			setBillList(billList);
-		};
 
 		const loadService = async (service, setService) => {
-			const fee = await fetchServiceDetails(service).catch((error) =>
-				console.log(error)
-			);
+			const fee = await fetchServiceDetails(service)
+				.catch((error) => console.log(error));
 
 			setService(fee.price);
 		};
 
 		loadRoomDetails();
-		loadMemberList();
 		loadService('Điện', setElectricityFee);
 		loadService('Nước', setWaterFee);
 		loadService('Rác', setGarbageFee);
-		loadBillList();
 
 		LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-	}, [isFocused, forceUpdateId]);
+	}, [isFocused]);
+
+	useEffect(() => {
+		const loadMemberList = async () => {
+			const memberList = await fetchRoomMemberList(selected_room_id)
+				.catch((error) => console.log(error));
+			setMemberList(memberList);
+		};
+
+		loadMemberList();
+	}, [forceUpdateRoomInfoId]);
+
+	useEffect(() => {
+		const loadBillList = async () => {
+			const billList = await fetchRoomBillList(selected_room_id)
+				.catch((error) => console.log(error));
+			setBillList(billList);
+		};
+
+		loadBillList();
+	}, [forceUpdateBillInfoId]);
 
 	const totalRemained = billList.reduce((res, curr) => {
 		return res + curr.remained;
 	}, 0);
 
 	const handleDeleteMember = async (memberID) => {
-		await deleteCustomer(memberID, forceUpdate).catch((error) =>
-			console.log(error)
-		);
+		await deleteCustomer(memberID, forceUpdateRoomInfo)
+			.catch((error) => console.log(error));
+	};
+
+	const handleDeleteBill = async (billID) => {
+		await deleteBill(billID, forceUpdateBillInfo)
+			.catch((error) => console.log(error));
 	};
 
 	const renderMembers = ({ item }) => {
@@ -103,18 +113,17 @@ export default function App({ navigation, route }) {
 					<Text>{item.name}</Text>
 
 					{/* Delete member icon */}
-					<View style={[styles.deleteIcon]}>
-						<TouchableOpacity
-							onPress={() => {
-								handleDeleteMember(item.id);
-							}}>
-							<FontAwesomeIcon
-								name="remove"
-								size={25}
-								style={{ color: 'white' }}
-							/>
-						</TouchableOpacity>
-					</View>
+					<TouchableOpacity
+						onPress={() => {
+							handleDeleteMember(item.id);
+						}}
+						style={[styles.deleteIcon]}>
+						<FontAwesomeIcon
+							name="remove"
+							size={25}
+							style={{ color: 'white' }}
+						/>
+					</TouchableOpacity>
 				</View>
 			</TouchableOpacity>
 		);
@@ -174,18 +183,19 @@ export default function App({ navigation, route }) {
 						</View>
 					</View>
 
-					<View style={[styles.deleteIcon]}>
-						<TouchableOpacity
-							onPress={() => {
-								// Handle delete selected bill
-							}}>
-							<FontAwesomeIcon
-								name="remove"
-								size={25}
-								style={{ color: 'white' }}
-							/>
-						</TouchableOpacity>
-					</View>
+
+					<TouchableOpacity
+						onPress={() => {
+							handleDeleteBill(item.id);
+						}}
+						style={[styles.deleteIcon]}>
+						<FontAwesomeIcon
+							name="remove"
+							size={25}
+							style={{ color: 'white' }}
+						/>
+					</TouchableOpacity>
+
 				</View>
 			</TouchableOpacity>
 		);
@@ -227,8 +237,6 @@ export default function App({ navigation, route }) {
 								<Text>Thông tin cơ bản</Text>
 								<TouchableOpacity
 									onPress={() => {
-										console.log('---------');
-
 										navigation.navigate('EditBasicInfo', {
 											selected_room_id: room.id,
 										});
@@ -448,7 +456,7 @@ export default function App({ navigation, route }) {
 			</ScrollView>
 		</View>
 	);
-}
+};
 const styles = StyleSheet.create({
 	container: {
 		alignItems: 'center',

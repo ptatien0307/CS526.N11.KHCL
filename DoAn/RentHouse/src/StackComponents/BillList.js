@@ -7,16 +7,15 @@ import {
 } from 'react-native';
 import { useEffect, useState } from 'react';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { fetchBillList } from '../database/actions/billActions';
-import { formatCurrency } from 'react-native-format-currency';
 
 export default function App({ navigation, route }) {
 	const [billList, setBillList] = useState([]);
 
 	useEffect(() => {
 		const loadBillList = async () => {
-			const bills = await fetchBillList().catch((error) => console.log(error));
+			const bills = await fetchBillList()
+				.catch((error) => console.log(error));
 
 			setBillList(bills);
 		};
@@ -26,7 +25,6 @@ export default function App({ navigation, route }) {
 
 	const renderItem = ({ item }) => {
 		return (
-			// Go to specific room
 			<TouchableOpacity
 				onPress={() => {
 					navigation.navigate('BillDetail', {
