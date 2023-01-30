@@ -9,14 +9,12 @@ import { useState, useEffect } from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { useForceUpdate } from "../utils/utils";
 import { useIsFocused } from '@react-navigation/native';
-import { fetchRoomList, insertRoom } from "../database/actions/roomActions";
+import { fetchRoomList } from "../database/actions/roomActions";
 
 export default function App({ navigation, route }) {
     const [roomList, setRoomList] = useState([]);
     const [selectedRoomId, setSelectedRoomId] = useState(null);
-    const [forceUpdate, forceUpdateId] = useForceUpdate();
     const isFocused = useIsFocused();
 
     // Get room list from database
@@ -29,7 +27,7 @@ export default function App({ navigation, route }) {
         };
 
         loadRoomList();
-    }, [isFocused, forceUpdateId]);
+    }, [isFocused]);
 
     const renderItem = ({ item }) => {
         return (
@@ -51,18 +49,6 @@ export default function App({ navigation, route }) {
                     </View>
                 </View>
             </TouchableOpacity>
-        );
-    };
-
-    const handleAddRoom = () => {
-        insertRoom(
-            {
-                name: `Phòng ${roomList.length + 1}`,
-                rental_fee: 950000,
-                old_electricity_number: new Date().getTime() % 1000000,
-                old_water_number: new Date().getTime() % 2000000,
-            },
-            forceUpdate
         );
     };
 

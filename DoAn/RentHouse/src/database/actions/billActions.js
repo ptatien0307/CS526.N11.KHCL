@@ -9,13 +9,17 @@ export const fetchBillList = () => {
         db.transaction((tx) => {
             tx.executeSql(
                 `
-                SELECT  bills.*,
-                        rooms.name as room_name
-                FROM 
-                    bills
-                    INNER JOIN
-                    rooms ON rooms.id = bills.room_id    
+                SELECT bills.id,
+                    strftime('%d/%m/%Y %H:%M:%S', created_at, 'localtime') AS created_at,
+                    total,
+                    remained,
+                    rooms.name AS room_name,
+                    strftime('%m-%Y', created_at, 'localtime') AS month_year
+                FROM bills
+                    INNER JOIN rooms ON rooms.id = bills.room_id
                 WHERE bills.status = 'Chưa thanh toán'
+                ORDER BY month_year DESC,
+                        room_name ASC;
                 `,
                 [],
                 (_, { rows: { _array } }) => {

@@ -3,6 +3,7 @@ import {
 	View,
 	Text,
 	FlatList,
+	SectionList,
 	TouchableOpacity,
 } from 'react-native';
 import { useEffect, useState } from 'react';
@@ -11,7 +12,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { fetchBillList } from '../database/actions/billActions';
 import { formatVNCurrency } from '../utils/utils';
 
-export default function App({ navigation, route }) {
+export default function App({ navigation }) {
 	const isFocused = useIsFocused();
 	const [billList, setBillList] = useState([]);
 
@@ -20,7 +21,24 @@ export default function App({ navigation, route }) {
 			const bills = await fetchBillList()
 				.catch((error) => console.log(error));
 
-			setBillList(bills);
+			const data = bills.reduce((accumulator, currentValue) => {
+				const monthYear = currentValue.month_year;
+
+				const monthYearGroup = accumulator.find((groupOfMonthYear) => groupOfMonthYear.title === monthYear);
+
+				if (monthYearGroup) {
+					monthYearGroup.data.push(currentValue);
+				} else {
+					accumulator.push({
+						title: monthYear,
+						data: [currentValue],
+					});
+				}
+
+				return accumulator;
+			}, []);
+
+			setBillList(data);
 		};
 
 		loadBillList();
@@ -65,10 +83,14 @@ export default function App({ navigation, route }) {
 	return (
 		<View style={styles.container}>
 			<View style={styles.body}>
-				<FlatList
-					data={billList}
+				<SectionList
+					sections={billList}
 					renderItem={renderItem}
-					keyExtractor={(item) => item.id}></FlatList>
+					keyExtractor={(item) => item.id}
+					renderSectionHeader={({ section: { title } }) => (
+						<Text>{title}</Text>
+					)}
+				/>
 			</View>
 		</View>
 	);
