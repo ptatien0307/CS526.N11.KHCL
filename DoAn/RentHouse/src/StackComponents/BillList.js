@@ -18,13 +18,14 @@ export default function App({ navigation }) {
 
 	useEffect(() => {
 		const loadBillList = async () => {
-			const bills = await fetchBillList()
-				.catch((error) => console.log(error));
+			const bills = await fetchBillList().catch((error) => console.log(error));
 
 			const data = bills.reduce((accumulator, currentValue) => {
 				const monthYear = currentValue.month_year;
 
-				const monthYearGroup = accumulator.find((groupOfMonthYear) => groupOfMonthYear.title === monthYear);
+				const monthYearGroup = accumulator.find(
+					(groupOfMonthYear) => groupOfMonthYear.title === monthYear
+				);
 
 				if (monthYearGroup) {
 					monthYearGroup.data.push(currentValue);
@@ -60,19 +61,41 @@ export default function App({ navigation }) {
 						</Text>
 					</View>
 
-					{/* Room status */}
-					<View style={styles.bodyTop}>
-						<View>
-							<Text style={styles.textBody}>Tổng tiền</Text>
-							<Text style={styles.textBody}>{formatVNCurrency(item.total, 2)}</Text>
+					{/* Bill money: total, collected, remained */}
+					<View style={styles.billMoney}>
+						{/* Total */}
+						<View style={[styles.myBorder, styles.money]}>
+							<Text>Tổng tiền:</Text>
+							<Text style={styles.textBold}>
+								{formatVNCurrency(item.total)}
+							</Text>
 						</View>
-						<View>
-							<Text style={styles.textBody}>Đã thu</Text>
-							<Text style={styles.textBody}>{formatVNCurrency(item.total - item.remained, 2)}</Text>
+
+						{/* Collected */}
+						<View
+							style={[
+								styles.myBorder,
+								styles.money,
+								{
+									flexDirection: 'row',
+									justifyContent: 'space-between',
+									alignItems: 'center',
+								},
+							]}>
+							<View>
+								<Text>Đã thu:</Text>
+								<Text style={styles.textBold}>
+									{formatVNCurrency(item.total - item.remained)}
+								</Text>
+							</View>
 						</View>
-						<View>
-							<Text style={styles.textBody}>Còn lại</Text>
-							<Text style={styles.textBody}>{formatVNCurrency(item.remained, 2)}</Text>
+
+						{/* Remained */}
+						<View style={[styles.myBorder, styles.money]}>
+							<Text>Còn lại: </Text>
+							<Text style={styles.textBold}>
+								{formatVNCurrency(item.remained)}
+							</Text>
 						</View>
 					</View>
 				</View>
@@ -88,7 +111,12 @@ export default function App({ navigation }) {
 					renderItem={renderItem}
 					keyExtractor={(item) => item.id}
 					renderSectionHeader={({ section: { title } }) => (
-						<Text>{title}</Text>
+						<View style={styles.sectionHeader}>
+							<Text style={styles.sectionText}>{title}</Text>
+						</View>
+					)}
+					renderSectionFooter={({ section: { title } }) => (
+						<View style={styles.sectionFooter}></View>
 					)}
 				/>
 			</View>
@@ -100,66 +128,71 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: 'center',
+		justifyContent: 'center',
 	},
-	header: {
-		width: '100%',
-		height: '10%',
-		alignItems: 'center',
-		justifyContent: 'flex-start',
-		backgroundColor: '#dfdfdf',
-		paddingLeft: 8,
-		borderBottomWidth: 2,
-	},
-	headerTop: {
-		flexDirection: 'row',
-		justifyContent: 'flex-start',
-		alignItems: 'center',
-		width: '100%',
-		height: '100%',
-	},
+
 	body: {
 		height: '100%',
 		width: '100%',
-	},
-	bodyTop: {
-		flexDirection: 'row',
-		justifyContent: 'space-around',
+		justifyContent: 'center',
 		alignItems: 'center',
-		width: '100%',
-		height: '100%',
 	},
 	room: {
 		flex: 1,
-		justifyContent: 'center',
-		paddingLeft: 16,
-		paddingVertical: 16,
-		marginBottom: 8,
+		justifyContent: 'space-around',
+		paddingVertical: 12,
+		marginBottom: 16,
 		width: '100%',
 		borderLeftWidth: 5,
 	},
+	billMoney: {
+		width: '95%',
+		height: '70%',
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		alignItems: 'center',
+	},
+	money: {
+		paddingLeft: 8,
+		paddingVertical: 8,
+		width: '30%',
+		height: '80%',
+		justifyContent: 'center',
+	},
 
 	styleRoomName: {
+		paddingLeft: 8,
 		fontWeight: 'bold',
+		fontSize: 17,
+	},
+	sectionText: {
+		fontWeight: 'bold',
+		fontSize: 20,
+		textAlign: 'center',
+		color: 'white',
 	},
 
-	stackTitle: {
-		marginLeft: 32,
-		fontSize: 20,
-		fontWeight: 'bold',
-		textAlign: 'center',
+	sectionHeader: {
+		backgroundColor: 'black',
+		borderRadius: 10,
+		width: '100%',
+		marginBottom: 8,
 	},
-	textTitle: {
-		fontSize: 20,
-		fontWeight: 'bold',
-		color: 'white',
-		flexDirection: 'row',
+	sectionFooter: {
+		marginBottom: 32,
+		borderBottomWidth: 2,
 	},
+
 	myBackground: {
 		backgroundColor: '#dfdfdf',
 		borderRadius: 10,
 	},
-	textBody: {
-		fontSize: 15,
-		textAlign: 'center',
+	myBorder: {
+		borderColor: 'black',
+		borderRadius: 15,
+		borderWidth: 2,
+	},
+	textBold: {
+		fontWeight: 'bold',
 	},
 });

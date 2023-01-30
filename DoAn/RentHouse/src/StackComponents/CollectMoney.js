@@ -49,7 +49,8 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 			updatedBill();
 
 			successDialog(
-				`Đã thu thành công ${formatVNCurrency(inputText)}. ${billDetails.room_name
+				`Đã thu thành công ${formatVNCurrency(inputText)}. ${
+					billDetails.room_name
 				} còn nợ ${formatVNCurrency(remained)}`
 			);
 
@@ -74,7 +75,9 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 		updatedBill();
 
 		successDialog(
-			`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${billDetails.room_name} đã thanh toán hết.`
+			`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${
+				billDetails.room_name
+			} đã thanh toán hết.`
 		);
 
 		setInputText('');
@@ -95,8 +98,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 				toValue: 470,
 				duration: 250,
 				useNativeDriver: false,
-			})
-				.start(() => resolve(1));
+			}).start(() => resolve(1));
 		});
 	};
 
@@ -116,8 +118,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 							{ translateY: inAnimetedValue },
 						],
 					},
-				]}
-			>
+				]}>
 				{/* Header */}
 				<View style={[styles.header]}>
 					<View style={styles.headerTop}>
@@ -154,8 +155,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 
 					<TouchableOpacity
 						style={styles.button}
-						onPress={handlePartialPayment}
-					>
+						onPress={handlePartialPayment}>
 						<FontAwesomeIcon
 							name="dollar"
 							size={25}
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
 	},
 	modal: {
 		width: '100%',
-		height: '70%',
+		height: '65%',
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 		position: 'absolute',
