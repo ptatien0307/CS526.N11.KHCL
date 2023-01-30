@@ -14,7 +14,7 @@ export const fetchBillList = () => {
                     total,
                     remained,
                     rooms.name AS room_name,
-                    strftime('%m-%Y', created_at, 'localtime') AS month_year
+                    strftime('%m/%Y', created_at, 'localtime') AS month_year
                 FROM bills
                     INNER JOIN rooms ON rooms.id = bills.room_id
                 WHERE bills.status = 'Chưa thanh toán'
