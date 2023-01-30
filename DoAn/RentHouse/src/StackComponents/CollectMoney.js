@@ -17,24 +17,21 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { updateBill } from '../database/actions/billActions.js';
 import { formatVNCurrency } from '../utils/utils.js';
 
-
 export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 	const inAnimetedValue = useRef(new Animated.Value(470)).current;
 	const outAnimetedValue = useRef(new Animated.Value(0)).current;
 
 	const [inputText, setInputText] = useState('');
 
-
 	const handlePartialPayment = () => {
 		console.log(inputText);
 		if (inputText === '') {
 			alertEmptyDialog();
-		}
-		else if (parseInt(inputText.replace(/\W+/g, '')) > billDetails.remained) {
+		} else if (parseInt(inputText.replace(/\W+/g, '')) > billDetails.remained) {
 			errorDialog('Vui lòng nhập số tiền nhỏ hơn số tiền mà phòng còn thiếu.');
-		}
-		else {
-			const remained = billDetails.remained - parseInt(inputText.replace(/\W+/g, ''));
+		} else {
+			const remained =
+				billDetails.remained - parseInt(inputText.replace(/\W+/g, ''));
 			const count = ++billDetails.paid_time;
 
 			const updatedBill = async () => {
@@ -43,16 +40,18 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 						...billDetails,
 						remained: remained,
 						paid_time: count,
-						status: remained ? 'Chưa thanh toán hết' : 'Đã thanh toán'
+						status: remained ? 'Chưa thanh toán hết' : 'Đã thanh toán',
 					},
-					forceUpdate)
-					.catch((error) => console.log(error));
+					forceUpdate
+				).catch((error) => console.log(error));
 			};
 
 			updatedBill();
 
 			successDialog(
-				`Đã thu thành công ${formatVNCurrency(inputText)}. ${billDetails.room_name} còn nợ ${formatVNCurrency(remained)}`
+				`Đã thu thành công ${formatVNCurrency(inputText)}. ${
+					billDetails.room_name
+				} còn nợ ${formatVNCurrency(remained)}`
 			);
 
 			setInputText('');
@@ -67,21 +66,22 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 					...billDetails,
 					remained: 0,
 					paid_time: ++billDetails.paid_time,
-					status: 'Đã thanh toán'
+					status: 'Đã thanh toán',
 				},
-				forceUpdate)
-				.catch((error) => console.log(error));
+				forceUpdate
+			).catch((error) => console.log(error));
 		};
 
 		updatedBill();
 
 		successDialog(
-			`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${billDetails.room_name} đã thanh toán hết.`
+			`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${
+				billDetails.room_name
+			} đã thanh toán hết.`
 		);
 
 		setInputText('');
 		handleClose();
-
 	};
 
 	useEffect(() => {
@@ -126,9 +126,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 					<View style={styles.headerTop}>
 						<Text style={styles.stackTitle}>THU TIỀN</Text>
 
-						<TouchableOpacity
-							onPress={handleClose}
-						>
+						<TouchableOpacity onPress={handleClose}>
 							<FontAwesomeIcon name="times-circle" size={40} />
 						</TouchableOpacity>
 					</View>
@@ -137,9 +135,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 				{/* Body */}
 				<View style={styles.body}>
 					<View style={styles.nhap}>
-						<Text style={{ fontSize: 25 }}>
-							Nhập số tiền khách trả:
-						</Text>
+						<Text style={{ fontSize: 25 }}>Nhập số tiền khách trả:</Text>
 					</View>
 
 					<TextInput
@@ -158,7 +154,6 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 							{formatVNCurrency(billDetails.remained)}
 						</Text>
 					</View>
-
 
 					<TouchableOpacity
 						style={styles.button}
@@ -181,28 +176,28 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 						</Text>
 					</TouchableOpacity>
 
-
-					{// Full payment button only appears when the payment is not entered by the user (e.g inputText === '')
-						!inputText && <TouchableOpacity
-							style={[styles.button, { backgroundColor: 'green' }]}
-							onPress={() => {
-								handleFullPayment();
-							}}
-						>
-							<Text
-								style={{
-									fontSize: 25,
-									fontWeight: 'bold',
-									color: 'white',
+					{
+						// Full payment button only appears when the payment is not entered by the user (e.g inputText === '')
+						!inputText && (
+							<TouchableOpacity
+								style={[styles.button, { backgroundColor: 'green' }]}
+								onPress={() => {
+									handleFullPayment();
 								}}>
-								THANH TOÁN HÓA ĐƠN
-							</Text>
-						</TouchableOpacity>
+								<Text
+									style={{
+										fontSize: 25,
+										fontWeight: 'bold',
+										color: 'white',
+									}}>
+									THANH TOÁN HÓA ĐƠN
+								</Text>
+							</TouchableOpacity>
+						)
 					}
-
 				</View>
-			</Animated.View >
-		</View >
+			</Animated.View>
+		</View>
 	);
 }
 const styles = StyleSheet.create({
@@ -217,7 +212,7 @@ const styles = StyleSheet.create({
 	},
 	modal: {
 		width: '100%',
-		height: '75%',
+		height: '70%',
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 		position: 'absolute',
@@ -279,6 +274,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		flexDirection: 'row',
+		marginBottom: 16,
 	},
 
 	stackTitle: {
