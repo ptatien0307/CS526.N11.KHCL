@@ -15,6 +15,7 @@ import {
 } from '../Dialogs/dialog.js';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { updateBill } from '../database/actions/billActions.js';
+import { formatVNCurrency } from '../utils/utils.js';
 
 
 export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
@@ -24,31 +25,63 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 	const [inputText, setInputText] = useState('');
 
 
-	const handleCollect = () => {
+	const handlePartialPayment = () => {
+		console.log(inputText);
 		if (inputText === '') {
 			alertEmptyDialog();
 		}
-		else if (parseInt(inputText) > billDetails.remained) {
+		else if (parseInt(inputText.replace(/\W+/g, '')) > billDetails.remained) {
 			errorDialog('Vui lòng nhập số tiền nhỏ hơn số tiền mà phòng còn thiếu.');
 		}
 		else {
-			const remained = billDetails.remained - parseInt(inputText);
+			const remained = billDetails.remained - parseInt(inputText.replace(/\W+/g, ''));
 			const count = ++billDetails.paid_time;
 
 			const updatedBill = async () => {
-				await updateBill({ ...billDetails, remained: remained, paid_time: count }, forceUpdate)
+				await updateBill(
+					{
+						...billDetails,
+						remained: remained,
+						paid_time: count,
+						status: remained ? 'Chưa thanh toán hết' : 'Đã thanh toán'
+					},
+					forceUpdate)
 					.catch((error) => console.log(error));
 			};
 
 			updatedBill();
 
 			successDialog(
-				`Đã thu thành công ${inputText}đ. ${billDetails.room_name} còn nợ ${remained}đ`
+				`Đã thu thành công ${formatVNCurrency(inputText)}. ${billDetails.room_name} còn nợ ${formatVNCurrency(remained)}`
 			);
 
 			setInputText('');
 			handleClose();
 		}
+	};
+
+	const handleFullPayment = () => {
+		const updatedBill = async () => {
+			await updateBill(
+				{
+					...billDetails,
+					remained: 0,
+					paid_time: ++billDetails.paid_time,
+					status: 'Đã thanh toán'
+				},
+				forceUpdate)
+				.catch((error) => console.log(error));
+		};
+
+		updatedBill();
+
+		successDialog(
+			`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${billDetails.room_name} đã thanh toán hết.`
+		);
+
+		setInputText('');
+		handleClose();
+
 	};
 
 	useEffect(() => {
@@ -94,9 +127,8 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 						<Text style={styles.stackTitle}>THU TIỀN</Text>
 
 						<TouchableOpacity
-							onPress={() => {
-								handleClose();
-							}}>
+							onPress={handleClose}
+						>
 							<FontAwesomeIcon name="times-circle" size={40} />
 						</TouchableOpacity>
 					</View>
@@ -113,22 +145,25 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 					<TextInput
 						style={[styles.input, styles.myBorder]}
 						onChangeText={(text) => {
-							setInputText(text);
+							setInputText(formatVNCurrency(text.replace(/\W+/g, ''), 2));
 						}}
 						placeholder={'Nhập số tiền ...'}
-						defaultValue={''}></TextInput>
+						defaultValue={inputText}
+						keyboardType={'numeric'}
+					/>
 
 					<View style={[styles.thieu, styles.myBackground]}>
 						<Text style={{ fontSize: 20 }}>Khách còn thiếu:</Text>
 						<Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-							{billDetails.remained}đ
+							{formatVNCurrency(billDetails.remained)}
 						</Text>
 					</View>
+
 
 					<TouchableOpacity
 						style={styles.button}
 						onPress={() => {
-							handleCollect();
+							handlePartialPayment();
 						}}>
 						<FontAwesomeIcon
 							name="dollar"
@@ -145,9 +180,29 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 							THU TIỀN
 						</Text>
 					</TouchableOpacity>
+
+
+					{// Full payment button only appears when the payment is not entered by the user (e.g inputText === '')
+						!inputText && <TouchableOpacity
+							style={[styles.button, { backgroundColor: 'green' }]}
+							onPress={() => {
+								handleFullPayment();
+							}}
+						>
+							<Text
+								style={{
+									fontSize: 25,
+									fontWeight: 'bold',
+									color: 'white',
+								}}>
+								THANH TOÁN HÓA ĐƠN
+							</Text>
+						</TouchableOpacity>
+					}
+
 				</View>
-			</Animated.View>
-		</View>
+			</Animated.View >
+		</View >
 	);
 }
 const styles = StyleSheet.create({
@@ -214,7 +269,7 @@ const styles = StyleSheet.create({
 		alignItems: 'flex-end',
 		justifyContent: 'space-around',
 		paddingHorizontal: 16,
-		marginBottom: 64,
+		marginBottom: 48,
 	},
 	button: {
 		backgroundColor: 'black',

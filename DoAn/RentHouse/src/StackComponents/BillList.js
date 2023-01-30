@@ -7,9 +7,12 @@ import {
 } from 'react-native';
 import { useEffect, useState } from 'react';
 
+import { useIsFocused } from '@react-navigation/native';
 import { fetchBillList } from '../database/actions/billActions';
+import { formatVNCurrency } from '../utils/utils';
 
 export default function App({ navigation, route }) {
+	const isFocused = useIsFocused();
 	const [billList, setBillList] = useState([]);
 
 	useEffect(() => {
@@ -21,7 +24,7 @@ export default function App({ navigation, route }) {
 		};
 
 		loadBillList();
-	}, []);
+	}, [isFocused]);
 
 	const renderItem = ({ item }) => {
 		return (
@@ -43,15 +46,15 @@ export default function App({ navigation, route }) {
 					<View style={styles.bodyTop}>
 						<View>
 							<Text style={styles.textBody}>Tổng tiền</Text>
-							<Text style={styles.textBody}>{item.total}</Text>
+							<Text style={styles.textBody}>{formatVNCurrency(item.total, 2)}</Text>
 						</View>
 						<View>
 							<Text style={styles.textBody}>Đã thu</Text>
-							<Text style={styles.textBody}>{item.total - item.remained}</Text>
+							<Text style={styles.textBody}>{formatVNCurrency(item.total - item.remained, 2)}</Text>
 						</View>
 						<View>
 							<Text style={styles.textBody}>Còn lại</Text>
-							<Text style={styles.textBody}>{item.remained}</Text>
+							<Text style={styles.textBody}>{formatVNCurrency(item.remained, 2)}</Text>
 						</View>
 					</View>
 				</View>
