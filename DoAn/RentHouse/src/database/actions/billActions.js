@@ -15,6 +15,7 @@ export const fetchBillList = () => {
                     bills
                     INNER JOIN
                     rooms ON rooms.id = bills.room_id    
+                WHERE bills.status = 'Chưa thanh toán'
                 `,
                 [],
                 (_, { rows: { _array } }) => {

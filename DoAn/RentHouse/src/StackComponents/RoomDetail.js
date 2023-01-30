@@ -81,7 +81,7 @@ export default function App({ navigation, route }) {
 		};
 
 		loadBillList();
-	}, [forceUpdateBillInfoId]);
+	}, [forceUpdateBillInfoId, isFocused]);
 
 	const totalRemained = billList.reduce((res, curr) => {
 		return res + curr.remained;

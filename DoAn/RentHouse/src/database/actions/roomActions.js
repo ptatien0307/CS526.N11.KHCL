@@ -59,7 +59,7 @@ export const fetchRoomListForCreateBill = () => {
 					AS a
 						LEFT JOIN bills ON a.id = bills.room_id AND 
 										strftime('%m-%Y', bills.created_at, 'localtime') = strftime('%m-%Y', 'now', 'localtime')
-				GROUP BY a.id;s
+				GROUP BY a.id;
 				`,
 				[],
 				(_, { rows: { _array: result } }) => {

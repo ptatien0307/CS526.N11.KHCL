@@ -17,8 +17,6 @@ import {
 import { editSuccessDialog } from '../Dialogs/dialog';
 
 export default function App({ navigation, route }) {
-	const [serviceList, setServiceList] = useState([]);
-
 	const [water, setWater] = useState();
 	const [electricity, setElectricity] = useState();
 	const [garbage, setGarbage] = useState();

@@ -11,7 +11,7 @@ export function useForceUpdate() {
 export function formatVNCurrency(amount, type = 1) {
 	// ```
 	// Return a formatted currency string
-	// 	type = 1: 1,000,000 VND (formatted currency string) 
+	// 	type = 1: 1,000,000 đ (formatted currency string) 
 	// 	type = 2: 1,000,000 (formatted currency string without currency symbol)
 	// 	type = 3: đ (currency symbol)
 	// ```
