@@ -56,23 +56,6 @@ export const fetchBillDetails = (bill_id) => {
     });
 };
 
-export const fetchBillListByRoom = (room_id) => {
-    return new Promise((resolve, reject) => {
-        db.transaction((tx) => {
-            tx.executeSql(
-                'SELECT * FROM bills WHERE room_id = ?',
-                [room_id],
-                (_, { rows: { _array } }) => {
-                    console.log('Bill list fetched successfully');
-                    resolve(_array);
-                },
-                (_, error) => reject(error)
-            );
-        });
-    });
-};
-
-
 export const insertBill = (bill, forceUpdate) => {
     return new Promise((resolve, reject) => {
         db.transaction(

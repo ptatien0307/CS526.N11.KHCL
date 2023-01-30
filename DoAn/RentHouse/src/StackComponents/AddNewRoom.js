@@ -8,11 +8,10 @@ import {
 } from 'react-native';
 import { useEffect, useState } from 'react';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
-import { useForceUpdate } from "../utils/utils";
 import { fetchRoomList, insertRoom } from "../database/actions/roomActions";
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 
@@ -51,40 +50,44 @@ export default function App({ navigation, route }) {
 
         // Check if price is empty
         if (price === '') {
-            return Alert.alert('Lỗi','Giá thuê không được để trống');
+            return Alert.alert('Lỗi', 'Giá thuê không được để trống');
         }
 
         // Check if electricityCurrent is empty
         if (electricityCurrent === '') {
-            return Alert.alert('Lỗi','Chỉ số điện hiện tại không được để trống');
+            return Alert.alert('Lỗi', 'Chỉ số điện hiện tại không được để trống');
         }
 
         // Check if waterServiceCurrent is empty
         if (waterServiceCurrent === '') {
-            return Alert.alert('Lỗi','Chỉ số nước hiện tại không được để trống');
+            return Alert.alert('Lỗi', 'Chỉ số nước hiện tại không được để trống');
         }
-        
+
         // Check if room name is existed
-        const roomList = fetchRoomList();
-        for (let i = 0; i < roomList.length; i++) {
-            if (roomList[i]['name'] === roomName) {
-                return Alert.alert('Lỗi', 'Tên phòng đã tồn tại');
+        const checkRoomName = async () => {
+            const roomList = await fetchRoomList();
+            for (let i = 0; i < roomList.length; i++) {
+                if (roomList[i]['name'] === roomName) {
+                    return Alert.alert('Lỗi', 'Tên phòng đã tồn tại');
+                }
             }
-        }
+        };
+
+        checkRoomName();
 
         // check if price have non-digit character
         if (/\D/.test(price)) {
-            return Alert.alert('Lỗi','Giá phòng chỉ được chứa số');
+            return Alert.alert('Lỗi', 'Giá phòng chỉ được chứa số');
         }
 
         // check if electricityCurrent have non-digit character
         if (/\D/.test(electricityCurrent)) {
-            return Alert.alert('Lỗi','Chỉ số điện mới chỉ được chứa số');
+            return Alert.alert('Lỗi', 'Chỉ số điện mới chỉ được chứa số');
         }
 
         // check if waterServiceCurrent have non-digit character
         if (/\D/.test(waterServiceCurrent)) {
-            return Alert.alert('Lỗi','Chỉ số nước mới chỉ được chứa số');
+            return Alert.alert('Lỗi', 'Chỉ số nước mới chỉ được chứa số');
         }
 
 
@@ -98,8 +101,8 @@ export default function App({ navigation, route }) {
                 old_water_number: waterServiceCurrent,
             },
         );
-        
-        Alert.alert('Thành công','Thêm phòng thành công');
+
+        Alert.alert('Thành công', 'Thêm phòng thành công');
         return navigation.goBack();
     };
 
@@ -120,7 +123,7 @@ export default function App({ navigation, route }) {
             <View style={styles.price}>
                 <Text style={styles.text}>Giá thuê</Text>
                 <TextInput
-                    style={[styles.input, {width: '60%'}]}
+                    style={[styles.input, { width: '60%' }]}
                     keyboardType="number-pad"
                     placeholder="Nhập giá thuê"
                     onChangeText={(text) => {
@@ -131,15 +134,17 @@ export default function App({ navigation, route }) {
             </View>
 
             <View style={styles.serviceCurrent}>
-                <Text style={[styles.text, {borderBottomColor:'black', borderBottomWidth:1, 
-                width:'100%', paddingBottom:8, paddingHorizontal:10}]}>
+                <Text style={[styles.text, {
+                    borderBottomColor: 'black', borderBottomWidth: 1,
+                    width: '100%', paddingBottom: 8, paddingHorizontal: 10
+                }]}>
                     Chỉ số điện nước hiện tại
                 </Text>
 
                 <View style={styles.inputService}>
                     <Text style={styles.text}>Chỉ số điện</Text>
                     <TextInput
-                        style={[styles.input, {width: '60%'}]}  
+                        style={[styles.input, { width: '60%' }]}
                         placeholder="Nhập chỉ số điện hiện tại"
                         keyboardType="number-pad"
                         onChangeText={(text) => {
@@ -151,7 +156,7 @@ export default function App({ navigation, route }) {
                 <View style={styles.inputService}>
                     <Text style={styles.text}>Chỉ số nước</Text>
                     <TextInput
-                        style={[styles.input, {width: '60%'}]}  
+                        style={[styles.input, { width: '60%' }]}
                         placeholder="Nhập chỉ số nước hiện tại"
                         keyboardType="number-pad"
                         onChangeText={(text) => {
@@ -162,15 +167,17 @@ export default function App({ navigation, route }) {
             </View>
 
             <View style={styles.ServiceContainer}>
-                <Text style={[styles.text, {borderBottomColor:'black', borderBottomWidth:1, 
-                width:'100%', paddingBottom:8, paddingHorizontal:10}]}>Dịch vụ</Text>
+                <Text style={[styles.text, {
+                    borderBottomColor: 'black', borderBottomWidth: 1,
+                    width: '100%', paddingBottom: 8, paddingHorizontal: 10
+                }]}>Dịch vụ</Text>
                 <View style={styles.service}>
                     <FontAwesomeIcon name="bolt" size={30} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                     <Text style={styles.text}>Điện</Text>
                     <Text style={styles.text}>{electricityPrice} đ/kWh</Text>
                 </View>
                 <View style={[styles.service]}>
-                    <IonIcon name="water" size={30} style={{paddingVertical: 2 }} />
+                    <IonIcon name="water" size={30} style={{ paddingVertical: 2 }} />
                     <Text style={[styles.text]}>Nước</Text>
                     <Text style={styles.text}>{waterPrice} đ/m3</Text>
                 </View>
@@ -179,7 +186,7 @@ export default function App({ navigation, route }) {
                     <Text style={styles.text}>Rác</Text>
                     <Text style={styles.text}>{garbagePrice} đ/tháng</Text>
                 </View>
-                
+
             </View>
 
             <TouchableOpacity style={styles.button} onPress={() => {
@@ -189,7 +196,7 @@ export default function App({ navigation, route }) {
             </TouchableOpacity>
 
         </View>
-    )
+    );
 }
 
 styles = StyleSheet.create({
@@ -260,9 +267,9 @@ styles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 1,
         borderRadius: 10,
-        paddingTop:10,
+        paddingTop: 10,
         marginTop: 10,
-        
+
     },
 
     service: {

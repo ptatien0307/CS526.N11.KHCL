@@ -24,7 +24,8 @@ export const fetchRoomList = () => {
 								LEFT JOIN
 								customers ON rooms.id = customers.room_id
 							GROUP BY rooms.id
-					) AS result;
+					) AS result
+				ORDER BY name ASC;
 				`,
 				[],
 				(_, { rows: { _array: result } }) => {
@@ -59,7 +60,8 @@ export const fetchRoomListForCreateBill = () => {
 					AS a
 						LEFT JOIN bills ON a.id = bills.room_id AND 
 										strftime('%m-%Y', bills.created_at, 'localtime') = strftime('%m-%Y', 'now', 'localtime')
-				GROUP BY a.id;
+				GROUP BY a.id
+				ORDER BY a.name ASC;
 				`,
 				[],
 				(_, { rows: { _array: result } }) => {
@@ -220,7 +222,12 @@ export const fetchRoomMemberList = (room_id) => {
 	return new Promise((resolve, reject) => {
 		db.transaction((tx) => {
 			tx.executeSql(
-				`SELECT id, name FROM customers WHERE room_id = ?`,
+				`SELECT id,
+						name
+				FROM customers
+				WHERE room_id = ?
+				ORDER BY name ASC
+				`,
 				[room_id],
 				(_, { rows: { _array: result } }) => {
 					console.log('Room member list fetched successfully');
@@ -238,7 +245,15 @@ export const fetchRoomBillList = (room_id) => {
 	return new Promise((resolve, reject) => {
 		db.transaction((tx) => {
 			tx.executeSql(
-				`SELECT id, created_at, total, remained from bills WHERE room_id = ?`,
+				`                
+				SELECT  id,
+                        strftime('%d/%m/%Y %H:%M:%S', created_at, 'localtime') AS created_at,
+                        total,
+                        remained
+                FROM bills
+                WHERE room_id = ?
+                ORDER BY strftime('%m-%Y', created_at, 'localtime') DESC;
+				`,
 				[room_id],
 				(_, { rows: { _array: result } }) => {
 					console.log('Room bill list fetched successfully');
