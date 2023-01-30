@@ -24,9 +24,8 @@ export default function App({ navigation, route }) {
 
 	useEffect(() => {
 		const loadService = async (service_name, setService) => {
-			const service = await fetchServiceDetails(service_name).catch((error) =>
-				console.log(error)
-			);
+			const service = await fetchServiceDetails(service_name)
+				.catch((error) => console.log(error));
 
 			setService(formatVNCurrency(service.price, 2));
 		};

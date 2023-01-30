@@ -9,41 +9,50 @@ import {
 import { useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { fetchRoomDetails, updateRoom } from '../database/actions/roomActions';
-import { useForceUpdate } from '../utils/utils';
+import { formatVNCurrency } from '../utils/utils';
 
 
 export default function App({ navigation, route }) {
 	const selected_room_id = route.params.selected_room_id;
 	const [room, setRoom] = useState({});
 
+	const [roomName, setRoomName] = useState('');
+	const [rentalFee, setRentalFee] = useState('');
+	const [deposit, setDeposit] = useState('');
+	const [moveInDate, setMoveInDate] = useState('');
 
 	const isFocused = useIsFocused();
-	const [forceUpdate, forceUpdateId] = useForceUpdate();
 
 	const handleSaveRoomEditedInfo = async () => {
+		console.log(parseInt(deposit.replace(/\W+/g, '')));
 		const temp = {
 			...room,
-			rental_fee: parseInt(room.rental_fee),
-			deposit: parseInt(room.deposit),
-			old_electricity_number: parseInt(room.old_electricity_number),
-			old_water_number: parseInt(room.old_water_number),
-		}
+			name: roomName,
+			move_in_date: moveInDate,
+			rental_fee: parseInt(rentalFee.replace(/\W+/g, '')),
+			deposit: parseInt(deposit.replace(/\W+/g, '')),
+		};
 
-		await updateRoom(temp, forceUpdate)
+		await updateRoom(temp)
 			.catch((error) => console.log(error));
 
 		navigation.goBack();
-	}
+	};
 
 	useEffect(() => {
 		const loadRoomDetails = async () => {
 			const roomDetails = await fetchRoomDetails(selected_room_id)
 				.catch((error) => console.log(error));
+
 			setRoom(roomDetails);
+			setRoomName(roomDetails.name);
+			setMoveInDate(roomDetails.move_in_date);
+			setRentalFee(formatVNCurrency(roomDetails.rental_fee, 2));
+			setDeposit(formatVNCurrency(roomDetails.deposit, 2));
 		};
 
 		loadRoomDetails();
-	}, [isFocused, forceUpdateId]);
+	}, [isFocused]);
 
 	return (
 		<View style={styles.container}>
@@ -65,13 +74,10 @@ export default function App({ navigation, route }) {
 							<TextInput
 								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
 								onChangeText={(e) => {
-									setRoom({
-										...room,
-										name: e
-									})
+									setRoomName(e);
 								}}
 								placeholder="Nhập ..."
-								defaultValue={room.name}
+								defaultValue={roomName}
 								editable={true}
 								multiline={false}
 								maxLength={256}
@@ -90,13 +96,10 @@ export default function App({ navigation, route }) {
 							<TextInput
 								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
 								onChangeText={(e) => {
-									setRoom({
-										...room,
-										move_in_date: e
-									})
+									setMoveInDate(e);
 								}}
 								placeholder="Nhập ..."
-								defaultValue={room.move_in_date}
+								defaultValue={moveInDate}
 								editable={true}
 								multiline={false}
 								maxLength={256}
@@ -115,14 +118,10 @@ export default function App({ navigation, route }) {
 							<TextInput
 								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
 								onChangeText={(e) => {
-									setRoom({
-										...room,
-										rental_fee: e
-									})
+									setRentalFee(formatVNCurrency(e.replace(/\W+/g, ''), 2));
 								}}
 								placeholder="Nhập ..."
-								defaultValue={String(room.rental_fee)}
-								editable={true}
+								defaultValue={rentalFee}
 								multiline={false}
 								maxLength={256}
 								keyboardType={'number-pad'}
@@ -140,14 +139,10 @@ export default function App({ navigation, route }) {
 							<TextInput
 								style={[styles.myBorder, { fontSize: 17, paddingLeft: 8, height: 40 }]}
 								onChangeText={(e) => {
-									setRoom({
-										...room,
-										deposit: e
-									})
+									setDeposit(formatVNCurrency(e.replace(/\W+/g, ''), 2));
 								}}
 								placeholder="Nhập ..."
-								defaultValue={room.deposit ? String(room.deposit) : 'Không có'}
-								editable={Boolean(room.deposit)}
+								defaultValue={deposit}
 								multiline={false}
 								maxLength={256}
 								keyboardType={'number-pad'}

@@ -17,10 +17,12 @@ import {
 	fetchRoomDetails,
 	fetchRoomMemberList,
 	fetchRoomBillList,
+	resetRoom,
 } from '../database/actions/roomActions';
 import { deleteCustomer } from '../database/actions/customerActions';
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { deleteBill } from '../database/actions/billActions';
+import { alertDeleteDialog } from '../Dialogs/dialog';
 import { useForceUpdate, formatVNCurrency } from '../utils/utils';
 
 export default function App({ navigation, route }) {
@@ -28,6 +30,7 @@ export default function App({ navigation, route }) {
 
 	const isFocused = useIsFocused();
 	const [forceUpdateRoomInfo, forceUpdateRoomInfoId] = useForceUpdate();
+	const [forceUpdateMemberList, forceUpdateMemberListId] = useForceUpdate();
 	const [forceUpdateBillInfo, forceUpdateBillInfoId] = useForceUpdate();
 
 	const [memberList, setMemberList] = useState([]);
@@ -46,12 +49,9 @@ export default function App({ navigation, route }) {
 			setRoom(roomDetails);
 		};
 
-
-
 		const loadService = async (service, setService) => {
 			const fee = await fetchServiceDetails(service)
 				.catch((error) => console.log(error));
-
 			setService(fee.price);
 		};
 
@@ -61,7 +61,7 @@ export default function App({ navigation, route }) {
 		loadService('Rác', setGarbageFee);
 
 		LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-	}, [isFocused]);
+	}, [isFocused, forceUpdateRoomInfoId]);
 
 	useEffect(() => {
 		const loadMemberList = async () => {
@@ -71,7 +71,7 @@ export default function App({ navigation, route }) {
 		};
 
 		loadMemberList();
-	}, [forceUpdateRoomInfoId]);
+	}, [forceUpdateMemberListId]);
 
 	useEffect(() => {
 		const loadBillList = async () => {
@@ -88,7 +88,7 @@ export default function App({ navigation, route }) {
 	}, 0);
 
 	const handleDeleteMember = async (memberID) => {
-		await deleteCustomer(memberID, forceUpdateRoomInfo)
+		await deleteCustomer(memberID, forceUpdateMemberList)
 			.catch((error) => console.log(error));
 	};
 
@@ -96,6 +96,23 @@ export default function App({ navigation, route }) {
 		await deleteBill(billID, forceUpdateBillInfo)
 			.catch((error) => console.log(error));
 	};
+
+	const handleResetRoom = async () => {
+		const res = await alertDeleteDialog(
+			'Chú ý',
+			'Reset phòng sẽ xóa tất cả thông tin của phòng (khách thuê, tất cả hóa đơn). Hãy đảm bảo mọi hóa đơn của phòng được thanh toán trước khi reset phòng.',
+		);
+		if (!res) return;
+
+		const forceUpdate = () => {
+			forceUpdateRoomInfo();
+			forceUpdateBillInfo();
+			forceUpdateMemberList();
+		};
+		await resetRoom(selected_room_id, forceUpdate)
+			.catch((error) => console.log(error));
+	};
+
 
 	const renderMembers = ({ item }) => {
 		return (
@@ -258,7 +275,7 @@ export default function App({ navigation, route }) {
 								<View style={[styles.rowItem, styles.myBackground]}>
 									<View>
 										<Text>Ngày đến:</Text>
-										<Text style={styles.textBold}>{room.move_in_date}</Text>
+										<Text style={styles.textBold}>{room.move_in_date || 'Không có'}</Text>
 									</View>
 								</View>
 							</View>
@@ -279,7 +296,7 @@ export default function App({ navigation, route }) {
 									<View>
 										<Text>Tiền cọc:</Text>
 										<Text style={styles.textBold}>
-											{room.deposit ? room.deposit : 'Không có'}
+											{formatVNCurrency(room.deposit) || 'Không có'}
 										</Text>
 									</View>
 								</View>
@@ -416,9 +433,8 @@ export default function App({ navigation, route }) {
 						{/* Reset room information button */}
 						<TouchableOpacity
 							style={styles.deleteButton}
-							onPress={() => {
-								// Handle reset room information
-							}}>
+							onPress={handleResetRoom}
+						>
 							<Text style={styles.textTitleWhite}>XÓA THÔNG TIN PHÒNG</Text>
 						</TouchableOpacity>
 					</View>

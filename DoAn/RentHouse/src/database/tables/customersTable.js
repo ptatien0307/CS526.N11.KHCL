@@ -17,7 +17,8 @@ export const createCustomersTable = `
         FOREIGN KEY (
             room_id
         )
-        REFERENCES rooms (id) 
+        REFERENCES rooms (id) ON UPDATE CASCADE
+                            ON DELETE CASCADE
     );
 `;
 

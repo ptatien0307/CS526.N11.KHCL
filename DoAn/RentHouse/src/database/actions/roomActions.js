@@ -135,7 +135,7 @@ export const updateRoom = (room, forceUpdate = null) => {
 				tx.executeSql(
 					`UPDATE rooms
 					SET name = ?,
-						settlement_date = ?,
+						deposit = ?,
 						rental_fee = ?,
 						move_in_date = ?,
 						old_electricity_number = ?,
@@ -143,7 +143,7 @@ export const updateRoom = (room, forceUpdate = null) => {
 					WHERE id = ?;`,
 					[
 						room.name,
-						room.settlement_date,
+						room.deposit,
 						room.rental_fee,
 						room.move_in_date,
 						room.old_electricity_number,
@@ -194,7 +194,7 @@ export const updateRoomWaterElectricityNumber = (room_id, water_number, electric
 	});
 };
 
-export const deleteRoom = (room_id, forceUpdate) => {
+export const deleteRoom = (room_id, forceUpdate = null) => {
 	return new Promise((resolve, reject) => {
 		db.transaction(
 			(tx) => {
@@ -249,5 +249,63 @@ export const fetchRoomBillList = (room_id) => {
 				}
 			);
 		});
+	});
+};
+
+export const resetRoom = (room_id, forceUpdate = null) => {
+	return new Promise((resolve, reject) => {
+		db.transaction(
+			(tx) => {
+				tx.executeSql(
+					'PRAGMA foreign_key = ON;',
+					[],
+					() => console.log('Foreign key enabled'),
+					(_, error) => console.log(error)
+				);
+				tx.executeSql(
+					`
+					CREATE TABLE temp_table AS SELECT *
+					FROM rooms
+					WHERE id = ?;
+					`,
+					[room_id],
+					() => console.log('Temp table created'),
+					(_, error) => console.log(error)
+				);
+				tx.executeSql(
+					'DELETE FROM rooms WHERE id = ?;',
+					[room_id],
+					() => console.log('Room deleted'),
+					(_, error) => console.log(error)
+				);
+				tx.executeSql(
+					`INSERT INTO rooms (
+										id,
+										name,
+										rental_fee,
+										old_electricity_number,
+										old_water_number
+									)
+									SELECT id,
+											name,
+											rental_fee,
+											old_electricity_number,
+											old_water_number
+									FROM temp_table;
+					`,
+					[],
+					() => console.log('Room reset successfully'),
+					(_, error) => console.log(error)
+				);
+				tx.executeSql(
+					'DROP TABLE temp_table;',
+					[],
+					() => console.log('Temp table dropped'),
+					(_, error) => console.log(error)
+				);
+			},
+			null,
+			forceUpdate
+		);
 	});
 };

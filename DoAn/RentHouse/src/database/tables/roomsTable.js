@@ -4,7 +4,6 @@ export const createRoomsTable = `
     CREATE TABLE IF NOT EXISTS rooms (
         id                     INTEGER PRIMARY KEY,
         name                   TEXT    NOT NULL,
-        settlement_date        INTEGER,
         rental_fee             INTEGER NOT NULL,
         deposit                INTEGER,
         move_in_date           TEXT,
@@ -22,5 +21,4 @@ export const populateRoomsTable = `
         (4,"Phòng 4",878000,"15/03/2022",1271,1203),
         (5,"Phòng 5",748000,"07/07/2023",1496,1828),
         (6,"Phòng 6",748000,"025/08/2023",1325,1523);
-        
 `;
