@@ -114,7 +114,7 @@ export const insertBill = (bill, forceUpdate) => {
     });
 };
 
-export const updateBill = (bill, forceUpdate) => {
+export const updateBill = (bill, forceUpdate = null) => {
     return new Promise((resolve, reject) => {
         db.transaction(
             (tx) => {

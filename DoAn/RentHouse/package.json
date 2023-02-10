@@ -20,7 +20,8 @@
     "react-native": "0.70.5",
     "react-native-format-currency": "^0.0.3",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-web": "~0.18.9"
+    "react-native-web": "~0.18.9",
+    "expo-dev-client": "~2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

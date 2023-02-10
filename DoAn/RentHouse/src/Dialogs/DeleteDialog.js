@@ -2,11 +2,9 @@ import {
 	StyleSheet,
 	View,
 	Text,
-	TextInput,
 	TouchableOpacity,
-	Alert,
 } from 'react-native';
-import { useEffect, useState } from 'react';
+
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 const DeleteDialog = (props) => {
@@ -16,10 +14,13 @@ const DeleteDialog = (props) => {
 	};
 	return (
 		<View style={styles.container}>
-			<FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
-			<Text style={styles.textTitle}> {props.title} </Text>
+			<View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+				<FontAwesomeIcon name="exclamation-circle" size={35} color='red' />
+				<Text style={styles.textTitle}> {props.title} </Text>
+
+			</View>
 			<Text style={styles.message}> {props.message}</Text>
-			<View>
+			<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 				<View>
 					<TouchableOpacity onPress={() => CloseModal(true)}>
 						<Text>Xóa</Text>
@@ -40,9 +41,10 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'flex-start',
+		backgroundColor: 'white',
 	},
 	textTitle: {
-		fontSize: 20,
+		fontSize: 30,
 		fontWeight: 'bold',
 		textAlign: 'center',
 	},

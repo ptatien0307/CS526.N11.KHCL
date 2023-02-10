@@ -23,7 +23,6 @@ import {
 import { deleteCustomer } from '../database/actions/customerActions';
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { deleteBill } from '../database/actions/billActions';
-import { alertDeleteDialog } from '../Dialogs/dialog';
 import { useForceUpdate, formatVNCurrency } from '../utils/utils';
 import { DeleteDialog } from '../Dialogs/DeleteDialog';
 
