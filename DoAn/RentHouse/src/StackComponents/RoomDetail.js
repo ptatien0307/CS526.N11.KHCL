@@ -44,18 +44,20 @@ export default function App({ navigation, route }) {
 
 	const [mountInfo, setMountInfo] = useState(true);
 	const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
-	const [confirmDelete, setConfirmDelete] = useState(false);
-	
+	const [confirmDelete, setConfirmDelete] = useState(true);
+
 	useEffect(() => {
 		const loadRoomDetails = async () => {
-			const roomDetails = await fetchRoomDetails(selected_room_id)
-				.catch((error) => console.log(error));
+			const roomDetails = await fetchRoomDetails(selected_room_id).catch(
+				(error) => console.log(error)
+			);
 			setRoom(roomDetails);
 		};
 
 		const loadService = async (service, setService) => {
-			const fee = await fetchServiceDetails(service)
-				.catch((error) => console.log(error));
+			const fee = await fetchServiceDetails(service).catch((error) =>
+				console.log(error)
+			);
 			setService(fee.price);
 		};
 
@@ -69,8 +71,9 @@ export default function App({ navigation, route }) {
 
 	useEffect(() => {
 		const loadMemberList = async () => {
-			const memberList = await fetchRoomMemberList(selected_room_id)
-				.catch((error) => console.log(error));
+			const memberList = await fetchRoomMemberList(selected_room_id).catch(
+				(error) => console.log(error)
+			);
 			setMemberList(memberList);
 		};
 
@@ -79,8 +82,9 @@ export default function App({ navigation, route }) {
 
 	useEffect(() => {
 		const loadBillList = async () => {
-			const billList = await fetchRoomBillList(selected_room_id)
-				.catch((error) => console.log(error));
+			const billList = await fetchRoomBillList(selected_room_id).catch(
+				(error) => console.log(error)
+			);
 			setBillList(billList);
 		};
 
@@ -92,20 +96,18 @@ export default function App({ navigation, route }) {
 	}, 0);
 
 	const handleDeleteMember = async (memberID) => {
-		await deleteCustomer(memberID, forceUpdateMemberList)
-			.catch((error) => console.log(error));
+		await deleteCustomer(memberID, forceUpdateMemberList).catch((error) =>
+			console.log(error)
+		);
 	};
 
 	const handleDeleteBill = async (billID) => {
-		await deleteBill(billID, forceUpdateBillInfo)
-			.catch((error) => console.log(error));
+		await deleteBill(billID, forceUpdateBillInfo).catch((error) =>
+			console.log(error)
+		);
 	};
 
 	const handleResetRoom = async () => {
-		// const res = await alertDeleteDialog(
-		// 	'Chú ý',
-		// 	'Reset phòng sẽ xóa tất cả thông tin của phòng (khách thuê, tất cả hóa đơn). Hãy đảm bảo mọi hóa đơn của phòng được thanh toán trước khi reset phòng.',
-		// );
 		if (!confirmDelete) return;
 
 		const forceUpdate = () => {
@@ -113,10 +115,10 @@ export default function App({ navigation, route }) {
 			forceUpdateBillInfo();
 			forceUpdateMemberList();
 		};
-		await resetRoom(selected_room_id, forceUpdate)
-			.catch((error) => console.log(error));
+		await resetRoom(selected_room_id, forceUpdate).catch((error) =>
+			console.log(error)
+		);
 	};
-
 
 	const renderMembers = ({ item }) => {
 		return (
@@ -204,7 +206,6 @@ export default function App({ navigation, route }) {
 						</View>
 					</View>
 
-
 					<TouchableOpacity
 						onPress={() => {
 							handleDeleteBill(item.id);
@@ -216,7 +217,6 @@ export default function App({ navigation, route }) {
 							style={{ color: 'white' }}
 						/>
 					</TouchableOpacity>
-
 				</View>
 			</TouchableOpacity>
 		);
@@ -279,7 +279,9 @@ export default function App({ navigation, route }) {
 								<View style={[styles.rowItem, styles.myBackground]}>
 									<View>
 										<Text>Ngày đến:</Text>
-										<Text style={styles.textBold}>{room.move_in_date || 'Không có'}</Text>
+										<Text style={styles.textBold}>
+											{room.move_in_date || 'Không có'}
+										</Text>
 									</View>
 								</View>
 							</View>
@@ -361,9 +363,7 @@ export default function App({ navigation, route }) {
 											size={20}
 											style={{ marginRight: 20 }}
 										/>
-										<Text>
-											{formatVNCurrency(waterFee)}/khối
-										</Text>
+										<Text>{formatVNCurrency(waterFee)}/khối</Text>
 									</View>
 									<View style={[styles.lastestUnit, styles.myBorder]}>
 										<Text>{room.old_water_number}</Text>
@@ -385,9 +385,7 @@ export default function App({ navigation, route }) {
 												marginRight: 26,
 											}}
 										/>
-										<Text>
-											{formatVNCurrency(electricityFee)}/Kwh
-										</Text>
+										<Text>{formatVNCurrency(electricityFee)}/Kwh</Text>
 									</View>
 									<View style={[styles.lastestUnit, styles.myBorder]}>
 										<Text>{room.old_electricity_number}</Text>
@@ -437,9 +435,10 @@ export default function App({ navigation, route }) {
 						{/* Reset room information button */}
 						<TouchableOpacity
 							style={styles.deleteButton}
-							onPress={()=>{setDeleteDialogVisible(true)
-								handleResetRoom}}
-						>
+							onPress={async () => {
+								await setDeleteDialogVisible(true);
+								await handleResetRoom();
+							}}>
 							<Text style={styles.textTitleWhite}>XÓA THÔNG TIN PHÒNG</Text>
 						</TouchableOpacity>
 					</View>
@@ -476,19 +475,22 @@ export default function App({ navigation, route }) {
 				)}
 			</ScrollView>
 			<Modal
-			animationType="slide"
-			transparent={true}
-			visible={deleteDialogVisible}>
+				animationType="slide"
+				transparent={true}
+				visible={deleteDialogVisible}>
 				<DeleteDialog
 					title={'Chú ý'}
-					message={'Reset phòng sẽ xóa tất cả thông tin của phòng (khách thuê, tất cả hóa đơn). Hãy đảm bảo mọi hóa đơn của phòng được thanh toán trước khi reset phòng.'}
+					message={
+						'Reset phòng sẽ xóa tất cả thông tin của phòng (khách thuê, tất cả hóa đơn). Hãy đảm bảo mọi hóa đơn của phòng được thanh toán trước khi reset phòng.'
+					}
 					setConfirmDelete={setConfirmDelete}
 					setDeleteDialogVisible={setDeleteDialogVisible}
-					/>
+				/>
 			</Modal>
 		</View>
 	);
-};
+}
+
 const styles = StyleSheet.create({
 	container: {
 		alignItems: 'center',
