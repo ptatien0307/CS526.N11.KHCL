@@ -254,7 +254,7 @@ export default function App({ navigation, route }) {
 						<View style={[styles.basicInfo, styles.myBorder]}>
 							<View
 								style={[styles.bodyHeader, { height: 35, marginBottom: 16 }]}>
-								<Text>Thông tin cơ bản</Text>
+								<Text style={styles.bodyHeaderText}>Thông tin cơ bản</Text>
 								<TouchableOpacity
 									onPress={() => {
 										navigation.navigate('EditBasicInfo', {
@@ -312,7 +312,7 @@ export default function App({ navigation, route }) {
 						<View style={[styles.memberInfo, styles.myBorder]}>
 							<View
 								style={[styles.bodyHeader, { height: 35, marginBottom: 16 }]}>
-								<Text>Thông tin người ở</Text>
+								<Text style={styles.bodyHeaderText}>Thông tin người ở</Text>
 
 								<TouchableOpacity
 									onPress={() => {
@@ -339,7 +339,7 @@ export default function App({ navigation, route }) {
 						<View style={[styles.serviceInfo, styles.myBorder]}>
 							<View
 								style={[styles.bodyHeader, { height: 35, marginBottom: 16 }]}>
-								<Text>Thông tin dịch vụ</Text>
+								<Text style={styles.bodyHeaderText}>Thông tin dịch vụ</Text>
 								<TouchableOpacity
 									onPress={() => {
 										navigation.navigate('EditRoomService', {
@@ -453,14 +453,10 @@ export default function App({ navigation, route }) {
 								style={{ color: 'white' }}
 							/>
 							<View>
-								<Text style={{ color: 'white' }}>
+								<Text style={styles.notiText}>
 									Tổng số tiền phòng này còn thiếu là:{' '}
 								</Text>
-								<Text
-									style={{
-										color: 'white',
-										fontWeight: 'bold',
-									}}>
+								<Text style={[styles.notiText, { fontWeight: 'bold' }]}>
 									{formatVNCurrency(totalRemained)}
 								</Text>
 							</View>
@@ -473,6 +469,8 @@ export default function App({ navigation, route }) {
 					</View>
 				)}
 			</ScrollView>
+
+			{/* Dialog */}
 			<Modal
 				animationType="slide"
 				transparent={true}
@@ -524,6 +522,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		marginBottom: 4,
 	},
+	bodyHeaderText: { fontSize: 18 },
 	infoContainer: {
 		width: '100%',
 		flex: 1,
@@ -669,7 +668,10 @@ const styles = StyleSheet.create({
 		marginBottom: 16,
 		padding: 8,
 	},
-
+	notiText: {
+		color: 'white',
+		fontSize: 17,
+	},
 	textTitle: {
 		fontSize: 20,
 		fontWeight: 'bold',
