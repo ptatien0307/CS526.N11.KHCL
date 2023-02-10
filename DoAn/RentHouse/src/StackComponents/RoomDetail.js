@@ -5,6 +5,7 @@ import {
 	TouchableOpacity,
 	FlatList,
 	ScrollView,
+	Modal,
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
@@ -24,6 +25,7 @@ import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { deleteBill } from '../database/actions/billActions';
 import { alertDeleteDialog } from '../Dialogs/dialog';
 import { useForceUpdate, formatVNCurrency } from '../utils/utils';
+import { DeleteDialog } from '../Dialogs/DeleteDialog';
 
 export default function App({ navigation, route }) {
 	const selected_room_id = route.params.selected_room_id;
@@ -41,7 +43,9 @@ export default function App({ navigation, route }) {
 	const [garbageFee, setGarbageFee] = useState('');
 
 	const [mountInfo, setMountInfo] = useState(true);
-
+	const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
+	const [confirmDelete, setConfirmDelete] = useState(false);
+	
 	useEffect(() => {
 		const loadRoomDetails = async () => {
 			const roomDetails = await fetchRoomDetails(selected_room_id)
@@ -98,11 +102,11 @@ export default function App({ navigation, route }) {
 	};
 
 	const handleResetRoom = async () => {
-		const res = await alertDeleteDialog(
-			'Chú ý',
-			'Reset phòng sẽ xóa tất cả thông tin của phòng (khách thuê, tất cả hóa đơn). Hãy đảm bảo mọi hóa đơn của phòng được thanh toán trước khi reset phòng.',
-		);
-		if (!res) return;
+		// const res = await alertDeleteDialog(
+		// 	'Chú ý',
+		// 	'Reset phòng sẽ xóa tất cả thông tin của phòng (khách thuê, tất cả hóa đơn). Hãy đảm bảo mọi hóa đơn của phòng được thanh toán trước khi reset phòng.',
+		// );
+		if (!confirmDelete) return;
 
 		const forceUpdate = () => {
 			forceUpdateRoomInfo();
@@ -433,7 +437,8 @@ export default function App({ navigation, route }) {
 						{/* Reset room information button */}
 						<TouchableOpacity
 							style={styles.deleteButton}
-							onPress={handleResetRoom}
+							onPress={()=>{setDeleteDialogVisible(true)
+								handleResetRoom}}
 						>
 							<Text style={styles.textTitleWhite}>XÓA THÔNG TIN PHÒNG</Text>
 						</TouchableOpacity>
@@ -470,6 +475,17 @@ export default function App({ navigation, route }) {
 					</View>
 				)}
 			</ScrollView>
+			<Modal
+			animationType="slide"
+			transparent={true}
+			visible={deleteDialogVisible}>
+				<DeleteDialog
+					title={'Chú ý'}
+					message={'Reset phòng sẽ xóa tất cả thông tin của phòng (khách thuê, tất cả hóa đơn). Hãy đảm bảo mọi hóa đơn của phòng được thanh toán trước khi reset phòng.'}
+					setConfirmDelete={setConfirmDelete}
+					setDeleteDialogVisible={setDeleteDialogVisible}
+					/>
+			</Modal>
 		</View>
 	);
 };
