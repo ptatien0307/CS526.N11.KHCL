@@ -10,9 +10,9 @@ import { useIsFocused } from '@react-navigation/native';
 
 import ThuTienHoaDon from './CollectMoney.js';
 import { fetchBillDetails } from '../database/actions/billActions.js';
-import { useForceUpdate, formatVNCurrency } from '../utils/utils.js';
+import { useForceUpdate, formatVNCurrency, formatHTMLBill } from '../utils/utils.js';
 
-export default function App({ navigation, route }) {
+export default function App({ route }) {
 	const selected_bill_id = route.params.selected_bill_id;
 
 	const isFocused = useIsFocused();
@@ -26,8 +26,7 @@ export default function App({ navigation, route }) {
 			);
 
 			setBillDetails(bill);
-
-			console.log(bill);
+			console.log(formatHTMLBill(bill));
 		};
 
 		loadBillDetails();
@@ -50,14 +49,18 @@ export default function App({ navigation, route }) {
 					<View style={[styles.detailItem, styles.myBackground]}>
 						<View>
 							<Text style={styles.subText}>Tiền phòng</Text>
+							<Text style={styles.subText}>
+								{`Số tháng: ${billDetails.number_of_months}, số ngày: ${billDetails.number_of_days}`}
+							</Text>
 							<Text style={styles.textBold}>
-								30 ngày, giá: {formatVNCurrency(billDetails.rental_fee)}/tháng
+								{formatVNCurrency(billDetails.rental_fee)}/tháng
 							</Text>
 						</View>
 						<View>
 							<Text style={styles.subText}>Thành tiền</Text>
 							<Text style={styles.textBoldRight}>
-								{formatVNCurrency(billDetails.rental_fee)}
+
+								{formatVNCurrency(billDetails.rental_fee * billDetails.number_of_months + Math.round(billDetails.rental_fee / 30) * billDetails.number_of_days)}
 							</Text>
 						</View>
 					</View>
@@ -70,10 +73,9 @@ export default function App({ navigation, route }) {
 								{`Số cũ: ${billDetails.old_electricity_number}, số mới: ${billDetails.new_electricity_number}`}
 							</Text>
 							<Text style={styles.textBold}>
-								{`${
-									billDetails.new_electricity_number -
+								{`${billDetails.new_electricity_number -
 									billDetails.old_electricity_number
-								} KWh x ${formatVNCurrency(billDetails.electricity_fee)}/KWh`}
+									} KWh x ${formatVNCurrency(billDetails.electricity_fee)}/KWh`}
 							</Text>
 						</View>
 						<View>
@@ -82,7 +84,7 @@ export default function App({ navigation, route }) {
 								{formatVNCurrency(
 									(billDetails.new_electricity_number -
 										billDetails.old_electricity_number) *
-										billDetails.electricity_fee
+									billDetails.electricity_fee
 								)}
 							</Text>
 						</View>
@@ -96,9 +98,8 @@ export default function App({ navigation, route }) {
 								{`Số cũ: ${billDetails.old_water_number}, số mới: ${billDetails.new_water_number}`}
 							</Text>
 							<Text style={styles.textBold}>
-								{`${
-									billDetails.new_water_number - billDetails.old_water_number
-								} khối x ${formatVNCurrency(billDetails.water_fee)}/khối`}
+								{`${billDetails.new_water_number - billDetails.old_water_number
+									} khối x ${formatVNCurrency(billDetails.water_fee)}/khối`}
 							</Text>
 						</View>
 						<View>
@@ -107,7 +108,7 @@ export default function App({ navigation, route }) {
 								{formatVNCurrency(
 									(billDetails.new_water_number -
 										billDetails.old_water_number) *
-										billDetails.water_fee
+									billDetails.water_fee
 								)}
 							</Text>
 						</View>

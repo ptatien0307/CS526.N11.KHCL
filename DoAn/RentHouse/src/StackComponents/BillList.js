@@ -21,7 +21,7 @@ export default function App({ navigation }) {
 			const bills = await fetchBillList().catch((error) => console.log(error));
 
 			const data = bills.reduce((accumulator, currentValue) => {
-				const monthYear = currentValue.month_year;
+				const monthYear = currentValue.month + '/' + currentValue.year;
 
 				const monthYearGroup = accumulator.find(
 					(groupOfMonthYear) => groupOfMonthYear.title === monthYear
@@ -49,6 +49,7 @@ export default function App({ navigation }) {
 		return (
 			<TouchableOpacity
 				onPress={() => {
+					console.log(item);
 					navigation.navigate('BillDetail', {
 						selected_bill_id: item.id,
 					});

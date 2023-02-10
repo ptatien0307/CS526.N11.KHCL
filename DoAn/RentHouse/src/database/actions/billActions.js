@@ -14,11 +14,13 @@ export const fetchBillList = () => {
                     total,
                     remained,
                     rooms.name AS room_name,
-                    strftime('%m/%Y', created_at, 'localtime') AS month_year
+                    strftime('%m', created_at, 'localtime') AS month,
+                    strftime('%Y', created_at, 'localtime') AS year
                 FROM bills
                     INNER JOIN rooms ON rooms.id = bills.room_id
                 WHERE bills.status = 'Chưa thanh toán'
-                ORDER BY month_year DESC,
+                ORDER BY year DESC,
+                        month ASC,
                         room_name ASC;
                 `,
                 [],
@@ -37,8 +39,26 @@ export const fetchBillDetails = (bill_id) => {
         db.transaction((tx) => {
             tx.executeSql(
                 `
-                SELECT  bills.*,
-                        rooms.name  as room_name
+                SELECT  bills.id,
+                        strftime('%d/%m/%Y %H:%M:%S', created_at, 'localtime') AS created_at,
+                        number_of_months,
+                        number_of_days,
+                        bills.rental_fee,
+                        bills.new_electricity_number,
+                        bills.old_electricity_number,
+                        electricity_fee,
+                        bills.new_water_number,
+                        bills.old_water_number,
+                        water_fee,
+                        garbage_fee,
+                        internet_fee,
+                        bill_amount,
+                        others_fee,
+                        credit,
+                        total,
+                        remained,
+                        paid_time,
+                        rooms.name as room_name
                 FROM 
                     bills
                     INNER JOIN
@@ -63,7 +83,6 @@ export const insertBill = (bill, forceUpdate) => {
                 tx.executeSql(
                     `INSERT INTO bills (
                         room_id,
-                        created_at,
                         number_of_months,
                         number_of_days,
                         rental_fee,
@@ -81,10 +100,9 @@ export const insertBill = (bill, forceUpdate) => {
                         total,
                         remained
                     )
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
                     [
                         bill.room_id,
-                        bill.created_at,
                         bill.number_of_months,
                         bill.number_of_days,
                         bill.rental_fee,

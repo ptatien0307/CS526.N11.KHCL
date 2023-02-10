@@ -8,7 +8,7 @@ import FontAwesomeIcon5 from 'react-native-vector-icons/FontAwesome5';
 import { fetchRoomDetails, updateRoomWaterElectricityNumber } from '../database/actions/roomActions';
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { insertBill } from '../database/actions/billActions';
-import { getCurrentDateString } from '../utils/utils';
+import { getCurrentDateString, formatHTMLBill } from '../utils/utils';
 
 
 export default function App({ navigation, route }) {
@@ -67,11 +67,11 @@ export default function App({ navigation, route }) {
 
         // Check if newElectricityNumber and WaterBillNew have non-digit characters
         if (/\D/.test(newElectricityNumber)) {
-            return Alert.alert('Lỗi','Chỉ số điện mới chỉ được chứa số');
+            return Alert.alert('Lỗi', 'Chỉ số điện mới chỉ được chứa số');
         }
-        
+
         if (/\D/.test(newWaterNumber)) {
-            return Alert.alert('Lỗi','Chỉ số nước mới chỉ được chứa số');
+            return Alert.alert('Lỗi', 'Chỉ số nước mới chỉ được chứa số');
         }
 
         // Check if input newElectricityNumber and WaterBillNew are empty
@@ -85,14 +85,14 @@ export default function App({ navigation, route }) {
 
         // Check if input newElectricityNumber and WaterBillNew are less than old
         if (newElectricityNumber < oldElectricityNumber) {
-            return Alert.alert('Lỗi','Chỉ số điện mới phải lớn hơn chỉ số điện cũ');
+            return Alert.alert('Lỗi', 'Chỉ số điện mới phải lớn hơn chỉ số điện cũ');
         }
         if (newWaterNumber < oldWaterNumber) {
-            return Alert.alert('Lỗi','Chỉ số nước mới phải lớn hơn chỉ số nước cũ');
+            return Alert.alert('Lỗi', 'Chỉ số nước mới phải lớn hơn chỉ số nước cũ');
         }
 
 
-        const roomBill = rentalFee * numberOfMonths + rentalFee / 30 * numberOfDays;
+        const roomBill = rentalFee * numberOfMonths + Math.round(rentalFee / 30) * numberOfDays;
         const electricityBill = electricityPrice * (newElectricityNumber - oldElectricityNumber);
         const waterBill = waterPrice * (newWaterNumber - oldWaterNumber);
 
@@ -107,7 +107,6 @@ export default function App({ navigation, route }) {
 
         insertBill({
             room_id: selected_room_id,
-            created_at: getCurrentDateString(),
             number_of_months: numberOfMonths,
             number_of_days: numberOfDays,
             rental_fee: rentalFee,
@@ -124,13 +123,13 @@ export default function App({ navigation, route }) {
             credit: creditTotal,
             total: totalBill,
             remained: totalBill
-        });
+        }).catch((error) => console.log(error));
 
         updateRoomWaterElectricityNumber(
             selected_room_id,
             newElectricityNumber,
             newWaterNumber
-        );
+        ).catch((error) => console.log(error));
 
         Alert.alert('Lập hóa đơn thành công', 'Tổng tiền hóa đơn: ' + totalBill);
         return navigation.goBack();

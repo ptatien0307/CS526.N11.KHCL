@@ -291,7 +291,7 @@ export default function App({ navigation, route }) {
 									<View>
 										<Text>Giá thuê:</Text>
 										<Text style={styles.textBold}>
-											{formatVNCurrency(room.rental_fee)}
+											{formatVNCurrency(room.rental_fee)}/tháng
 										</Text>
 									</View>
 								</View>

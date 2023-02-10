@@ -81,7 +81,14 @@ export const fetchRoomDetails = (room_id) => {
 	return new Promise((resolve, reject) => {
 		db.transaction((tx) => {
 			tx.executeSql(
-				'SELECT * FROM rooms WHERE id = ?',
+				`SELECT id,
+        				name,
+        				rental_fee,
+						deposit,
+						move_in_date,
+						old_electricity_number,
+						old_water_number
+				FROM rooms WHERE id = ?`,
 				[room_id],
 				(_, { rows: { _array: result } }) => {
 					console.log('Room fetched successfully');
