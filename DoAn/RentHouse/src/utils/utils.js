@@ -160,7 +160,7 @@ export function formatHTMLBill({
 
         <tr>
             <th colspan="2">Tiền rác</th>
-            <td class="total"><strong>${formatVNCurrency(garbageFee)}/tháng</strong></td>
+            <td class="total"><strong>${formatVNCurrency(garbageFee)}</strong></td>
         </tr>
 
         <tr>
