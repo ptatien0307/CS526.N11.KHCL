@@ -127,6 +127,19 @@ export default function App({ route }) {
 						</View>
 					</View>
 
+					{/* Internet */}
+					<View style={[styles.detailItem, styles.myBackground]}>
+						<View>
+							<Text style={styles.subText}>Tiền Internet</Text>
+						</View>
+						<View>
+							<Text style={styles.subText}>Thành tiền</Text>
+							<Text style={styles.textBoldRight}>
+								{formatVNCurrency(billDetails.internet_fee)}
+							</Text>
+						</View>
+					</View>
+
 					{/* Credit */}
 					<View style={[styles.detailItem, styles.myBackground]}>
 						<View>
