@@ -67,6 +67,7 @@ export default function App({ navigation, route }) {
 								editable={true}
 								multiline={false}
 								maxLength={256}
+								keyboardType="numeric"
 							>
 							</TextInput>
 						</View>
@@ -89,6 +90,7 @@ export default function App({ navigation, route }) {
 								editable={true}
 								multiline={false}
 								maxLength={256}
+								keyboardType="numeric"
 							>
 
 							</TextInput>
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
 	},
 
 	saveButton: {
-		backgroundColor: 'black',
+		backgroundColor: '#6cdb4e',
 		width: '100%',
 		height: '7%',
 		borderRadius: 10,
