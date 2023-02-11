@@ -20,7 +20,7 @@ import { alertMissingDialog } from '../Dialogs/dialog';
 import { useForceUpdate } from '../utils/utils';
 
 export default function App({ navigation, route }) {
-	const isFocused = useIsFocused()
+	const isFocused = useIsFocused();
 	const [noteContent, setNoteContent] = useState('');
 	const [noteList, setNoteList] = useState([]);
 	const [forceUpdate, forceUpdateId] = useForceUpdate();
@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	textInputContent: {
+		flex: 9,
 		fontSize: 20,
 	},
 

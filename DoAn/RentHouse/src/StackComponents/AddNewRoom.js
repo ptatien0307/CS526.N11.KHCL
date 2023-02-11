@@ -14,6 +14,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import { fetchRoomList, insertRoom } from "../database/actions/roomActions";
 import { fetchServiceDetails } from '../database/actions/serviceActions';
+import { formatVNCurrency } from '../utils/utils';
 
 export default function App({ navigation, route }) {
     const [roomName, setRoomName] = useState('');
@@ -32,12 +33,13 @@ export default function App({ navigation, route }) {
             const servicePrices = await fetchServiceDetails(service_name)
                 .catch((error) => console.log(error));
 
-            setServicePrice(String(servicePrices['price']));
+            setServicePrice(String(servicePrices.price));
         };
 
         loadServicePrices('Điện', setElectricityPrice);
         loadServicePrices('Nước', setWaterPrice);
         loadServicePrices('Rác', setGarbagePrice);
+        loadServicePrices('Phòng', setPrice);
 
     }, []);
 
@@ -90,9 +92,6 @@ export default function App({ navigation, route }) {
             return Alert.alert('Lỗi', 'Chỉ số nước mới chỉ được chứa số');
         }
 
-
-
-
         insertRoom(
             {
                 name: 'Phòng ' + roomName,
@@ -129,6 +128,7 @@ export default function App({ navigation, route }) {
                     onChangeText={(text) => {
                         setPrice(text);
                     }}
+                    defaultValue={price}
                 />
                 <Text style={styles.text}>đ/tháng</Text>
             </View>
@@ -174,24 +174,22 @@ export default function App({ navigation, route }) {
                 <View style={styles.service}>
                     <FontAwesomeIcon name="bolt" size={30} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                     <Text style={styles.text}>Điện</Text>
-                    <Text style={styles.text}>{electricityPrice} đ/kWh</Text>
+                    <Text style={styles.text}>{formatVNCurrency(electricityPrice)}/kWh</Text>
                 </View>
                 <View style={[styles.service]}>
                     <IonIcon name="water" size={30} style={{ paddingVertical: 2 }} />
                     <Text style={[styles.text]}>Nước</Text>
-                    <Text style={styles.text}>{waterPrice} đ/m3</Text>
+                    <Text style={styles.text}>{formatVNCurrency(waterPrice)}/khối</Text>
                 </View>
                 <View style={styles.service}>
                     <IonIcon name="trash" size={25} style={{ paddingHorizontal: 2, paddingVertical: 4 }} />
                     <Text style={styles.text}>Rác</Text>
-                    <Text style={styles.text}>{garbagePrice} đ/tháng</Text>
+                    <Text style={styles.text}>{formatVNCurrency(garbagePrice)}/tháng</Text>
                 </View>
 
             </View>
 
-            <TouchableOpacity style={styles.button} onPress={() => {
-                handleAddRoom();
-            }}>
+            <TouchableOpacity style={styles.button} onPress={handleAddRoom}>
                 <Text style={styles.text}>Thêm phòng</Text>
             </TouchableOpacity>
 

@@ -77,7 +77,7 @@ export default function App({ navigation, route }) {
 		};
 
 		loadMemberList();
-	}, [forceUpdateMemberListId]);
+	}, [isFocused, forceUpdateMemberListId]);
 
 	useEffect(() => {
 		const loadBillList = async () => {
@@ -317,7 +317,7 @@ export default function App({ navigation, route }) {
 								<TouchableOpacity
 									onPress={() => {
 										navigation.navigate('AddMember', {
-											roomID: room.id,
+											roomID: room.id
 										});
 									}}>
 									<FontAwesomeIcon name="plus-circle" size={30} />
@@ -391,25 +391,6 @@ export default function App({ navigation, route }) {
 									</View>
 								</View>
 
-								{/* Wifi */}
-								<View style={[styles.service, styles.myBackground]}>
-									<View
-										style={{
-											flexDirection: 'row',
-											alignItems: 'center',
-										}}>
-										<IonIcon
-											name="wifi"
-											size={20}
-											style={{
-												marginRight: 20,
-											}}
-										/>
-
-										<Text>Tiền wifi</Text>
-									</View>
-								</View>
-
 								{/* Tiền rác */}
 								<View style={[styles.service, styles.myBackground]}>
 									<View
@@ -425,7 +406,7 @@ export default function App({ navigation, route }) {
 											}}
 										/>
 
-										<Text> {formatVNCurrency(garbageFee)}/tháng</Text>
+										<Text>{formatVNCurrency(garbageFee)}/tháng</Text>
 									</View>
 								</View>
 							</View>

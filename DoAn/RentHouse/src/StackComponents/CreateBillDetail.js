@@ -8,7 +8,7 @@ import FontAwesomeIcon5 from 'react-native-vector-icons/FontAwesome5';
 import { fetchRoomDetails, updateRoomWaterElectricityNumber } from '../database/actions/roomActions';
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { insertBill } from '../database/actions/billActions';
-import { getCurrentDateString, formatHTMLBill } from '../utils/utils';
+import { formatHTMLBill, formatVNCurrency } from '../utils/utils';
 
 
 export default function App({ navigation, route }) {
@@ -51,7 +51,7 @@ export default function App({ navigation, route }) {
             const servicePrices = await fetchServiceDetails(service_name)
                 .catch((error) => console.log(error));
 
-            setServicePrice(String(servicePrices['price']));
+            setServicePrice(servicePrices['price']);
         };
 
         loadRoomDetails();
@@ -84,15 +84,15 @@ export default function App({ navigation, route }) {
         }
 
         // Check if input newElectricityNumber and WaterBillNew are less than old
-        if (newElectricityNumber < oldElectricityNumber) {
+        if (newElectricityNumber <= oldElectricityNumber) {
             return Alert.alert('Lỗi', 'Chỉ số điện mới phải lớn hơn chỉ số điện cũ');
         }
-        if (newWaterNumber < oldWaterNumber) {
+        if (newWaterNumber <= oldWaterNumber) {
             return Alert.alert('Lỗi', 'Chỉ số nước mới phải lớn hơn chỉ số nước cũ');
         }
 
 
-        const roomBill = rentalFee * numberOfMonths + Math.round(rentalFee / 30) * numberOfDays;
+        const roomBill = rentalFee * parseInt(numberOfMonths) + Math.round(rentalFee / 30) * numberOfDays;
         const electricityBill = electricityPrice * (newElectricityNumber - oldElectricityNumber);
         const waterBill = waterPrice * (newWaterNumber - oldWaterNumber);
 
@@ -125,6 +125,26 @@ export default function App({ navigation, route }) {
             remained: totalBill
         }).catch((error) => console.log(error));
 
+        console.log({
+            room_id: selected_room_id,
+            number_of_months: numberOfMonths,
+            number_of_days: numberOfDays,
+            rental_fee: rentalFee,
+            new_electricity_number: newElectricityNumber,
+            old_electricity_number: oldElectricityNumber,
+            electricity_fee: electricityPrice,
+            new_water_number: newWaterNumber,
+            old_water_number: oldWaterNumber,
+            water_fee: waterPrice,
+            garbage_fee: garbagePrice,
+            internet_fee: internetPrice,
+            bill_amount: billAmount,
+            others_fee: othersFeeTotal,
+            credit: creditTotal,
+            total: totalBill,
+            remained: totalBill
+        });
+
         updateRoomWaterElectricityNumber(
             selected_room_id,
             newElectricityNumber,
@@ -148,7 +168,7 @@ export default function App({ navigation, route }) {
                         <FontAwesomeIcon5 name="door-closed" size={30} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                         <View>
                             <Text style={[styles.billName]}>Tiền phòng</Text>
-                            <Text>{rentalFee} đồng/tháng</Text>
+                            <Text>{formatVNCurrency(rentalFee)}/tháng</Text>
                         </View>
                     </View>
 
@@ -182,7 +202,7 @@ export default function App({ navigation, route }) {
                         <FontAwesomeIcon name="bolt" size={30} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                         <View>
                             <Text style={[styles.billName]}>Tiền điện</Text>
-                            <Text>{electricityPrice} đồng/KWh</Text>
+                            <Text>{formatVNCurrency(electricityPrice)}/KWh</Text>
                         </View>
                     </View>
 
@@ -205,7 +225,7 @@ export default function App({ navigation, route }) {
                         <IonIcon name="water" size={30} style={{ paddingHorizontal: 8, paddingVertical: 2 }} />
                         <View>
                             <Text style={[styles.billName]}>Tiền nước</Text>
-                            <Text>{waterPrice} đồng/Khối</Text>
+                            <Text>{formatVNCurrency(waterPrice)}/khối</Text>
                         </View>
                     </View>
                     <View style={styles.billValue}>
@@ -253,7 +273,7 @@ export default function App({ navigation, route }) {
                         <IonIcon name="trash" size={25} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                         <View>
                             <Text style={[styles.billName]}>Tiền rác</Text>
-                            <Text>{garbagePrice} đồng/1 tháng</Text>
+                            <Text>{formatVNCurrency(garbagePrice)}/tháng</Text>
                         </View>
                     </View>
                 </View>

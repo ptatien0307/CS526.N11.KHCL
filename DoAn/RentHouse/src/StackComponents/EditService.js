@@ -7,7 +7,6 @@ import {
 	ScrollView,
 } from 'react-native';
 import { useEffect, useState } from 'react';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 import { formatVNCurrency } from '../utils/utils';
 import {
@@ -16,7 +15,7 @@ import {
 } from '../database/actions/serviceActions';
 import { editSuccessDialog } from '../Dialogs/dialog';
 
-export default function App({ navigation, route }) {
+export default function App({ navigation }) {
 	const [water, setWater] = useState();
 	const [electricity, setElectricity] = useState();
 	const [garbage, setGarbage] = useState();
