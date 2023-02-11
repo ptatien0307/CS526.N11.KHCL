@@ -12,6 +12,11 @@ import { useIsFocused } from '@react-navigation/native';
 import { fetchBillList, deleteBill } from '../database/actions/billActions';
 import { formatVNCurrency, useForceUpdate } from '../utils/utils';
 
+import { Dimensions } from 'react-native';
+
+const wh = Dimensions.get('window').width;
+const vh = Dimensions.get('window').height;
+
 export default function App({ navigation }) {
 	const isFocused = useIsFocused();
 	const [billList, setBillList] = useState([]);
@@ -164,7 +169,7 @@ const styles = StyleSheet.create({
 		marginBottom: 16,
 		flexDirection: 'row',
 		alignItems: 'center',
-		paddingVertical: 8,
+		paddingVertical: 12,
 	},
 	billMoney: {
 		width: '95%',
@@ -194,10 +199,13 @@ const styles = StyleSheet.create({
 	},
 
 	sectionHeader: {
+		justifyContent: 'center',
+		alignItems: 'center',
 		backgroundColor: 'black',
 		borderRadius: 10,
 		width: '100%',
 		marginBottom: 8,
+		height: vh / 17,
 	},
 	sectionFooter: {
 		marginBottom: 32,
@@ -226,7 +234,7 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		right: 0,
 		backgroundColor: 'black',
-		height: '120%',
+		height: '130%',
 		width: '10%',
 		justifyContent: 'center',
 		alignItems: 'center',

@@ -18,6 +18,10 @@ import {
 } from '../database/actions/noteActions';
 import { alertMissingDialog } from '../Dialogs/dialog';
 import { useForceUpdate } from '../utils/utils';
+import { Dimensions } from 'react-native';
+
+const wh = Dimensions.get('window').width;
+const vh = Dimensions.get('window').height;
 
 export default function App({ navigation, route }) {
 	const isFocused = useIsFocused();
@@ -39,11 +43,11 @@ export default function App({ navigation, route }) {
 	const handleAddNote = () => {
 		if (noteContent.length === 0) {
 			alertMissingDialog();
-		}
-		else {
+		} else {
 			const insertedNote = async () => {
-				await insertNote(noteContent, forceUpdate)
-					.catch((error) => console.log(error));
+				await insertNote(noteContent, forceUpdate).catch((error) =>
+					console.log(error)
+				);
 			};
 
 			insertedNote();
@@ -57,20 +61,15 @@ export default function App({ navigation, route }) {
 				style={[styles.note, styles.myBackground]}
 				onPress={() => {
 					navigation.navigate('EditNote', {
-						selected_note_id: item.id
+						selected_note_id: item.id,
 					});
-				}}
-			>
+				}}>
 				<View style={styles.noteContent}>
-					<Text style={{ fontSize: 20 }}>
-						{item.content}
-					</Text>
+					<Text style={{ fontSize: 20 }}>{item.content}</Text>
 				</View>
 
 				<View style={styles.noteIcon}>
-					<TouchableOpacity
-						onPress={() => deleteNote(item.id, forceUpdate)}
-					>
+					<TouchableOpacity onPress={() => deleteNote(item.id, forceUpdate)}>
 						<FontAwesomeIcon
 							name="remove"
 							size={25}
@@ -94,8 +93,7 @@ export default function App({ navigation, route }) {
 						value={noteContent}
 					/>
 
-					<TouchableOpacity
-						onPress={handleAddNote}>
+					<TouchableOpacity onPress={handleAddNote}>
 						<FontAwesomeIcon name="plus-circle" size={30} />
 					</TouchableOpacity>
 				</View>
@@ -130,12 +128,11 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		marginVertical: 16,
 		paddingHorizontal: 8,
-		height: 50,
+		height: vh / 12,
 		justifyContent: 'space-between',
 		alignItems: 'center',
 	},
 	textInputContent: {
-		flex: 9,
 		fontSize: 20,
 	},
 
