@@ -24,7 +24,7 @@ import { deleteCustomer } from '../database/actions/customerActions';
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { deleteBill } from '../database/actions/billActions';
 import { useForceUpdate, formatVNCurrency } from '../utils/utils';
-import { DeleteDialog } from '../Dialogs/DeleteDialog';
+import { DeleteDialog } from '../Dialogs/DeleteDialog.js';
 
 export default function App({ navigation, route }) {
 	const selected_room_id = route.params.selected_room_id;
@@ -43,7 +43,7 @@ export default function App({ navigation, route }) {
 
 	const [mountInfo, setMountInfo] = useState(true);
 	const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
-	const [confirmDelete, setConfirmDelete] = useState(true);
+	const [confirmDelete, setConfirmDelete] = useState(false);
 
 	useEffect(() => {
 		const loadRoomDetails = async () => {

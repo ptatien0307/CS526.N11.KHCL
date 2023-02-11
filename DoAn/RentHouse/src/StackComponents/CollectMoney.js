@@ -11,8 +11,9 @@ import { useEffect, useRef, useState } from 'react';
 import {
 	alertEmptyDialog,
 	successDialog,
-	errorDialog,
 } from '../Dialogs/dialog.js';
+
+import {ErrorDialog} from '../Dialogs/ErrorDialog'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { updateBill } from '../database/actions/billActions.js';
 import { formatVNCurrency } from '../utils/utils.js';
@@ -22,12 +23,14 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 	const outAnimetedValue = useRef(new Animated.Value(0)).current;
 
 	const [inputText, setInputText] = useState('');
+	const [errorDialogVisible, setErrorDialogVisible] = useState(false);
 
 	const handlePartialPayment = () => {
 		console.log(inputText);
 		if (inputText === '') {
 			alertEmptyDialog();
 		} else if (parseInt(inputText.replace(/\W+/g, '')) > billDetails.remained) {
+			setErrorDialogVisible(true)
 			errorDialog('Vui lòng nhập số tiền nhỏ hơn số tiền mà phòng còn thiếu.');
 		} else {
 			const remained =
@@ -191,6 +194,15 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 					}
 				</View>
 			</Animated.View>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={editSuccessDialogVisible}>
+				<ErrorDialog
+					message={'Vui lòng nhập số tiền nhỏ hơn số tiền mà phòng còn thiếu.'}
+					setErrorDialogVisible={setErrorDialogVisible}
+				/>
+			</Modal>
 		</View>
 	);
 }

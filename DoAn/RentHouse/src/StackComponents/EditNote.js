@@ -4,16 +4,19 @@ import {
 	Text,
 	TextInput,
 	TouchableOpacity,
+	Modal
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import { fetchNoteContent, updateNote } from '../database/actions/noteActions';
-import { alertMissingDialog, editSuccessDialog } from '../Dialogs/dialog';
+import { MissingDialog } from '../Dialogs/MissingDialog';
+import { EditSuccessDialog } from '../Dialogs/EditSuccessDialog';
 
 export default function EditModal({ navigation, route }) {
 	const selected_note_id = route.params.selected_note_id;
 
 	const [noteContent, setNoteContent] = useState('');
-
+	const [missingDialogVisible, setMissingDialogVisible] = useState(false);
+	const [editSuccessDialogVisible, setEditSuccessDialogVisible] = useState(false);
 	useEffect(() => {
 		const loadNote = async () => {
 			const note = await fetchNoteContent(selected_note_id)
@@ -25,9 +28,9 @@ export default function EditModal({ navigation, route }) {
 		loadNote();
 	}, [])
 
-	const handleSave = () => {
+	const handleSave = async() => {
 		if (noteContent.length === 0) {
-			alertMissingDialog();
+			setMissingDialogVisible(true);
 		}
 		else {
 			const updatedNote = async () => {
@@ -39,7 +42,7 @@ export default function EditModal({ navigation, route }) {
 			}
 
 			updatedNote();
-			editSuccessDialog();
+			setEditSuccessDialogVisible(true);
 			navigation.goBack();
 		}
 	};
@@ -68,6 +71,22 @@ export default function EditModal({ navigation, route }) {
 					LƯU CHỈNH SỬA
 				</Text>
 			</TouchableOpacity>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={missingDialogVisible}>
+				<MissingDialog
+					setMissingDialogVisible={setMissingDialogVisible}
+				/>
+			</Modal>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={editSuccessDialogVisible}>
+				<EditSuccessDialog
+					setEditSuccessDialogVisible={setEditSuccessDialogVisible}
+				/>
+			</Modal>
 		</View>
 	);
 }

@@ -7,27 +7,18 @@ import {
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-const DeleteDialog = (props) => {
-	const CloseModal = (userChoice) => {
-		props.setConfirmDelete(userChoice);
-		props.setDeleteDialogVisible(false);
-	};
+const EditSuccessDialog = (props) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.modal}>
-				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10,}}>
+				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10}}>
 					<FontAwesomeIcon name="exclamation-circle" size={35} color='red' />
-					<Text style={styles.textTitle}> {props.title} </Text>
+					<Text style={styles.textTitle}> Hoàn Thành </Text>
 				</View>
-				<Text style={styles.message}> {props.message}</Text>
-				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10,}}>
+				<Text style={styles.message}> Chỉnh sửa thành công.</Text>
+				<View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingVertical: 10}}>
 					<View style = {styles.button}>
-						<TouchableOpacity onPress={() => CloseModal(true)}>
-							<Text>Xóa</Text>
-						</TouchableOpacity>
-					</View>
-					<View style = {styles.button}>
-						<TouchableOpacity onPress={() => CloseModal(false)}>
+						<TouchableOpacity onPress={() => props.setEditSuccessDialogVisible(false)}>
 							<Text>Quay lại</Text>
 						</TouchableOpacity>
 					</View>
@@ -73,4 +64,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export { DeleteDialog };
+export {EditSuccessDialog};
