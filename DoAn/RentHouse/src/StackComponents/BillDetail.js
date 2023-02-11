@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
+import { Dimensions } from 'react-native';
+import { printAsync } from 'expo-print';
 
 import ThuTienHoaDon from './CollectMoney.js';
 import { fetchBillDetails } from '../database/actions/billActions.js';
@@ -15,7 +17,6 @@ import {
 	formatVNCurrency,
 	formatHTMLBill,
 } from '../utils/utils.js';
-import { Dimensions } from 'react-native';
 
 const wh = Dimensions.get('window').width;
 const vh = Dimensions.get('window').height;
@@ -27,6 +28,13 @@ export default function App({ route }) {
 	const [billDetails, setBillDetails] = useState({});
 	const [isThuTienModal, setIsThuTienModal] = useState(false);
 	const [forceUpdate, forceUpdateId] = useForceUpdate();
+
+	const handlePrintBill = async () => {
+		const html = formatHTMLBill(billDetails);
+		await printAsync({ html });
+	};
+
+
 	useEffect(() => {
 		const loadBillDetails = async () => {
 			const bill = await fetchBillDetails(selected_bill_id).catch((error) =>
@@ -68,8 +76,8 @@ export default function App({ route }) {
 							<Text style={styles.textBoldRight}>
 								{formatVNCurrency(
 									billDetails.rental_fee * billDetails.number_of_months +
-										Math.round(billDetails.rental_fee / 30) *
-											billDetails.number_of_days
+									Math.round(billDetails.rental_fee / 30) *
+									billDetails.number_of_days
 								)}
 							</Text>
 						</View>
@@ -83,10 +91,9 @@ export default function App({ route }) {
 								{`Số cũ: ${billDetails.old_electricity_number}, số mới: ${billDetails.new_electricity_number}`}
 							</Text>
 							<Text style={styles.textBold}>
-								{`${
-									billDetails.new_electricity_number -
+								{`${billDetails.new_electricity_number -
 									billDetails.old_electricity_number
-								} KWh x ${formatVNCurrency(billDetails.electricity_fee)}/KWh`}
+									} KWh x ${formatVNCurrency(billDetails.electricity_fee)}/KWh`}
 							</Text>
 						</View>
 						<View>
@@ -95,7 +102,7 @@ export default function App({ route }) {
 								{formatVNCurrency(
 									(billDetails.new_electricity_number -
 										billDetails.old_electricity_number) *
-										billDetails.electricity_fee
+									billDetails.electricity_fee
 								)}
 							</Text>
 						</View>
@@ -109,9 +116,8 @@ export default function App({ route }) {
 								{`Số cũ: ${billDetails.old_water_number}, số mới: ${billDetails.new_water_number}`}
 							</Text>
 							<Text style={styles.textBold}>
-								{`${
-									billDetails.new_water_number - billDetails.old_water_number
-								} khối x ${formatVNCurrency(billDetails.water_fee)}/khối`}
+								{`${billDetails.new_water_number - billDetails.old_water_number
+									} khối x ${formatVNCurrency(billDetails.water_fee)}/khối`}
 							</Text>
 						</View>
 						<View>
@@ -120,7 +126,7 @@ export default function App({ route }) {
 								{formatVNCurrency(
 									(billDetails.new_water_number -
 										billDetails.old_water_number) *
-										billDetails.water_fee
+									billDetails.water_fee
 								)}
 							</Text>
 						</View>
@@ -226,9 +232,7 @@ export default function App({ route }) {
 						styles.button,
 						{ marginBottom: vh / 10, backgroundColor: 'black' },
 					]}
-					onPress={() => {
-						// Print bill
-					}}>
+					onPress={handlePrintBill}>
 					<Text style={styles.textTitleWhite}>IN HÓA ĐƠN</Text>
 				</TouchableOpacity>
 

@@ -234,7 +234,7 @@ export const deleteBill = async (bill_id, forceUpdate = null) => {
         );
     }
     else {
-        Alert.alert('Hủy hóa đơn', 'Hóa đơn này đã thanh toán xong. Bạn có muốn tiếp tục?',
+        Alert.alert('Xóa hóa đơn', 'Hóa đơn này đã thanh toán xong. Bạn có muốn tiếp tục xóa?',
             [
                 {
                     text: 'Quay lại',

@@ -432,7 +432,7 @@ export default function App({ navigation, route }) {
 						<TouchableOpacity
 							style={styles.resetButton}
 							onPress={async () => {
-								await setDeleteDialogVisible(true);
+								setDeleteDialogVisible(true);
 								await handleResetRoom();
 							}}>
 							<Text style={styles.textTitleWhite}>XÓA THÔNG TIN PHÒNG</Text>
