@@ -8,7 +8,7 @@ import FontAwesomeIcon5 from 'react-native-vector-icons/FontAwesome5';
 import { fetchRoomDetails, updateRoomWaterElectricityNumber } from '../database/actions/roomActions';
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { insertBill } from '../database/actions/billActions';
-import { getCurrentDateString, formatHTMLBill } from '../utils/utils';
+import { formatVNCurrency } from '../utils/utils';
 
 
 export default function App({ navigation, route }) {
@@ -51,7 +51,7 @@ export default function App({ navigation, route }) {
             const servicePrices = await fetchServiceDetails(service_name)
                 .catch((error) => console.log(error));
 
-            setServicePrice(String(servicePrices['price']));
+            setServicePrice(servicePrices['price']);
         };
 
         loadRoomDetails();
@@ -83,16 +83,28 @@ export default function App({ navigation, route }) {
             return Alert.alert('Lỗi', 'Chưa nhập chỉ số nước mới');
         }
 
+        if (internetPrice == '') {
+            return Alert.alert('Lỗi', 'Chưa nhập tiền Internet');
+        }
+
+        if (credit == '') {
+            return Alert.alert('Lỗi', 'Chưa nhập số tiền miễn giảm');
+        }
+
+        if (othersFee == '') {
+            return Alert.alert('Lỗi', 'Chưa nhập số tiền thu thêm');
+        }
+
         // Check if input newElectricityNumber and WaterBillNew are less than old
-        if (newElectricityNumber < oldElectricityNumber) {
+        if (newElectricityNumber <= oldElectricityNumber) {
             return Alert.alert('Lỗi', 'Chỉ số điện mới phải lớn hơn chỉ số điện cũ');
         }
-        if (newWaterNumber < oldWaterNumber) {
+        if (newWaterNumber <= oldWaterNumber) {
             return Alert.alert('Lỗi', 'Chỉ số nước mới phải lớn hơn chỉ số nước cũ');
         }
 
 
-        const roomBill = rentalFee * numberOfMonths + Math.round(rentalFee / 30) * numberOfDays;
+        const roomBill = rentalFee * parseInt(numberOfMonths) + Math.round(rentalFee / 30) * numberOfDays;
         const electricityBill = electricityPrice * (newElectricityNumber - oldElectricityNumber);
         const waterBill = waterPrice * (newWaterNumber - oldWaterNumber);
 
@@ -127,8 +139,8 @@ export default function App({ navigation, route }) {
 
         updateRoomWaterElectricityNumber(
             selected_room_id,
-            newElectricityNumber,
-            newWaterNumber
+            newWaterNumber,
+            newElectricityNumber
         ).catch((error) => console.log(error));
 
         Alert.alert('Lập hóa đơn thành công', 'Tổng tiền hóa đơn: ' + totalBill);
@@ -148,7 +160,7 @@ export default function App({ navigation, route }) {
                         <FontAwesomeIcon5 name="door-closed" size={30} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                         <View>
                             <Text style={[styles.billName]}>Tiền phòng</Text>
-                            <Text>{rentalFee} đồng/tháng</Text>
+                            <Text>{formatVNCurrency(rentalFee)}/tháng</Text>
                         </View>
                     </View>
 
@@ -182,7 +194,7 @@ export default function App({ navigation, route }) {
                         <FontAwesomeIcon name="bolt" size={30} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                         <View>
                             <Text style={[styles.billName]}>Tiền điện</Text>
-                            <Text>{electricityPrice} đồng/KWh</Text>
+                            <Text>{formatVNCurrency(electricityPrice)}/KWh</Text>
                         </View>
                     </View>
 
@@ -205,7 +217,7 @@ export default function App({ navigation, route }) {
                         <IonIcon name="water" size={30} style={{ paddingHorizontal: 8, paddingVertical: 2 }} />
                         <View>
                             <Text style={[styles.billName]}>Tiền nước</Text>
-                            <Text>{waterPrice} đồng/Khối</Text>
+                            <Text>{formatVNCurrency(waterPrice)}/khối</Text>
                         </View>
                     </View>
                     <View style={styles.billValue}>
@@ -237,9 +249,9 @@ export default function App({ navigation, route }) {
                             <Text>Thành tiền: </Text>
                             <TextInput
                                 style={[styles.textInput]}
-                                placeholder="0"
                                 keyboardType="number-pad"
                                 onChangeText={text => setInternetPrice(text)}
+                                defaultValue={internetPrice}
                             />
                             <Text>đ</Text>
                         </View>
@@ -253,7 +265,7 @@ export default function App({ navigation, route }) {
                         <IonIcon name="trash" size={25} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                         <View>
                             <Text style={[styles.billName]}>Tiền rác</Text>
-                            <Text>{garbagePrice} đồng/1 tháng</Text>
+                            <Text>{formatVNCurrency(garbagePrice)}/tháng</Text>
                         </View>
                     </View>
                 </View>
@@ -268,8 +280,8 @@ export default function App({ navigation, route }) {
                             <TextInput
                                 style={[styles.textInput]}
                                 keyboardType="number-pad"
-                                placeholder="0"
                                 onChangeText={text => setCredit(text)}
+                                defaultValue={credit}
                             />
                             <Text>đ</Text>
                         </View>
@@ -286,8 +298,8 @@ export default function App({ navigation, route }) {
                             <TextInput
                                 style={[styles.textInput]}
                                 keyboardType="number-pad"
-                                placeholder="0"
                                 onChangeText={text => setOthersFee(text)}
+                                defaultValue={othersFee}
                             />
                             <Text>đ</Text>
                         </View>
@@ -307,7 +319,7 @@ export default function App({ navigation, route }) {
 
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {

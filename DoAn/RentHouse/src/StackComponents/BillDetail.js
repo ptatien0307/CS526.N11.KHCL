@@ -7,10 +7,20 @@ import {
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
+import { Dimensions } from 'react-native';
+import { printAsync } from 'expo-print';
 
 import ThuTienHoaDon from './CollectMoney.js';
 import { fetchBillDetails } from '../database/actions/billActions.js';
-import { useForceUpdate, formatVNCurrency, formatHTMLBill } from '../utils/utils.js';
+import { fetchHouseInfo } from '../database/actions/houseInfoActions.js';
+import {
+	useForceUpdate,
+	formatVNCurrency,
+	formatHTMLBill,
+} from '../utils/utils.js';
+
+const wh = Dimensions.get('window').width;
+const vh = Dimensions.get('window').height;
 
 export default function App({ route }) {
 	const selected_bill_id = route.params.selected_bill_id;
@@ -18,7 +28,16 @@ export default function App({ route }) {
 	const isFocused = useIsFocused();
 	const [billDetails, setBillDetails] = useState({});
 	const [isThuTienModal, setIsThuTienModal] = useState(false);
+	const [houseInfo, setHouseInfo] = useState({});
 	const [forceUpdate, forceUpdateId] = useForceUpdate();
+
+	const handlePrintBill = async () => {
+		const html = formatHTMLBill({ bill: billDetails, info: houseInfo });
+		console.log(html);
+		await printAsync({ html });
+	};
+
+
 	useEffect(() => {
 		const loadBillDetails = async () => {
 			const bill = await fetchBillDetails(selected_bill_id).catch((error) =>
@@ -26,11 +45,23 @@ export default function App({ route }) {
 			);
 
 			setBillDetails(bill);
-			console.log(formatHTMLBill(bill));
 		};
 
 		loadBillDetails();
 	}, [forceUpdateId, isFocused]);
+
+	useEffect(() => {
+		const loadHouseInfo = async () => {
+			const houseInfo = await fetchHouseInfo()
+				.catch((error) => console.log(error));
+
+			setHouseInfo(houseInfo);
+			console.log(houseInfo);
+		};
+
+		loadHouseInfo();
+	}, []);
+
 
 	return (
 		<View style={styles.container}>
@@ -59,8 +90,11 @@ export default function App({ route }) {
 						<View>
 							<Text style={styles.subText}>Thành tiền</Text>
 							<Text style={styles.textBoldRight}>
-
-								{formatVNCurrency(billDetails.rental_fee * billDetails.number_of_months + Math.round(billDetails.rental_fee / 30) * billDetails.number_of_days)}
+								{formatVNCurrency(
+									billDetails.rental_fee * billDetails.number_of_months +
+									Math.round(billDetails.rental_fee / 30) *
+									billDetails.number_of_days
+								)}
 							</Text>
 						</View>
 					</View>
@@ -197,7 +231,7 @@ export default function App({ route }) {
 
 				<TouchableOpacity
 					style={[
-						styles.collectButton,
+						styles.button,
 						{ backgroundColor: billDetails.remained ? 'black' : 'green' },
 					]}
 					onPress={() => {
@@ -207,6 +241,15 @@ export default function App({ route }) {
 					<Text style={styles.textTitleWhite}>
 						{billDetails.remained ? `THU TIỀN HÓA ĐƠN` : `HÓA ĐƠN ĐÃ ĐƯỢC THU`}
 					</Text>
+				</TouchableOpacity>
+
+				<TouchableOpacity
+					style={[
+						styles.button,
+						{ marginBottom: vh / 10, backgroundColor: 'black' },
+					]}
+					onPress={handlePrintBill}>
+					<Text style={styles.textTitleWhite}>IN HÓA ĐƠN</Text>
 				</TouchableOpacity>
 
 				{/* Update current bill */}
@@ -232,21 +275,20 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: 'auto',
 		alignItems: 'center',
-		paddingBottom: 4,
-		paddingHorizontal: 4,
+		padding: 4,
 	},
 	detailItem: {
 		width: '100%',
-		minHeight: 65,
+		minHeight: vh / 10,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingHorizontal: 8,
+		padding: 8,
 		marginTop: 8,
 	},
 	detailItemRight: {
 		width: '100%',
-		minHeight: 75,
+		minHeight: vh / 10,
 		justifyContent: 'center',
 		alignItems: 'flex-end',
 		paddingRight: 8,
@@ -256,19 +298,17 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: 'auto',
 		alignItems: 'center',
-		marginTop: 8,
-		paddingBottom: 4,
-		paddingHorizontal: 4,
+		marginTop: vh / 30,
+		padding: 4,
 	},
 
-	collectButton: {
+	button: {
 		width: '100%',
 		height: '5%',
 		borderRadius: 10,
 		justifyContent: 'center',
 		alignContent: 'center',
-		marginTop: 8,
-		marginBottom: 16,
+		marginVertical: 16,
 	},
 	subText: {
 		fontSize: 16,

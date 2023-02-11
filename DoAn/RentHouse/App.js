@@ -24,7 +24,7 @@ import BillList from './src/StackComponents/BillList.js';
 import CreateBill from './src/StackComponents/CreateBill.js';
 import CreateBillDetail from './src/StackComponents/CreateBillDetail.js';
 
-import Guide from './src/StackComponents/Guide.js';
+import Infor from './src/StackComponents/Infor.js';
 
 import Service from './src/StackComponents/Service.js';
 import EditService from './src/StackComponents/EditService.js';
@@ -59,31 +59,31 @@ export default function App() {
 						headerShown: false,
 					}}
 				/>
-				<Stack.Screen name="RoomList" component={RoomList} />
-				<Stack.Screen name="AddNewRoom" component={AddNewRoom} />
+				<Stack.Screen name="RoomList" component={RoomList} options={{ title: 'Danh sách phòng' }}/>
+				<Stack.Screen name="AddNewRoom" component={AddNewRoom} options={{ title: 'Thêm phòng' }}/>
 
-				<Stack.Screen name="RoomDetail" component={RoomDetail} />
-				<Stack.Screen name="EditBasicInfo" component={EditBasicInfo} />
-				<Stack.Screen name="EditRoomService" component={EditRoomService} />
+				<Stack.Screen name="RoomDetail" component={RoomDetail} options={{ title: 'Thông tin phòng' }}/>
+				<Stack.Screen name="EditBasicInfo" component={EditBasicInfo} options={{ title: 'Chỉnh sửa thông tin phòng' }}/>
+				<Stack.Screen name="EditRoomService" component={EditRoomService} options={{ title: 'Chỉnh sửa dịch vụ phòng' }}/>
 
-				<Stack.Screen name="MemberDetail" component={MemberDetail} />
-				<Stack.Screen name="AddMember" component={AddMember} />
-				<Stack.Screen name="EditMember" component={EditMember} />
+				<Stack.Screen name="MemberDetail" component={MemberDetail} options={{ title: 'Thông tin khách thuê' }}/>
+				<Stack.Screen name="AddMember" component={AddMember} options={{ title: 'Thêm khách thuê' }}/>
+				<Stack.Screen name="EditMember" component={EditMember} options={{ title: 'Chỉnh thông tin khách' }}/>
 
-				<Stack.Screen name="BillList" component={BillList} />
-				<Stack.Screen name="BillDetail" component={BillDetail} />
+				<Stack.Screen name="BillList" component={BillList} options={{ title: 'Danh sách hóa đơn' }} />
+				<Stack.Screen name="BillDetail" component={BillDetail} options={{ title: 'Chi tiết hóa đơn' }}/>
 
-				<Stack.Screen name="CreateBill" component={CreateBill} />
-				<Stack.Screen name="CreateBillDetail" component={CreateBillDetail} />
+				<Stack.Screen name="CreateBill" component={CreateBill} options={{ title: 'Danh sách phòng' }}/>
+				<Stack.Screen name="CreateBillDetail" component={CreateBillDetail} options={{ title: 'Lập hóa đơn' }}/>
 
-				<Stack.Screen name="Guide" component={Guide} />
+				<Stack.Screen name="Infor" component={Infor} options={{ title: 'Thông tin trọ' }} />
 
-				<Stack.Screen name="NoteList" component={NoteList} />
+				<Stack.Screen name="NoteList" component={NoteList} options={{ title: 'Ghi chú' }}/>
 
-				<Stack.Screen name="Service" component={Service} />
-				<Stack.Screen name="EditService" component={EditService} />
+				<Stack.Screen name="Service" component={Service} options={{ title: 'Dịch vụ' }}/>
+				<Stack.Screen name="EditService" component={EditService} options={{ title: 'Cài đặt dịch vụ' }}/>
 
-				<Stack.Screen name="EditNote" component={EditNote} />
+				<Stack.Screen name="EditNote" component={EditNote} options={{ title: 'Chi tiết ghi chú' }}/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

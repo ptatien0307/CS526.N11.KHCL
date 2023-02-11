@@ -22,11 +22,10 @@ export default function EditModal({ navigation, route }) {
 			const note = await fetchNoteContent(selected_note_id)
 				.catch((error) => console.log(error));
 			setNoteContent(note.content);
-			console.log(note.content);
 		};
 
 		loadNote();
-	}, [])
+	}, []);
 
 	const handleSave = async() => {
 		if (noteContent.length === 0) {
@@ -39,7 +38,7 @@ export default function EditModal({ navigation, route }) {
 					content: noteContent
 				})
 					.catch((error) => console.log(error));
-			}
+			};
 
 			updatedNote();
 			setEditSuccessDialogVisible(true);
@@ -59,7 +58,8 @@ export default function EditModal({ navigation, route }) {
 					defaultValue={noteContent}
 					editable={true}
 					multiline={true}
-					maxLength={256}></TextInput>
+					maxLength={256}
+				/>
 			</View>
 			{/* Save button */}
 			<TouchableOpacity

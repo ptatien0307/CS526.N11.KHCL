@@ -2,19 +2,25 @@ import {
 	StyleSheet,
 	View,
 	Text,
-	FlatList,
 	SectionList,
 	TouchableOpacity,
 } from 'react-native';
 import { useEffect, useState } from 'react';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 import { useIsFocused } from '@react-navigation/native';
-import { fetchBillList } from '../database/actions/billActions';
-import { formatVNCurrency } from '../utils/utils';
+import { fetchBillList, deleteBill } from '../database/actions/billActions';
+import { formatVNCurrency, useForceUpdate } from '../utils/utils';
+
+import { Dimensions } from 'react-native';
+
+const wh = Dimensions.get('window').width;
+const vh = Dimensions.get('window').height;
 
 export default function App({ navigation }) {
 	const isFocused = useIsFocused();
 	const [billList, setBillList] = useState([]);
+	const [forceUpdateBillList, forceUpdateBillListID] = useForceUpdate();
 
 	useEffect(() => {
 		const loadBillList = async () => {
@@ -43,7 +49,13 @@ export default function App({ navigation }) {
 		};
 
 		loadBillList();
-	}, [isFocused]);
+	}, [isFocused, forceUpdateBillListID]);
+
+	const handleDeleteBill = async (billID) => {
+		await deleteBill(billID, forceUpdateBillList).catch((error) =>
+			console.log(error)
+		);
+	};
 
 	const renderItem = ({ item }) => {
 		return (
@@ -55,50 +67,64 @@ export default function App({ navigation }) {
 					});
 				}}>
 				<View style={[styles.room, styles.myBackground]}>
-					{/* Room name */}
-					<View>
-						<Text style={styles.styleRoomName}>
-							{item.room_name} - {item.created_at}
-						</Text>
-					</View>
-
-					{/* Bill money: total, collected, remained */}
-					<View style={styles.billMoney}>
-						{/* Total */}
-						<View style={[styles.myBorder, styles.money]}>
-							<Text>Tổng tiền:</Text>
-							<Text style={styles.textBold}>
-								{formatVNCurrency(item.total)}
+					<View style={styles.billInfo}>
+						{/* Room name */}
+						<View>
+							<Text style={styles.styleRoomName}>
+								{item.room_name} - {item.created_at}
 							</Text>
 						</View>
 
-						{/* Collected */}
-						<View
-							style={[
-								styles.myBorder,
-								styles.money,
-								{
-									flexDirection: 'row',
-									justifyContent: 'space-between',
-									alignItems: 'center',
-								},
-							]}>
-							<View>
-								<Text>Đã thu:</Text>
+						{/* Bill money: total, collected, remained */}
+						<View style={styles.billMoney}>
+							{/* Total */}
+							<View style={[styles.myBorder, styles.money]}>
+								<Text>Tổng tiền:</Text>
 								<Text style={styles.textBold}>
-									{formatVNCurrency(item.total - item.remained)}
+									{formatVNCurrency(item.total)}
+								</Text>
+							</View>
+
+							{/* Collected */}
+							<View
+								style={[
+									styles.myBorder,
+									styles.money,
+									{
+										flexDirection: 'row',
+										justifyContent: 'space-between',
+										alignItems: 'center',
+									},
+								]}>
+								<View>
+									<Text>Đã thu:</Text>
+									<Text style={styles.textBold}>
+										{formatVNCurrency(item.total - item.remained)}
+									</Text>
+								</View>
+							</View>
+
+							{/* Remained */}
+							<View style={[styles.myBorder, styles.money]}>
+								<Text>Còn lại: </Text>
+								<Text style={styles.textBold}>
+									{formatVNCurrency(item.remained)}
 								</Text>
 							</View>
 						</View>
-
-						{/* Remained */}
-						<View style={[styles.myBorder, styles.money]}>
-							<Text>Còn lại: </Text>
-							<Text style={styles.textBold}>
-								{formatVNCurrency(item.remained)}
-							</Text>
-						</View>
 					</View>
+
+					<TouchableOpacity
+						onPress={() => {
+							handleDeleteBill(item.id);
+						}}
+						style={[styles.deleteIcon]}>
+						<FontAwesomeIcon
+							name="remove"
+							size={25}
+							style={{ color: 'white' }}
+						/>
+					</TouchableOpacity>
 				</View>
 			</TouchableOpacity>
 		);
@@ -140,15 +166,14 @@ const styles = StyleSheet.create({
 	},
 	room: {
 		flex: 1,
-		justifyContent: 'space-around',
-		paddingVertical: 12,
 		marginBottom: 16,
-		width: '100%',
-		borderLeftWidth: 5,
+		flexDirection: 'row',
+		alignItems: 'center',
+		paddingVertical: 12,
 	},
 	billMoney: {
 		width: '95%',
-		height: '70%',
+		height: '80%',
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignItems: 'center',
@@ -174,10 +199,13 @@ const styles = StyleSheet.create({
 	},
 
 	sectionHeader: {
+		justifyContent: 'center',
+		alignItems: 'center',
 		backgroundColor: 'black',
 		borderRadius: 10,
 		width: '100%',
 		marginBottom: 8,
+		height: vh / 17,
 	},
 	sectionFooter: {
 		marginBottom: 32,
@@ -195,5 +223,22 @@ const styles = StyleSheet.create({
 	},
 	textBold: {
 		fontWeight: 'bold',
+	},
+	billInfo: {
+		width: '95%',
+		flexDirection: 'column',
+		justifyContent: 'space-around',
+		alignItems: 'flex-start',
+	},
+	deleteIcon: {
+		position: 'absolute',
+		right: 0,
+		backgroundColor: 'black',
+		height: '130%',
+		width: '10%',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderTopRightRadius: 10,
+		borderBottomRightRadius: 10,
 	},
 });

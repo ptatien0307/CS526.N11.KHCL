@@ -24,7 +24,11 @@ import { deleteCustomer } from '../database/actions/customerActions';
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { deleteBill } from '../database/actions/billActions';
 import { useForceUpdate, formatVNCurrency } from '../utils/utils';
-import { DeleteDialog } from '../Dialogs/DeleteDialog.js';
+import { DeleteDialog } from '../Dialogs/DeleteDialog';
+import { Dimensions } from 'react-native';
+
+const wh = Dimensions.get('window').width;
+const vh = Dimensions.get('window').height;
 
 export default function App({ navigation, route }) {
 	const selected_room_id = route.params.selected_room_id;
@@ -77,7 +81,7 @@ export default function App({ navigation, route }) {
 		};
 
 		loadMemberList();
-	}, [forceUpdateMemberListId]);
+	}, [isFocused, forceUpdateMemberListId]);
 
 	useEffect(() => {
 		const loadBillList = async () => {
@@ -101,9 +105,11 @@ export default function App({ navigation, route }) {
 	};
 
 	const handleDeleteBill = async (billID) => {
-		await deleteBill(billID, forceUpdateBillInfo).catch((error) =>
-			console.log(error)
-		);
+		const forceUpdate = () => {
+			forceUpdateRoomInfo();
+			forceUpdateBillInfo();
+		};
+		await deleteBill(billID, forceUpdate).catch((error) => console.log(error));
 	};
 
 	const handleResetRoom = async () => {
@@ -132,14 +138,14 @@ export default function App({ navigation, route }) {
 					<FontAwesomeIcon name="user" size={20} style={{ marginRight: 32 }} />
 
 					{/* Member name */}
-					<Text>{item.name}</Text>
+					<Text style={{ fontSize: 17 }}>{item.name}</Text>
 
 					{/* Delete member icon */}
 					<TouchableOpacity
 						onPress={() => {
 							handleDeleteMember(item.id);
 						}}
-						style={[styles.deleteIcon]}>
+						style={[styles.deleteBillButton]}>
 						<FontAwesomeIcon
 							name="remove"
 							size={25}
@@ -209,7 +215,7 @@ export default function App({ navigation, route }) {
 						onPress={() => {
 							handleDeleteBill(item.id);
 						}}
-						style={[styles.deleteIcon]}>
+						style={[styles.deleteBillButton]}>
 						<FontAwesomeIcon
 							name="remove"
 							size={25}
@@ -231,7 +237,7 @@ export default function App({ navigation, route }) {
 					onPress={() => {
 						if (!mountInfo) setMountInfo(!mountInfo);
 					}}>
-					<Text style={styles.textBold}>THÔNG TIN</Text>
+					<Text style={[styles.textBold, { fontSize: 18 }]}>THÔNG TIN</Text>
 				</TouchableOpacity>
 
 				<TouchableOpacity
@@ -239,7 +245,9 @@ export default function App({ navigation, route }) {
 					onPress={() => {
 						if (mountInfo) setMountInfo(!mountInfo);
 					}}>
-					<Text style={styles.textBold}>LỊCH SỬ HÓA ĐƠN</Text>
+					<Text style={[styles.textBold, { fontSize: 18 }]}>
+						LỊCH SỬ HÓA ĐƠN
+					</Text>
 				</TouchableOpacity>
 			</View>
 
@@ -261,7 +269,7 @@ export default function App({ navigation, route }) {
 											selected_room_id: room.id,
 										});
 									}}>
-									<FontAwesomeIcon name="edit" size={20} />
+									<FontAwesomeIcon name="edit" size={25} />
 								</TouchableOpacity>
 							</View>
 
@@ -269,16 +277,18 @@ export default function App({ navigation, route }) {
 								{/* Room name */}
 								<View style={[styles.rowItem, styles.myBackground]}>
 									<View>
-										<Text>Tên phòng:</Text>
-										<Text style={styles.textBold}>{room.name}</Text>
+										<Text style={{ fontSize: 19 }}>Tên phòng:</Text>
+										<Text style={[styles.textBold, { fontSize: 16 }]}>
+											{room.name}
+										</Text>
 									</View>
 								</View>
 
 								{/* Move in day */}
 								<View style={[styles.rowItem, styles.myBackground]}>
 									<View>
-										<Text>Ngày đến:</Text>
-										<Text style={styles.textBold}>
+										<Text style={{ fontSize: 19 }}>Ngày đến:</Text>
+										<Text style={[styles.textBold, { fontSize: 16 }]}>
 											{room.move_in_date || 'Không có'}
 										</Text>
 									</View>
@@ -289,8 +299,8 @@ export default function App({ navigation, route }) {
 								{/* Rental fee */}
 								<View style={[styles.rowItem, styles.myBackground]}>
 									<View>
-										<Text>Giá thuê:</Text>
-										<Text style={styles.textBold}>
+										<Text style={{ fontSize: 19 }}>Giá thuê:</Text>
+										<Text style={[styles.textBold, { fontSize: 16 }]}>
 											{formatVNCurrency(room.rental_fee)}/tháng
 										</Text>
 									</View>
@@ -299,8 +309,8 @@ export default function App({ navigation, route }) {
 								{/* Deposit */}
 								<View style={[styles.rowItem, styles.myBackground]}>
 									<View>
-										<Text>Tiền cọc:</Text>
-										<Text style={styles.textBold}>
+										<Text style={{ fontSize: 19 }}>Tiền cọc:</Text>
+										<Text style={[styles.textBold, { fontSize: 16 }]}>
 											{formatVNCurrency(room.deposit) || 'Không có'}
 										</Text>
 									</View>
@@ -362,7 +372,9 @@ export default function App({ navigation, route }) {
 											size={20}
 											style={{ marginRight: 20 }}
 										/>
-										<Text>{formatVNCurrency(waterFee)}/khối</Text>
+										<Text style={{ fontSize: 16 }}>
+											{formatVNCurrency(waterFee)}/khối
+										</Text>
 									</View>
 									<View style={[styles.lastestUnit, styles.myBorder]}>
 										<Text>{room.old_water_number}</Text>
@@ -384,29 +396,12 @@ export default function App({ navigation, route }) {
 												marginRight: 26,
 											}}
 										/>
-										<Text>{formatVNCurrency(electricityFee)}/Kwh</Text>
+										<Text style={{ fontSize: 16 }}>
+											{formatVNCurrency(electricityFee)}/Kwh
+										</Text>
 									</View>
 									<View style={[styles.lastestUnit, styles.myBorder]}>
 										<Text>{room.old_electricity_number}</Text>
-									</View>
-								</View>
-
-								{/* Wifi */}
-								<View style={[styles.service, styles.myBackground]}>
-									<View
-										style={{
-											flexDirection: 'row',
-											alignItems: 'center',
-										}}>
-										<IonIcon
-											name="wifi"
-											size={20}
-											style={{
-												marginRight: 20,
-											}}
-										/>
-
-										<Text>Tiền wifi</Text>
 									</View>
 								</View>
 
@@ -425,7 +420,9 @@ export default function App({ navigation, route }) {
 											}}
 										/>
 
-										<Text> {formatVNCurrency(garbageFee)}/tháng</Text>
+										<Text style={{ fontSize: 16 }}>
+											{formatVNCurrency(garbageFee)}/tháng
+										</Text>
 									</View>
 								</View>
 							</View>
@@ -433,9 +430,9 @@ export default function App({ navigation, route }) {
 
 						{/* Reset room information button */}
 						<TouchableOpacity
-							style={styles.deleteButton}
+							style={styles.resetButton}
 							onPress={async () => {
-								await setDeleteDialogVisible(true);
+								setDeleteDialogVisible(true);
 								await handleResetRoom();
 							}}>
 							<Text style={styles.textTitleWhite}>XÓA THÔNG TIN PHÒNG</Text>
@@ -494,6 +491,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-start',
 		flexDirection: 'column',
 		flex: 1,
+		paddingHorizontal: 4,
 	},
 	header: {
 		width: '100%',
@@ -529,8 +527,8 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	basicInfo: {
-		width: '90%',
-		height: 200,
+		width: '100%',
+		height: vh / 3,
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		padding: 8,
@@ -553,8 +551,8 @@ const styles = StyleSheet.create({
 	},
 
 	memberInfo: {
-		width: '90%',
-		height: 300,
+		width: '100%',
+		height: vh / 2,
 		justifyContent: 'flex-start',
 		alignItems: 'center',
 		padding: 8,
@@ -576,8 +574,8 @@ const styles = StyleSheet.create({
 	},
 
 	serviceInfo: {
-		width: '90%',
-		height: 250,
+		width: '100%',
+		height: vh / 3,
 		justifyContent: 'flex-start',
 		alignItems: 'center',
 		padding: 8,
@@ -600,39 +598,40 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 
-	deleteIcon: {
+	deleteBillButton: {
 		position: 'absolute',
 		right: 0,
 		backgroundColor: 'black',
-		height: '100%',
-		width: 30,
+		height: '106%',
+		width: wh / 10,
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderTopRightRadius: 10,
 		borderBottomRightRadius: 10,
 	},
-	deleteButton: {
+	resetButton: {
 		backgroundColor: 'black',
-		width: '90%',
+		width: '100%',
 		height: '5%',
 		borderRadius: 10,
-		marginBottom: 12,
+		marginBottom: 32,
 		justifyContent: 'center',
 	},
 
 	billContainer: {
 		width: '100%',
 		flex: 1,
-		padding: 8,
 	},
 	billInfoContainer: {
+		width: '100%',
 		flex: 1,
 		marginBottom: 32,
 		flexDirection: 'row',
 		alignItems: 'center',
+		paddingVertical: 4,
 	},
 	billInfo: {
-		height: 100,
+		height: vh / 6,
 		flexDirection: 'column',
 		justifyContent: 'space-around',
 		alignItems: 'flex-start',
@@ -642,7 +641,6 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: '30%',
 		textAlign: 'center',
-		marginBottom: 8,
 	},
 	billMoney: {
 		width: '100%',
@@ -653,20 +651,19 @@ const styles = StyleSheet.create({
 	},
 	money: {
 		paddingLeft: 8,
-		width: '30%',
-		height: '80%',
+		width: '32%',
+		height: '85%',
 		justifyContent: 'center',
 	},
 	totalRemained: {
 		borderRadius: 10,
-		backgroundColor: '#3c3f3e',
+		backgroundColor: 'black',
 		width: '100%',
-		height: 80,
+		height: vh / 8,
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignItems: 'center',
 		marginBottom: 16,
-		padding: 8,
 	},
 	notiText: {
 		color: 'white',
