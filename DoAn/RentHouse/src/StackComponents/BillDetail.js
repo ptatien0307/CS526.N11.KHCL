@@ -12,6 +12,7 @@ import { printAsync } from 'expo-print';
 
 import ThuTienHoaDon from './CollectMoney.js';
 import { fetchBillDetails } from '../database/actions/billActions.js';
+import { fetchHouseInfo } from '../database/actions/houseInfoActions.js';
 import {
 	useForceUpdate,
 	formatVNCurrency,
@@ -27,10 +28,12 @@ export default function App({ route }) {
 	const isFocused = useIsFocused();
 	const [billDetails, setBillDetails] = useState({});
 	const [isThuTienModal, setIsThuTienModal] = useState(false);
+	const [houseInfo, setHouseInfo] = useState({});
 	const [forceUpdate, forceUpdateId] = useForceUpdate();
 
 	const handlePrintBill = async () => {
-		const html = formatHTMLBill(billDetails);
+		const html = formatHTMLBill({ bill: billDetails, info: houseInfo });
+		console.log(html);
 		await printAsync({ html });
 	};
 
@@ -46,6 +49,19 @@ export default function App({ route }) {
 
 		loadBillDetails();
 	}, [forceUpdateId, isFocused]);
+
+	useEffect(() => {
+		const loadHouseInfo = async () => {
+			const houseInfo = await fetchHouseInfo()
+				.catch((error) => console.log(error));
+
+			setHouseInfo(houseInfo);
+			console.log(houseInfo);
+		};
+
+		loadHouseInfo();
+	}, []);
+
 
 	return (
 		<View style={styles.container}>

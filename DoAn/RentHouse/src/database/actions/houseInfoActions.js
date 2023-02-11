@@ -12,7 +12,7 @@ export const fetchHouseInfo = () => {
                 [],
                 (_, { rows: { _array: result } }) => {
                     console.log('House info fetched successfully');
-                    resolve(result);
+                    resolve(result[0]);
                 },
                 (_, error) => {
                     reject(error);
@@ -20,7 +20,7 @@ export const fetchHouseInfo = () => {
             );
         });
     });
-}
+};
 
 export const updateHouseInfo = (houseInfo, forceUpdate = null) => {
     return new Promise((resolve, reject) => {

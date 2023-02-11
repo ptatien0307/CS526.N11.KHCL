@@ -1,12 +1,28 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+
+import { fetchHouseInfo } from '../database/actions/houseInfoActions';
 
 export default function App({ navigation }) {
+	const isFocused = useIsFocused();
+	const [houseName, setHouseName] = useState('');
+
+	useEffect(() => {
+		const loadHouseInfo = async () => {
+			const houseInfo = await fetchHouseInfo().catch((error) => console.log(error));
+
+			setHouseName(houseInfo.name.toUpperCase());
+		};
+
+		loadHouseInfo();
+	}, [isFocused]);
+
 	return (
 		<View style={styles.container}>
 			{/* Header */}
 			<View View style={[styles.header, styles.myBackground]}>
-				<Text style={styles.textTitle}>TÊN NHÀ TRỌ</Text>
+				<Text style={styles.textTitle}>NHÀ TRỌ {houseName}</Text>
 			</View>
 
 			{/* Container */}

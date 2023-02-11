@@ -9,7 +9,7 @@ import { createBillsTable, populateBillsTable } from './tables/billsTable';
 import { createServicePricesTable } from './tables/servicePricesTable';
 import { populateServicePricesTable } from './tables/servicePricesTable';
 import { createNotesTable, populateNotesTable } from './tables/notesTable';
-import { createHouseInfoTable } from './tables/houseInfoTable';
+import { createHouseInfoTable, populateHouseInfoTable } from './tables/houseInfoTable';
 import { openDatabase } from 'expo-sqlite';
 
 const db = openDatabase('renthouse.db');
@@ -51,7 +51,7 @@ const createTables = () => {
 			[],
 			() => console.log('Created house info table'),
 			(_, error) => console.log(error)
-		)
+		);
 	});
 };
 
@@ -85,6 +85,12 @@ const populateTables = () => {
 			populateBillsTable,
 			[],
 			() => console.log('Populated bills table'),
+			(_, error) => console.log(error)
+		);
+		tx.executeSql(
+			populateHouseInfoTable,
+			[],
+			() => console.log('Populated house info table'),
 			(_, error) => console.log(error)
 		);
 	});
