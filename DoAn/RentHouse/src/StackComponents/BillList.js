@@ -47,8 +47,9 @@ export default function App({ navigation }) {
 	}, [isFocused, forceUpdateBillListID]);
 
 	const handleDeleteBill = async (billID) => {
-		await deleteBill(billID, forceUpdateBillList)
-			.catch((error) => console.log(error));
+		await deleteBill(billID, forceUpdateBillList).catch((error) =>
+			console.log(error)
+		);
 	};
 
 	const renderItem = ({ item }) => {
@@ -61,50 +62,53 @@ export default function App({ navigation }) {
 					});
 				}}>
 				<View style={[styles.room, styles.myBackground]}>
-					{/* Room name */}
-					<View>
-						<Text style={styles.styleRoomName}>
-							{item.room_name} - {item.created_at}
-						</Text>
-					</View>
-
-					{/* Bill money: total, collected, remained */}
-					<View style={styles.billMoney}>
-						{/* Total */}
-						<View style={[styles.myBorder, styles.money]}>
-							<Text>Tổng tiền:</Text>
-							<Text style={styles.textBold}>
-								{formatVNCurrency(item.total)}
+					<View style={styles.billInfo}>
+						{/* Room name */}
+						<View>
+							<Text style={styles.styleRoomName}>
+								{item.room_name} - {item.created_at}
 							</Text>
 						</View>
 
-						{/* Collected */}
-						<View
-							style={[
-								styles.myBorder,
-								styles.money,
-								{
-									flexDirection: 'row',
-									justifyContent: 'space-between',
-									alignItems: 'center',
-								},
-							]}>
-							<View>
-								<Text>Đã thu:</Text>
+						{/* Bill money: total, collected, remained */}
+						<View style={styles.billMoney}>
+							{/* Total */}
+							<View style={[styles.myBorder, styles.money]}>
+								<Text>Tổng tiền:</Text>
 								<Text style={styles.textBold}>
-									{formatVNCurrency(item.total - item.remained)}
+									{formatVNCurrency(item.total)}
+								</Text>
+							</View>
+
+							{/* Collected */}
+							<View
+								style={[
+									styles.myBorder,
+									styles.money,
+									{
+										flexDirection: 'row',
+										justifyContent: 'space-between',
+										alignItems: 'center',
+									},
+								]}>
+								<View>
+									<Text>Đã thu:</Text>
+									<Text style={styles.textBold}>
+										{formatVNCurrency(item.total - item.remained)}
+									</Text>
+								</View>
+							</View>
+
+							{/* Remained */}
+							<View style={[styles.myBorder, styles.money]}>
+								<Text>Còn lại: </Text>
+								<Text style={styles.textBold}>
+									{formatVNCurrency(item.remained)}
 								</Text>
 							</View>
 						</View>
-
-						{/* Remained */}
-						<View style={[styles.myBorder, styles.money]}>
-							<Text>Còn lại: </Text>
-							<Text style={styles.textBold}>
-								{formatVNCurrency(item.remained)}
-							</Text>
-						</View>
 					</View>
+
 					<TouchableOpacity
 						onPress={() => {
 							handleDeleteBill(item.id);
@@ -117,8 +121,6 @@ export default function App({ navigation }) {
 						/>
 					</TouchableOpacity>
 				</View>
-
-
 			</TouchableOpacity>
 		);
 	};
@@ -159,15 +161,14 @@ const styles = StyleSheet.create({
 	},
 	room: {
 		flex: 1,
-		justifyContent: 'space-around',
-		paddingVertical: 12,
 		marginBottom: 16,
-		width: '100%',
-		borderLeftWidth: 5,
+		flexDirection: 'row',
+		alignItems: 'center',
+		paddingVertical: 8,
 	},
 	billMoney: {
 		width: '95%',
-		height: '70%',
+		height: '80%',
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignItems: 'center',
@@ -215,13 +216,18 @@ const styles = StyleSheet.create({
 	textBold: {
 		fontWeight: 'bold',
 	},
-
+	billInfo: {
+		width: '95%',
+		flexDirection: 'column',
+		justifyContent: 'space-around',
+		alignItems: 'flex-start',
+	},
 	deleteIcon: {
 		position: 'absolute',
 		right: 0,
 		backgroundColor: 'black',
-		height: '100%',
-		width: '5%',
+		height: '120%',
+		width: '10%',
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderTopRightRadius: 10,
