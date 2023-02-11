@@ -485,6 +485,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		flex: 1,
 		paddingHorizontal: 4,
+		backgroundColor: '#d9d9d9',
 	},
 	header: {
 		width: '100%',
@@ -526,6 +527,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		padding: 8,
 		marginBottom: 8,
+		backgroundColor: 'white',
 	},
 	infoRow: {
 		flexDirection: 'row',
@@ -550,6 +552,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		padding: 8,
 		marginBottom: 8,
+		backgroundColor: 'white',
 	},
 	memberContainer: {
 		width: '100%',
@@ -573,6 +576,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		padding: 8,
 		marginBottom: 8,
+		backgroundColor: 'white',
 	},
 	serviceContainer: {
 		width: '100%',
@@ -603,7 +607,7 @@ const styles = StyleSheet.create({
 		borderBottomRightRadius: 10,
 	},
 	resetButton: {
-		backgroundColor: 'black',
+		backgroundColor: 'red',
 		width: '100%',
 		height: '5%',
 		borderRadius: 10,
@@ -650,7 +654,7 @@ const styles = StyleSheet.create({
 	},
 	totalRemained: {
 		borderRadius: 10,
-		backgroundColor: 'black',
+		backgroundColor: 'orange',
 		width: '100%',
 		height: vh / 8,
 		flexDirection: 'row',
@@ -677,8 +681,9 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 	},
 	myBackground: {
-		backgroundColor: '#dfdfdf',
+		backgroundColor: 'white',
 		borderRadius: 10,
+		borderWidth: 1,
 	},
 	myBorder: {
 		borderColor: 'black',

@@ -190,7 +190,7 @@ export default function App({ navigation, route }) {
             </View>
 
             <TouchableOpacity style={styles.button} onPress={handleAddRoom}>
-                <Text style={styles.text}>Thêm phòng</Text>
+                <Text style={[styles.text, {fontWeight:'bold', color:'white'}]}>THÊM PHÒNG</Text>
             </TouchableOpacity>
 
         </View>
@@ -202,6 +202,7 @@ styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
+        backgroundColor: '#d9d9d9'
     },
     roomName: {
         flexDirection: 'row',
@@ -213,6 +214,7 @@ styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginTop: 10,
+        backgroundColor:'white'
     },
     input: {
         width: '75%',
@@ -230,6 +232,7 @@ styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginTop: 10,
+        backgroundColor:'white'
     },
 
     serviceCurrent: {
@@ -239,6 +242,7 @@ styles = StyleSheet.create({
         borderRadius: 10,
         paddingTop: 10,
         marginTop: 10,
+        backgroundColor:'white'
     },
 
     inputService: {
@@ -251,7 +255,7 @@ styles = StyleSheet.create({
 
     button: {
         width: '95%',
-        backgroundColor: '#00bfff',
+        backgroundColor: '#6bec4b',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
@@ -267,7 +271,7 @@ styles = StyleSheet.create({
         borderRadius: 10,
         paddingTop: 10,
         marginTop: 10,
-
+        backgroundColor:'white'
     },
 
     service: {
@@ -277,7 +281,6 @@ styles = StyleSheet.create({
         width: '95%',
         padding: 10,
     },
-
 
 });
 

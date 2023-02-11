@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 		width: '100%',
+		backgroundColor: '#d9d9d9',
 	},
 
 	body: {
@@ -144,6 +145,7 @@ const styles = StyleSheet.create({
 		borderLeftWidth: 5,
 		width: '100%',
 		marginBottom: 16,
+		borderLeftColor: '#6bec4b'
 	},
 	noteContent: {
 		minHeight: 50,
@@ -161,9 +163,10 @@ const styles = StyleSheet.create({
 		borderColor: 'black',
 		borderRadius: 15,
 		borderWidth: 2,
+		backgroundColor: 'white',
 	},
 	myBackground: {
-		backgroundColor: '#dfdfdf',
+		backgroundColor: 'white',
 		borderRadius: 10,
 	},
 });

@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'flex-start',
+		backgroundColor: '#d9d9d9'
 	},
 	textInputContainer: {
 		minHeight: 50,
@@ -105,6 +106,7 @@ const styles = StyleSheet.create({
 		width: '90%',
 		justifyContent: 'space-between',
 		alignItems: 'center',
+		backgroundColor: 'white',
 	},
 	textInputContent: {
 		fontSize: 20,
@@ -117,9 +119,8 @@ const styles = StyleSheet.create({
 		width: '90%',
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: 'black',
+		backgroundColor: '#6bec4b',
 		borderRadius: 15,
-		borderWidth: 2,
 	},
 
 	myBorder: {

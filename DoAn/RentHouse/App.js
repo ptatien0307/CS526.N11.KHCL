@@ -73,7 +73,7 @@ export default function App() {
 				<Stack.Screen name="BillList" component={BillList} options={{ title: 'Danh sách hóa đơn' }} />
 				<Stack.Screen name="BillDetail" component={BillDetail} options={{ title: 'Chi tiết hóa đơn' }}/>
 
-				<Stack.Screen name="CreateBill" component={CreateBill} options={{ title: 'Danh sách phòng' }}/>
+				<Stack.Screen name="CreateBill" component={CreateBill} options={{ title: 'Danh sách phòng đã thuê' }}/>
 				<Stack.Screen name="CreateBillDetail" component={CreateBillDetail} options={{ title: 'Lập hóa đơn' }}/>
 
 				<Stack.Screen name="Infor" component={Infor} options={{ title: 'Thông tin trọ' }} />

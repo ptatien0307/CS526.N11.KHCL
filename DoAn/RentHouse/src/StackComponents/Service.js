@@ -23,30 +23,28 @@ export default function App({ navigation, route }) {
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.container}>
-				{/* Body */}
-				<View style={[styles.body]}>
-					{serviceList.map((service) => (
-						<View style={[styles.item, styles.myBackground]} key={service.id}>
-							<View style={styles.titleContainer}>
-								<Text style={styles.title}>{service.name}</Text>
-							</View>
-							<View>
-								<Text style={{ fontSize: 20 }}>
-									Giá: {formatVNCurrency(service.price, 2)} {service.unit}
-								</Text>
-							</View>
+			{/* Body */}
+			<View style={[styles.body]}>
+				{serviceList.map((service) => (
+					<View style={[styles.item, styles.myBackground]} key={service.id}>
+						<View style={styles.titleContainer}>
+							<Text style={styles.title}>{service.name}</Text>
 						</View>
-					))}
+						<View>
+							<Text style={{ fontSize: 20 }}>
+								Giá: {formatVNCurrency(service.price, 2)} {service.unit}
+							</Text>
+						</View>
+					</View>
+				))}
 
-					<TouchableOpacity
-						style={styles.editButton}
-						onPress={() => {
-							navigation.navigate('EditService', {});
-						}}>
-						<FontAwesomeIcon name="edit" size={35} style={{ color: 'white' }} />
-					</TouchableOpacity>
-				</View>
+				<TouchableOpacity
+					style={styles.editButton}
+					onPress={() => {
+						navigation.navigate('EditService', {});
+					}}>
+					<FontAwesomeIcon name="edit" size={35} style={{ color: 'white' }} />
+				</TouchableOpacity>
 			</View>
 		</View>
 	);
@@ -58,6 +56,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 		width: '100%',
+		backgroundColor: '#d9d9d9',
 	},
 
 	body: {
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
 		marginBottom: 32,
 	},
 	editButton: {
-		backgroundColor: 'black',
+		backgroundColor: '#6bec4b',
 		borderRadius: 10,
 		paddingHorizontal: 8,
 		paddingVertical: 4,
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
 	},
 
 	myBackground: {
-		backgroundColor: '#dfdfdf',
+		backgroundColor: 'white',
 		borderRadius: 10,
 	},
 	myBorder: {

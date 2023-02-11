@@ -313,7 +313,7 @@ export default function App({ navigation, route }) {
                 style={styles.calculateButton}
                 onPress={calculateBill}
             >
-                <AntDesign name="addfile" size={24} />
+                <AntDesign name="addfile" size={24} color='white' />
                 <Text style={styles.calculateButtonText}>Lập hóa đơn</Text>
             </TouchableOpacity>
 
@@ -400,7 +400,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 5,
         justifyContent: 'center',
-        backgroundColor: '#dfdfdf',
+        backgroundColor: '#6bec4b',
         borderRadius: 10,
     },
 
@@ -409,5 +409,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         paddingLeft: 10,
+        color: 'white',
     }
 });
