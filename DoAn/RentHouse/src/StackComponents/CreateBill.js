@@ -19,7 +19,6 @@ import {
 
 import { fetchRoomListForCreateBill } from '../database/actions/roomActions';
 
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 export default function App({ navigation, route }) {
 	const isFocused = useIsFocused();
@@ -59,13 +58,13 @@ export default function App({ navigation, route }) {
 				<View>
 					<Text>
 						TÌNH TRẠNG:
-						<Text style={{ color: item.bills_count > 0 ? 'green' : 'red' }}>
+						<Text style={{ color: item.bills_count > 0 ? '#6bec4b' : 'red' }}>
 							{item.bills_count > 0 ? ` Đã lập ${item.bills_count} hóa đơn` : ' Chưa lập hóa đơn'}
 						</Text>
 					</Text>
 				</View>
 			</View>
-		</TouchableOpacity >
+		</TouchableOpacity>
 	);
 
 	return (
@@ -97,6 +96,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 		width: '100%',
+		backgroundColor: '#d9d9d9'
 	},
 
 	body: {
@@ -118,8 +118,9 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 	},
 	myBackground: {
-		backgroundColor: '#dfdfdf',
+		backgroundColor: 'white',
 		borderRadius: 10,
+		borderLeftColor: '#6bec4b',
 	},
 
 	styleRoomName: {
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
 		height: '10%',
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: '#dfdfdf',
+		backgroundColor: '#6bec4b',
 		borderRadius: 10,
 		padding: 8,
 		margin: 8,
@@ -152,5 +153,6 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		textAlign: 'center',
 		marginBottom: 8,
+		color: 'white',
 	},
 });

@@ -176,7 +176,7 @@ export function formatHTMLBill({
             <td>
                 <p>Giảm: <b>${formatVNCurrency(credit)}</b></p>
             </td>
-            <td class="total">${formatVNCurrency(credit)}</td>
+            <td class="total">-${formatVNCurrency(credit)}</td>
         </tr>
         <tr>
             <td><b>Phụ thu</b></td>

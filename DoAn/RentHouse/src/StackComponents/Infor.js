@@ -5,6 +5,7 @@ import {
 	Text,
 	TouchableOpacity,
 	TextInput,
+	Alert,
 } from 'react-native';
 
 
@@ -40,7 +41,19 @@ export default function App({ navigation }) {
 			address: houseAddress,
 			phone_number: housePhone,
 		};
-
+		
+		// thong bao thanh cong
+		Alert.alert(
+			'Thông báo',
+			'Cập nhật thông tin thành công',
+			[
+				{
+					text: 'OK',
+					onPress: () => console.log('OK Pressed'),
+				},
+			],
+			{ cancelable: false }
+		);
 		await updateHouseInfo(houseInfo, () => {
 			navigation.navigate('Menu');
 		});
@@ -96,13 +109,13 @@ export default function App({ navigation }) {
 				{/* Save button */}
 				<TouchableOpacity
 					style={{
-						backgroundColor: '#f4511e',
+						backgroundColor: '#6bec4b',
 						padding: 10,
 						borderRadius: 10,
 						margin: 10,
 					}}
 					onPress={handleSave}>
-					<Text style={{ color: 'white', textAlign: 'center' }}>Lưu</Text>
+					<Text style={{ color: 'white', textAlign: 'center', fontWeight:'bold', fontSize:20 }}>Lưu thông tin</Text>
 				</TouchableOpacity>
 
 			</View>

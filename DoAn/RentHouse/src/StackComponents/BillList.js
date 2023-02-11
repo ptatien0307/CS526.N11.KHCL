@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
+		backgroundColor: '#d9d9d9',
 	},
 
 	body: {
@@ -201,7 +202,7 @@ const styles = StyleSheet.create({
 	sectionHeader: {
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: 'black',
+		backgroundColor: '#6bec4b',
 		borderRadius: 10,
 		width: '100%',
 		marginBottom: 8,
@@ -213,7 +214,7 @@ const styles = StyleSheet.create({
 	},
 
 	myBackground: {
-		backgroundColor: '#dfdfdf',
+		backgroundColor: 'white',
 		borderRadius: 10,
 	},
 	myBorder: {

@@ -246,10 +246,10 @@ export default function App({ route }) {
 				<TouchableOpacity
 					style={[
 						styles.button,
-						{ marginBottom: vh / 10, backgroundColor: 'black' },
+						{ marginBottom: vh / 10, backgroundColor: '#4B5BEC' },
 					]}
 					onPress={handlePrintBill}>
-					<Text style={styles.textTitleWhite}>IN HÓA ĐƠN</Text>
+					<Text style={styles.textTitleWhite}>XUẤT HÓA ĐƠN</Text>
 				</TouchableOpacity>
 
 				{/* Update current bill */}
@@ -270,12 +270,14 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 		paddingHorizontal: 4,
+		backgroundColor: '#d9d9d9'
 	},
 	billDetail: {
 		width: '100%',
 		height: 'auto',
 		alignItems: 'center',
 		padding: 4,
+		backgroundColor: 'white',
 	},
 	detailItem: {
 		width: '100%',
@@ -300,6 +302,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		marginTop: vh / 30,
 		padding: 4,
+		backgroundColor: 'white',
 	},
 
 	button: {
@@ -334,8 +337,9 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 	},
 	myBackground: {
-		backgroundColor: '#dfdfdf',
+		backgroundColor: 'white',
 		borderRadius: 10,
+		borderWidth: 1,
 	},
 	myBorder: {
 		borderColor: 'black',

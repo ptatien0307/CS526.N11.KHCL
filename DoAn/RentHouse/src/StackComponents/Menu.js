@@ -21,8 +21,8 @@ export default function App({ navigation }) {
 	return (
 		<View style={styles.container}>
 			{/* Header */}
-			<View View style={[styles.header, styles.myBackground]}>
-				<Text style={styles.textTitle}>NHÀ TRỌ {houseName}</Text>
+			<View View style={[styles.header]}>
+				<Text style={[styles.textTitle,{color:'white', fontSize:25}]}>NHÀ TRỌ {houseName}</Text>
 			</View>
 
 			{/* Container */}
@@ -106,14 +106,16 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'space-evenly',
-		backgroundColor: '#ffffff',
+		backgroundColor: '#d9d9d9',
 	},
 	header: {
-		marginTop: 12,
+		marginTop: '10%',
 		flex: 1,
 		width: '90%',
 		alignItems: 'center',
 		justifyContent: 'center',
+		backgroundColor: '#6bec4b',
+		borderRadius: 10,
 	},
 	body: {
 		flex: 4,
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
 	},
 
 	myBackground: {
-		backgroundColor: '#dfdfdf',
+		backgroundColor: 'white',
 		borderRadius: 10,
 	},
 

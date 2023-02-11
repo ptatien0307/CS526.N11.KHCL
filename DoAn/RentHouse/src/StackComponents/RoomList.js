@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		paddingHorizontal: 4,
 		paddingTop: 8,
+		backgroundColor: '#d9d9d9',
 	},
 
 	body: {
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 	},
 	addButton: {
-		backgroundColor: 'black',
+		backgroundColor: '#6bec4b',
 		borderRadius: 10,
 		paddingHorizontal: 8,
 		paddingVertical: 4,
@@ -108,7 +109,8 @@ const styles = StyleSheet.create({
 	},
 
 	myBackground: {
-		backgroundColor: '#dfdfdf',
+		backgroundColor: 'white',
 		borderRadius: 10,
+		borderLeftColor: '#6bec4b'
 	},
 });
