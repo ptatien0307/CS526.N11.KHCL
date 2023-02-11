@@ -74,10 +74,10 @@ export default function App({ navigation }) {
 					<TouchableOpacity
 						style={[styles.feature, styles.myBackground]}
 						onPress={() => {
-							navigation.navigate('Guide');
+							navigation.navigate('Infor');
 						}}
 					>
-						<Text style={styles.textTitle}>HƯỚNG DẪN</Text>
+						<Text style={styles.textTitle}>THÔNG TIN TRỌ</Text>
 					</TouchableOpacity>
 				</View>
 			</View>

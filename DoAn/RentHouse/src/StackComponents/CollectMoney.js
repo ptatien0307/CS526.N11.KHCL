@@ -179,11 +179,11 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 								onPress={handleFullPayment}>
 								<Text
 									style={{
-										fontSize: 25,
+										fontSize: 20,
 										fontWeight: 'bold',
 										color: 'white',
 									}}>
-									THANH TOÁN HÓA ĐƠN
+									THANH TOÁN HÓA ĐƠN 1 LẦN
 								</Text>
 							</TouchableOpacity>
 						)
