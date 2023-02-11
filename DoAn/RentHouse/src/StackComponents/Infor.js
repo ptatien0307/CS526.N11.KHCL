@@ -21,7 +21,9 @@ export default function App({ navigation, route }) {
 	return (
 		<View style={styles.container}>
 			{/* Body */}
-			<View style={styles.body}></View>
+			<View style={styles.body}>
+				
+			</View>
 		</View>
 	);
 }
