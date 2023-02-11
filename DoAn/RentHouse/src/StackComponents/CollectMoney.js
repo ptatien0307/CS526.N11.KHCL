@@ -24,12 +24,13 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 	const [inputText, setInputText] = useState('');
 
 	const handlePartialPayment = () => {
-		console.log(inputText);
 		if (inputText === '') {
 			alertEmptyDialog();
-		} else if (parseInt(inputText.replace(/\W+/g, '')) > billDetails.remained) {
+		}
+		else if (parseInt(inputText.replace(/\W+/g, '')) > billDetails.remained) {
 			errorDialog('Vui lòng nhập số tiền nhỏ hơn số tiền mà phòng còn thiếu.');
-		} else {
+		}
+		else {
 			const remained =
 				billDetails.remained - parseInt(inputText.replace(/\W+/g, ''));
 			const count = ++billDetails.paid_time;
@@ -40,7 +41,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 						...billDetails,
 						remained: remained,
 						paid_time: count,
-						status: remained ? 'Chưa thanh toán hết' : 'Đã thanh toán',
+						status: remained ? 'Chưa thanh toán' : 'Đã thanh toán',
 					},
 					forceUpdate
 				).catch((error) => console.log(error));
@@ -49,8 +50,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 			updatedBill();
 
 			successDialog(
-				`Đã thu thành công ${formatVNCurrency(inputText)}. ${
-					billDetails.room_name
+				`Đã thu thành công ${formatVNCurrency(inputText)}. ${billDetails.room_name
 				} còn nợ ${formatVNCurrency(remained)}`
 			);
 
@@ -75,8 +75,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 		updatedBill();
 
 		successDialog(
-			`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${
-				billDetails.room_name
+			`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${billDetails.room_name
 			} đã thanh toán hết.`
 		);
 

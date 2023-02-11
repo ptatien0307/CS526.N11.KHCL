@@ -1,6 +1,8 @@
 `use strict`;
 
 import { openDatabase } from 'expo-sqlite';
+import { updateRoomWaterElectricityNumber } from './roomActions';
+import { Alert } from 'react-native';
 
 const db = openDatabase('renthouse.db');
 
@@ -58,6 +60,9 @@ export const fetchBillDetails = (bill_id) => {
                         total,
                         remained,
                         paid_time,
+                        room_id,
+                        status,
+                        room_id,
                         rooms.name as room_name
                 FROM 
                     bills
@@ -76,7 +81,7 @@ export const fetchBillDetails = (bill_id) => {
     });
 };
 
-export const insertBill = (bill, forceUpdate) => {
+export const insertBill = (bill, forceUpdate = null) => {
     return new Promise((resolve, reject) => {
         db.transaction(
             (tx) => {
@@ -139,7 +144,6 @@ export const updateBill = (bill, forceUpdate = null) => {
                 tx.executeSql(
                     `UPDATE bills SET
                         room_id = ?,
-                        created_at = ?,
                         rental_fee = ?,
                         new_electricity_number = ?,
                         old_electricity_number = ?,
@@ -159,7 +163,6 @@ export const updateBill = (bill, forceUpdate = null) => {
                     WHERE id = ?;`,
                     [
                         bill.room_id,
-                        bill.created_at,
                         bill.rental_fee,
                         bill.new_electricity_number,
                         bill.old_electricity_number,
@@ -190,23 +193,80 @@ export const updateBill = (bill, forceUpdate = null) => {
     });
 };
 
-export const deleteBill = (bill_id, forceUpdate = null) => {
-    return new Promise((resolve, reject) => {
-        db.transaction(
-            (tx) => {
-                tx.executeSql(
-                    'DELETE FROM bills WHERE id = ?;',
-                    [bill_id],
-                    (_, { rows: { _array } }) => {
-                        console.log('Bill deleted successfully');
-                        resolve(_array);
+export const deleteBill = async (bill_id, forceUpdate = null) => {
+    const billDetails = await fetchBillDetails(bill_id);
+    if (billDetails.status === 'Chưa thanh toán') {
+        Alert.alert('Hủy hóa đơn', 'Hóa đơn này chưa thanh toán xong. Trạng thái phòng sẽ được khôi phục lại trước khi lập hóa đơn này. Bạn có muốn tiếp tục?',
+            [
+                {
+                    text: 'Quay lại',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {
+                    text: 'Tiếp tục',
+                    onPress: () => {
+                        const newWaterNumber = billDetails.old_water_number;
+                        const newElectricityNumber = billDetails.old_electricity_number;
+
+                        return new Promise((resolve, reject) => {
+                            db.transaction(
+                                (tx) => {
+                                    tx.executeSql(
+                                        `DELETE FROM bills WHERE id = ?;`,
+                                        [bill_id],
+                                        (_, { rows: { _array } }) => {
+                                            console.log('Bill deleted successfully');
+                                            resolve(_array);
+                                        },
+                                        (_, error) => reject(error)
+                                    );
+                                },
+                                null,
+                                () => {
+                                    updateRoomWaterElectricityNumber(billDetails.room_id, newWaterNumber, newElectricityNumber, forceUpdate);
+                                });
+                        });
                     },
-                    (_, error) => reject(error)
-                );
-            },
-            null,
-            forceUpdate);
-    });
+                },
+            ],
+            { cancelable: true }
+        );
+    }
+    else {
+        Alert.alert('Hủy hóa đơn', 'Hóa đơn này đã thanh toán xong. Bạn có muốn tiếp tục?',
+            [
+                {
+                    text: 'Quay lại',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {
+                    text: 'Tiếp tục',
+                    onPress: () => {
+
+                        return new Promise((resolve, reject) => {
+                            db.transaction(
+                                (tx) => {
+                                    tx.executeSql(
+                                        `DELETE FROM bills WHERE id = ?;`,
+                                        [bill_id],
+                                        (_, { rows: { _array } }) => {
+                                            console.log('Bill deleted successfully');
+                                            resolve(_array);
+                                        },
+                                        (_, error) => reject(error)
+                                    );
+                                },
+                                null,
+                                forceUpdate);
+                        });
+                    }
+                },
+            ],
+            { cancelable: true }
+        );
+    };
 };
 
 

@@ -8,7 +8,7 @@ import FontAwesomeIcon5 from 'react-native-vector-icons/FontAwesome5';
 import { fetchRoomDetails, updateRoomWaterElectricityNumber } from '../database/actions/roomActions';
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { insertBill } from '../database/actions/billActions';
-import { formatHTMLBill, formatVNCurrency } from '../utils/utils';
+import { formatVNCurrency } from '../utils/utils';
 
 
 export default function App({ navigation, route }) {
@@ -83,6 +83,18 @@ export default function App({ navigation, route }) {
             return Alert.alert('Lỗi', 'Chưa nhập chỉ số nước mới');
         }
 
+        if (internetPrice == '') {
+            return Alert.alert('Lỗi', 'Chưa nhập tiền Internet');
+        }
+
+        if (credit == '') {
+            return Alert.alert('Lỗi', 'Chưa nhập số tiền miễn giảm');
+        }
+
+        if (othersFee == '') {
+            return Alert.alert('Lỗi', 'Chưa nhập số tiền thu thêm');
+        }
+
         // Check if input newElectricityNumber and WaterBillNew are less than old
         if (newElectricityNumber <= oldElectricityNumber) {
             return Alert.alert('Lỗi', 'Chỉ số điện mới phải lớn hơn chỉ số điện cũ');
@@ -125,30 +137,10 @@ export default function App({ navigation, route }) {
             remained: totalBill
         }).catch((error) => console.log(error));
 
-        console.log({
-            room_id: selected_room_id,
-            number_of_months: numberOfMonths,
-            number_of_days: numberOfDays,
-            rental_fee: rentalFee,
-            new_electricity_number: newElectricityNumber,
-            old_electricity_number: oldElectricityNumber,
-            electricity_fee: electricityPrice,
-            new_water_number: newWaterNumber,
-            old_water_number: oldWaterNumber,
-            water_fee: waterPrice,
-            garbage_fee: garbagePrice,
-            internet_fee: internetPrice,
-            bill_amount: billAmount,
-            others_fee: othersFeeTotal,
-            credit: creditTotal,
-            total: totalBill,
-            remained: totalBill
-        });
-
         updateRoomWaterElectricityNumber(
             selected_room_id,
-            newElectricityNumber,
-            newWaterNumber
+            newWaterNumber,
+            newElectricityNumber
         ).catch((error) => console.log(error));
 
         Alert.alert('Lập hóa đơn thành công', 'Tổng tiền hóa đơn: ' + totalBill);
@@ -257,9 +249,9 @@ export default function App({ navigation, route }) {
                             <Text>Thành tiền: </Text>
                             <TextInput
                                 style={[styles.textInput]}
-                                placeholder="0"
                                 keyboardType="number-pad"
                                 onChangeText={text => setInternetPrice(text)}
+                                defaultValue={internetPrice}
                             />
                             <Text>đ</Text>
                         </View>
@@ -288,8 +280,8 @@ export default function App({ navigation, route }) {
                             <TextInput
                                 style={[styles.textInput]}
                                 keyboardType="number-pad"
-                                placeholder="0"
                                 onChangeText={text => setCredit(text)}
+                                defaultValue={credit}
                             />
                             <Text>đ</Text>
                         </View>
@@ -306,8 +298,8 @@ export default function App({ navigation, route }) {
                             <TextInput
                                 style={[styles.textInput]}
                                 keyboardType="number-pad"
-                                placeholder="0"
                                 onChangeText={text => setOthersFee(text)}
+                                defaultValue={othersFee}
                             />
                             <Text>đ</Text>
                         </View>
@@ -327,7 +319,7 @@ export default function App({ navigation, route }) {
 
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {

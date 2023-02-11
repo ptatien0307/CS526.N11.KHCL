@@ -26,7 +26,6 @@ export default function App({ route }) {
 			);
 
 			setBillDetails(bill);
-			// console.log(formatHTMLBill(bill));
 		};
 
 		loadBillDetails();

@@ -2,19 +2,20 @@ import {
 	StyleSheet,
 	View,
 	Text,
-	FlatList,
 	SectionList,
 	TouchableOpacity,
 } from 'react-native';
 import { useEffect, useState } from 'react';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 import { useIsFocused } from '@react-navigation/native';
-import { fetchBillList } from '../database/actions/billActions';
-import { formatVNCurrency } from '../utils/utils';
+import { fetchBillList, deleteBill } from '../database/actions/billActions';
+import { formatVNCurrency, useForceUpdate } from '../utils/utils';
 
 export default function App({ navigation }) {
 	const isFocused = useIsFocused();
 	const [billList, setBillList] = useState([]);
+	const [forceUpdateBillList, forceUpdateBillListID] = useForceUpdate();
 
 	useEffect(() => {
 		const loadBillList = async () => {
@@ -43,7 +44,12 @@ export default function App({ navigation }) {
 		};
 
 		loadBillList();
-	}, [isFocused]);
+	}, [isFocused, forceUpdateBillListID]);
+
+	const handleDeleteBill = async (billID) => {
+		await deleteBill(billID, forceUpdateBillList)
+			.catch((error) => console.log(error));
+	};
 
 	const renderItem = ({ item }) => {
 		return (
@@ -99,7 +105,20 @@ export default function App({ navigation }) {
 							</Text>
 						</View>
 					</View>
+					<TouchableOpacity
+						onPress={() => {
+							handleDeleteBill(item.id);
+						}}
+						style={[styles.deleteIcon]}>
+						<FontAwesomeIcon
+							name="remove"
+							size={25}
+							style={{ color: 'white' }}
+						/>
+					</TouchableOpacity>
 				</View>
+
+
 			</TouchableOpacity>
 		);
 	};
@@ -195,5 +214,17 @@ const styles = StyleSheet.create({
 	},
 	textBold: {
 		fontWeight: 'bold',
+	},
+
+	deleteIcon: {
+		position: 'absolute',
+		right: 0,
+		backgroundColor: 'black',
+		height: '100%',
+		width: '5%',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderTopRightRadius: 10,
+		borderBottomRightRadius: 10,
 	},
 });

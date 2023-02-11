@@ -101,9 +101,12 @@ export default function App({ navigation, route }) {
 	};
 
 	const handleDeleteBill = async (billID) => {
-		await deleteBill(billID, forceUpdateBillInfo).catch((error) =>
-			console.log(error)
-		);
+		const forceUpdate = () => {
+			forceUpdateRoomInfo();
+			forceUpdateBillInfo();
+		};
+		await deleteBill(billID, forceUpdate)
+			.catch((error) => console.log(error));
 	};
 
 	const handleResetRoom = async () => {
