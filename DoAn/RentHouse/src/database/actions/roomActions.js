@@ -275,6 +275,7 @@ export const fetchRoomBillList = (room_id) => {
 };
 
 export const resetRoom = (room_id, forceUpdate = null) => {
+	console.log('Resetting room' + room_id);
 	return new Promise((resolve, reject) => {
 		db.transaction(
 			(tx) => {

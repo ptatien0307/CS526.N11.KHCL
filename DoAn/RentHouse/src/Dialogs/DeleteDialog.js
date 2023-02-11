@@ -7,27 +7,26 @@ import {
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-const DeleteDialog = (props) => {
-	const CloseModal = (userChoice) => {
-		props.setConfirmDelete(userChoice);
-		props.setDeleteDialogVisible(false);
-	};
+const DeleteDialog = ({ setDeleteDialogVisible, callback, title, message }) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.modal}>
-				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10,}}>
+				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10, }}>
 					<FontAwesomeIcon name="exclamation-circle" size={35} color='red' />
-					<Text style={styles.textTitle}> {props.title} </Text>
+					<Text style={styles.textTitle}> {title} </Text>
 				</View>
-				<Text style={styles.message}> {props.message}</Text>
-				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10,}}>
-					<View style = {styles.button}>
-						<TouchableOpacity onPress={() => CloseModal(true)}>
+				<Text style={styles.message}> {message}</Text>
+				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10, }}>
+					<View style={styles.button}>
+						<TouchableOpacity onPress={() => {
+							callback();
+							setDeleteDialogVisible(false);
+						}}>
 							<Text>Xóa</Text>
 						</TouchableOpacity>
 					</View>
-					<View style = {styles.button}>
-						<TouchableOpacity onPress={() => CloseModal(false)}>
+					<View style={styles.button}>
+						<TouchableOpacity onPress={() => setDeleteDialogVisible(false)}>
 							<Text>Quay lại</Text>
 						</TouchableOpacity>
 					</View>
@@ -45,12 +44,12 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: '#000000aa',
 	},
-	modal: {	
+	modal: {
 		alignItems: 'center',
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: "#ffffff",
-		flexDirection:'column',
+		flexDirection: 'column',
 		height: 200,
 		margin: 50,
 		padding: 20,
