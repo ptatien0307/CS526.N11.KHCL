@@ -7,20 +7,20 @@ import {
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-const EditSuccessDialog = ({ setEditSuccessDialogVisible, navigation }) => {
+const SuccessDialog = ({ setSuccessDialogVisible, callback, message }) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.modal}>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10 }}>
 					<FontAwesomeIcon name="check-circle" size={35} color='green' />
-					<Text style={styles.textTitle}> Hoàn Thành </Text>
+					<Text style={styles.textTitle}> Thành công </Text>
 				</View>
-				<Text style={styles.message}> Chỉnh sửa thành công.</Text>
+				<Text style={styles.message}> {message}</Text>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingVertical: 10 }}>
 					<View style={styles.button}>
 						<TouchableOpacity onPress={() => {
-							setEditSuccessDialogVisible(false);
-							navigation.goBack();
+                            callback();
+							setSuccessDialogVisible(false);
 						}}>
 							<Text>Quay lại</Text>
 						</TouchableOpacity>
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export { EditSuccessDialog };
+export { SuccessDialog };

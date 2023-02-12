@@ -7,18 +7,18 @@ import {
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-const EditSuccessDialog = (props) => {
+const MissingDialog = ({ setMissingDialogVisible }) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.modal}>
-				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10}}>
+				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10 }}>
 					<FontAwesomeIcon name="exclamation-circle" size={35} color='red' />
-					<Text style={styles.textTitle}> Hoàn Thành </Text>
+					<Text style={styles.textTitle}> Lỗi </Text>
 				</View>
-				<Text style={styles.message}> Chỉnh sửa thành công.</Text>
-				<View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingVertical: 10}}>
-					<View style = {styles.button}>
-						<TouchableOpacity onPress={() => props.setEditSuccessDialogVisible(false)}>
+				<Text style={styles.message}> Thông tin chỉnh sửa bị bỏ trống.</Text>
+				<View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingVertical: 10 }}>
+					<View style={styles.button}>
+						<TouchableOpacity onPress={() => setMissingDialogVisible(false)}>
 							<Text>Quay lại</Text>
 						</TouchableOpacity>
 					</View>
@@ -36,12 +36,12 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: '#000000aa',
 	},
-	modal: {	
+	modal: {
 		alignItems: 'center',
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: "#ffffff",
-		flexDirection:'column',
+		flexDirection: 'column',
 		height: 200,
 		margin: 50,
 		padding: 20,
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export {EditSuccessDialog};
+export { MissingDialog };
