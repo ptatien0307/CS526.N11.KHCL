@@ -5,6 +5,7 @@ import {
     TextInput,
     TouchableOpacity,
     Alert,
+    Modal
 } from 'react-native';
 import { useEffect, useState } from 'react';
 
@@ -15,7 +16,6 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import { fetchRoomList, insertRoom } from "../database/actions/roomActions";
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { formatVNCurrency } from '../utils/utils';
-import { Modal } from 'react-native-web';
 
 import {ErrorDialog} from '../Dialogs/ErrorDialog';
 import {BillSuccessDialog} from '../Dialogs/BillSuccessDialog'
@@ -52,14 +52,14 @@ export default function App({ navigation, route }) {
     }, []);
 
     const handleAddRoom = () => {
-
+        
         // Check if room name is empty
         if (roomName === '') {
             setErrorMessageDialog('Tên phòng không được để trống');
             setErrorDialogVisible(true);
             return;
         }
-
+        console.log('Room name not empty')
         // Check if price is empty
         if (price === '') {
             setErrorMessageDialog('Giá thuê không được để trống');
