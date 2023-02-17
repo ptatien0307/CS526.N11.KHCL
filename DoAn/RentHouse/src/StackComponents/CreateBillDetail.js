@@ -355,6 +355,7 @@ export default function App({ navigation, route }) {
 				transparent={true}
 				visible={billSuccessDialogVisible}>
 				<BillSuccessDialog
+                    title={'Lập hóa đơn thành công'}
 					message={messageBill}
                     navigation={navigation}
 					setBillSuccessDialogVisible={setBillSuccessDialogVisible}

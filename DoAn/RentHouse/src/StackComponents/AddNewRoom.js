@@ -15,8 +15,10 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import { fetchRoomList, insertRoom } from "../database/actions/roomActions";
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { formatVNCurrency } from '../utils/utils';
-import { ErrorDialog } from '../Dialogs/EmptyDialog';
 import { Modal } from 'react-native-web';
+
+import {ErrorDialog} from '../Dialogs/ErrorDialog';
+import {BillSuccessDialog} from '../Dialogs/BillSuccessDialog'
 
 export default function App({ navigation, route }) {
     const [roomName, setRoomName] = useState('');
@@ -29,6 +31,7 @@ export default function App({ navigation, route }) {
     const [garbagePrice, setGarbagePrice] = useState(null);
     const [messageErrorDialog, setErrorMessageDialog] = useState('');
     const [errorDialogVisible, setErrorDialogVisible] = useState(false);
+    const [billSuccessDialogVisible, setBillSuccessDialogVisible] = useState(false);
 
 
     // Load service price from database
@@ -122,8 +125,8 @@ export default function App({ navigation, route }) {
             },
         );
 
-        Alert.alert('Thành công', 'Thêm phòng thành công');
-        return navigation.goBack();
+        setBillSuccessDialogVisible(true);
+        return;
     };
 
 
@@ -214,10 +217,26 @@ export default function App({ navigation, route }) {
                 <Text style={[styles.text, { fontWeight: 'bold', color: 'white' }]}>THÊM PHÒNG</Text>
             </TouchableOpacity>
 
-            <Modal>
-
-            </Modal>
-
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={errorDialogVisible}>
+				<ErrorDialog
+					message={messageErrorDialog}
+					setErrorDialogVisible={setErrorDialogVisible}
+				/>
+			</Modal>
+            <Modal
+				animationType="slide"
+				transparent={true}
+				visible={billSuccessDialogVisible}>
+				<BillSuccessDialog
+                    title={'Thành công'}
+					message={'Thêm phòng thành công'}
+                    navigation={navigation}
+					setBillSuccessDialogVisible={setBillSuccessDialogVisible}
+				/>
+			</Modal>
         </View>
     );
 }

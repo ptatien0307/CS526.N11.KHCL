@@ -7,13 +7,13 @@ import {
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-const BillSuccessDialog = ({ setBillSuccessDialogVisible, navigation, message }) => {
+const BillSuccessDialog = ({ setBillSuccessDialogVisible, navigation, title, message }) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.modal}>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10 }}>
 					<FontAwesomeIcon name="check-circle" size={35} color='green' />
-					<Text style={styles.textTitle}> Lập hóa đơn thành công </Text>
+					<Text style={styles.textTitle}> {title} </Text>
 				</View>
 				<Text style={styles.message}> {message}</Text>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingVertical: 10 }}>
