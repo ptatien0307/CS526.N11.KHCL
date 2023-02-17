@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Alert, Modal } from 'react-native';
 import { useEffect, useState } from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -9,6 +9,7 @@ import { fetchRoomDetails, updateRoomWaterElectricityNumber } from '../database/
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { insertBill } from '../database/actions/billActions';
 import { formatVNCurrency } from '../utils/utils';
+import {ErrorDialog} from '../Dialogs/ErrorDialog'
 
 
 export default function App({ navigation, route }) {
@@ -35,6 +36,8 @@ export default function App({ navigation, route }) {
 
     const [credit, setCredit] = useState('0');
     const [othersFee, setOthersFee] = useState('0');
+    const [messageErrorDialog, setErrorMessageDialog] = useState('')
+    const [errorDialogVisible, setErrorDialogVisible] = useState(false);
 
 
     useEffect(() => {
@@ -67,40 +70,58 @@ export default function App({ navigation, route }) {
 
         // Check if newElectricityNumber and WaterBillNew have non-digit characters
         if (/\D/.test(newElectricityNumber)) {
-            return Alert.alert('Lỗi', 'Chỉ số điện mới chỉ được chứa số');
+            setErrorMessageDialog('Chỉ số điện mới chỉ được chứa số')
+            setErrorDialogVisible(true)
+            return;
         }
 
         if (/\D/.test(newWaterNumber)) {
-            return Alert.alert('Lỗi', 'Chỉ số nước mới chỉ được chứa số');
+            setErrorMessageDialog('Chỉ số nước mới chỉ được chứa số')
+            setErrorDialogVisible(true)
+            return;
         }
 
         // Check if input newElectricityNumber and WaterBillNew are empty
         if (newElectricityNumber == '') {
-            return Alert.alert('Lỗi', 'Chưa nhập chỉ số điện mới');
+            setErrorMessageDialog('Chưa nhập chỉ số điện mới')
+            setErrorDialogVisible(true)
+            return;
         }
 
         if (newWaterNumber == '') {
-            return Alert.alert('Lỗi', 'Chưa nhập chỉ số nước mới');
+            setErrorMessageDialog('Chưa nhập chỉ số nước mới')
+            setErrorDialogVisible(true)
+            return;
         }
 
         if (internetPrice == '') {
-            return Alert.alert('Lỗi', 'Chưa nhập tiền Internet');
+            setErrorMessageDialog('Chưa nhập tiền Internet')
+            setErrorDialogVisible(true)
+            return;
         }
 
         if (credit == '') {
-            return Alert.alert('Lỗi', 'Chưa nhập số tiền miễn giảm');
+            setErrorMessageDialog('Chưa nhập số tiền miễn giảm')
+            setErrorDialogVisible(true)
+            return;
         }
 
         if (othersFee == '') {
-            return Alert.alert('Lỗi', 'Chưa nhập số tiền thu thêm');
+            setErrorMessageDialog('Chưa nhập số tiền thu thêm')
+            setErrorDialogVisible(true)
+            return;
         }
 
         // Check if input newElectricityNumber and WaterBillNew are less than old
         if (newElectricityNumber <= oldElectricityNumber) {
-            return Alert.alert('Lỗi', 'Chỉ số điện mới phải lớn hơn chỉ số điện cũ');
+            setErrorMessageDialog('Chỉ số điện mới phải lớn hơn chỉ số điện cũ')
+            setErrorDialogVisible(true)
+            return;
         }
         if (newWaterNumber <= oldWaterNumber) {
-            return Alert.alert('Lỗi', 'Chỉ số nước mới phải lớn hơn chỉ số nước cũ');
+            setErrorMessageDialog('Chỉ số nước mới phải lớn hơn chỉ số nước cũ')
+            setErrorDialogVisible(true)
+            return;
         }
 
 
@@ -112,6 +133,7 @@ export default function App({ navigation, route }) {
         const garbagePriceTotal = parseInt(garbagePrice);
         const creditTotal = parseInt(credit);
         const othersFeeTotal = parseInt(othersFee);
+
 
         const billAmount = roomBill + electricityBill + waterBill + internetPriceTotal + garbagePriceTotal;
 
@@ -316,7 +338,15 @@ export default function App({ navigation, route }) {
                 <AntDesign name="addfile" size={24} color='white' />
                 <Text style={styles.calculateButtonText}>Lập hóa đơn</Text>
             </TouchableOpacity>
-
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={errorDialogVisible}>
+				<ErrorDialog
+					message={messageErrorDialog}
+					setErrorDialogVisible={setErrorDialogVisible}
+				/>
+			</Modal>
         </View>
     );
 };
