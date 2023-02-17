@@ -15,6 +15,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import { fetchRoomList, insertRoom } from "../database/actions/roomActions";
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { formatVNCurrency } from '../utils/utils';
+import { ErrorDialog } from '../Dialogs/EmptyDialog'
 
 export default function App({ navigation, route }) {
     const [roomName, setRoomName] = useState('');
@@ -25,6 +26,9 @@ export default function App({ navigation, route }) {
     const [electricityPrice, setElectricityPrice] = useState(null);
     const [waterPrice, setWaterPrice] = useState(null);
     const [garbagePrice, setGarbagePrice] = useState(null);
+    const [messageErrorDialog, setErrorMessageDialog] = useState('')
+    const [errorDialogVisible, setErrorDialogVisible] = useState(false);
+
 
     // Load service price from database
     useEffect(() => {

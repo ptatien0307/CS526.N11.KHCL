@@ -14,7 +14,6 @@ import {
 	fetchServiceDetails,
 	updateServicePrice,
 } from '../database/actions/serviceActions';
-import { editSuccessDialog } from '../Dialogs/dialog';
 import { EditSuccessDialog } from '../Dialogs/EditSuccessDialog';
 
 export default function App({ navigation }) {
