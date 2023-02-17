@@ -5,6 +5,7 @@ import {
 	TouchableOpacity,
 	TextInput,
 	ScrollView,
+	Modal
 } from 'react-native';
 import { useEffect, useState } from 'react';
 
@@ -14,12 +15,14 @@ import {
 	updateServicePrice,
 } from '../database/actions/serviceActions';
 import { editSuccessDialog } from '../Dialogs/dialog';
+import { EditSuccessDialog } from '../Dialogs/EditSuccessDialog';
 
 export default function App({ navigation }) {
 	const [water, setWater] = useState();
 	const [electricity, setElectricity] = useState();
 	const [garbage, setGarbage] = useState();
 	const [rentallFee, setRentallFee] = useState();
+	const [editSuccessDialogVisible, setEditSuccessDialogVisible] = useState(false)
 
 	useEffect(() => {
 		const loadService = async (service_name, setService) => {
@@ -47,8 +50,7 @@ export default function App({ navigation }) {
 		updateService('Rác', Number(garbage.replace(/\W+/g, '')));
 		updateService('Phòng', Number(rentallFee.replace(/\W+/g, '')));
 
-		editSuccessDialog();
-		navigation.goBack();
+		setEditSuccessDialogVisible(true)
 	};
 
 	return (
@@ -161,6 +163,15 @@ export default function App({ navigation }) {
 					</TouchableOpacity>
 				</ScrollView>
 			</View>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={editSuccessDialogVisible}>
+				<EditSuccessDialog
+					setEditSuccessDialogVisible={setEditSuccessDialogVisible}
+					navigation={navigation}
+				/>
+			</Modal>
 		</View>
 	);
 }

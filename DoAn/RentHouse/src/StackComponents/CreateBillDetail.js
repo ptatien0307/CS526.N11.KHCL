@@ -9,7 +9,8 @@ import { fetchRoomDetails, updateRoomWaterElectricityNumber } from '../database/
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { insertBill } from '../database/actions/billActions';
 import { formatVNCurrency } from '../utils/utils';
-import {ErrorDialog} from '../Dialogs/ErrorDialog'
+import {ErrorDialog} from '../Dialogs/ErrorDialog';
+import {BillSuccessDialog} from '../Dialogs/BillSuccessDialog'
 
 
 export default function App({ navigation, route }) {
@@ -38,6 +39,8 @@ export default function App({ navigation, route }) {
     const [othersFee, setOthersFee] = useState('0');
     const [messageErrorDialog, setErrorMessageDialog] = useState('')
     const [errorDialogVisible, setErrorDialogVisible] = useState(false);
+    const [billSuccessDialogVisible, setBillSuccessDialogVisible] = useState(false);
+    const [messageBill, setMessageBill] = useState('')
 
 
     useEffect(() => {
@@ -164,9 +167,9 @@ export default function App({ navigation, route }) {
             newWaterNumber,
             newElectricityNumber
         ).catch((error) => console.log(error));
-
-        Alert.alert('Lập hóa đơn thành công', 'Tổng tiền hóa đơn: ' + totalBill);
-        return navigation.goBack();
+        setMessageBill('Tổng tiền hóa đơn: ' + totalBill)
+        setBillSuccessDialogVisible(true)
+        return;
     };
 
     return (
@@ -345,6 +348,16 @@ export default function App({ navigation, route }) {
 				<ErrorDialog
 					message={messageErrorDialog}
 					setErrorDialogVisible={setErrorDialogVisible}
+				/>
+			</Modal>
+            <Modal
+				animationType="slide"
+				transparent={true}
+				visible={billSuccessDialogVisible}>
+				<BillSuccessDialog
+					message={messageBill}
+                    navigation={navigation}
+					setBillSuccessDialogVisible={setBillSuccessDialogVisible}
 				/>
 			</Modal>
         </View>

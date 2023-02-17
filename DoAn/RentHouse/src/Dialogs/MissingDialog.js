@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
 		margin: 50,
 		padding: 20,
 		borderRadius: 30,
-		flex: 1
 	},
 	textTitle: {
 		fontSize: 30,
