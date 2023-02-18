@@ -120,11 +120,12 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 		width: '100%',
+		backgroundColor: '#d9d9d9',
 	},
 
 	body: {
 		marginTop: 8,
-		width: '90%',
+		width: '95%',
 		height: '100%',
 		alignItems: 'center',
 		justifyContent: 'space-around',
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 	myBackground: {
-		backgroundColor: '#dfdfdf',
+		backgroundColor: 'white',
 		borderRadius: 10,
 	},
 	myBorder: {

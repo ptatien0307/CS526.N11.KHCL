@@ -345,12 +345,13 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 		width: '100%',
+		backgroundColor: '#d9d9d9',
 	},
 
 	body: {
 		height: '100%',
 		marginTop: 8,
-		width: '90%',
+		width: '95%',
 		alignItems: 'center',
 		justifyContent: 'space-around',
 	},
@@ -375,7 +376,7 @@ const styles = StyleSheet.create({
 	},
 
 	addButton: {
-		backgroundColor: 'black',
+		backgroundColor: '#6cdb4e',
 		borderRadius: 10,
 		paddingHorizontal: 8,
 		paddingVertical: 4,
@@ -400,7 +401,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 	myBackground: {
-		backgroundColor: '#dfdfdf',
+		backgroundColor: 'white',
 		borderRadius: 10,
 	},
 	myBorder: {

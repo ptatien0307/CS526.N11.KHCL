@@ -182,10 +182,11 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 		width: '100%',
+		backgroundColor:'#d9d9d9',
 	},
 
 	body: {
-		width: '90%',
+		width: '95%',
 		height: '100%',
 		alignItems: 'center',
 		justifyContent: 'space-evenly',
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
 		marginBottom: 32,
 	},
 	saveButton: {
-		backgroundColor: 'black',
+		backgroundColor: '#6bec4b',
 		borderRadius: 10,
 		paddingHorizontal: 8,
 		paddingVertical: 4,
@@ -227,7 +228,7 @@ const styles = StyleSheet.create({
 	},
 
 	myBackground: {
-		backgroundColor: '#dfdfdf',
+		backgroundColor: 'white',
 		borderRadius: 10,
 	},
 	myBorder: {
