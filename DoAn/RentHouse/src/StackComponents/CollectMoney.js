@@ -13,7 +13,7 @@ import { ErrorDialog } from '../Dialogs/ErrorDialog';
 import { EmptyDialog } from '../Dialogs/EmptyDialog';
 import { MissingDialog } from '../Dialogs/MissingDialog';
 import { SuccessDialog } from '../Dialogs/SuccessDialog';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome } from '@expo/vector-icons';
 import { updateBill } from '../database/actions/billActions.js';
 import { formatVNCurrency } from '../utils/utils.js';
 
@@ -122,7 +122,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 						<Text style={styles.stackTitle}>THU TIỀN</Text>
 
 						<TouchableOpacity onPress={handleClose}>
-							<FontAwesomeIcon name="times-circle" size={40} />
+							<FontAwesome name="times-circle" size={40} />
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -153,7 +153,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 					<TouchableOpacity
 						style={styles.button}
 						onPress={handlePartialPayment}>
-						<FontAwesomeIcon
+						<FontAwesome
 							name="dollar"
 							size={25}
 							style={{ color: 'white', marginRight: 16 }}

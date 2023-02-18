@@ -11,9 +11,7 @@ import { useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { LogBox } from 'react-native';
 
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import IonIcon from 'react-native-vector-icons/Ionicons';
-
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import {
 	fetchRoomDetails,
 	fetchRoomMemberList,
@@ -121,7 +119,7 @@ export default function App({ navigation, route }) {
 				}}>
 				<View style={[styles.member, styles.myBackground]}>
 					{/* Member icon */}
-					<FontAwesomeIcon name="user" size={20} style={{ marginRight: 32 }} />
+					<FontAwesome name="user" size={20} style={{ marginRight: 32 }} />
 
 					{/* Member name */}
 					<Text style={{ fontSize: 17 }}>{item.name}</Text>
@@ -132,7 +130,7 @@ export default function App({ navigation, route }) {
 							handleDeleteMember(item.id);
 						}}
 						style={[styles.deleteBillButton]}>
-						<FontAwesomeIcon
+						<FontAwesome
 							name="remove"
 							size={25}
 							style={{ color: 'white' }}
@@ -202,7 +200,7 @@ export default function App({ navigation, route }) {
 							handleDeleteBill(item.id);
 						}}
 						style={[styles.deleteBillButton]}>
-						<FontAwesomeIcon
+						<FontAwesome
 							name="remove"
 							size={25}
 							style={{ color: 'white' }}
@@ -255,7 +253,7 @@ export default function App({ navigation, route }) {
 											selected_room_id: room.id,
 										});
 									}}>
-									<FontAwesomeIcon name="edit" size={25} />
+									<FontAwesome name="edit" size={25} />
 								</TouchableOpacity>
 							</View>
 
@@ -297,7 +295,7 @@ export default function App({ navigation, route }) {
 									<View>
 										<Text style={{ fontSize: 19 }}>Tiền cọc:</Text>
 										<Text style={[styles.textBold, { fontSize: 16 }]}>
-											{formatVNCurrency(room.deposit) || 'Không có'}
+											{formatVNCurrency(room.deposit)}
 										</Text>
 									</View>
 								</View>
@@ -316,7 +314,7 @@ export default function App({ navigation, route }) {
 											roomID: room.id,
 										});
 									}}>
-									<FontAwesomeIcon name="plus-circle" size={30} />
+									<FontAwesome name="plus-circle" size={30} />
 								</TouchableOpacity>
 							</View>
 
@@ -342,7 +340,7 @@ export default function App({ navigation, route }) {
 											roomID: room.id,
 										});
 									}}>
-									<FontAwesomeIcon name="edit" size={25} />
+									<FontAwesome name="edit" size={25} />
 								</TouchableOpacity>
 							</View>
 							<View style={[styles.serviceContainer]}>
@@ -353,7 +351,7 @@ export default function App({ navigation, route }) {
 											flexDirection: 'row',
 											alignItems: 'center',
 										}}>
-										<IonIcon
+										<Ionicons
 											name="water"
 											size={20}
 											style={{ marginRight: 20 }}
@@ -374,7 +372,7 @@ export default function App({ navigation, route }) {
 											flexDirection: 'row',
 											alignItems: 'center',
 										}}>
-										<FontAwesomeIcon
+										<FontAwesome
 											name="bolt"
 											size={20}
 											style={{
@@ -398,7 +396,7 @@ export default function App({ navigation, route }) {
 											flexDirection: 'row',
 											alignItems: 'center',
 										}}>
-										<IonIcon
+										<Ionicons
 											name="trash"
 											size={20}
 											style={{
@@ -427,7 +425,7 @@ export default function App({ navigation, route }) {
 				{!mountInfo && (
 					<View style={[styles.billContainer]}>
 						<View style={styles.totalRemained}>
-							<IonIcon
+							<Ionicons
 								name="notifications"
 								size={30}
 								style={{ color: 'white' }}

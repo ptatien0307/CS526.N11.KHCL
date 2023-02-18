@@ -5,21 +5,21 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome } from '@expo/vector-icons';
 
 const BillSuccessDialog = ({ setBillSuccessDialogVisible, navigation, title, message }) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.modal}>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10 }}>
-					<FontAwesomeIcon name="check-circle" size={35} color='green' />
+					<FontAwesome name="check-circle" size={35} color='green' />
 					<Text style={styles.textTitle}> {title} </Text>
 				</View>
 				<Text style={styles.message}> {message}</Text>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingVertical: 10 }}>
 					<View style={styles.button}>
 						<TouchableOpacity onPress={() => {
-                            navigation.goBack();
+							navigation.goBack();
 							setBillSuccessDialogVisible(false);
 						}}>
 							<Text style={styles.textButton}>Quay lại</Text>

@@ -33,7 +33,7 @@ export default function App({ navigation, route }) {
 		};
 
 		await updateRoom(temp)
-			.catch((error) => console.log(error));
+			.catch((error) => { });
 
 		navigation.goBack();
 	};
@@ -41,7 +41,7 @@ export default function App({ navigation, route }) {
 	useEffect(() => {
 		const loadRoomDetails = async () => {
 			const roomDetails = await fetchRoomDetails(selected_room_id)
-				.catch((error) => console.log(error));
+				.catch((error) => { });
 
 			setRoom(roomDetails);
 			setRoomName(roomDetails.name);

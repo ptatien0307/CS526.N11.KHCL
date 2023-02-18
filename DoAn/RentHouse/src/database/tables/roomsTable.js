@@ -5,7 +5,7 @@ export const createRoomsTable = `
         id                     INTEGER PRIMARY KEY,
         name                   TEXT    NOT NULL,
         rental_fee             INTEGER NOT NULL,
-        deposit                INTEGER,
+        deposit                INTEGER DEFAULT 0,
         move_in_date           TEXT,
         old_electricity_number INTEGER NOT NULL,
         old_water_number       INTEGER NOT NULL

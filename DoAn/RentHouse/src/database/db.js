@@ -57,30 +57,30 @@ const createTables = () => {
 
 const populateTables = () => {
 	db.transaction((tx) => {
-		tx.executeSql(
-			populateRoomsTable,
-			[],
-			() => { },
-			(_, error) => { }
-		);
-		tx.executeSql(
-			populateCustomersTable,
-			[],
-			() => { },
-			(_, error) => { }
-		);
-		tx.executeSql(
-			populateBillsTable,
-			[],
-			() => { },
-			(_, error) => { }
-		);
-		tx.executeSql(
-			populateNotesTable,
-			[],
-			() => { },
-			(_, error) => { }
-		);
+		// tx.executeSql(
+		// 	populateRoomsTable,
+		// 	[],
+		// 	() => { },
+		// 	(_, error) => { }
+		// );
+		// tx.executeSql(
+		// 	populateCustomersTable,
+		// 	[],
+		// 	() => { },
+		// 	(_, error) => { }
+		// );
+		// tx.executeSql(
+		// 	populateBillsTable,
+		// 	[],
+		// 	() => { },
+		// 	(_, error) => { }
+		// );
+		// tx.executeSql(
+		// 	populateNotesTable,
+		// 	[],
+		// 	() => { },
+		// 	(_, error) => { }
+		// );
 		tx.executeSql(
 			populateServicePricesTable,
 			[],

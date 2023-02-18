@@ -9,7 +9,7 @@ import { useIsFocused } from '@react-navigation/native';
 import Checkbox from 'expo-checkbox';
 import { useEffect, useState } from 'react';
 
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome } from '@expo/vector-icons';
 import { fetchCustomerDetails } from '../database/actions/customerActions';
 
 export default function App({ navigation, route }) {
@@ -178,7 +178,7 @@ export default function App({ navigation, route }) {
 						memberID: member.id,
 					});
 				}}>
-				<FontAwesomeIcon name="edit" size={35} style={{ color: 'white' }} />
+				<FontAwesome name="edit" size={35} style={{ color: 'white' }} />
 			</TouchableOpacity>
 		</View>
 	);

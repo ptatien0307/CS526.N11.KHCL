@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome } from '@expo/vector-icons';
 
 import { fetchServiceList } from '../database/actions/serviceActions';
 import { formatVNCurrency } from '../utils/utils';
@@ -41,7 +41,7 @@ export default function App({ navigation, route }) {
 					onPress={() => {
 						navigation.navigate('EditService', {});
 					}}>
-					<FontAwesomeIcon name="edit" size={35} style={{ color: 'white' }} />
+					<FontAwesome name="edit" size={35} style={{ color: 'white' }} />
 				</TouchableOpacity>
 			</View>
 		</View>

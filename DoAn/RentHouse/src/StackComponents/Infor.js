@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome } from '@expo/vector-icons';
 import { fetchHouseInfo, updateHouseInfo } from '../database/actions/houseInfoActions';
 
 

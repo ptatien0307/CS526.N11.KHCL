@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { useState, useEffect } from 'react';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome } from '@expo/vector-icons';
 
 import { useIsFocused } from '@react-navigation/native';
 import { fetchRoomList } from '../database/actions/roomActions';
@@ -66,7 +66,7 @@ export default function App({ navigation, route }) {
 					onPress={() => {
 						navigation.navigate('AddNewRoom');
 					}}>
-					<Icon name="plus-circle" size={35} color="white" />
+					<FontAwesome name="plus-square" size={35} color="white" />
 				</TouchableOpacity>
 			</View>
 		</View>

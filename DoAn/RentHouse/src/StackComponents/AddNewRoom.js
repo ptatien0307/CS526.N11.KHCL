@@ -10,8 +10,8 @@ import {
 import { useEffect, useState } from 'react';
 
 
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
+
 
 import { fetchRoomList, insertRoom } from "../database/actions/roomActions";
 import { fetchServiceDetails } from '../database/actions/serviceActions';
@@ -195,17 +195,17 @@ export default function App({ navigation, route }) {
                     width: '100%', paddingBottom: 8, paddingHorizontal: 10
                 }]}>Dịch vụ</Text>
                 <View style={styles.service}>
-                    <FontAwesomeIcon name="bolt" size={30} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
+                    <FontAwesome name="bolt" size={30} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                     <Text style={styles.text}>Điện</Text>
                     <Text style={styles.text}>{formatVNCurrency(electricityPrice)}/kWh</Text>
                 </View>
                 <View style={[styles.service]}>
-                    <IonIcon name="water" size={30} style={{ paddingVertical: 2 }} />
+                    <Ionicons name="water" size={30} style={{ paddingVertical: 2 }} />
                     <Text style={[styles.text]}>Nước</Text>
                     <Text style={styles.text}>{formatVNCurrency(waterPrice)}/khối</Text>
                 </View>
                 <View style={styles.service}>
-                    <IonIcon name="trash" size={25} style={{ paddingHorizontal: 2, paddingVertical: 4 }} />
+                    <Ionicons name="trash" size={25} style={{ paddingHorizontal: 2, paddingVertical: 4 }} />
                     <Text style={styles.text}>Rác</Text>
                     <Text style={styles.text}>{formatVNCurrency(garbagePrice)}/tháng</Text>
                 </View>

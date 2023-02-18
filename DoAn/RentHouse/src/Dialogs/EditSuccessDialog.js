@@ -5,14 +5,14 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome } from '@expo/vector-icons';
 
 const EditSuccessDialog = ({ setEditSuccessDialogVisible, navigation }) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.modal}>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10 }}>
-					<FontAwesomeIcon name="check-circle" size={35} color='green' />
+					<FontAwesome name="check-circle" size={35} color='green' />
 					<Text style={styles.textTitle}> Hoàn Thành </Text>
 				</View>
 				<Text style={styles.message}> Chỉnh sửa thành công.</Text>

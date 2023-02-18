@@ -1,9 +1,8 @@
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Alert, Modal } from 'react-native';
 import { useEffect, useState } from "react";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import FontAwesomeIcon5 from 'react-native-vector-icons/FontAwesome5';
+import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 import { fetchRoomDetails, updateRoomWaterElectricityNumber } from '../database/actions/roomActions';
 import { fetchServiceDetails } from '../database/actions/serviceActions';
@@ -182,7 +181,7 @@ export default function App({ navigation, route }) {
                 <View style={styles.billContainer}>
 
                     <View style={[{ flexDirection: 'row' }]}>
-                        <FontAwesomeIcon5 name="door-closed" size={30} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
+                        <FontAwesome5 name="door-closed" size={30} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                         <View>
                             <Text style={[styles.billName]}>Tiền phòng</Text>
                             <Text>{formatVNCurrency(rentalFee)}/tháng</Text>
@@ -216,7 +215,7 @@ export default function App({ navigation, route }) {
                 <View style={styles.billContainer}>
 
                     <View style={[{ flexDirection: 'row' }]}>
-                        <FontAwesomeIcon name="bolt" size={30} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
+                        <FontAwesome name="bolt" size={30} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                         <View>
                             <Text style={[styles.billName]}>Tiền điện</Text>
                             <Text>{formatVNCurrency(electricityPrice)}/KWh</Text>
@@ -239,7 +238,7 @@ export default function App({ navigation, route }) {
                 {/* Water bill inputs */}
                 <View style={styles.billContainer}>
                     <View style={[{ flexDirection: 'row' }]}>
-                        <IonIcon name="water" size={30} style={{ paddingHorizontal: 8, paddingVertical: 2 }} />
+                        <Ionicons name="water" size={30} style={{ paddingHorizontal: 8, paddingVertical: 2 }} />
                         <View>
                             <Text style={[styles.billName]}>Tiền nước</Text>
                             <Text>{formatVNCurrency(waterPrice)}/khối</Text>
@@ -263,7 +262,7 @@ export default function App({ navigation, route }) {
                 <View style={styles.billContainer}>
 
                     <View style={[{ flexDirection: 'row' }]}>
-                        <IonIcon name="wifi" size={25} style={{ paddingHorizontal: 8, paddingVertical: 1 }} />
+                        <Ionicons name="wifi" size={25} style={{ paddingHorizontal: 8, paddingVertical: 1 }} />
                         <View>
                             <Text style={[styles.billName, { justifyContent: 'center' }]}>Tiền mạng</Text>
                         </View>
@@ -287,7 +286,7 @@ export default function App({ navigation, route }) {
                 <View style={[styles.billContainer, { paddingBottom: 10 }]}>
 
                     <View style={[{ flexDirection: 'row' }]}>
-                        <IonIcon name="trash" size={25} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
+                        <Ionicons name="trash" size={25} style={{ paddingHorizontal: 8, paddingVertical: 4 }} />
                         <View>
                             <Text style={[styles.billName]}>Tiền rác</Text>
                             <Text>{formatVNCurrency(garbagePrice)}/tháng</Text>

@@ -6,7 +6,7 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 import { useEffect, useState } from 'react';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome } from '@expo/vector-icons';
 
 import { useIsFocused } from '@react-navigation/native';
 import { fetchBillList, deleteBill } from '../database/actions/billActions';
@@ -116,7 +116,7 @@ export default function App({ navigation }) {
 							handleDeleteBill(item.id);
 						}}
 						style={[styles.deleteIcon]}>
-						<FontAwesomeIcon
+						<FontAwesome
 							name="remove"
 							size={25}
 							style={{ color: 'white' }}

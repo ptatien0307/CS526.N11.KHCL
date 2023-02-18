@@ -5,14 +5,14 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome } from '@expo/vector-icons';
 
 const MissingDialog = ({ setMissingDialogVisible }) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.modal}>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10 }}>
-					<FontAwesomeIcon name="exclamation-circle" size={35} color='red' />
+					<FontAwesome name="exclamation-circle" size={35} color='red' />
 					<Text style={styles.textTitle}> Lỗi </Text>
 				</View>
 				<Text style={styles.message}> Thông tin chỉnh sửa hoặc thêm mới bị bỏ trống.</Text>

@@ -192,11 +192,10 @@ export const updateBill = (bill, forceUpdate = null) => {
 export const deleteBill = async (bill_id, forceUpdate = null) => {
     const billDetails = await fetchBillDetails(bill_id);
     if (billDetails.status === 'Chưa thanh toán') {
-        Alert.alert('Hủy hóa đơn', 'Hóa đơn này chưa thanh toán xong. Trạng thái phòng sẽ được khôi phục lại trước khi lập hóa đơn này. Bạn có muốn tiếp tục?',
+        Alert.alert('❗ Hủy hóa đơn', 'Hóa đơn này chưa thanh toán xong. Trạng thái phòng sẽ được khôi phục lại trước khi lập hóa đơn này. Bạn có muốn tiếp tục?',
             [
                 {
                     text: 'Quay lại',
-                    onPress: () => { },
                     style: 'cancel',
                 },
                 {
@@ -229,11 +228,10 @@ export const deleteBill = async (bill_id, forceUpdate = null) => {
         );
     }
     else {
-        Alert.alert('Xóa hóa đơn', 'Hóa đơn này đã thanh toán xong. Bạn có muốn tiếp tục xóa?',
+        Alert.alert('❗ Xóa hóa đơn', 'Hóa đơn này đã thanh toán xong. Bạn có muốn tiếp tục xóa?',
             [
                 {
                     text: 'Quay lại',
-                    onPress: () => { },
                     style: 'cancel',
                 },
                 {

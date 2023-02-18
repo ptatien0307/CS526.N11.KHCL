@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome } from '@expo/vector-icons';
 
 import {
 	fetchNoteList,
@@ -71,7 +71,7 @@ export default function App({ navigation, route }) {
 
 				<View style={styles.noteIcon}>
 					<TouchableOpacity onPress={() => deleteNote(item.id, forceUpdate)}>
-						<FontAwesomeIcon
+						<FontAwesome
 							name="remove"
 							size={25}
 							style={{ marginHorizontal: 4 }}
@@ -95,7 +95,7 @@ export default function App({ navigation, route }) {
 					/>
 
 					<TouchableOpacity onPress={handleAddNote}>
-						<FontAwesomeIcon name="plus-circle" size={30} />
+						<FontAwesome name="plus-circle" size={30} />
 					</TouchableOpacity>
 				</View>
 
