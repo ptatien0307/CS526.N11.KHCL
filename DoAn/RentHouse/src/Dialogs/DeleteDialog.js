@@ -22,12 +22,12 @@ const DeleteDialog = ({ setDeleteDialogVisible, callback, title, message }) => {
 							callback();
 							setDeleteDialogVisible(false);
 						}}>
-							<Text>Xóa</Text>
+							<Text style={styles.textButton}>Xóa</Text>
 						</TouchableOpacity>
 					</View>
 					<View style={styles.button}>
 						<TouchableOpacity onPress={() => setDeleteDialogVisible(false)}>
-							<Text>Quay lại</Text>
+							<Text style={styles.textButton}>Quay lại</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -68,6 +68,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+	},
+	textButton: {
+		fontSize: 20,
+		textAlign: 'center',
+		fontWeight: 'bold',
 	}
 });
 

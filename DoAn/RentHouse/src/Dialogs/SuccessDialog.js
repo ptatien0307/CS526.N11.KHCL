@@ -22,7 +22,7 @@ const SuccessDialog = ({ setSuccessDialogVisible, callback, message }) => {
                             callback();
 							setSuccessDialogVisible(false);
 						}}>
-							<Text>Quay lại</Text>
+							<Text style={styles.textButton}>Quay lại</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -63,6 +63,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+	},
+	textButton: {
+		fontSize: 20,
+		textAlign: 'center',
+		fontWeight: 'bold',
 	}
 });
 

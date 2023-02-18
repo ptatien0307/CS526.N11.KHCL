@@ -19,7 +19,7 @@ const EmptyDialog = ({ setEmptyDialogVisible }) => {
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingVertical: 10 }}>
 					<View style={styles.button}>
 						<TouchableOpacity onPress={() => setEmptyDialogVisible(false)}>
-							<Text>Quay lại</Text>
+							<Text style={styles.textButton}>Quay lại</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -60,6 +60,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+	},
+	textButton: {
+		fontSize: 20,
+		textAlign: 'center',
+		fontWeight: 'bold',
 	}
 });
 

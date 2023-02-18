@@ -22,7 +22,7 @@ const BillSuccessDialog = ({ setBillSuccessDialogVisible, navigation, title, mes
                             navigation.goBack();
 							setBillSuccessDialogVisible(false);
 						}}>
-							<Text>Quay lại</Text>
+							<Text style={styles.textButton}>Quay lại</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -63,6 +63,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+	},
+	textButton: {
+		fontSize: 20,
+		textAlign: 'center',
+		fontWeight: 'bold',
 	}
 });
 
