@@ -20,7 +20,7 @@ import {
 import { useForceUpdate } from '../utils/utils';
 import { Dimensions } from 'react-native';
 
-import {MissingDialog} from '../Dialogs/MissingDialog'
+import { MissingDialog } from '../Dialogs/MissingDialog';
 
 const wh = Dimensions.get('window').width;
 const vh = Dimensions.get('window').height;
@@ -35,7 +35,7 @@ export default function App({ navigation, route }) {
 	// Get note list from database
 	useEffect(() => {
 		const loadNoteList = async () => {
-			const notes = await fetchNoteList().catch((error) => console.log(error));
+			const notes = await fetchNoteList().catch((error) => { });
 
 			setNoteList(notes);
 		};
@@ -45,12 +45,10 @@ export default function App({ navigation, route }) {
 
 	const handleAddNote = () => {
 		if (noteContent.length === 0) {
-			setMissingDialogVisible(true)
+			setMissingDialogVisible(true);
 		} else {
 			const insertedNote = async () => {
-				await insertNote(noteContent, forceUpdate).catch((error) =>
-					console.log(error)
-				);
+				await insertNote(noteContent, forceUpdate).catch((error) => { });
 			};
 
 			insertedNote();

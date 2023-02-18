@@ -11,8 +11,8 @@ import Checkbox from 'expo-checkbox';
 import { useState, useEffect } from 'react';
 
 
-import {EmptyDialog} from '../Dialogs/EmptyDialog'
-import {EditSuccessDialog} from '../Dialogs/EditSuccessDialog';
+import { EmptyDialog } from '../Dialogs/EmptyDialog';
+import { EditSuccessDialog } from '../Dialogs/EditSuccessDialog';
 
 import {
 	fetchCustomerDetails,
@@ -41,9 +41,7 @@ export default function App({ navigation, route }) {
 
 	useEffect(() => {
 		const loadCustomerDetails = async () => {
-			const customerDetails = await fetchCustomerDetails(memberID).catch(
-				(error) => console.log(error)
-			);
+			const customerDetails = await fetchCustomerDetails(memberID).catch((error) => { });
 
 			setMemberDetails(customerDetails);
 			setCustomerName(customerDetails.name);
@@ -63,26 +61,10 @@ export default function App({ navigation, route }) {
 
 	// BACK-END ___ EDIT MEMBER INFORMATION
 	const handleSave = () => {
-		console.log(
-			customerName,
-			dateOfBirth,
-			address,
-			citizenID,
-			citizenIDDate,
-			citizenIDPlace,
-			job,
-			phoneNumber
-		);
-
 		if (
 			customerName === '' ||
 			dateOfBirth === '' ||
-			address === '' ||
-			citizenID === '' ||
-			citizenIDDate === '' ||
-			citizenIDPlace === '' ||
-			phoneNumber === '' ||
-			job === ''
+			address === ''
 		)
 			setEmptyDialogVisible(true);
 		else {
@@ -99,7 +81,7 @@ export default function App({ navigation, route }) {
 					job: job,
 					phone: phoneNumber,
 					temporary_residence: temporaryResidence,
-				}).catch((error) => console.log(error));
+				}).catch((error) => { });
 			};
 
 			updatedMember();

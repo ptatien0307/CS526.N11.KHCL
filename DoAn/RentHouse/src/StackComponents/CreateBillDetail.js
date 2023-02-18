@@ -9,8 +9,8 @@ import { fetchRoomDetails, updateRoomWaterElectricityNumber } from '../database/
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { insertBill } from '../database/actions/billActions';
 import { formatVNCurrency } from '../utils/utils';
-import {ErrorDialog} from '../Dialogs/ErrorDialog';
-import {BillSuccessDialog} from '../Dialogs/BillSuccessDialog'
+import { ErrorDialog } from '../Dialogs/ErrorDialog';
+import { BillSuccessDialog } from '../Dialogs/BillSuccessDialog';
 
 
 export default function App({ navigation, route }) {
@@ -37,16 +37,16 @@ export default function App({ navigation, route }) {
 
     const [credit, setCredit] = useState('0');
     const [othersFee, setOthersFee] = useState('0');
-    const [messageErrorDialog, setErrorMessageDialog] = useState('')
+    const [messageErrorDialog, setErrorMessageDialog] = useState('');
     const [errorDialogVisible, setErrorDialogVisible] = useState(false);
     const [billSuccessDialogVisible, setBillSuccessDialogVisible] = useState(false);
-    const [messageBill, setMessageBill] = useState('')
+    const [messageBill, setMessageBill] = useState('');
 
 
     useEffect(() => {
         const loadRoomDetails = async () => {
             const roomDetails = await fetchRoomDetails(selected_room_id)
-                .catch((error) => console.log(error));
+                .catch((error) => { });
 
             setRoomRentalFee(roomDetails['rental_fee']);
             setOldElectricityNumber(roomDetails['old_electricity_number']);
@@ -55,7 +55,7 @@ export default function App({ navigation, route }) {
 
         const loadServicePrices = async (service_name, setServicePrice) => {
             const servicePrices = await fetchServiceDetails(service_name)
-                .catch((error) => console.log(error));
+                .catch((error) => { });
 
             setServicePrice(servicePrices['price']);
         };
@@ -73,57 +73,57 @@ export default function App({ navigation, route }) {
 
         // Check if newElectricityNumber and WaterBillNew have non-digit characters
         if (/\D/.test(newElectricityNumber)) {
-            setErrorMessageDialog('Chỉ số điện mới chỉ được chứa số')
-            setErrorDialogVisible(true)
+            setErrorMessageDialog('Chỉ số điện mới chỉ được chứa số');
+            setErrorDialogVisible(true);
             return;
         }
 
         if (/\D/.test(newWaterNumber)) {
-            setErrorMessageDialog('Chỉ số nước mới chỉ được chứa số')
-            setErrorDialogVisible(true)
+            setErrorMessageDialog('Chỉ số nước mới chỉ được chứa số');
+            setErrorDialogVisible(true);
             return;
         }
 
         // Check if input newElectricityNumber and WaterBillNew are empty
         if (newElectricityNumber == '') {
-            setErrorMessageDialog('Chưa nhập chỉ số điện mới')
-            setErrorDialogVisible(true)
+            setErrorMessageDialog('Chưa nhập chỉ số điện mới');
+            setErrorDialogVisible(true);
             return;
         }
 
         if (newWaterNumber == '') {
-            setErrorMessageDialog('Chưa nhập chỉ số nước mới')
-            setErrorDialogVisible(true)
+            setErrorMessageDialog('Chưa nhập chỉ số nước mới');
+            setErrorDialogVisible(true);
             return;
         }
 
         if (internetPrice == '') {
-            setErrorMessageDialog('Chưa nhập tiền Internet')
-            setErrorDialogVisible(true)
+            setErrorMessageDialog('Chưa nhập tiền Internet');
+            setErrorDialogVisible(true);
             return;
         }
 
         if (credit == '') {
-            setErrorMessageDialog('Chưa nhập số tiền miễn giảm')
-            setErrorDialogVisible(true)
+            setErrorMessageDialog('Chưa nhập số tiền miễn giảm');
+            setErrorDialogVisible(true);
             return;
         }
 
         if (othersFee == '') {
-            setErrorMessageDialog('Chưa nhập số tiền thu thêm')
-            setErrorDialogVisible(true)
+            setErrorMessageDialog('Chưa nhập số tiền thu thêm');
+            setErrorDialogVisible(true);
             return;
         }
 
         // Check if input newElectricityNumber and WaterBillNew are less than old
         if (newElectricityNumber <= oldElectricityNumber) {
-            setErrorMessageDialog('Chỉ số điện mới phải lớn hơn chỉ số điện cũ')
-            setErrorDialogVisible(true)
+            setErrorMessageDialog('Chỉ số điện mới phải lớn hơn chỉ số điện cũ');
+            setErrorDialogVisible(true);
             return;
         }
         if (newWaterNumber <= oldWaterNumber) {
-            setErrorMessageDialog('Chỉ số nước mới phải lớn hơn chỉ số nước cũ')
-            setErrorDialogVisible(true)
+            setErrorMessageDialog('Chỉ số nước mới phải lớn hơn chỉ số nước cũ');
+            setErrorDialogVisible(true);
             return;
         }
 
@@ -160,15 +160,15 @@ export default function App({ navigation, route }) {
             credit: creditTotal,
             total: totalBill,
             remained: totalBill
-        }).catch((error) => console.log(error));
+        }).catch((error) => { });
 
         updateRoomWaterElectricityNumber(
             selected_room_id,
             newWaterNumber,
             newElectricityNumber
-        ).catch((error) => console.log(error));
-        setMessageBill('Tổng tiền hóa đơn: ' + totalBill)
-        setBillSuccessDialogVisible(true)
+        ).catch((error) => { });
+        setMessageBill('Tổng tiền hóa đơn: ' + totalBill);
+        setBillSuccessDialogVisible(true);
         return;
     };
 
@@ -341,28 +341,28 @@ export default function App({ navigation, route }) {
                 <AntDesign name="addfile" size={24} color='white' />
                 <Text style={styles.calculateButtonText}>Lập hóa đơn</Text>
             </TouchableOpacity>
-			<Modal
-				animationType="slide"
-				transparent={true}
-				visible={errorDialogVisible}
-                onRequestClose={() => { setErrorDialogVisible(false); }}>
-				<ErrorDialog
-					message={messageErrorDialog}
-					setErrorDialogVisible={setErrorDialogVisible}
-				/>
-			</Modal>
             <Modal
-				animationType="slide"
-				transparent={true}
-				visible={billSuccessDialogVisible}
+                animationType="slide"
+                transparent={true}
+                visible={errorDialogVisible}
+                onRequestClose={() => { setErrorDialogVisible(false); }}>
+                <ErrorDialog
+                    message={messageErrorDialog}
+                    setErrorDialogVisible={setErrorDialogVisible}
+                />
+            </Modal>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={billSuccessDialogVisible}
                 onRequestClose={() => { setBillSuccessDialogVisible(false); }}>
-				<BillSuccessDialog
+                <BillSuccessDialog
                     title={'Lập hóa đơn thành công'}
-					message={messageBill}
+                    message={messageBill}
                     navigation={navigation}
-					setBillSuccessDialogVisible={setBillSuccessDialogVisible}
-				/>
-			</Modal>
+                    setBillSuccessDialogVisible={setBillSuccessDialogVisible}
+                />
+            </Modal>
         </View>
     );
 };

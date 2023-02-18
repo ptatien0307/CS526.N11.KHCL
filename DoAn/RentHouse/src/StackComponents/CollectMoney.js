@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 
-import {ErrorDialog} from '../Dialogs/ErrorDialog'
-import {EmptyDialog} from '../Dialogs/EmptyDialog'
-import {MissingDialog} from '../Dialogs/MissingDialog'
-import {SuccessDialog} from '../Dialogs/SuccessDialog'
+import { ErrorDialog } from '../Dialogs/ErrorDialog';
+import { EmptyDialog } from '../Dialogs/EmptyDialog';
+import { MissingDialog } from '../Dialogs/MissingDialog';
+import { SuccessDialog } from '../Dialogs/SuccessDialog';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { updateBill } from '../database/actions/billActions.js';
 import { formatVNCurrency } from '../utils/utils.js';
@@ -26,7 +26,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 	const [emptyDialogVisible, setEmptyDialogVisible] = useState(false);
 	const [missingDialogVisible, setMissingDialogVisible] = useState(false);
 	const [successDialogVisible, setSuccessDialogVisible] = useState(false);
-	const [messageSuccesDialog, setMessageSuccessDialog] = useState('')
+	const [messageSuccesDialog, setMessageSuccessDialog] = useState('');
 
 	const handlePartialPayment = () => {
 		if (inputText === '') {
@@ -49,11 +49,11 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 						status: remained ? 'Chưa thanh toán' : 'Đã thanh toán',
 					},
 					forceUpdate
-				).catch((error) => console.log(error));
+				).catch((error) => { });
 			};
 
 			updatedBill();
-			setMessageSuccessDialog(`Đã thu thành công ${formatVNCurrency(inputText)}. ${billDetails.room_name} còn nợ ${formatVNCurrency(remained)}`)
+			setMessageSuccessDialog(`Đã thu thành công ${formatVNCurrency(inputText)}. ${billDetails.room_name} còn nợ ${formatVNCurrency(remained)}`);
 			setSuccessDialogVisible(true);
 
 			setInputText('');
@@ -70,11 +70,11 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 					status: 'Đã thanh toán',
 				},
 				forceUpdate
-			).catch((error) => console.log(error));
+			).catch((error) => { });
 		};
 
 		updatedBill();
-		setMessageSuccessDialog(`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${billDetails.room_name} đã thanh toán hết.`)
+		setMessageSuccessDialog(`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${billDetails.room_name} đã thanh toán hết.`);
 		setSuccessDialogVisible(true);
 
 		setInputText('');
@@ -100,7 +100,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 	};
 
 	const handleClose = async () => {
-		await slideOutAnimation().catch((error) => console.log(error));
+		await slideOutAnimation().catch((error) => { });
 		setIsThuTienModal(false);
 	};
 
@@ -223,7 +223,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 				onRequestClose={() => { setSuccessDialogVisible(false); }}>
 				<SuccessDialog
 					setSuccessDialogVisible={setSuccessDialogVisible}
-					message = {messageSuccesDialog}
+					message={messageSuccesDialog}
 					callback={handleClose}
 				/>
 			</Modal>

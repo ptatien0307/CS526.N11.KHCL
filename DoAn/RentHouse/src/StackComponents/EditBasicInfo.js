@@ -24,7 +24,6 @@ export default function App({ navigation, route }) {
 	const isFocused = useIsFocused();
 
 	const handleSaveRoomEditedInfo = async () => {
-		console.log(parseInt(deposit.replace(/\W+/g, '')));
 		const temp = {
 			...room,
 			name: roomName,

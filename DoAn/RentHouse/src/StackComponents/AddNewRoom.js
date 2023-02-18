@@ -17,8 +17,8 @@ import { fetchRoomList, insertRoom } from "../database/actions/roomActions";
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { formatVNCurrency } from '../utils/utils';
 
-import {ErrorDialog} from '../Dialogs/ErrorDialog';
-import {BillSuccessDialog} from '../Dialogs/BillSuccessDialog'
+import { ErrorDialog } from '../Dialogs/ErrorDialog';
+import { BillSuccessDialog } from '../Dialogs/BillSuccessDialog';
 
 export default function App({ navigation, route }) {
     const [roomName, setRoomName] = useState('');
@@ -39,7 +39,7 @@ export default function App({ navigation, route }) {
 
         const loadServicePrices = async (service_name, setServicePrice) => {
             const servicePrices = await fetchServiceDetails(service_name)
-                .catch((error) => console.log(error));
+                .catch((error) => { });
 
             setServicePrice(String(servicePrices.price));
         };
@@ -52,14 +52,13 @@ export default function App({ navigation, route }) {
     }, []);
 
     const handleAddRoom = () => {
-        
         // Check if room name is empty
         if (roomName === '') {
             setErrorMessageDialog('Tên phòng không được để trống');
             setErrorDialogVisible(true);
             return;
         }
-        console.log('Room name not empty')
+
         // Check if price is empty
         if (price === '') {
             setErrorMessageDialog('Giá thuê không được để trống');
@@ -217,28 +216,28 @@ export default function App({ navigation, route }) {
                 <Text style={[styles.text, { fontWeight: 'bold', color: 'white' }]}>THÊM PHÒNG</Text>
             </TouchableOpacity>
 
-			<Modal
-				animationType="slide"
-				transparent={true}
-				visible={errorDialogVisible}
-                onRequestClose={() => { setErrorDialogVisible(false); }}>
-				<ErrorDialog
-					message={messageErrorDialog}
-					setErrorDialogVisible={setErrorDialogVisible}
-				/>
-			</Modal>
             <Modal
-				animationType="slide"
-				transparent={true}
-				visible={billSuccessDialogVisible}
+                animationType="slide"
+                transparent={true}
+                visible={errorDialogVisible}
+                onRequestClose={() => { setErrorDialogVisible(false); }}>
+                <ErrorDialog
+                    message={messageErrorDialog}
+                    setErrorDialogVisible={setErrorDialogVisible}
+                />
+            </Modal>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={billSuccessDialogVisible}
                 onRequestClose={() => { setBillSuccessDialogVisible(false); }}>
-				<BillSuccessDialog
+                <BillSuccessDialog
                     title={'Thành công'}
-					message={'Thêm phòng thành công'}
+                    message={'Thêm phòng thành công'}
                     navigation={navigation}
-					setBillSuccessDialogVisible={setBillSuccessDialogVisible}
-				/>
-			</Modal>
+                    setBillSuccessDialogVisible={setBillSuccessDialogVisible}
+                />
+            </Modal>
         </View>
     );
 }

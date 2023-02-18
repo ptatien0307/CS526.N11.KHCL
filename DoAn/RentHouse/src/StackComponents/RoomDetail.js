@@ -50,16 +50,12 @@ export default function App({ navigation, route }) {
 
 	useEffect(() => {
 		const loadRoomDetails = async () => {
-			const roomDetails = await fetchRoomDetails(selected_room_id).catch(
-				(error) => console.log(error)
-			);
+			const roomDetails = await fetchRoomDetails(selected_room_id).catch((error) => { });
 			setRoom(roomDetails);
 		};
 
 		const loadService = async (service, setService) => {
-			const fee = await fetchServiceDetails(service).catch((error) =>
-				console.log(error)
-			);
+			const fee = await fetchServiceDetails(service).catch((error) => { });
 			setService(fee.price);
 		};
 
@@ -73,9 +69,7 @@ export default function App({ navigation, route }) {
 
 	useEffect(() => {
 		const loadMemberList = async () => {
-			const memberList = await fetchRoomMemberList(selected_room_id).catch(
-				(error) => console.log(error)
-			);
+			const memberList = await fetchRoomMemberList(selected_room_id).catch((error) => { });
 			setMemberList(memberList);
 		};
 
@@ -84,9 +78,7 @@ export default function App({ navigation, route }) {
 
 	useEffect(() => {
 		const loadBillList = async () => {
-			const billList = await fetchRoomBillList(selected_room_id).catch(
-				(error) => console.log(error)
-			);
+			const billList = await fetchRoomBillList(selected_room_id).catch((error) => { });
 			setBillList(billList);
 		};
 
@@ -98,9 +90,7 @@ export default function App({ navigation, route }) {
 	}, 0);
 
 	const handleDeleteMember = async (memberID) => {
-		await deleteCustomer(memberID, forceUpdateMemberList).catch((error) =>
-			console.log(error)
-		);
+		await deleteCustomer(memberID, forceUpdateMemberList).catch((error) => { });
 	};
 
 	const handleDeleteBill = async (billID) => {
@@ -108,7 +98,7 @@ export default function App({ navigation, route }) {
 			forceUpdateRoomInfo();
 			forceUpdateBillInfo();
 		};
-		await deleteBill(billID, forceUpdate).catch((error) => console.log(error));
+		await deleteBill(billID, forceUpdate).catch((error) => { });
 	};
 
 	const handleResetRoom = async () => {
@@ -118,7 +108,7 @@ export default function App({ navigation, route }) {
 			forceUpdateMemberList();
 		};
 		await resetRoom(selected_room_id, forceUpdate)
-			.catch((error) => console.log(error));
+			.catch((error) => { });
 	};
 
 	const renderMembers = ({ item }) => {

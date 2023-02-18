@@ -37,7 +37,6 @@ export const insertCustomer = (customer, forceUpdate = null) => {
 						customer.room_id,
 					],
 					(_, result) => {
-						console.log('Customer inserted successfully');
 						resolve(result);
 					},
 					(_, error) => {
@@ -84,7 +83,6 @@ export const updateCustomer = (customer, forceUpdate = null) => {
 						customer.id,
 					],
 					(_, result) => {
-						console.log('Customer updated successfully');
 						resolve(result);
 					},
 					(_, error) => {
@@ -106,7 +104,6 @@ export const deleteCustomer = (customer_id, forceUpdate = null) => {
 					`DELETE FROM customers WHERE id = ?;`,
 					[customer_id],
 					(_, result) => {
-						console.log('Customer deleted successfully');
 						resolve(result);
 					},
 					(_, error) => {
@@ -128,7 +125,6 @@ export const fetchCustomerDetails = (customer_id) => {
 				WHERE id = ?;`,
 				[customer_id],
 				(_, { rows: { _array: result } }) => {
-					console.log('Customer details fetched successfully');
 					resolve(result[0]);
 				},
 				(_, error) => {

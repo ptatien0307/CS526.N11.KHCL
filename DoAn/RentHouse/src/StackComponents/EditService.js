@@ -21,12 +21,12 @@ export default function App({ navigation }) {
 	const [electricity, setElectricity] = useState();
 	const [garbage, setGarbage] = useState();
 	const [rentallFee, setRentallFee] = useState();
-	const [editSuccessDialogVisible, setEditSuccessDialogVisible] = useState(false)
+	const [editSuccessDialogVisible, setEditSuccessDialogVisible] = useState(false);
 
 	useEffect(() => {
 		const loadService = async (service_name, setService) => {
 			const service = await fetchServiceDetails(service_name)
-				.catch((error) => console.log(error));
+				.catch((error) => { });
 
 			setService(formatVNCurrency(service.price, 2));
 		};
@@ -39,9 +39,7 @@ export default function App({ navigation }) {
 
 	const handleSave = () => {
 		const updateService = async (service_name, service_price) => {
-			await updateServicePrice(service_name, service_price).catch((error) =>
-				console.log(error)
-			);
+			await updateServicePrice(service_name, service_price).catch((error) => { });
 		};
 
 		updateService('Nước', Number(water.replace(/\W+/g, '')));
@@ -49,7 +47,7 @@ export default function App({ navigation }) {
 		updateService('Rác', Number(garbage.replace(/\W+/g, '')));
 		updateService('Phòng', Number(rentallFee.replace(/\W+/g, '')));
 
-		setEditSuccessDialogVisible(true)
+		setEditSuccessDialogVisible(true);
 	};
 
 	return (
@@ -182,7 +180,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 		width: '100%',
-		backgroundColor:'#d9d9d9',
+		backgroundColor: '#d9d9d9',
 	},
 
 	body: {

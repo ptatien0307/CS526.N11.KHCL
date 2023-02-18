@@ -27,7 +27,6 @@ export const fetchBillList = () => {
                 `,
                 [],
                 (_, { rows: { _array } }) => {
-                    console.log('Bill list fetched successfully');
                     resolve(_array);
                 },
                 (_, error) => reject(error)
@@ -72,7 +71,6 @@ export const fetchBillDetails = (bill_id) => {
                 `,
                 [bill_id],
                 (_, { rows: { _array } }) => {
-                    console.log('Bill fetched successfully');
                     resolve(_array[0]);
                 },
                 (_, error) => reject(error)
@@ -126,7 +124,6 @@ export const insertBill = (bill, forceUpdate = null) => {
                         bill.remained,
                     ],
                     (_, { rows: { _array } }) => {
-                        console.log('Bill inserted successfully');
                         resolve(_array);
                     },
                     (_, error) => reject(error)
@@ -182,7 +179,6 @@ export const updateBill = (bill, forceUpdate = null) => {
                         bill.id,
                     ],
                     (_, { rows: { _array } }) => {
-                        console.log('Bill updated successfully');
                         resolve(_array);
                     },
                     (_, error) => reject(error)
@@ -200,7 +196,7 @@ export const deleteBill = async (bill_id, forceUpdate = null) => {
             [
                 {
                     text: 'Quay lại',
-                    onPress: () => console.log('Cancel Pressed'),
+                    onPress: () => { },
                     style: 'cancel',
                 },
                 {
@@ -216,7 +212,6 @@ export const deleteBill = async (bill_id, forceUpdate = null) => {
                                         `DELETE FROM bills WHERE id = ?;`,
                                         [bill_id],
                                         (_, { rows: { _array } }) => {
-                                            console.log('Bill deleted successfully');
                                             resolve(_array);
                                         },
                                         (_, error) => reject(error)
@@ -238,7 +233,7 @@ export const deleteBill = async (bill_id, forceUpdate = null) => {
             [
                 {
                     text: 'Quay lại',
-                    onPress: () => console.log('Cancel Pressed'),
+                    onPress: () => { },
                     style: 'cancel',
                 },
                 {
@@ -252,7 +247,6 @@ export const deleteBill = async (bill_id, forceUpdate = null) => {
                                         `DELETE FROM bills WHERE id = ?;`,
                                         [bill_id],
                                         (_, { rows: { _array } }) => {
-                                            console.log('Bill deleted successfully');
                                             resolve(_array);
                                         },
                                         (_, error) => reject(error)

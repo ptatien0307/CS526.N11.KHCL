@@ -11,7 +11,6 @@ export const fetchHouseInfo = () => {
                 'SELECT * FROM house_info WHERE id = 1',
                 [],
                 (_, { rows: { _array: result } }) => {
-                    console.log('House info fetched successfully');
                     resolve(result[0]);
                 },
                 (_, error) => {
@@ -30,7 +29,6 @@ export const updateHouseInfo = (houseInfo, forceUpdate = null) => {
                     'UPDATE house_info SET name = ?, address = ?, phone_number = ?',
                     [houseInfo.name, houseInfo.address, houseInfo.phone_number],
                     (_, result) => {
-                        console.log('House info updated successfully');
                         resolve(result);
                     },
                     (_, error) => {

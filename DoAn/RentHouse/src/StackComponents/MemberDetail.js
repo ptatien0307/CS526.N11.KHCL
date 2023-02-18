@@ -20,13 +20,9 @@ export default function App({ navigation, route }) {
 
 	useEffect(() => {
 		const loadCustomerDetails = async () => {
-			const customerDetails = await fetchCustomerDetails(memberID).catch(
-				(error) => console.log(error)
-			);
+			const customerDetails = await fetchCustomerDetails(memberID).catch((error) => { });
 
 			setMember(customerDetails);
-
-			console.log(customerDetails);
 		};
 
 		loadCustomerDetails();
@@ -194,7 +190,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 		width: '100%',
-		backgroundColor:'#d9d9d9'
+		backgroundColor: '#d9d9d9'
 	},
 
 	body: {

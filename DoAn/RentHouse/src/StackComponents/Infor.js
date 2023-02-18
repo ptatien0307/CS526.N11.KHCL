@@ -22,14 +22,11 @@ export default function App({ navigation }) {
 	useEffect(() => {
 		const loadHouseInfo = async () => {
 			const houseInfo = await fetchHouseInfo()
-				.catch((error) => console.log(error));
+				.catch((error) => { });
 
 			setHouseName(houseInfo.name);
 			setHouseAddress(houseInfo.address);
 			setHousePhone(houseInfo.phone_number);
-
-			console;
-			console.log(houseInfo.name);
 		};
 
 		loadHouseInfo();
@@ -41,7 +38,7 @@ export default function App({ navigation }) {
 			address: houseAddress,
 			phone_number: housePhone,
 		};
-		
+
 		// thong bao thanh cong
 		Alert.alert(
 			'Thông báo',
@@ -49,7 +46,7 @@ export default function App({ navigation }) {
 			[
 				{
 					text: 'OK',
-					onPress: () => console.log('OK Pressed'),
+					onPress: () => { },
 				},
 			],
 			{ cancelable: false }
@@ -115,7 +112,7 @@ export default function App({ navigation }) {
 						margin: 10,
 					}}
 					onPress={handleSave}>
-					<Text style={{ color: 'white', textAlign: 'center', fontWeight:'bold', fontSize:20 }}>Lưu thông tin</Text>
+					<Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 20 }}>Lưu thông tin</Text>
 				</TouchableOpacity>
 
 			</View>

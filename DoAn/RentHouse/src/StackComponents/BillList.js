@@ -24,7 +24,7 @@ export default function App({ navigation }) {
 
 	useEffect(() => {
 		const loadBillList = async () => {
-			const bills = await fetchBillList().catch((error) => console.log(error));
+			const bills = await fetchBillList().catch((error) => { });
 
 			const data = bills.reduce((accumulator, currentValue) => {
 				const monthYear = currentValue.month + '/' + currentValue.year;
@@ -52,16 +52,13 @@ export default function App({ navigation }) {
 	}, [isFocused, forceUpdateBillListID]);
 
 	const handleDeleteBill = async (billID) => {
-		await deleteBill(billID, forceUpdateBillList).catch((error) =>
-			console.log(error)
-		);
+		await deleteBill(billID, forceUpdateBillList).catch((error) => { });
 	};
 
 	const renderItem = ({ item }) => {
 		return (
 			<TouchableOpacity
 				onPress={() => {
-					console.log(item);
 					navigation.navigate('BillDetail', {
 						selected_bill_id: item.id,
 					});

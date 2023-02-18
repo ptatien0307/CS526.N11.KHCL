@@ -12,7 +12,7 @@ import { useState } from 'react';
 
 import { insertCustomer } from '../database/actions/customerActions';
 
-import {MissingDialog} from '../Dialogs/MissingDialog'
+import { MissingDialog } from '../Dialogs/MissingDialog';
 
 export default function App({ navigation, route }) {
 	const roomID = route.params.roomID;
@@ -44,11 +44,12 @@ export default function App({ navigation, route }) {
 				phone: phoneNumber,
 				temporary_residence: temporaryResidence,
 				room_id: roomID,
-			}).catch((error) => console.log(error));
+			}).catch((error) => { });
 		};
-		if (customerName ===''||dateOfBirth ===''||gender ===''||address ===''||citizenID ===''||citizenIDDate ===''||citizenIDPlace ===''||
-		job ===''||phoneNumber ===''||temporaryResidence ===''||roomID==='')
-			setMissingDialogVisible(true)
+
+		if (customerName === '' || dateOfBirth === '' || address === '') {
+			setMissingDialogVisible(true);
+		}
 		else {
 			insertedCustomer();
 			navigation.goBack();

@@ -33,16 +33,13 @@ export default function App({ route }) {
 
 	const handlePrintBill = async () => {
 		const html = formatHTMLBill({ bill: billDetails, info: houseInfo });
-		console.log(html);
 		await printAsync({ html });
 	};
 
 
 	useEffect(() => {
 		const loadBillDetails = async () => {
-			const bill = await fetchBillDetails(selected_bill_id).catch((error) =>
-				console.log(error)
-			);
+			const bill = await fetchBillDetails(selected_bill_id).catch((error) => { });
 
 			setBillDetails(bill);
 		};
@@ -53,10 +50,9 @@ export default function App({ route }) {
 	useEffect(() => {
 		const loadHouseInfo = async () => {
 			const houseInfo = await fetchHouseInfo()
-				.catch((error) => console.log(error));
+				.catch((error) => { });
 
 			setHouseInfo(houseInfo);
-			console.log(houseInfo);
 		};
 
 		loadHouseInfo();

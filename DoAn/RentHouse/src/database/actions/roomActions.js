@@ -29,7 +29,6 @@ export const fetchRoomList = () => {
 				`,
 				[],
 				(_, { rows: { _array: result } }) => {
-					console.log('Room list fetched successfully');
 					resolve(result);
 				},
 				(_, error) => {
@@ -65,7 +64,6 @@ export const fetchRoomListForCreateBill = () => {
 				`,
 				[],
 				(_, { rows: { _array: result } }) => {
-					console.log('In-use-room list fetched successfully');
 					resolve(result);
 				},
 				(_, error) => {
@@ -91,7 +89,6 @@ export const fetchRoomDetails = (room_id) => {
 				FROM rooms WHERE id = ?`,
 				[room_id],
 				(_, { rows: { _array: result } }) => {
-					console.log('Room fetched successfully');
 					resolve(result[0]);
 				},
 				(_, error) => {
@@ -123,7 +120,6 @@ export const insertRoom = (room, forceUpdate) => {
 						room.old_water_number,
 					],
 					(_, result) => {
-						console.log('Room inserted successfully');
 						resolve(result);
 					},
 					(_, error) => {
@@ -160,7 +156,6 @@ export const updateRoom = (room, forceUpdate = null) => {
 						room.id,
 					],
 					(_, result) => {
-						console.log('Room updated successfully');
 						resolve(result);
 					},
 					(_, error) => {
@@ -189,7 +184,6 @@ export const updateRoomWaterElectricityNumber = (room_id, water_number, electric
 						room_id,
 					],
 					(_, result) => {
-						console.log('Room updated successfully');
 						resolve(result);
 					},
 					(_, error) => {
@@ -211,7 +205,6 @@ export const deleteRoom = (room_id, forceUpdate = null) => {
 					'DELETE FROM rooms WHERE id = ?',
 					[room_id],
 					(_, result) => {
-						console.log('Room deleted successfully');
 						resolve(result);
 					},
 					(_, error) => {
@@ -237,7 +230,6 @@ export const fetchRoomMemberList = (room_id) => {
 				`,
 				[room_id],
 				(_, { rows: { _array: result } }) => {
-					console.log('Room member list fetched successfully');
 					resolve(result);
 				},
 				(_, error) => {
@@ -263,7 +255,6 @@ export const fetchRoomBillList = (room_id) => {
 				`,
 				[room_id],
 				(_, { rows: { _array: result } }) => {
-					console.log('Room bill list fetched successfully');
 					resolve(result);
 				},
 				(_, error) => {
@@ -275,15 +266,14 @@ export const fetchRoomBillList = (room_id) => {
 };
 
 export const resetRoom = (room_id, forceUpdate = null) => {
-	console.log('Resetting room' + room_id);
 	return new Promise((resolve, reject) => {
 		db.transaction(
 			(tx) => {
 				tx.executeSql(
 					'PRAGMA foreign_key = ON;',
 					[],
-					() => console.log('Foreign key enabled'),
-					(_, error) => console.log(error)
+					() => { },
+					(_, error) => { }
 				);
 				tx.executeSql(
 					`
@@ -292,14 +282,14 @@ export const resetRoom = (room_id, forceUpdate = null) => {
 					WHERE id = ?;
 					`,
 					[room_id],
-					() => console.log('Temp table created'),
-					(_, error) => console.log(error)
+					() => { },
+					(_, error) => { }
 				);
 				tx.executeSql(
 					'DELETE FROM rooms WHERE id = ?;',
 					[room_id],
-					() => console.log('Room deleted'),
-					(_, error) => console.log(error)
+					() => { },
+					(_, error) => { }
 				);
 				tx.executeSql(
 					`INSERT INTO rooms (
@@ -317,14 +307,14 @@ export const resetRoom = (room_id, forceUpdate = null) => {
 									FROM temp_table;
 					`,
 					[],
-					() => console.log('Room reset successfully'),
-					(_, error) => console.log(error)
+					() => { },
+					(_, error) => { }
 				);
 				tx.executeSql(
 					'DROP TABLE temp_table;',
 					[],
-					() => console.log('Temp table dropped'),
-					(_, error) => console.log(error)
+					() => { },
+					(_, error) => { }
 				);
 			},
 			null,

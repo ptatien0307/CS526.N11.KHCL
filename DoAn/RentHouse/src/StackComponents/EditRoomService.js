@@ -20,7 +20,7 @@ export default function App({ navigation, route }) {
 	useEffect(() => {
 		const loadRoomDetails = async () => {
 			const roomDetails = await fetchRoomDetails(roomID)
-				.catch((error) => console.log(error));
+				.catch((error) => { });
 
 			setOldElectricityNumber(roomDetails.old_electricity_number.toString());
 			setOldWaterNumber(roomDetails.old_water_number.toString());
@@ -35,7 +35,7 @@ export default function App({ navigation, route }) {
 			parseInt(old_water_number),
 			parseInt(old_electricity_number)
 		)
-			.catch((error) => console.log(error));
+			.catch((error) => { });
 
 		navigation.goBack();
 	};

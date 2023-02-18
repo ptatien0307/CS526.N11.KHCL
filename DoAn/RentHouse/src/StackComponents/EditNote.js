@@ -20,7 +20,7 @@ export default function EditModal({ navigation, route }) {
 	useEffect(() => {
 		const loadNote = async () => {
 			const note = await fetchNoteContent(selected_note_id)
-				.catch((error) => console.log(error));
+				.catch((error) => { });
 			setNoteContent(note.content);
 		};
 
@@ -38,7 +38,7 @@ export default function EditModal({ navigation, route }) {
 					content: noteContent
 				})
 					.then(() => setEditSuccessDialogVisible(true))
-					.catch((error) => console.log(error));
+					.catch((error) => { });
 			};
 
 			updatedNote();

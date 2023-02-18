@@ -10,7 +10,7 @@ export default function App({ navigation }) {
 
 	useEffect(() => {
 		const loadHouseInfo = async () => {
-			const houseInfo = await fetchHouseInfo().catch((error) => console.log(error));
+			const houseInfo = await fetchHouseInfo().catch((error) => { });
 
 			setHouseName(houseInfo.name.toUpperCase());
 		};
@@ -22,7 +22,7 @@ export default function App({ navigation }) {
 		<View style={styles.container}>
 			{/* Header */}
 			<View View style={[styles.header]}>
-				<Text style={[styles.textTitle,{color:'white', fontSize:25}]}>NHÀ TRỌ {houseName}</Text>
+				<Text style={[styles.textTitle, { color: 'white', fontSize: 25 }]}>NHÀ TRỌ {houseName}</Text>
 			</View>
 
 			{/* Container */}

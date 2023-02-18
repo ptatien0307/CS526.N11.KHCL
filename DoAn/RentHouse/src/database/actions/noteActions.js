@@ -11,7 +11,6 @@ export const fetchNoteList = () => {
 				'SELECT id, content FROM notes',
 				[],
 				(_, { rows: { _array: result } }) => {
-					console.log('Note list fetched successfully');
 					resolve(result);
 				},
 				(_, error) => {
@@ -29,7 +28,6 @@ export const fetchNoteContent = (note_id) => {
 				'SELECT content FROM notes WHERE id = ?',
 				[note_id],
 				(_, { rows: { _array: result } }) => {
-					console.log('Note content fetched successfully');
 					resolve(result[0]);
 				},
 				(_, error) => {
@@ -38,7 +36,7 @@ export const fetchNoteContent = (note_id) => {
 			);
 		});
 	});
-}; ``
+};
 
 export const insertNote = (content, forceUpdate = null) => {
 	return new Promise((resolve, reject) => {
@@ -48,7 +46,6 @@ export const insertNote = (content, forceUpdate = null) => {
 					'INSERT INTO notes (content) VALUES (?)',
 					[content],
 					(_, result) => {
-						console.log('Note inserted successfully');
 						resolve(result);
 					},
 					(_, error) => {
@@ -70,7 +67,6 @@ export const updateNote = ({ id, content }, forceUpdate = null) => {
 					'UPDATE notes SET content = ? WHERE id = ?',
 					[content, id],
 					(_, result) => {
-						console.log('Note updated successfully');
 						resolve(result);
 					},
 					(_, error) => {
@@ -92,7 +88,6 @@ export const deleteNote = (id, forceUpdate) => {
 					'DELETE FROM notes WHERE id = ?',
 					[id],
 					(_, result) => {
-						console.log('Note deleted successfully');
 						resolve(result);
 					},
 					(_, error) => {

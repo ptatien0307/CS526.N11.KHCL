@@ -12,9 +12,7 @@ export default function App({ navigation, route }) {
 
 	useEffect(() => {
 		const loadServiceList = async () => {
-			const services = await fetchServiceList().catch((error) =>
-				console.log(error)
-			);
+			const services = await fetchServiceList().catch((error) => { });
 
 			setServiceList(services);
 		};

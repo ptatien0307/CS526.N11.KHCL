@@ -19,38 +19,38 @@ const createTables = () => {
 		tx.executeSql(
 			createCustomersTable,
 			[],
-			() => console.log('Created customers table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 		tx.executeSql(
 			createRoomsTable,
 			[],
-			() => console.log('Created rooms table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 		tx.executeSql(
 			createBillsTable,
 			[],
-			() => console.log('Created bills table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 		tx.executeSql(
 			createServicePricesTable,
 			[],
-			() => console.log('Created service prices table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 		tx.executeSql(
 			createNotesTable,
 			[],
-			() => console.log('Created notes table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 		tx.executeSql(
 			createHouseInfoTable,
 			[],
-			() => console.log('Created house info table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 	});
 };
@@ -60,38 +60,38 @@ const populateTables = () => {
 		tx.executeSql(
 			populateRoomsTable,
 			[],
-			() => console.log('Populated rooms table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 		tx.executeSql(
 			populateCustomersTable,
 			[],
-			() => console.log('Populated customers table'),
-			(_, error) => console.log(error)
-		);
-		tx.executeSql(
-			populateServicePricesTable,
-			[],
-			() => console.log('Populated service prices table'),
-			(_, error) => console.log(error)
-		);
-		tx.executeSql(
-			populateNotesTable,
-			[],
-			() => console.log('Populated notes table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 		tx.executeSql(
 			populateBillsTable,
 			[],
-			() => console.log('Populated bills table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
+		);
+		tx.executeSql(
+			populateNotesTable,
+			[],
+			() => { },
+			(_, error) => { }
+		);
+		tx.executeSql(
+			populateServicePricesTable,
+			[],
+			() => { },
+			(_, error) => { }
 		);
 		tx.executeSql(
 			populateHouseInfoTable,
 			[],
-			() => console.log('Populated house info table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 	});
 };
@@ -106,38 +106,38 @@ export const deleteDatabase = () => {
 		tx.executeSql(
 			'DROP TABLE IF EXISTS rooms;',
 			[],
-			() => console.log('Deleted rooms table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 		tx.executeSql(
 			'DROP TABLE IF EXISTS customers;',
 			[],
-			() => console.log('Deleted customers table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 		tx.executeSql(
 			'DROP TABLE IF EXISTS bills;',
 			[],
-			() => console.log('Deleted bills table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 		tx.executeSql(
 			'DROP TABLE IF EXISTS service_prices;',
 			[],
-			() => console.log('Deleted service prices table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 		tx.executeSql(
 			'DROP TABLE IF EXISTS notes;',
 			[],
-			() => console.log('Deleted notes table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 		tx.executeSql(
 			'DROP TABLE IF EXISTS house_info;',
 			[],
-			() => console.log('Deleted house info table'),
-			(_, error) => console.log(error)
+			() => { },
+			(_, error) => { }
 		);
 	});
 };
@@ -146,18 +146,18 @@ export const enableAutoVacuum = () => {
 	db.exec(
 		[{ sql: 'PRAGMA auto_vacuum = 1;', args: [] }],
 		false,
-		() => console.log('Enabled auto vacuum')
+		() => { }
 	);
 };
 
 export const vacuum = () => {
-	db.exec([{ sql: 'VACUUM;', args: [] }], false, () => console.log('Vacuumed'));
+	db.exec([{ sql: 'VACUUM;', args: [] }], false, () => { });
 };
 
 export const enableForeignKeys = () => {
 	db.exec(
 		[{ sql: 'PRAGMA foreign_keys = ON;', args: [] }],
 		false,
-		() => console.log('Enabled foreign keys')
+		() => { }
 	);
 };

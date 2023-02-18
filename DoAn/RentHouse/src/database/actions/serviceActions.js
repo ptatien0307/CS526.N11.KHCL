@@ -11,7 +11,6 @@ export const fetchServiceList = () => {
                 'SELECT * FROM service_prices',
                 [],
                 (_, { rows: { _array: result } }) => {
-                    console.log('Service list fetched successfully');
                     resolve(result);
                 },
                 (_, error) => {
@@ -29,7 +28,6 @@ export const updateServicePrice = (service_name, service_price) => {
                 'UPDATE service_prices SET price = ? WHERE name = ?',
                 [service_price, service_name],
                 (_, result) => {
-                    console.log('Service updated successfully');
                     resolve(result);
                 },
                 (_, error) => {
@@ -47,7 +45,6 @@ export const fetchServiceDetails = (service_name) => {
                 'SELECT * FROM service_prices WHERE name = ?',
                 [service_name],
                 (_, { rows: { _array: result } }) => {
-                    console.log('Service fetched successfully');
                     resolve(result[0]);
                 },
                 (_, error) => {
