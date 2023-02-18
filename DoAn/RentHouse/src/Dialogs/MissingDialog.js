@@ -15,7 +15,7 @@ const MissingDialog = ({ setMissingDialogVisible }) => {
 					<FontAwesomeIcon name="exclamation-circle" size={35} color='red' />
 					<Text style={styles.textTitle}> Lỗi </Text>
 				</View>
-				<Text style={styles.message}> Thông tin chỉnh sửa bị bỏ trống.</Text>
+				<Text style={styles.message}> Thông tin chỉnh sửa hoặc thêm mới bị bỏ trống.</Text>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingVertical: 10 }}>
 					<View style={styles.button}>
 						<TouchableOpacity onPress={() => setMissingDialogVisible(false)}>

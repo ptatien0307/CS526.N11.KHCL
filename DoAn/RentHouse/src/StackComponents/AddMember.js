@@ -5,11 +5,14 @@ import {
 	TouchableOpacity,
 	Text,
 	ScrollView,
+	Modal
 } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { useState } from 'react';
 
 import { insertCustomer } from '../database/actions/customerActions';
+
+import {MissingDialog} from '../Dialogs/MissingDialog'
 
 export default function App({ navigation, route }) {
 	const roomID = route.params.roomID;
@@ -24,6 +27,8 @@ export default function App({ navigation, route }) {
 	const [job, setJob] = useState('');
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const [temporaryResidence, setTemporaryResidence] = useState(false);
+
+	const [missingDialogVisible, setMissingDialogVisible] = useState(false);
 
 	const handleAddCustomer = () => {
 		const insertedCustomer = async () => {
@@ -41,10 +46,13 @@ export default function App({ navigation, route }) {
 				room_id: roomID,
 			}).catch((error) => console.log(error));
 		};
-
-		insertedCustomer();
-
-		navigation.goBack();
+		if (customerName ===''||dateOfBirth ===''||gender ===''||address ===''||citizenID ===''||citizenIDDate ===''||citizenIDPlace ===''||
+		job ===''||phoneNumber ===''||temporaryResidence ===''||roomID==='')
+			setMissingDialogVisible(true)
+		else {
+			insertedCustomer();
+			navigation.goBack();
+		}
 	};
 
 	return (
@@ -318,6 +326,15 @@ export default function App({ navigation, route }) {
 					</TouchableOpacity>
 				</ScrollView>
 			</View>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={missingDialogVisible}
+				onRequestClose={() => { setMissingDialogVisible(false); }}>
+				<MissingDialog
+					setMissingDialogVisible={setMissingDialogVisible}
+				/>
+			</Modal>
 		</View>
 	);
 }
