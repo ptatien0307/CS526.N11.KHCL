@@ -73,7 +73,8 @@ export default function EditModal({ navigation, route }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={missingDialogVisible}>
+				visible={missingDialogVisible}
+				onRequestClose={() => { setMissingDialogVisible(false); }}>
 				<MissingDialog
 					setMissingDialogVisible={setMissingDialogVisible}
 				/>
@@ -81,7 +82,8 @@ export default function EditModal({ navigation, route }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={editSuccessDialogVisible}>
+				visible={editSuccessDialogVisible}
+				onRequestClose={() => { setEditSuccessDialogVisible(false); }}>
 				<EditSuccessDialog
 					setEditSuccessDialogVisible={setEditSuccessDialogVisible}
 					navigation={navigation}

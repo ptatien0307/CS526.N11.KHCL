@@ -9,12 +9,8 @@ import {
 } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 
-import {
-	alertEmptyDialog,
-	successDialog,
-} from '../Dialogs/dialog.js';
-
 import {ErrorDialog} from '../Dialogs/ErrorDialog'
+import {EmptyDialog} from '../Dialogs/EmptyDialog'
 import {MissingDialog} from '../Dialogs/MissingDialog'
 import {SuccessDialog} from '../Dialogs/SuccessDialog'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -27,13 +23,14 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 
 	const [inputText, setInputText] = useState('');
 	const [errorDialogVisible, setErrorDialogVisible] = useState(false);
+	const [emptyDialogVisible, setEmptyDialogVisible] = useState(false);
 	const [missingDialogVisible, setMissingDialogVisible] = useState(false);
 	const [successDialogVisible, setSuccessDialogVisible] = useState(false);
 	const [messageSuccesDialog, setMessageSuccessDialog] = useState('')
 
 	const handlePartialPayment = () => {
 		if (inputText === '') {
-			alertEmptyDialog();
+			setEmptyDialogVisible(true);
 		}
 		else if (parseInt(inputText.replace(/\W+/g, '')) > billDetails.remained) {
 			setErrorDialogVisible(true);
@@ -194,7 +191,8 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={errorDialogVisible}>
+				visible={errorDialogVisible}
+				onRequestClose={() => { setErrorDialogVisible(false); }}>
 				<ErrorDialog
 					message={'Vui lòng nhập số tiền nhỏ hơn số tiền mà phòng còn thiếu.'}
 					setErrorDialogVisible={setErrorDialogVisible}
@@ -203,7 +201,8 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={missingDialogVisible}>
+				visible={missingDialogVisible}
+				onRequestClose={() => { setMissingDialogVisible(false); }}>
 				<MissingDialog
 					setMissingDialogVisible={setMissingDialogVisible}
 				/>
@@ -211,7 +210,17 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={successDialogVisible}>
+				visible={emptyDialogVisible}
+				onRequestClose={() => { setEmptyDialogVisible(false); }}>
+				<EmptyDialog
+					setEmptyDialogVisible={setEmptyDialogVisible}
+				/>
+			</Modal>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={successDialogVisible}
+				onRequestClose={() => { setSuccessDialogVisible(false); }}>
 				<SuccessDialog
 					setSuccessDialogVisible={setSuccessDialogVisible}
 					message = {messageSuccesDialog}

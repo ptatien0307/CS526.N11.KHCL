@@ -165,7 +165,8 @@ export default function App({ navigation }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={editSuccessDialogVisible}>
+				visible={editSuccessDialogVisible}
+				onRequestClose={() => { setEditSuccessDialogVisible(false); }}>
 				<EditSuccessDialog
 					setEditSuccessDialogVisible={setEditSuccessDialogVisible}
 					navigation={navigation}

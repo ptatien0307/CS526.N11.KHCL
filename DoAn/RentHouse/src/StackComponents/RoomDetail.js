@@ -464,7 +464,8 @@ export default function App({ navigation, route }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={deleteDialogVisible}>
+				visible={deleteDialogVisible}
+				onRequestClose={() => { setDeleteDialogVisible(false); }}>
 				<DeleteDialog
 					title={'Chú ý'}
 					message={

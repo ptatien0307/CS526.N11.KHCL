@@ -7,7 +7,7 @@ import {
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-const MissingDialog = ({ setMissingDialogVisible }) => {
+const EmptyDialog = ({ setEmptyDialogVisible }) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.modal}>
@@ -15,10 +15,10 @@ const MissingDialog = ({ setMissingDialogVisible }) => {
 					<FontAwesomeIcon name="exclamation-circle" size={35} color='red' />
 					<Text style={styles.textTitle}> Lỗi </Text>
 				</View>
-				<Text style={styles.message}> Thông tin chỉnh sửa bị bỏ trống.</Text>
+				<Text style={styles.message}> Thông tin nhập vào bị bỏ trống.</Text>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingVertical: 10 }}>
 					<View style={styles.button}>
-						<TouchableOpacity onPress={() => setMissingDialogVisible(false)}>
+						<TouchableOpacity onPress={() => setEmptyDialogVisible(false)}>
 							<Text>Quay lại</Text>
 						</TouchableOpacity>
 					</View>
@@ -63,4 +63,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export { MissingDialog };
+export { EmptyDialog };

@@ -344,7 +344,8 @@ export default function App({ navigation, route }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={errorDialogVisible}>
+				visible={errorDialogVisible}
+                onRequestClose={() => { setErrorDialogVisible(false); }}>
 				<ErrorDialog
 					message={messageErrorDialog}
 					setErrorDialogVisible={setErrorDialogVisible}
@@ -353,7 +354,8 @@ export default function App({ navigation, route }) {
             <Modal
 				animationType="slide"
 				transparent={true}
-				visible={billSuccessDialogVisible}>
+				visible={billSuccessDialogVisible}
+                onRequestClose={() => { setBillSuccessDialogVisible(false); }}>
 				<BillSuccessDialog
                     title={'Lập hóa đơn thành công'}
 					message={messageBill}
