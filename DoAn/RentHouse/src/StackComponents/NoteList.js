@@ -6,6 +6,7 @@ import {
 	FlatList,
 	TouchableOpacity,
 	TextInput,
+	Modal
 } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 
@@ -16,9 +17,10 @@ import {
 	deleteNote,
 	insertNote,
 } from '../database/actions/noteActions';
-import { alertMissingDialog } from '../Dialogs/dialog';
 import { useForceUpdate } from '../utils/utils';
 import { Dimensions } from 'react-native';
+
+import {MissingDialog} from '../Dialogs/MissingDialog'
 
 const wh = Dimensions.get('window').width;
 const vh = Dimensions.get('window').height;
@@ -28,6 +30,7 @@ export default function App({ navigation, route }) {
 	const [noteContent, setNoteContent] = useState('');
 	const [noteList, setNoteList] = useState([]);
 	const [forceUpdate, forceUpdateId] = useForceUpdate();
+	const [missingDialogVisible, setMissingDialogVisible] = useState(false);
 
 	// Get note list from database
 	useEffect(() => {
@@ -42,7 +45,7 @@ export default function App({ navigation, route }) {
 
 	const handleAddNote = () => {
 		if (noteContent.length === 0) {
-			alertMissingDialog();
+			setMissingDialogVisible(true)
 		} else {
 			const insertedNote = async () => {
 				await insertNote(noteContent, forceUpdate).catch((error) =>
@@ -105,6 +108,15 @@ export default function App({ navigation, route }) {
 					keyExtractor={(item) => item.id}
 				/>
 			</View>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={missingDialogVisible}
+				onRequestClose={() => { setMissingDialogVisible(false); }}>
+				<MissingDialog
+					setMissingDialogVisible={setMissingDialogVisible}
+				/>
+			</Modal>
 		</View>
 	);
 }

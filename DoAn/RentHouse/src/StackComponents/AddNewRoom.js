@@ -5,6 +5,7 @@ import {
     TextInput,
     TouchableOpacity,
     Alert,
+    Modal
 } from 'react-native';
 import { useEffect, useState } from 'react';
 
@@ -16,6 +17,9 @@ import { fetchRoomList, insertRoom } from "../database/actions/roomActions";
 import { fetchServiceDetails } from '../database/actions/serviceActions';
 import { formatVNCurrency } from '../utils/utils';
 
+import {ErrorDialog} from '../Dialogs/ErrorDialog';
+import {BillSuccessDialog} from '../Dialogs/BillSuccessDialog'
+
 export default function App({ navigation, route }) {
     const [roomName, setRoomName] = useState('');
     const [price, setPrice] = useState('');
@@ -25,6 +29,10 @@ export default function App({ navigation, route }) {
     const [electricityPrice, setElectricityPrice] = useState(null);
     const [waterPrice, setWaterPrice] = useState(null);
     const [garbagePrice, setGarbagePrice] = useState(null);
+    const [messageErrorDialog, setErrorMessageDialog] = useState('');
+    const [errorDialogVisible, setErrorDialogVisible] = useState(false);
+    const [billSuccessDialogVisible, setBillSuccessDialogVisible] = useState(false);
+
 
     // Load service price from database
     useEffect(() => {
@@ -44,25 +52,33 @@ export default function App({ navigation, route }) {
     }, []);
 
     const handleAddRoom = () => {
-
+        
         // Check if room name is empty
         if (roomName === '') {
-            return Alert.alert('Lỗi', 'Tên phòng không được để trống');
+            setErrorMessageDialog('Tên phòng không được để trống');
+            setErrorDialogVisible(true);
+            return;
         }
-
+        console.log('Room name not empty')
         // Check if price is empty
         if (price === '') {
-            return Alert.alert('Lỗi', 'Giá thuê không được để trống');
+            setErrorMessageDialog('Giá thuê không được để trống');
+            setErrorDialogVisible(true);
+            return;
         }
 
         // Check if electricityCurrent is empty
         if (electricityCurrent === '') {
-            return Alert.alert('Lỗi', 'Chỉ số điện hiện tại không được để trống');
+            setErrorMessageDialog('Chỉ số điện hiện tại không được để trống');
+            setErrorDialogVisible(true);
+            return;
         }
 
         // Check if waterServiceCurrent is empty
         if (waterServiceCurrent === '') {
-            return Alert.alert('Lỗi', 'Chỉ số nước hiện tại không được để trống');
+            setErrorMessageDialog('Chỉ số nước hiện tại không được để trống');
+            setErrorDialogVisible(true);
+            return;
         }
 
         // Check if room name is existed
@@ -70,7 +86,9 @@ export default function App({ navigation, route }) {
             const roomList = await fetchRoomList();
             for (let i = 0; i < roomList.length; i++) {
                 if (roomList[i]['name'] === roomName) {
-                    return Alert.alert('Lỗi', 'Tên phòng đã tồn tại');
+                    setErrorMessageDialog('Tên phòng đã tồn tại');
+                    setErrorDialogVisible(true);
+                    return;
                 }
             }
         };
@@ -79,17 +97,23 @@ export default function App({ navigation, route }) {
 
         // check if price have non-digit character
         if (/\D/.test(price)) {
-            return Alert.alert('Lỗi', 'Giá phòng chỉ được chứa số');
+            setErrorMessageDialog('Giá phòng chỉ được chứa số');
+            setErrorDialogVisible(true);
+            return;
         }
 
         // check if electricityCurrent have non-digit character
         if (/\D/.test(electricityCurrent)) {
-            return Alert.alert('Lỗi', 'Chỉ số điện mới chỉ được chứa số');
+            setErrorMessageDialog('Chỉ số điện mới chỉ được chứa số');
+            setErrorDialogVisible(true);
+            return;
         }
 
         // check if waterServiceCurrent have non-digit character
         if (/\D/.test(waterServiceCurrent)) {
-            return Alert.alert('Lỗi', 'Chỉ số nước mới chỉ được chứa số');
+            setErrorMessageDialog('Chỉ số nước mới chỉ được chứa số');
+            setErrorDialogVisible(true);
+            return;
         }
 
         insertRoom(
@@ -101,8 +125,8 @@ export default function App({ navigation, route }) {
             },
         );
 
-        Alert.alert('Thành công', 'Thêm phòng thành công');
-        return navigation.goBack();
+        setBillSuccessDialogVisible(true);
+        return;
     };
 
 
@@ -190,9 +214,31 @@ export default function App({ navigation, route }) {
             </View>
 
             <TouchableOpacity style={styles.button} onPress={handleAddRoom}>
-                <Text style={[styles.text, {fontWeight:'bold', color:'white'}]}>THÊM PHÒNG</Text>
+                <Text style={[styles.text, { fontWeight: 'bold', color: 'white' }]}>THÊM PHÒNG</Text>
             </TouchableOpacity>
 
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={errorDialogVisible}
+                onRequestClose={() => { setErrorDialogVisible(false); }}>
+				<ErrorDialog
+					message={messageErrorDialog}
+					setErrorDialogVisible={setErrorDialogVisible}
+				/>
+			</Modal>
+            <Modal
+				animationType="slide"
+				transparent={true}
+				visible={billSuccessDialogVisible}
+                onRequestClose={() => { setBillSuccessDialogVisible(false); }}>
+				<BillSuccessDialog
+                    title={'Thành công'}
+					message={'Thêm phòng thành công'}
+                    navigation={navigation}
+					setBillSuccessDialogVisible={setBillSuccessDialogVisible}
+				/>
+			</Modal>
         </View>
     );
 }
@@ -214,7 +260,7 @@ styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginTop: 10,
-        backgroundColor:'white'
+        backgroundColor: 'white'
     },
     input: {
         width: '75%',
@@ -232,7 +278,7 @@ styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginTop: 10,
-        backgroundColor:'white'
+        backgroundColor: 'white'
     },
 
     serviceCurrent: {
@@ -242,7 +288,7 @@ styles = StyleSheet.create({
         borderRadius: 10,
         paddingTop: 10,
         marginTop: 10,
-        backgroundColor:'white'
+        backgroundColor: 'white'
     },
 
     inputService: {
@@ -271,7 +317,7 @@ styles = StyleSheet.create({
         borderRadius: 10,
         paddingTop: 10,
         marginTop: 10,
-        backgroundColor:'white'
+        backgroundColor: 'white'
     },
 
     service: {

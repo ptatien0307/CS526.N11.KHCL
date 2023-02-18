@@ -5,15 +5,14 @@ import {
 	TouchableOpacity,
 	TextInput,
 	ScrollView,
+	Modal
 } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { useState, useEffect } from 'react';
 
-import {
-	alertDeleteDialog,
-	alertEmptyDialog,
-	editSuccessDialog,
-} from '../Dialogs/dialog.js';
+
+import {EmptyDialog} from '../Dialogs/EmptyDialog'
+import {EditSuccessDialog} from '../Dialogs/EditSuccessDialog';
 
 import {
 	fetchCustomerDetails,
@@ -36,6 +35,9 @@ export default function App({ navigation, route }) {
 	const [job, setJob] = useState(null);
 
 	const [gender, setGender] = useState(null);
+
+	const [emptyDialogVisible, setEmptyDialogVisible] = useState(false);
+	const [editSuccessDialogVisible, setEditSuccessDialogVisible] = useState(false);
 
 	useEffect(() => {
 		const loadCustomerDetails = async () => {
@@ -82,7 +84,7 @@ export default function App({ navigation, route }) {
 			phoneNumber === '' ||
 			job === ''
 		)
-			alertEmptyDialog();
+			setEmptyDialogVisible(true);
 		else {
 			const updatedMember = async () => {
 				await updateCustomer({
@@ -101,9 +103,7 @@ export default function App({ navigation, route }) {
 			};
 
 			updatedMember();
-
-			navigation.goBack();
-			editSuccessDialog();
+			setEditSuccessDialogVisible(true);
 		}
 	};
 
@@ -352,6 +352,25 @@ export default function App({ navigation, route }) {
 					</TouchableOpacity>
 				</ScrollView>
 			</View>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={emptyDialogVisible}
+				onRequestClose={() => { setEmptyDialogVisible(false); }}>
+				<EmptyDialog
+					setEmptyDialogVisible={setEmptyDialogVisible}
+				/>
+			</Modal>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={editSuccessDialogVisible}
+				onRequestClose={() => { setEditSuccessDialogVisible(false); }}>
+				<EditSuccessDialog
+					setEditSuccessDialogVisible={setEditSuccessDialogVisible}
+					navigation={navigation}
+				/>
+			</Modal>
 		</View>
 	);
 }

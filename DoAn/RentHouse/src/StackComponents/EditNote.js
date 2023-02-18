@@ -27,7 +27,7 @@ export default function EditModal({ navigation, route }) {
 		loadNote();
 	}, []);
 
-	const handleSave = async() => {
+	const handleSave = async () => {
 		if (noteContent.length === 0) {
 			setMissingDialogVisible(true);
 		}
@@ -37,12 +37,11 @@ export default function EditModal({ navigation, route }) {
 					id: selected_note_id,
 					content: noteContent
 				})
+					.then(() => setEditSuccessDialogVisible(true))
 					.catch((error) => console.log(error));
 			};
 
 			updatedNote();
-			setEditSuccessDialogVisible(true);
-			navigation.goBack();
 		}
 	};
 
@@ -74,7 +73,8 @@ export default function EditModal({ navigation, route }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={missingDialogVisible}>
+				visible={missingDialogVisible}
+				onRequestClose={() => { setMissingDialogVisible(false); }}>
 				<MissingDialog
 					setMissingDialogVisible={setMissingDialogVisible}
 				/>
@@ -82,9 +82,11 @@ export default function EditModal({ navigation, route }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={editSuccessDialogVisible}>
+				visible={editSuccessDialogVisible}
+				onRequestClose={() => { setEditSuccessDialogVisible(false); }}>
 				<EditSuccessDialog
 					setEditSuccessDialogVisible={setEditSuccessDialogVisible}
+					navigation={navigation}
 				/>
 			</Modal>
 		</View>

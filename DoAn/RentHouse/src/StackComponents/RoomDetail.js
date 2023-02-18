@@ -47,7 +47,6 @@ export default function App({ navigation, route }) {
 
 	const [mountInfo, setMountInfo] = useState(true);
 	const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
-	const [confirmDelete, setConfirmDelete] = useState(false);
 
 	useEffect(() => {
 		const loadRoomDetails = async () => {
@@ -113,16 +112,13 @@ export default function App({ navigation, route }) {
 	};
 
 	const handleResetRoom = async () => {
-		if (!confirmDelete) return;
-
 		const forceUpdate = () => {
 			forceUpdateRoomInfo();
 			forceUpdateBillInfo();
 			forceUpdateMemberList();
 		};
-		await resetRoom(selected_room_id, forceUpdate).catch((error) =>
-			console.log(error)
-		);
+		await resetRoom(selected_room_id, forceUpdate)
+			.catch((error) => console.log(error));
 	};
 
 	const renderMembers = ({ item }) => {
@@ -431,10 +427,7 @@ export default function App({ navigation, route }) {
 						{/* Reset room information button */}
 						<TouchableOpacity
 							style={styles.resetButton}
-							onPress={async () => {
-								setDeleteDialogVisible(true);
-								await handleResetRoom();
-							}}>
+							onPress={() => setDeleteDialogVisible(true)}>
 							<Text style={styles.textTitleWhite}>XÓA THÔNG TIN PHÒNG</Text>
 						</TouchableOpacity>
 					</View>
@@ -471,14 +464,15 @@ export default function App({ navigation, route }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={deleteDialogVisible}>
+				visible={deleteDialogVisible}
+				onRequestClose={() => { setDeleteDialogVisible(false); }}>
 				<DeleteDialog
 					title={'Chú ý'}
 					message={
 						'Reset phòng sẽ xóa tất cả thông tin của phòng (khách thuê, tất cả hóa đơn). Hãy đảm bảo mọi hóa đơn của phòng được thanh toán trước khi reset phòng.'
 					}
-					setConfirmDelete={setConfirmDelete}
 					setDeleteDialogVisible={setDeleteDialogVisible}
+					callback={handleResetRoom}
 				/>
 			</Modal>
 		</View>

@@ -5,15 +5,14 @@ import {
 	TouchableOpacity,
 	TextInput,
 	Animated,
+	Modal
 } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 
-import {
-	alertEmptyDialog,
-	successDialog,
-} from '../Dialogs/dialog.js';
-
 import {ErrorDialog} from '../Dialogs/ErrorDialog'
+import {EmptyDialog} from '../Dialogs/EmptyDialog'
+import {MissingDialog} from '../Dialogs/MissingDialog'
+import {SuccessDialog} from '../Dialogs/SuccessDialog'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { updateBill } from '../database/actions/billActions.js';
 import { formatVNCurrency } from '../utils/utils.js';
@@ -24,13 +23,17 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 
 	const [inputText, setInputText] = useState('');
 	const [errorDialogVisible, setErrorDialogVisible] = useState(false);
+	const [emptyDialogVisible, setEmptyDialogVisible] = useState(false);
+	const [missingDialogVisible, setMissingDialogVisible] = useState(false);
+	const [successDialogVisible, setSuccessDialogVisible] = useState(false);
+	const [messageSuccesDialog, setMessageSuccessDialog] = useState('')
 
 	const handlePartialPayment = () => {
 		if (inputText === '') {
-			alertEmptyDialog();
+			setEmptyDialogVisible(true);
 		}
 		else if (parseInt(inputText.replace(/\W+/g, '')) > billDetails.remained) {
-			errorDialog('Vui lòng nhập số tiền nhỏ hơn số tiền mà phòng còn thiếu.');
+			setErrorDialogVisible(true);
 		}
 		else {
 			const remained =
@@ -50,14 +53,10 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 			};
 
 			updatedBill();
-
-			successDialog(
-				`Đã thu thành công ${formatVNCurrency(inputText)}. ${billDetails.room_name
-				} còn nợ ${formatVNCurrency(remained)}`
-			);
+			setMessageSuccessDialog(`Đã thu thành công ${formatVNCurrency(inputText)}. ${billDetails.room_name} còn nợ ${formatVNCurrency(remained)}`)
+			setSuccessDialogVisible(true);
 
 			setInputText('');
-			handleClose();
 		}
 	};
 
@@ -75,14 +74,11 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 		};
 
 		updatedBill();
-
-		successDialog(
-			`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${billDetails.room_name
-			} đã thanh toán hết.`
-		);
+		setMessageSuccessDialog(`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${billDetails.room_name} đã thanh toán hết.`)
+		setSuccessDialogVisible(true);
 
 		setInputText('');
-		handleClose();
+
 	};
 
 	useEffect(() => {
@@ -195,10 +191,40 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={editSuccessDialogVisible}>
+				visible={errorDialogVisible}
+				onRequestClose={() => { setErrorDialogVisible(false); }}>
 				<ErrorDialog
 					message={'Vui lòng nhập số tiền nhỏ hơn số tiền mà phòng còn thiếu.'}
 					setErrorDialogVisible={setErrorDialogVisible}
+				/>
+			</Modal>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={missingDialogVisible}
+				onRequestClose={() => { setMissingDialogVisible(false); }}>
+				<MissingDialog
+					setMissingDialogVisible={setMissingDialogVisible}
+				/>
+			</Modal>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={emptyDialogVisible}
+				onRequestClose={() => { setEmptyDialogVisible(false); }}>
+				<EmptyDialog
+					setEmptyDialogVisible={setEmptyDialogVisible}
+				/>
+			</Modal>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={successDialogVisible}
+				onRequestClose={() => { setSuccessDialogVisible(false); }}>
+				<SuccessDialog
+					setSuccessDialogVisible={setSuccessDialogVisible}
+					message = {messageSuccesDialog}
+					callback={handleClose}
 				/>
 			</Modal>
 		</View>

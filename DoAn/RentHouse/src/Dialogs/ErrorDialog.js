@@ -12,13 +12,13 @@ const ErrorDialog = (props) => {
 		<View style={styles.container}>
 			<View style={styles.modal}>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10}}>
-					<FontAwesomeIcon name="exclamation-circle" size={35} color='red' />
+					<FontAwesomeIcon name="times-circle" size={35} color='red' />
 					<Text style={styles.textTitle}> Lỗi </Text>
 				</View>
 				<Text style={styles.message}> {props.message}</Text>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingVertical: 10}}>
 					<View style = {styles.button}>
-						<TouchableOpacity onPress={() => props.setMissingDialogVisible(false)}>
+						<TouchableOpacity onPress={() => props.setErrorDialogVisible(false)}>
 							<Text>Quay lại</Text>
 						</TouchableOpacity>
 					</View>
@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
 		margin: 50,
 		padding: 20,
 		borderRadius: 30,
-		flex: 1
 	},
 	textTitle: {
 		fontSize: 30,
