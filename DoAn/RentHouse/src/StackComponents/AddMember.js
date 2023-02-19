@@ -308,7 +308,7 @@ export default function App({ navigation, route }) {
 						style={styles.addButton}
 						onPress={handleAddCustomer}>
 						<View>
-							<Text style={styles.textTitle}>+ THÊM KHÁCH THUÊ</Text>
+							<Text style={styles.textTitle}>HOÀN TẤT</Text>
 						</View>
 					</TouchableOpacity>
 				</ScrollView>
