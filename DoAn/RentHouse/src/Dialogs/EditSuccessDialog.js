@@ -15,7 +15,7 @@ const EditSuccessDialog = ({ setEditSuccessDialogVisible, navigation }) => {
 					<FontAwesome name="check-circle" size={30} color='green' />
 					<Text style={styles.textTitle}> Hoàn Thành </Text>
 				</View>
-				<Text style={styles.message}> Chỉnh sửa thành công.</Text>
+				<Text style={styles.textMessage}> Chỉnh sửa thành công.</Text>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingVertical: 10 }}>
 					<View style={styles.button}>
 						<TouchableOpacity onPress={() => {

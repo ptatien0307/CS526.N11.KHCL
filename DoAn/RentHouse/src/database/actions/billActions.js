@@ -22,7 +22,7 @@ export const fetchBillList = () => {
                     INNER JOIN rooms ON rooms.id = bills.room_id
                 WHERE bills.status = 'Chưa thanh toán'
                 ORDER BY year DESC,
-                        month ASC,
+                        month DESC,
                         room_name ASC;
                 `,
                 [],

@@ -12,7 +12,7 @@ import { useState } from 'react';
 
 import { insertCustomer } from '../database/actions/customerActions';
 
-import { MissingDialog } from '../Dialogs/MissingDialog';
+import { EmptyDialog } from '../Dialogs/EmptyDialog';
 
 export default function App({ navigation, route }) {
 	const roomID = route.params.roomID;
@@ -28,7 +28,7 @@ export default function App({ navigation, route }) {
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const [temporaryResidence, setTemporaryResidence] = useState(false);
 
-	const [missingDialogVisible, setMissingDialogVisible] = useState(false);
+	const [emptyDialogVisible, setEmptyDialogVisible] = useState(false);
 
 	const handleAddCustomer = () => {
 		const insertedCustomer = async () => {
@@ -48,7 +48,7 @@ export default function App({ navigation, route }) {
 		};
 
 		if (customerName === '' || dateOfBirth === '' || address === '') {
-			setMissingDialogVisible(true);
+			setEmptyDialogVisible(true);
 		}
 		else {
 			insertedCustomer();
@@ -316,10 +316,10 @@ export default function App({ navigation, route }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={missingDialogVisible}
-				onRequestClose={() => { setMissingDialogVisible(false); }}>
-				<MissingDialog
-					setMissingDialogVisible={setMissingDialogVisible}
+				visible={emptyDialogVisible}
+				onRequestClose={() => setEmptyDialogVisible(false)}>
+				<EmptyDialog
+					setEmptyDialogVisible={setEmptyDialogVisible}
 				/>
 			</Modal>
 		</View>

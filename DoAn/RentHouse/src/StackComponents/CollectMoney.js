@@ -8,12 +8,11 @@ import {
 	Modal,
 } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
+import { FontAwesome } from '@expo/vector-icons';
 
 import { ErrorDialog } from '../Dialogs/ErrorDialog';
 import { EmptyDialog } from '../Dialogs/EmptyDialog';
-import { MissingDialog } from '../Dialogs/MissingDialog';
 import { SuccessDialog } from '../Dialogs/SuccessDialog';
-import { FontAwesome } from '@expo/vector-icons';
 import { updateBill } from '../database/actions/billActions.js';
 import { formatVNCurrency } from '../utils/utils.js';
 
@@ -24,7 +23,6 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 	const [inputText, setInputText] = useState('');
 	const [errorDialogVisible, setErrorDialogVisible] = useState(false);
 	const [emptyDialogVisible, setEmptyDialogVisible] = useState(false);
-	const [missingDialogVisible, setMissingDialogVisible] = useState(false);
 	const [successDialogVisible, setSuccessDialogVisible] = useState(false);
 	const [messageSuccesDialog, setMessageSuccessDialog] = useState('');
 
@@ -47,13 +45,12 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 						status: remained ? 'Chưa thanh toán' : 'Đã thanh toán',
 					},
 					forceUpdate
-				).catch((error) => {});
+				).catch((error) => { });
 			};
 
 			updatedBill();
 			setMessageSuccessDialog(
-				`Đã thu thành công ${formatVNCurrency(inputText)}. ${
-					billDetails.room_name
+				`Đã thu thành công ${formatVNCurrency(inputText)}. ${billDetails.room_name
 				} còn nợ ${formatVNCurrency(remained)}`
 			);
 			setSuccessDialogVisible(true);
@@ -72,13 +69,12 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 					status: 'Đã thanh toán',
 				},
 				forceUpdate
-			).catch((error) => {});
+			).catch((error) => { });
 		};
 
 		updatedBill();
 		setMessageSuccessDialog(
-			`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${
-				billDetails.room_name
+			`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${billDetails.room_name
 			} đã thanh toán hết.`
 		);
 		setSuccessDialogVisible(true);
@@ -105,7 +101,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 	};
 
 	const handleClose = async () => {
-		await slideOutAnimation().catch((error) => {});
+		await slideOutAnimation().catch((error) => { });
 		setIsThuTienModal(false);
 	};
 
@@ -206,17 +202,6 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 					setErrorDialogVisible={setErrorDialogVisible}
 				/>
 			</Modal>
-
-			<Modal
-				animationType="slide"
-				transparent={true}
-				visible={missingDialogVisible}
-				onRequestClose={() => {
-					setMissingDialogVisible(false);
-				}}>
-				<MissingDialog setMissingDialogVisible={setMissingDialogVisible} />
-			</Modal>
-
 			<Modal
 				animationType="slide"
 				transparent={true}

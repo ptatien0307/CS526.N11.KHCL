@@ -8,10 +8,7 @@ import {
     Modal
 } from 'react-native';
 import { useEffect, useState } from 'react';
-
-
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
-
 
 import { fetchRoomList, insertRoom } from "../database/actions/roomActions";
 import { fetchServiceDetails } from '../database/actions/serviceActions';
@@ -51,7 +48,7 @@ export default function App({ navigation, route }) {
 
     }, []);
 
-    const handleAddRoom = () => {
+    const handleAddRoom = async () => {
         // Check if room name is empty
         if (roomName === '') {
             setErrorMessageDialog('Tên phòng không được để trống');
@@ -81,18 +78,15 @@ export default function App({ navigation, route }) {
         }
 
         // Check if room name is existed
-        const checkRoomName = async () => {
-            const roomList = await fetchRoomList();
-            for (let i = 0; i < roomList.length; i++) {
-                if (roomList[i]['name'] === roomName) {
-                    setErrorMessageDialog('Tên phòng đã tồn tại');
-                    setErrorDialogVisible(true);
-                    return;
-                }
+        const roomList = await fetchRoomList();
+        for (let i = 0; i < roomList.length; i++) {
+            console.log(roomList[i]['name']);
+            if (roomList[i]['name'] === `Phòng ${roomName}`) {
+                setErrorMessageDialog('Tên phòng đã tồn tại');
+                setErrorDialogVisible(true);
+                return;
             }
-        };
-
-        checkRoomName();
+        }
 
         // check if price have non-digit character
         if (/\D/.test(price)) {

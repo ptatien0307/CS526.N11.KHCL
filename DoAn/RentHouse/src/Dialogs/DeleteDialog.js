@@ -15,7 +15,9 @@ const DeleteDialog = ({ setDeleteDialogVisible, callback, title, message }) => {
 					<FontAwesome name="exclamation-circle" size={30} color='red' />
 					<Text style={styles.textTitle}> {title} </Text>
 				</View>
+
 				<Text style={styles.message}> {message}</Text>
+
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10, }}>
 					<View style={styles.button}>
 						<TouchableOpacity onPress={() => {

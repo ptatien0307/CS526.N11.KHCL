@@ -166,7 +166,7 @@ export default function App({ navigation, route }) {
             newWaterNumber,
             newElectricityNumber
         ).catch((error) => { });
-        setMessageBill('Tổng tiền hóa đơn: ' + totalBill);
+        setMessageBill('Lập hóa đơn thành công.\nTổng tiền hóa đơn: ' + formatVNCurrency(totalBill));
         setBillSuccessDialogVisible(true);
         return;
     };
@@ -356,7 +356,7 @@ export default function App({ navigation, route }) {
                 visible={billSuccessDialogVisible}
                 onRequestClose={() => { setBillSuccessDialogVisible(false); }}>
                 <BillSuccessDialog
-                    title={'Lập hóa đơn thành công'}
+                    title={'Thành công'}
                     message={messageBill}
                     navigation={navigation}
                     setBillSuccessDialogVisible={setBillSuccessDialogVisible}

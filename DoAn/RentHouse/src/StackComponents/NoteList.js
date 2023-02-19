@@ -20,7 +20,7 @@ import {
 import { useForceUpdate } from '../utils/utils';
 import { Dimensions } from 'react-native';
 
-import { MissingDialog } from '../Dialogs/MissingDialog';
+import { EmptyDialog } from '../Dialogs/EmptyDialog';
 
 const wh = Dimensions.get('window').width;
 const vh = Dimensions.get('window').height;
@@ -30,7 +30,8 @@ export default function App({ navigation, route }) {
 	const [noteContent, setNoteContent] = useState('');
 	const [noteList, setNoteList] = useState([]);
 	const [forceUpdate, forceUpdateId] = useForceUpdate();
-	const [missingDialogVisible, setMissingDialogVisible] = useState(false);
+
+	const [emptyDialogVisible, setEmptyDialogVisible] = useState(false);
 
 	// Get note list from database
 	useEffect(() => {
@@ -45,7 +46,7 @@ export default function App({ navigation, route }) {
 
 	const handleAddNote = () => {
 		if (noteContent.length === 0) {
-			setMissingDialogVisible(true);
+			setEmptyDialogVisible(true);
 		} else {
 			const insertedNote = async () => {
 				await insertNote(noteContent, forceUpdate).catch((error) => { });
@@ -109,10 +110,10 @@ export default function App({ navigation, route }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={missingDialogVisible}
-				onRequestClose={() => { setMissingDialogVisible(false); }}>
-				<MissingDialog
-					setMissingDialogVisible={setMissingDialogVisible}
+				visible={emptyDialogVisible}
+				onRequestClose={() => setEmptyDialogVisible(false)}>
+				<EmptyDialog
+					setEmptyDialogVisible={setEmptyDialogVisible}
 				/>
 			</Modal>
 		</View>

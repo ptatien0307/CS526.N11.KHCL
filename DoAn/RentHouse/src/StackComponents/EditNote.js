@@ -8,15 +8,17 @@ import {
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import { fetchNoteContent, updateNote } from '../database/actions/noteActions';
-import { MissingDialog } from '../Dialogs/MissingDialog';
+import { EmptyDialog } from '../Dialogs/EmptyDialog';
 import { EditSuccessDialog } from '../Dialogs/EditSuccessDialog';
 
 export default function EditModal({ navigation, route }) {
 	const selected_note_id = route.params.selected_note_id;
 
 	const [noteContent, setNoteContent] = useState('');
-	const [missingDialogVisible, setMissingDialogVisible] = useState(false);
+
+	const [emptyDialogVisible, setEmptyDialogVisible] = useState(false);
 	const [editSuccessDialogVisible, setEditSuccessDialogVisible] = useState(false);
+
 	useEffect(() => {
 		const loadNote = async () => {
 			const note = await fetchNoteContent(selected_note_id)
@@ -29,7 +31,7 @@ export default function EditModal({ navigation, route }) {
 
 	const handleSave = async () => {
 		if (noteContent.length === 0) {
-			setMissingDialogVisible(true);
+			setEmptyDialogVisible(true);
 		}
 		else {
 			const updatedNote = async () => {
@@ -73,17 +75,17 @@ export default function EditModal({ navigation, route }) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={missingDialogVisible}
-				onRequestClose={() => { setMissingDialogVisible(false); }}>
-				<MissingDialog
-					setMissingDialogVisible={setMissingDialogVisible}
+				visible={emptyDialogVisible}
+				onRequestClose={() => { setEmptyDialogVisible(false); }}>
+				<EmptyDialog
+					setEmptyDialogVisible={setEmptyDialogVisible}
 				/>
 			</Modal>
 			<Modal
 				animationType="slide"
 				transparent={true}
 				visible={editSuccessDialogVisible}
-				onRequestClose={() => { setEditSuccessDialogVisible(false); }}>
+				onRequestClose={() => setEditSuccessDialogVisible(false)}>
 				<EditSuccessDialog
 					setEditSuccessDialogVisible={setEditSuccessDialogVisible}
 					navigation={navigation}
