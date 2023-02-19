@@ -69,7 +69,7 @@ export default function App({ navigation, route }) {
 					{/* Name */}
 					<View style={[styles.item, styles.myBackground]}>
 						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Họ tên:</Text>
+							<Text style={styles.title}>Họ tên*:</Text>
 						</View>
 						<View>
 							<TextInput
@@ -80,10 +80,8 @@ export default function App({ navigation, route }) {
 								onChangeText={(text) => {
 									setCustomerName(text);
 								}}
-								placeholder="Nhập ..."
-								editable={true}
-								multiline={true}
-								maxLength={256}></TextInput>
+								placeholder="Nhập họ tên"
+								maxLength={50}></TextInput>
 						</View>
 					</View>
 
@@ -101,17 +99,16 @@ export default function App({ navigation, route }) {
 								onChangeText={(text) => {
 									setPhoneNumber(text);
 								}}
-								placeholder="Nhập ..."
-								editable={true}
-								multiline={true}
-								maxLength={256}></TextInput>
+								placeholder="Nhập số điện thoại"
+								keyboardType='numeric'
+								maxLength={12}></TextInput>
 						</View>
 					</View>
 
 					{/* DataOfBirth */}
 					<View style={[styles.item, styles.myBackground]}>
 						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Ngày sinh:</Text>
+							<Text style={styles.title}>Ngày sinh*:</Text>
 						</View>
 						<View>
 							<TextInput
@@ -122,10 +119,8 @@ export default function App({ navigation, route }) {
 								onChangeText={(text) => {
 									setDateOfBirth(text);
 								}}
-								placeholder="Nhập ..."
-								editable={true}
-								multiline={true}
-								maxLength={256}></TextInput>
+								placeholder="Nhập ngày sinh (dd/mm/yyyy)"
+								maxLength={12}></TextInput>
 						</View>
 					</View>
 
@@ -171,7 +166,7 @@ export default function App({ navigation, route }) {
 					{/* Address */}
 					<View style={[styles.item, styles.myBackground]}>
 						<View style={styles.titleContainer}>
-							<Text style={styles.title}>Địa chỉ thường trú:</Text>
+							<Text style={styles.title}>Địa chỉ thường trú*:</Text>
 						</View>
 						<View>
 							<TextInput
@@ -182,10 +177,8 @@ export default function App({ navigation, route }) {
 								onChangeText={(text) => {
 									setAddress(text);
 								}}
-								placeholder="Nhập ..."
-								editable={true}
-								multiline={true}
-								maxLength={256}></TextInput>
+								placeholder="Nhập địa chỉ thường trú"
+								maxLength={100}></TextInput>
 						</View>
 					</View>
 
@@ -243,10 +236,9 @@ export default function App({ navigation, route }) {
 									onChangeText={(text) => {
 										setCitizenID(text);
 									}}
-									placeholder="Nhập ..."
-									editable={true}
-									multiline={true}
-									maxLength={256}></TextInput>
+									placeholder="Nhập số CCCD"
+									keyboardType='numeric'
+									maxLength={15}></TextInput>
 							</View>
 						</View>
 
@@ -266,9 +258,7 @@ export default function App({ navigation, route }) {
 											setCitizenIDDate(text);
 										}}
 										placeholder="Nhập ..."
-										editable={true}
-										multiline={true}
-										maxLength={256}></TextInput>
+										maxLength={10}></TextInput>
 								</View>
 							</View>
 							{/* Place */}
@@ -286,9 +276,7 @@ export default function App({ navigation, route }) {
 											setCitizenIDPlace(text);
 										}}
 										placeholder="Nhập ..."
-										editable={true}
-										multiline={true}
-										maxLength={256}></TextInput>
+										maxLength={10}></TextInput>
 								</View>
 							</View>
 						</View>
@@ -309,10 +297,8 @@ export default function App({ navigation, route }) {
 									onChangeText={(text) => {
 										setJob(text);
 									}}
-									placeholder="Nhập ..."
-									editable={true}
-									multiline={true}
-									maxLength={256}></TextInput>
+									placeholder="Nhập nghề nghiệp"
+									maxLength={30}></TextInput>
 							</View>
 						</View>
 					</View>

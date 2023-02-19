@@ -74,11 +74,10 @@ export default function App({ navigation }) {
 								onChangeText={(text) => {
 									setGarbage(formatVNCurrency(text.replace(/\W+/g, ''), 2));
 								}}
-								placeholder="Nhập ..."
+								placeholder="Nhập đơn giá tiền rác"
 								defaultValue={garbage}
-								editable={true}
-								multiline={false}
-								maxLength={256}
+								maxLength={9}
+								keyboardType="numeric"
 							/>
 						</View>
 					</View>
@@ -97,11 +96,10 @@ export default function App({ navigation }) {
 								onChangeText={(text) => {
 									setElectricity(formatVNCurrency(text.replace(/\W+/g, ''), 2));
 								}}
-								placeholder="Nhập ..."
+								placeholder="Nhập đơn giá tiền điện"
 								defaultValue={electricity}
-								editable={true}
-								multiline={false}
-								maxLength={256}
+								maxLength={9}
+								keyboardType="numeric"
 							/>
 						</View>
 					</View>
@@ -120,11 +118,10 @@ export default function App({ navigation }) {
 								onChangeText={(text) => {
 									setWater(formatVNCurrency(text.replace(/\W+/g, ''), 2));
 								}}
-								placeholder="Nhập ..."
+								placeholder="Nhập đơn giá tiền nước"
 								defaultValue={water}
-								editable={true}
-								multiline={false}
-								maxLength={256}
+								maxLength={9}
+								keyboardType="numeric"
 							/>
 						</View>
 					</View>
@@ -143,11 +140,10 @@ export default function App({ navigation }) {
 								onChangeText={(text) => {
 									setRentallFee(formatVNCurrency(text.replace(/\W+/g, ''), 2));
 								}}
-								placeholder="Nhập ..."
+								placeholder="Nhập đơn giá tiền phòng"
 								defaultValue={rentallFee}
-								editable={true}
-								multiline={false}
-								maxLength={256}
+								maxLength={13}
+								keyboardType="numeric"
 							/>
 						</View>
 					</View>

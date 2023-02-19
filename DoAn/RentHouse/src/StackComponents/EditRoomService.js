@@ -62,11 +62,9 @@ export default function App({ navigation, route }) {
 								onChangeText={(text) => {
 									setOldWaterNumber(text);
 								}}
-								placeholder="Nhập ..."
+								placeholder="Nhập số nước hiện tại"
 								defaultValue={old_water_number}
-								editable={true}
-								multiline={false}
-								maxLength={256}
+								maxLength={9}
 								keyboardType="numeric"
 							>
 							</TextInput>
@@ -85,11 +83,9 @@ export default function App({ navigation, route }) {
 								onChangeText={(text) => {
 									setOldElectricityNumber(text);
 								}}
-								placeholder="Nhập ..."
+								placeholder="Nhập số điện hiện tại"
 								defaultValue={old_electricity_number}
-								editable={true}
-								multiline={false}
-								maxLength={256}
+								maxLength={9}
 								keyboardType="numeric"
 							>
 

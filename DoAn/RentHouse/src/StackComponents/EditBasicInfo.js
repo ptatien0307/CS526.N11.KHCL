@@ -75,11 +75,9 @@ export default function App({ navigation, route }) {
 								onChangeText={(e) => {
 									setRoomName(e);
 								}}
-								placeholder="Nhập ..."
+								placeholder="Nhập tên phòng"
 								defaultValue={roomName}
-								editable={true}
-								multiline={false}
-								maxLength={256}
+								maxLength={32}
 							>
 							</TextInput>
 						</View>
@@ -97,11 +95,9 @@ export default function App({ navigation, route }) {
 								onChangeText={(e) => {
 									setMoveInDate(e);
 								}}
-								placeholder="Nhập ..."
+								placeholder="Nhập ngày chuyển đến dd/mm/yyyy"
 								defaultValue={moveInDate}
-								editable={true}
-								multiline={false}
-								maxLength={256}
+								maxLength={20}
 							>
 
 							</TextInput>
@@ -121,8 +117,7 @@ export default function App({ navigation, route }) {
 								}}
 								placeholder="Nhập ..."
 								defaultValue={rentalFee}
-								multiline={false}
-								maxLength={256}
+								maxLength={13}
 								keyboardType={'number-pad'}
 							>
 							</TextInput>
@@ -142,8 +137,7 @@ export default function App({ navigation, route }) {
 								}}
 								placeholder="Nhập tiền cọc"
 								defaultValue={deposit}
-								multiline={false}
-								maxLength={256}
+								maxLength={13}
 								keyboardType={'number-pad'}
 							>
 
