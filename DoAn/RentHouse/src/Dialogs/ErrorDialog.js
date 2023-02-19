@@ -12,7 +12,7 @@ const ErrorDialog = (props) => {
 		<View style={styles.container}>
 			<View style={styles.modal}>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10 }}>
-					<FontAwesome name="times-circle" size={35} color='red' />
+					<FontAwesome name="times-circle" size={30} color='red' />
 					<Text style={styles.textTitle}> Lỗi </Text>
 				</View>
 				<Text style={styles.message}> {props.message}</Text>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 		borderRadius: 30,
 	},
 	textTitle: {
-		fontSize: 30,
+		fontSize: 25,
 		fontWeight: 'bold',
 		textAlign: 'center',
 	},

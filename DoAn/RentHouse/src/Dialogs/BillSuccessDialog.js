@@ -12,7 +12,7 @@ const BillSuccessDialog = ({ setBillSuccessDialogVisible, navigation, title, mes
 		<View style={styles.container}>
 			<View style={styles.modal}>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10 }}>
-					<FontAwesome name="check-circle" size={35} color='green' />
+					<FontAwesome name="check-circle" size={30} color='green' />
 					<Text style={styles.textTitle}> {title} </Text>
 				</View>
 				<Text style={styles.message}> {message}</Text>
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 		borderRadius: 30,
 	},
 	textTitle: {
-		fontSize: 30,
+		fontSize: 25,
 		fontWeight: 'bold',
 		textAlign: 'center',
 	},

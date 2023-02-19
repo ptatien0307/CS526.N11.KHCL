@@ -12,7 +12,7 @@ const DeleteDialog = ({ setDeleteDialogVisible, callback, title, message }) => {
 		<View style={styles.container}>
 			<View style={styles.modal}>
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10, }}>
-					<FontAwesome name="exclamation-circle" size={35} color='red' />
+					<FontAwesome name="exclamation-circle" size={30} color='red' />
 					<Text style={styles.textTitle}> {title} </Text>
 				</View>
 				<Text style={styles.message}> {message}</Text>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 		borderRadius: 30,
 	},
 	textTitle: {
-		fontSize: 30,
+		fontSize: 25,
 		fontWeight: 'bold',
 		textAlign: 'center',
 	},
