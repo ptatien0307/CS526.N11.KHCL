@@ -50,7 +50,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 
 			updatedBill();
 			setMessageSuccessDialog(
-				`Đã thu thành công ${formatVNCurrency(inputText)}. ${billDetails.room_name
+				`Đã thu thành công ${formatVNCurrency(inputText)}.\n${billDetails.room_name
 				} còn nợ ${formatVNCurrency(remained)}`
 			);
 			setSuccessDialogVisible(true);
@@ -74,7 +74,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 
 		updatedBill();
 		setMessageSuccessDialog(
-			`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${billDetails.room_name
+			`Đã thu thành công ${formatVNCurrency(billDetails.remained)}.\n${billDetails.room_name
 			} đã thanh toán hết.`
 		);
 		setSuccessDialogVisible(true);
