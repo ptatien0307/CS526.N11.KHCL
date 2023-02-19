@@ -5,7 +5,7 @@ import {
 	TouchableOpacity,
 	TextInput,
 	Animated,
-	Modal
+	Modal,
 } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 
@@ -31,11 +31,9 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 	const handlePartialPayment = () => {
 		if (inputText === '') {
 			setEmptyDialogVisible(true);
-		}
-		else if (parseInt(inputText.replace(/\W+/g, '')) > billDetails.remained) {
+		} else if (parseInt(inputText.replace(/\W+/g, '')) > billDetails.remained) {
 			setErrorDialogVisible(true);
-		}
-		else {
+		} else {
 			const remained =
 				billDetails.remained - parseInt(inputText.replace(/\W+/g, ''));
 			const count = ++billDetails.paid_time;
@@ -49,11 +47,15 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 						status: remained ? 'Chưa thanh toán' : 'Đã thanh toán',
 					},
 					forceUpdate
-				).catch((error) => { });
+				).catch((error) => {});
 			};
 
 			updatedBill();
-			setMessageSuccessDialog(`Đã thu thành công ${formatVNCurrency(inputText)}. ${billDetails.room_name} còn nợ ${formatVNCurrency(remained)}`);
+			setMessageSuccessDialog(
+				`Đã thu thành công ${formatVNCurrency(inputText)}. ${
+					billDetails.room_name
+				} còn nợ ${formatVNCurrency(remained)}`
+			);
 			setSuccessDialogVisible(true);
 
 			setInputText('');
@@ -70,15 +72,18 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 					status: 'Đã thanh toán',
 				},
 				forceUpdate
-			).catch((error) => { });
+			).catch((error) => {});
 		};
 
 		updatedBill();
-		setMessageSuccessDialog(`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${billDetails.room_name} đã thanh toán hết.`);
+		setMessageSuccessDialog(
+			`Đã thu thành công ${formatVNCurrency(billDetails.remained)}. ${
+				billDetails.room_name
+			} đã thanh toán hết.`
+		);
 		setSuccessDialogVisible(true);
 
 		setInputText('');
-
 	};
 
 	useEffect(() => {
@@ -100,7 +105,7 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 	};
 
 	const handleClose = async () => {
-		await slideOutAnimation().catch((error) => { });
+		await slideOutAnimation().catch((error) => {});
 		setIsThuTienModal(false);
 	};
 
@@ -188,39 +193,47 @@ export default function App({ billDetails, forceUpdate, setIsThuTienModal }) {
 					}
 				</View>
 			</Animated.View>
+
 			<Modal
 				animationType="slide"
 				transparent={true}
 				visible={errorDialogVisible}
-				onRequestClose={() => { setErrorDialogVisible(false); }}>
+				onRequestClose={() => {
+					setErrorDialogVisible(false);
+				}}>
 				<ErrorDialog
 					message={'Vui lòng nhập số tiền nhỏ hơn số tiền mà phòng còn thiếu.'}
 					setErrorDialogVisible={setErrorDialogVisible}
 				/>
 			</Modal>
+
 			<Modal
 				animationType="slide"
 				transparent={true}
 				visible={missingDialogVisible}
-				onRequestClose={() => { setMissingDialogVisible(false); }}>
-				<MissingDialog
-					setMissingDialogVisible={setMissingDialogVisible}
-				/>
+				onRequestClose={() => {
+					setMissingDialogVisible(false);
+				}}>
+				<MissingDialog setMissingDialogVisible={setMissingDialogVisible} />
 			</Modal>
+
 			<Modal
 				animationType="slide"
 				transparent={true}
 				visible={emptyDialogVisible}
-				onRequestClose={() => { setEmptyDialogVisible(false); }}>
-				<EmptyDialog
-					setEmptyDialogVisible={setEmptyDialogVisible}
-				/>
+				onRequestClose={() => {
+					setEmptyDialogVisible(false);
+				}}>
+				<EmptyDialog setEmptyDialogVisible={setEmptyDialogVisible} />
 			</Modal>
+
 			<Modal
 				animationType="slide"
 				transparent={true}
 				visible={successDialogVisible}
-				onRequestClose={() => { setSuccessDialogVisible(false); }}>
+				onRequestClose={() => {
+					setSuccessDialogVisible(false);
+				}}>
 				<SuccessDialog
 					setSuccessDialogVisible={setSuccessDialogVisible}
 					message={messageSuccesDialog}
@@ -242,7 +255,7 @@ const styles = StyleSheet.create({
 	},
 	modal: {
 		width: '100%',
-		height: '65%',
+		height: '40%',
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 		position: 'absolute',
@@ -270,7 +283,7 @@ const styles = StyleSheet.create({
 
 	body: {
 		width: '100%',
-		height: '80%',
+		height: '100%',
 		alignItems: 'center',
 		justifyContent: 'flex-start',
 	},
@@ -308,7 +321,7 @@ const styles = StyleSheet.create({
 	},
 
 	stackTitle: {
-		marginLeft: 32,
+		marginLeft: 8,
 		marginRight: 128,
 		fontSize: 35,
 		fontWeight: 'bold',
