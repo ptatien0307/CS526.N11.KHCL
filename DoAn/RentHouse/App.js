@@ -41,7 +41,7 @@ export default function App() {
 	// Initialize database
 	useEffect(() => {
 		enableForeignKeys();
-		deleteDatabase();
+		// deleteDatabase();
 		enableAutoVacuum();
 		vacuum();
 		createDatabase();

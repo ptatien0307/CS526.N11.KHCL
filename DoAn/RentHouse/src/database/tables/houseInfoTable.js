@@ -10,6 +10,6 @@ export const createHouseInfoTable = `
 `;
 
 export const populateHouseInfoTable = `
-    INSERT OR REPLACE INTO house_info (id)
+    INSERT OR IGNORE INTO house_info (id)
     VALUES (1);
 `;
