@@ -45,6 +45,8 @@ export default function App({ navigation, route }) {
 
 	const [mountInfo, setMountInfo] = useState(true);
 	const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
+	const [deleteDialogVisible_, setDeleteDialogVisible_] = useState(false);
+	const [itemID, setItemID] = useState('')
 
 	useEffect(() => {
 		const loadRoomDetails = async () => {
@@ -127,7 +129,8 @@ export default function App({ navigation, route }) {
 					{/* Delete member icon */}
 					<TouchableOpacity
 						onPress={() => {
-							handleDeleteMember(item.id);
+							setItemID(item.id)
+							setDeleteDialogVisible_(true)
 						}}
 						style={[styles.deleteBillButton]}>
 						<FontAwesome
@@ -461,6 +464,22 @@ export default function App({ navigation, route }) {
 					}
 					setDeleteDialogVisible={setDeleteDialogVisible}
 					callback={handleResetRoom}
+					itemID={''}
+				/>
+			</Modal>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={deleteDialogVisible_}
+				onRequestClose={() => { setDeleteDialogVisible_(false); }}>
+				<DeleteDialog
+					title={'Chú ý'}
+					message={
+						'Bạn có chắc là muốn xóa người ở này? Nếu là người ở cuối cùng hãy đảm bảo mọi hóa đơn của phòng được thanh toán trước khi xóa người ở này.'
+					}
+					setDeleteDialogVisible={setDeleteDialogVisible_}
+					callback={handleDeleteMember}
+					itemID = {itemID}
 				/>
 			</Modal>
 		</View>
