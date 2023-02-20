@@ -6,7 +6,7 @@ import {
 	FlatList,
 	TouchableOpacity,
 	TextInput,
-	Modal
+	Modal,
 } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 
@@ -36,7 +36,7 @@ export default function App({ navigation, route }) {
 	// Get note list from database
 	useEffect(() => {
 		const loadNoteList = async () => {
-			const notes = await fetchNoteList().catch((error) => { });
+			const notes = await fetchNoteList().catch((error) => {});
 
 			setNoteList(notes);
 		};
@@ -49,7 +49,7 @@ export default function App({ navigation, route }) {
 			setEmptyDialogVisible(true);
 		} else {
 			const insertedNote = async () => {
-				await insertNote(noteContent, forceUpdate).catch((error) => { });
+				await insertNote(noteContent, forceUpdate).catch((error) => {});
 			};
 
 			insertedNote();
@@ -112,9 +112,7 @@ export default function App({ navigation, route }) {
 				transparent={true}
 				visible={emptyDialogVisible}
 				onRequestClose={() => setEmptyDialogVisible(false)}>
-				<EmptyDialog
-					setEmptyDialogVisible={setEmptyDialogVisible}
-				/>
+				<EmptyDialog setEmptyDialogVisible={setEmptyDialogVisible} />
 			</Modal>
 		</View>
 	);
@@ -146,6 +144,7 @@ const styles = StyleSheet.create({
 	},
 	textInputContent: {
 		fontSize: 20,
+		width: '90%',
 	},
 
 	note: {
@@ -156,11 +155,11 @@ const styles = StyleSheet.create({
 		borderLeftWidth: 5,
 		width: '100%',
 		marginBottom: 16,
-		borderLeftColor: '#6bec4b'
+		borderLeftColor: '#6bec4b',
 	},
 	noteContent: {
 		minHeight: 50,
-		width: '100%',
+		width: '90%',
 		justifyContent: 'center',
 		alignItems: 'flex-start',
 	},
