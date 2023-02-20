@@ -12,8 +12,8 @@ export const createServicePricesTable = `
 export const populateServicePricesTable = `
     INSERT OR IGNORE INTO service_prices (id, name, price, unit)
     VALUES 
-        (1, 'Rác', 50000, '₫/tháng'),
-        (2, 'Điện', 2000, '₫/kWh'),
-        (3, 'Nước', 10000, '₫/khối'),
+        (1, 'Rác', 15000, '₫/tháng'),
+        (2, 'Điện', 3000, '₫/kWh'),
+        (3, 'Nước', 3000, '₫/khối'),
         (4, 'Phòng', 950000, '₫/Phòng');
 `;
