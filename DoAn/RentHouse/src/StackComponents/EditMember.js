@@ -42,7 +42,7 @@ export default function App({ navigation, route }) {
 	useEffect(() => {
 		const loadCustomerDetails = async () => {
 			const customerDetails = await fetchCustomerDetails(memberID).catch(
-				(error) => {}
+				(error) => { }
 			);
 
 			setMemberDetails(customerDetails);
@@ -78,7 +78,7 @@ export default function App({ navigation, route }) {
 					job: job,
 					phone: phoneNumber,
 					temporary_residence: temporaryResidence,
-				}).catch((error) => {});
+				}).catch((error) => { });
 			};
 
 			updatedMember();
@@ -216,7 +216,7 @@ export default function App({ navigation, route }) {
 							<View style={{ flexDirection: 'row', marginRight: 104 }}>
 								<View>
 									<Checkbox
-										value={!!temporaryResidence}
+										value={Boolean(temporaryResidence)}
 										onValueChange={() => {
 											setTemporaryResidence(true);
 										}}
@@ -229,7 +229,7 @@ export default function App({ navigation, route }) {
 							<View style={{ flexDirection: 'row' }}>
 								<View>
 									<Checkbox
-										value={!temporaryResidence}
+										value={!Boolean(temporaryResidence)}
 										onValueChange={() => {
 											setTemporaryResidence(false);
 										}}

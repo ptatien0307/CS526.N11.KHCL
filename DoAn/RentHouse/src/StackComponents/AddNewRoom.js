@@ -80,7 +80,6 @@ export default function App({ navigation, route }) {
         // Check if room name is existed
         const roomList = await fetchRoomList();
         for (let i = 0; i < roomList.length; i++) {
-            console.log(roomList[i]['name']);
             if (roomList[i]['name'] === `Phòng ${roomName}`) {
                 setErrorMessageDialog('Tên phòng đã tồn tại');
                 setErrorDialogVisible(true);

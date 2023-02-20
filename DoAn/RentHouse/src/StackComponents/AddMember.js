@@ -42,7 +42,7 @@ export default function App({ navigation, route }) {
 				citizen_id_place: citizenIDPlace,
 				job: job,
 				phone: phoneNumber,
-				temporary_residence: temporaryResidence,
+				temporary_residence: temporaryResidence ? 1 : 0,
 				room_id: roomID,
 			}).catch((error) => { });
 		};

@@ -7,7 +7,7 @@ import {
 
 import { FontAwesome } from '@expo/vector-icons';
 
-const DeleteDialog = ({ setDeleteDialogVisible, callback, title, message, itemID}) => {
+const DeleteDialog = ({ setDeleteDialogVisible, callback, title, message, itemID }) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.modal}>
@@ -16,17 +16,17 @@ const DeleteDialog = ({ setDeleteDialogVisible, callback, title, message, itemID
 					<Text style={styles.textTitle}> {title} </Text>
 				</View>
 
-				<Text style={styles.message}> {message}</Text>
+				<Text style={styles.message}>{message}</Text>
 
 				<View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingVertical: 10, }}>
 					<View style={styles.button}>
 						<TouchableOpacity onPress={() => {
-							if (itemID ===''){
+							if (itemID === '') {
 								callback();
 								setDeleteDialogVisible(false);
 							}
-							else
-							{	callback(itemID);
+							else {
+								callback(itemID);
 								setDeleteDialogVisible(false);
 							}
 						}}>

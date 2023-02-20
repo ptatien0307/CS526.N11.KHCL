@@ -82,13 +82,13 @@ const populateTables = () => {
 		// 	(_, error) => { }
 		// );
 		tx.executeSql(
-			populateServicePricesTable,
+			populateHouseInfoTable,
 			[],
 			() => { },
 			(_, error) => { }
 		);
 		tx.executeSql(
-			populateHouseInfoTable,
+			populateServicePricesTable,
 			[],
 			() => { },
 			(_, error) => { }
