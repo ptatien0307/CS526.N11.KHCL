@@ -5,11 +5,10 @@ import {
 	TouchableOpacity,
 	TextInput,
 	ScrollView,
-	Modal
+	Modal,
 } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { useState, useEffect } from 'react';
-
 
 import { EmptyDialog } from '../Dialogs/EmptyDialog';
 import { EditSuccessDialog } from '../Dialogs/EditSuccessDialog';
@@ -37,11 +36,14 @@ export default function App({ navigation, route }) {
 	const [gender, setGender] = useState(null);
 
 	const [emptyDialogVisible, setEmptyDialogVisible] = useState(false);
-	const [editSuccessDialogVisible, setEditSuccessDialogVisible] = useState(false);
+	const [editSuccessDialogVisible, setEditSuccessDialogVisible] =
+		useState(false);
 
 	useEffect(() => {
 		const loadCustomerDetails = async () => {
-			const customerDetails = await fetchCustomerDetails(memberID).catch((error) => { });
+			const customerDetails = await fetchCustomerDetails(memberID).catch(
+				(error) => {}
+			);
 
 			setMemberDetails(customerDetails);
 			setCustomerName(customerDetails.name);
@@ -59,13 +61,8 @@ export default function App({ navigation, route }) {
 		loadCustomerDetails();
 	}, []);
 
-	// BACK-END ___ EDIT MEMBER INFORMATION
 	const handleSave = () => {
-		if (
-			customerName === '' ||
-			dateOfBirth === '' ||
-			address === ''
-		)
+		if (customerName === '' || dateOfBirth === '' || address === '')
 			setEmptyDialogVisible(true);
 		else {
 			const updatedMember = async () => {
@@ -81,7 +78,7 @@ export default function App({ navigation, route }) {
 					job: job,
 					phone: phoneNumber,
 					temporary_residence: temporaryResidence,
-				}).catch((error) => { });
+				}).catch((error) => {});
 			};
 
 			updatedMember();
@@ -216,14 +213,10 @@ export default function App({ navigation, route }) {
 							<Text style={styles.title}>Đăng ký tạm trú:</Text>
 						</View>
 						<View style={[styles.row, { justifyContent: 'flex-start' }]}>
-							<View
-								style={{
-									flexDirection: 'row',
-									marginRight: 104,
-								}}>
+							<View style={{ flexDirection: 'row', marginRight: 104 }}>
 								<View>
 									<Checkbox
-										value={temporaryResidence}
+										value={!!temporaryResidence}
 										onValueChange={() => {
 											setTemporaryResidence(true);
 										}}
@@ -338,16 +331,18 @@ export default function App({ navigation, route }) {
 				animationType="slide"
 				transparent={true}
 				visible={emptyDialogVisible}
-				onRequestClose={() => { setEmptyDialogVisible(false); }}>
-				<EmptyDialog
-					setEmptyDialogVisible={setEmptyDialogVisible}
-				/>
+				onRequestClose={() => {
+					setEmptyDialogVisible(false);
+				}}>
+				<EmptyDialog setEmptyDialogVisible={setEmptyDialogVisible} />
 			</Modal>
 			<Modal
 				animationType="slide"
 				transparent={true}
 				visible={editSuccessDialogVisible}
-				onRequestClose={() => { setEditSuccessDialogVisible(false); }}>
+				onRequestClose={() => {
+					setEditSuccessDialogVisible(false);
+				}}>
 				<EditSuccessDialog
 					setEditSuccessDialogVisible={setEditSuccessDialogVisible}
 					navigation={navigation}
