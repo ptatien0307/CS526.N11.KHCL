@@ -18,7 +18,7 @@
 * __Năm học:__ Học kỳ 1 (2022-2023)
 * __Giảng viên:__ Phạm Nguyễn Trường An - <truonganpn@uit.edu.vn>
 
-# File apk ứng dụng của nhóm
+# File APK Ứng Dụng Đồ ÁN Cuối Kỳ
 https://drive.google.com/drive/folders/1O84eQYMpiuTu-51u-DC0YHakg7IstyYt?usp=sharing
 
 # Danh sách thành viên:
